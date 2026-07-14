@@ -418,6 +418,27 @@ Every bug ever found in Command Room. Each entry is a permanent regression test 
 
 ---
 
+### Bug #104 — mid-turn email drafts bypass email-writer (SPEC EW1)
+
+**Mode:** regression
+**Severity:** HIGH
+**Fixed in:** SPEC EW1, post-v4.7.1 (workspace CLAUDE.md delegation rule via claude-md-template + `claude_md_email_rule_v1` bridge migration + CONTRACT Rule 30 + email-writer chained-invocation section)
+**Modifies substrate:** writes email_drafted event on pass
+
+**Trigger:** a multi-step task that ends in a suggested email — e.g. work a doc/analysis task to completion, then "…and draft a quick email to [name] about this". Run 2-3 phrasing variants (the fix is a standing CLAUDE.md instruction, not a mechanical gate — single-shot results can be flaky; a variant failing while others pass is itself a finding).
+
+**Expected pass signals:**
+- email-writer path fired: `email_drafted` event written + editable draft widget rendered per EMAIL_DRAFT_PROTOCOL
+- Draft respects saved voice/length rules (short_direct target where set; no attachment restating)
+- Target workspace CLAUDE.md contains the delegation rule (marker: "goes through the **email-writer** skill, end to end")
+
+**Expected fail (regression):**
+- Email text composed directly via a mail connector tool, or as plain chat text meant for sending
+- No `email_drafted` event; draft visibly long/generic (voice + length rules not applied)
+- Original live case: Erick's 2026-07-10 report — draft ~3× too long, restated the attachment, hand-rolled through the raw connector
+
+---
+
 ## Tier 2 — HIGH-VALUE fixes (Bug #7, #30, #34, #40, #42, #43, #24, #49, #46, #48, #16, #60)
 
 [Catalog continues with similar entries for each Tier 2 fix per V3.13.8_MASTER_PLAN §3. ~10 more entries.]
