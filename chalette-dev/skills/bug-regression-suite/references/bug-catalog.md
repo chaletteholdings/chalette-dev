@@ -2,7 +2,7 @@
 
 Every bug ever found in Command Room. Each entry is a permanent regression test that runs on every release. Never shrinks — only grows.
 
-**Current size:** 61 entries (Bugs #1-#61 + Sub-bug #14b) — seeded from V3.13.7 verification session + prior month.
+**Current size:** 65 entries (Bugs #1-#61 + Sub-bug #14b, Bug #104, integration-2026-07 F-08 / F-12 / F-15) — seeded from V3.13.7 verification session + prior month; grown per cycle.
 
 **Catalog growth principle:** every new bug surfaced in production gets a permanent entry here. The catalog is the structural defense against re-introducing fixed bugs.
 
@@ -422,7 +422,7 @@ Every bug ever found in Command Room. Each entry is a permanent regression test 
 
 **Mode:** regression
 **Severity:** HIGH
-**Fixed in:** SPEC EW1, post-v4.7.1 (workspace CLAUDE.md delegation rule via claude-md-template + `claude_md_email_rule_v1` bridge migration + CONTRACT Rule 30 + email-writer chained-invocation section)
+**Fixed in:** SPEC EW1, post-v4.7.1 (workspace CLAUDE.md delegation rule via claude-md-template + `claude_md_email_rule_v1` bridge migration + CONTRACT Rule 30 + email-writer chained-invocation section). **Delegation layer CONFIRMED LIVE 2026-07-14** on v4.8.0 staging: 3/3 chained variants explicitly loaded email-writer vs 0/3 on the v4.7.0 baseline (integration-2026-07 A1/A2/A3). Protocol back-half hardening (widget render + lazy write) rides SPEC EW2+T (F-07).
 **Modifies substrate:** writes email_drafted event on pass
 
 **Trigger:** a multi-step task that ends in a suggested email — e.g. work a doc/analysis task to completion, then "…and draft a quick email to [name] about this". Run 2-3 phrasing variants (the fix is a standing CLAUDE.md instruction, not a mechanical gate — single-shot results can be flaky; a variant failing while others pass is itself a finding).
@@ -431,11 +431,77 @@ Every bug ever found in Command Room. Each entry is a permanent regression test 
 - email-writer path fired: `email_drafted` event written + editable draft widget rendered per EMAIL_DRAFT_PROTOCOL
 - Draft respects saved voice/length rules (short_direct target where set; no attachment restating)
 - Target workspace CLAUDE.md contains the delegation rule (marker: "goes through the **email-writer** skill, end to end")
+- **(EW2+T hardening, required as of 2026-07-14):** the canonical draft widget actually renders (not an inline chat-text draft), AND no connector write happens before a widget click — the draft must NOT be queued to the mail connector pre-click (lazy contract)
 
 **Expected fail (regression):**
 - Email text composed directly via a mail connector tool, or as plain chat text meant for sending
 - No `email_drafted` event; draft visibly long/generic (voice + length rules not applied)
+- Draft eagerly queued to the connector before any widget click, or draft delivered as chat text instead of the widget (integration-2026-07 A1/A2 shape — delegation fired, back half freelanced)
 - Original live case: Erick's 2026-07-10 report — draft ~3× too long, restated the attachment, hand-rolled through the raw connector
+
+---
+
+### F-15 (integration-2026-07) — Large commitments widget must ride the file-URI transport; instruction layer, not code layer
+
+**Mode:** regression
+**Severity:** HIGH (S2 — Bug #32's live shadow: the transport code shipped v3.13.8 §2.1 but zero skill texts referenced it)
+**Fixed in:** pending — SPEC EW2+T (CHAT_ACTION_WIDGET.md § transport + large-widget Step-3 blocks mandate `render_and_relay`; byte-for-byte relay language killed)
+**Modifies substrate:** false (read-only fire; a click writes legitimate commitment events)
+
+**Trigger:** fire `commitments` against a workspace at real scale (M's workspace: ~199 open items; canonical render >80KB pre-cap)
+
+**Expected pass signals:**
+- Canonical renderer + validator run, then the widget rides `widget_transport.render_and_relay()` file-URI to `show_widget` — never a byte-for-byte relay of a large widget through the tool parameter
+- ≤7-page cap honored on the rendered widget
+- Widget wire uses the canonical `apply choices:` prefix (with `src:"commitments"` stateless dispatch)
+- **Fresh-session dead-wire-prefix check:** open a FRESH session and click a widget button — the click must route through apply-choices. Any custom wire prefix (live case: `commitment triage apply:`) dead-ends in a fresh session = FAIL even if the click worked in the session that rendered it
+- Skill text check: commitment-triage Step 3 (and every large-widget Step-3 block) references `render_and_relay` — the byte-for-byte `render → validate → show_widget` mandate is gone
+
+**Expected fail (regression):**
+- Freelance compact widget, or improvised file delivery to outputs/, after hitting the transmission ceiling (the two live improvisations, 2026-07-13/14)
+- Byte-relay attempt / socket-closed / >7 rows shown
+- Custom wire prefix on widget buttons
+- Code anchor green but skill texts still mandate the byte-for-byte relay (instruction-layer regression — see Methodology notes)
+
+---
+
+### F-08 (integration-2026-07) — Recipient with no email on file → recovery action, never an inferred address
+
+**Mode:** regression
+**Severity:** HIGH (S2)
+**Fixed in:** pending — SPEC EW2+T (email-writer chained + main path: no-email-on-file → canonical recovery, address inference banned; canonical recovery verb exists since v3.13.8 §2.11 / Bug #44)
+**Modifies substrate:** false (must block before any send; no connector write)
+
+**Trigger:** `draft email to [person with no email on file]` — run it BOTH direct and as a chained mid-task ask ("…and draft a quick email to [name] about this"). Use a placeholder person, or a real no-email contact with the send never clicked.
+
+**Expected pass signals:**
+- No-email-on-file → the canonical recovery action (`add email then send`) or an explicit refuse-with-recovery-options (the D6 shape: investigated, found nothing, offered recovery paths)
+- No address appears anywhere in the draft/widget that is not on file
+
+**Expected fail (regression):**
+- ANY inferred or pattern-guessed address (e.g., first-initial+lastname@org-domain) presented as the recipient — **even gated behind a confirm**. The confirm gate is not a pass: live case A1 2026-07-13 inferred `jhashman@a-zbus.com` as "most likely" and the guess was WRONG; a rubber-stamp would have sent to a bad address
+
+---
+
+### F-12 (integration-2026-07) — apply-choices draft click on a non-Gmail backend must land the substrate writes
+
+**Mode:** regression
+**Severity:** HIGH (S2)
+**Fixed in:** pending — SPEC EW2+T (connector-neutral cutover of apply-choices email handlers: seam-resolved draft id via connector_adapters provenance, event append + voice snapshot at click time)
+**Modifies substrate:** true (connector draft + `email_drafted` event + voice-correction snapshot)
+**Cleanup:** delete the connector draft; the events are legitimate audit trail
+
+**Sequence:**
+1. Fire an email draft that renders the canonical widget, on a workspace whose email backend is NOT Gmail (M's: Superhuman)
+2. Click `draft` (consolidated `apply choices: [{"action":"draft", ...}]` dispatch)
+3. Verify substrate
+
+**Expected pass signals:**
+- Connector draft created (nothing sent) AND `email_drafted` event appended at click time with a connector-neutral draft id — not a Gmail-hardcoded `gmail_draft_id`
+- Voice-correction snapshot (Step 3d, mandatory on email actions) written in the same click handling
+
+**Expected fail (regression):**
+- Draft lands in the connector but the `email_drafted` event count is unchanged and no voice snapshot exists (live case E2 2026-07-14) — downstream drafted-but-not-sent detection, send linkage (`draft_event_seq`), and voice learning all go blind on the non-Gmail backend
 
 ---
 
@@ -482,6 +548,22 @@ Every bug ever found in Command Room. Each entry is a permanent regression test 
 (Fire stress-prone surfaces — weekly-audit, dormant-scan, operator-report — and run word-boundary leak scan on chat narration.)
 
 [~25 more adversarial entries.]
+
+---
+
+## Methodology notes
+
+### Instruction-layer check — mandatory for every shared-helper fix (added 2026-07-14)
+
+When a fix ships as a shared code helper (`shared/scripts/*`, `widget_transport`, renderers, validators), the code-anchor check alone is NOT sufficient. Every code-anchor check for a shared-helper fix must **also grep the skill texts** (SKILL.md files + protocol references like CHAT_ACTION_WIDGET.md / EMAIL_DRAFT_PROTOCOL.md) for a reference to that helper.
+
+Why: a helper referenced by zero skill texts is invisible at runtime — Cowork obeys the stale skill text and improvises when it hits the wall the helper was built to remove. Live case (integration-2026-07 F-15): the Bug #32 anchor verified `render_and_relay()` exists in `widget_transport.py` and went green, while zero SKILL.md files referenced it and commitment-triage Step 3 still mandated the byte-for-byte relay the transport fix exists to replace. Two live fires, two different improvisations, one missing instruction.
+
+Anchor pattern per shared-helper entry:
+1. Code layer: the helper function/module exists and its tests pass.
+2. Instruction layer: `grep -rl "<helper_name>" skills/ references/` returns at least the skill(s) the fix targets — and no skill text still mandates the superseded mechanism.
+
+Same failure class as the description-only-routing gotcha: every mechanical gate green, the layer the runtime actually reads absent.
 
 ---
 
