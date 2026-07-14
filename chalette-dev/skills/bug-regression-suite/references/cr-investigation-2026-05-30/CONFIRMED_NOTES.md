@@ -1,0 +1,59 @@
+# Confirmed notes
+
+Generated 2026-05-30 from cr-investigation workflow (run wf_a1c48cb6-f37).
+Count: 9
+
+
+## command-room-onboarding
+
+- **[note] RP7 show-then-tune** — `C:/Users/asdas/.claude/plugins/marketplaces/commandroom1/command-room/skills/command-room-onboarding/SKILL.md:88 vs :215-256`
+  - FALSE POSITIVE on the RP7 family label, but a genuine internal self-contradiction. Behavioral rule #1 at line 88 states 'Scan first. Show second. Ask third. Never ask a question the scan could answer.' However Phase 0c at line 215 render...
+  - _Impact:_ None at runtime. The prescribed Phase 0c flow is unambiguous and correct. A future SKILL.md editor could misread rule #1 as prohibiting the setup widget and remove it, which would break onboarding ...
+
+## command-room-update-bridge
+
+- **[note] advisory-only abort gate (missing schema event types)** — `C:/Users/asdas/.claude/plugins/marketplaces/commandroom1/command-room/skills/command-room-update-bridge/SKILL.md:757-758,782-786`
+  - Phase 4.8 failure handling logs `release_action_failed`, `release_action_failed_fallback`, `release_manifest_parse_failed`, `release_detector_import_failed`, `release_detector_raised`, `release_detector_malformed_result`, `release_action...
+  - _Impact:_ No customer impact. The missing schema entries are for internal diagnostic failure-logging only. The idempotency logic that governs what users see (Step 4.8a) reads only `plugin_update` and `plugin...
+
+## confidence.py / cru_match.py
+
+- **[note] event-contract-correctness** — `C:/Users/asdas/.claude/plugins/marketplaces/commandroom1/command-room/shared/scripts/confidence.py:89`
+  - confidence.py defines CONFIDENCE_SURFACE_MIN = 0.7, CONFIDENCE_AUTOCOMMIT = 0.8, CONFIDENCE_AUTOAPPLY_PEOPLE = 0.85 as the extraction confidence thresholds, and these are correctly aliased in cru_match.py. However the DATA_CONTRACT.md cl...
+  - _Impact:_ Events classified with extraction confidence 0.70–0.74 are surfaced in the daily Commitments fire as regular open commitments even though DATA_CONTRACT.md line 248 classifies that band as "Provisio...
+
+## people-crm
+
+- **[note] event-contract drift** — `C:/Users/asdas/.claude/plugins/marketplaces/commandroom1/command-room/skills/people-crm/SKILL.md:359`
+  - people-crm enrichment pipeline emits `interaction` events using the deprecated `primary_project_id` field (line 359) instead of the canonical `primary_thread_id`. The events.schema.json marks `project_id` as DEPRECATED and specifies `pri...
+  - _Impact:_ No observable impact to end users. Events emitted with `primary_project_id` are read correctly by all shared utilities that explicitly fall back to that alias. The only cost is accumulated schema d...
+
+## people_writer.py
+
+- **[note] field-drift** — `C:/Users/asdas/.claude/plugins/marketplaces/commandroom1/command-room/shared/scripts/people_writer.py:118`
+  - ALLOWED_PERSON_FIELDS includes "connections" (line 134) — an array of relationship-graph edges written by intro-broker. The DATA_CONTRACT.md person record shape (lines 95-110 of references/DATA_CONTRACT.md) does NOT include connections i...
+  - _Impact:_ No current customer impact. All existing skills use atomic_append_jsonl via the writer helper and are unaffected. The DATA_CONTRACT.md example omitting `connections` could mislead a developer audit...
+
+## references/PRIVACY_POLICY.md — scanner gap documentation
+
+- **[note] RP4 — scanner architecture gap** — `C:/Users/asdas/.claude/plugins/marketplaces/commandroom1/command-room/tests/run_no_real_customer_names_test.py:230`
+  - The name scanner has five structural gaps that allow real names to bypass all three layers: (1) names not in COMMON_FIRST_NAMES (Drew, Tate, Joss, Charlie, Blake, Marcus, Amir, Rae, Jeff, Pioneer) escape Layer 3 entirely; (2) names in CO...
+  - _Impact:_ No direct runtime impact on end users. The gaps allow real beta-customer and partner names (Drew, Rae, Marcus, Amir, Jeff, Pioneer, Blake, Joss, Tate, Charlie) to persist in plugin source files — s...
+
+## report-bug
+
+- **[note] advisory-only abort gate (missing schema event type)** — `C:/Users/asdas/.claude/plugins/marketplaces/commandroom1/command-room/skills/report-bug/SKILL.md:72`
+  - report-bug logs a `bug_self_fixed` event when the user confirms a self-help step resolved their issue. `bug_self_fixed` does not appear in events.schema.json (though `bug_received` and `bug_reported` do). Since `bug_self_fixed` is a tele...
+  - _Impact:_ No runtime abort or user-visible failure. The only impact is that self-resolved bug resolutions are written to events.jsonl under an event type (`bug_self_fixed`) that is absent from the events.sch...
+
+## skill: Matt sign-off as generic placeholder
+
+- **[note] RP4 — real name leak (nuanced false positive candidate)** — `C:/Users/asdas/.claude/plugins/marketplaces/commandroom1/command-room/skills/email-writer/SKILL.md:363`
+  - The 'Matt' sign-off in email-writer/SKILL.md and follow-up-ritual/SKILL.md voice blocks is instructionally intended as 'use your own first name here' — but it hardcodes the real user M's preferred sign-off name as if it were a universal ...
+  - _Impact:_ Any customer who installs the plugin and never runs voice calibration will see "Matt" / "—Matt" in the Voice Block sign-off guidance and in three example emails in email-writer and two examples in ...
+
+## stalled-projects / stalled_projects_config.schema.json
+
+- **[note] stale-references / retired-skill (weekly-audit)** — `shared/data-schemas/stalled_projects_config.schema.json:41; skills/stalled-projects/SKILL.md:138`
+  - The schema persists the surface_location value as 'weekly_audit_only' (schema line 41), but the skill's questionnaire UI shows '☐ cleanup only' (SKILL.md line 138). If a user selects 'cleanup only', the value saved to disk as written by ...
+  - _Impact:_ No current customer impact. The saved config value would be wrong ("cleanup only" instead of "weekly_audit_only") if a user selects that checkbox option during tune mode, but the surface_locations ...

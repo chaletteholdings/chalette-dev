@@ -1,0 +1,15 @@
+{
+  "name": "chalette-dev",
+  "version": "0.1.0",
+  "description": "Chalette internal dev & QA toolkit for Command Room. 16 skills extracted from the private chalette plugin (v0.8.8, 2026-07-13): release verification (verify-cr-release, ship-readiness-gate, synthetic-workspace-runtime-test, compare-canonical-vs-freelance), test batteries (cr-test, run-command-room-tests, bug-regression-suite, cross-skill-interaction-test, scale-stress-test, smoke-watch), skill building (cr-skill-builder, skill-creator, skill-generator, regenerate-skill, voice-test), and preview-command-room-widget. Operator-aware: reads config/operator.json for identity, paths, and permitted test targets — non-M operators always test against synthetic fixtures, never a real workspace. Shipping/promote (ship-cr-plugin) deliberately NOT included — releases stay with M.",
+  "author": {
+    "name": "Chalette Holdings"
+  },
+  "keywords": [
+    "chalette",
+    "internal",
+    "dev-tooling",
+    "verification",
+    "command-room-companion"
+  ]
+}

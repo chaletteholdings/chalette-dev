@@ -1,0 +1,11 @@
+{
+  "_comment_do_not_ship": "Per-machine operator identity for chalette-dev skills. Each person edits this on their own clone; committed default is the contractor-safe profile.",
+  "operator": "eric",
+  "operator_name": "Eric",
+  "role": "engineer",
+  "cr1_clone": "~/repos/cr1",
+  "workspace_root": "~/cr-test-workspace",
+  "allowed_targets": ["synthetic"],
+  "may_ship": false,
+  "may_promote": false
+}

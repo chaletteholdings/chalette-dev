@@ -1,0 +1,277 @@
+---
+name: bug-regression-suite
+description: "INTERNAL — accumulated test corpus + adversarial-prompt suite (one skill, two modes). Mode 1 (regression): fires a curated catalog of known-bug repro prompts against the target workspace; asserts each fix held. Mode 2 (adversarial): fires edge-case prompts designed to elicit NEW failure modes; surfaces any architectural surprises. Catalog grows over time — every new bug found becomes a permanent regression test. Target defaults to synthetic fixtures; M's actual workspace is reachable via --target=m-workspace ONLY when config/operator.json identifies the operator as M. Triggers: 'run regression suite', 'bug regression', 'red team', 'adversarial check', 'verify bugs fixed'. All substrate-modifying tests pre-snapshot + tag test_artifact=true + emit post-suite cleanup helper. Plugin-developer use only. Companions: verify-cr-release, ship-readiness-gate."
+---
+
+# bug-regression-suite
+
+**The accumulated test corpus for Command Room.** Every bug ever found has a canonical repro prompt in this catalog. After every release, run this suite to verify all known fixes still hold. Plus an adversarial mode that fires edge-case prompts designed to elicit NEW failure modes — the structural defense against pattern-matching adaptation.
+
+## Why this skill exists
+
+Per V3.13.8_MASTER_PLAN §6 Principle 5 + the 20% gap analysis: the bugs we've found over the past month show patterns Cowork could regress on with any release. Without a permanent regression catalog, every release risks reintroducing fixed bugs.
+
+This skill is the permanent corpus. Every bug fixed in v3.13.x is in here. Every bug fixed in v3.14.x will be added. Cumulative coverage that grows over time.
+
+The adversarial mode adds the "try to break it" complement — fire edge-case prompts that historically surface bugs (no-email persons, first-name collisions, multi-write scenarios, corrupted substrate, malformed prompts) and assert they don't produce new failures.
+
+## When this fires
+
+| Trigger | Mode |
+|---|---|
+| `run regression suite` | All known-bug repros |
+| `bug regression` | Same |
+| `verify bugs fixed` | Same |
+| `red team` | Adversarial mode only |
+| `adversarial check` | Same |
+| `run regression suite --adversarial` | Both modes (regression + adversarial) |
+| `run regression suite --bug-id=N` | Single-bug repro only |
+| `run regression suite --target=synthetic` (default) | Against synthetic fixtures |
+| `run regression suite --target=m-workspace` | Against M's actual workspace — ONLY when `config/operator.json` in this plugin repo has `"operator": "m"`. Any other operator: refuse this target and run synthetic. |
+| `run regression suite --cleanup` | Post-suite cleanup helper |
+
+## Behavior
+
+### Step 0 — Pre-fire safety
+
+Before running ANY substrate-modifying test, snapshot the workspace's mutable substrate. `WORKSPACE_ROOT` comes from `config/operator.json` (`workspace_root`) — the value below is M's machine; on any other operator's machine it points at that operator's synthetic-fixture workspace:
+
+```bash
+WORKSPACE_ROOT="C:\Users\asdas\Desktop\Claude\Command Room"  # read from config/operator.json, not hardcoded
+SNAPSHOT_DIR="$WORKSPACE_ROOT/_hq/.system/regression-snapshots/$(date +%Y-%m-%dT%H-%M-%S)"
+mkdir -p "$SNAPSHOT_DIR"
+
+cp "$WORKSPACE_ROOT/_hq/data/entities.json" "$SNAPSHOT_DIR/entities.json.before"
+cp "$WORKSPACE_ROOT/_hq/data/events.jsonl" "$SNAPSHOT_DIR/events.jsonl.before"
+cp "$WORKSPACE_ROOT/_hq/data/aliases.json" "$SNAPSHOT_DIR/aliases.json.before"
+wc -l "$WORKSPACE_ROOT/_hq/data/events.jsonl" > "$SNAPSHOT_DIR/baseline_counts.txt"
+```
+
+Snapshot path captured for post-fire diff + cleanup reference.
+
+### Step 1 — Load the bug catalog
+
+Catalog lives in `references/bug-catalog.md` — markdown file with one entry per known bug. Format:
+
+```markdown
+## Bug #19 — find_existing_person fuzzy-name match silent corruption
+
+**Mode:** regression
+**Severity:** SHIP-BLOCKER
+**Fixed in:** v3.13.7
+
+**Trigger (single-token, against workspace with multi-name collision):**
+`add a new person: Daniel`
+
+**Expected behavior (post-fix):**
+- Cowork detects existing Daniels (Pourbaba, Spaeth, others)
+- Surfaces disambiguation widget (Path B freelance elicit form OR canonical disambiguation per v3.13.8)
+- REFUSES to silent-create
+
+**Expected pass signals (response classifier):**
+- Disambiguation widget OR form appears
+- "found N existing Daniels" or similar language
+- No new person_NNN record minted without explicit confirmation
+
+**Expected fail signals (regression):**
+- Silent person creation
+- Existing Daniel record updated with new context (Pourbaba overwritten with Walker context)
+- MultipleCandidatesError not raised
+
+**Safety:** modifies entities.json. PRE-snapshot required. Cleanup: delete any new person record created via disambiguation widget click; if user accidentally clicked through.
+
+**Variants:**
+- Variant A: single-token (the canonical test)
+- Variant B: full-name "Daniel Walker" (should NOT trigger disambiguation — full-name distinct)
+- Variant C: alias-like "Dan" (should trigger disambiguation if "Dan" matches multiple aliases)
+```
+
+See `references/bug-catalog.md` for the full 60+-entry catalog.
+
+### Step 2 — Per-bug fire + classify
+
+For each bug entry (or filtered subset per `--bug-id` flag):
+
+1. Emit the trigger prompt to M (M pastes into Cowork)
+2. Wait for M's paste-back of Cowork response
+3. Run response classifier (see verify-cr-release's response-classifier.md)
+4. Verdict: PASS (fix held) / FAIL (regression detected) / PARTIAL (works by good faith, no structural guarantee)
+5. Log to findings + advance to next bug
+
+Adversarial mode:
+- Picks bugs from catalog tagged `mode: adversarial`
+- These are edge-case prompts that have historically surfaced bugs
+- Asserts no new failures — if a NEW pattern surfaces, log as candidate-bug for v3.14.x
+
+### Step 3 — Cross-skill interactions sub-suite (lighter than cross-skill-interaction-test)
+
+A few bugs require multi-fire sequences. Catalog flags these:
+
+```markdown
+## Bug #51 — show-my-list cascade-close to source commitment
+
+**Mode:** regression
+**Severity:** SHIP-BLOCKER
+**Fixed in:** v3.13.8 §2.9
+
+**Sequence:**
+1. Fire: `show my list`
+2. Wait for widget
+3. Click `resolved` on a discuss-wrapper item (note its source commitment seq from data.commitment_id)
+4. Fire: `morning brief`
+5. Verify the underlying source commitment does NOT appear in "you owe" count
+
+**Expected pass:**
+- Source commitment_resolved event written ALONGSIDE wrapper close
+- Morning brief reflects the closure
+```
+
+The skill drives M through the sequence + classifies the multi-fire response.
+
+### Step 4 — Adversarial mode
+
+Adversarial prompts test EDGE CASES designed to elicit failures. Catalog:
+
+```markdown
+## Adversarial #1 — Email to person with no email on file
+
+**Mode:** adversarial
+**Target bug class:** Bug #44 (dead-chrome) + related
+**Trigger:** `draft email to [person with no email]`
+**Expected pass:** add-email-then-send recovery widget OR clear "no email on file, add one to enable send" message
+**Expected fail:** dead-chrome Send button OR silent gmail call failing
+
+## Adversarial #2 — Disambiguation with 3+ Daniels
+**Trigger:** `add a new person: Daniel`
+**Expected pass:** disambiguation surface; never silent-create
+**Expected fail:** silent-create OR existing-Daniel updated
+
+## Adversarial #3 — Multi-write update-bridge migration
+**Setup:** ensure 8 malformed lines in events.jsonl OR seed them
+**Trigger:** trigger update-bridge migration phase
+**Expected pass:** corruption_recovery + spaeth-fix + brain_name prompt all complete under single lock
+**Expected fail:** deadlock OR partial-state
+
+## Adversarial #4 — Commitments at 218+ items
+**Trigger:** `commitments` against accumulated workspace
+**Expected pass:** widget renders with 7-item cap + show more; transmits successfully
+**Expected fail:** socket-closed error OR oversize widget OR cap not enforced
+
+[catalog continues — 30+ adversarial entries]
+```
+
+### Step 5 — Aggregate verdict
+
+After all selected bugs fire:
+
+```
+Bug Regression Suite — run at 2026-05-26T10:00:00Z
+
+Mode: regression
+Target: M's workspace
+Catalog: 14 Tier 1 ship-blockers + 18 Tier 2 + 12 Tier 3 adversarial = 44 tests
+
+Results:
+PASS: 41/44 (93%)
+FAIL: 0/44 (0 regressions!)
+PARTIAL: 3/44
+
+Partial details:
+- Bug #46 widget ladder: ladder codified in EMAIL_DRAFT_PROTOCOL.md but render_path_router.py not yet enforced at runtime
+- Bug #60 process narration: Some surfaces still leak project_NNN; voice scrub partial
+- Bug #61 telemetry capture: 5/7 orchestrators emit pack_run correctly; 2 still skip
+
+No regressions detected. v3.13.8 ship holds.
+
+Pending v3.13.8.1 (or follow-up):
+- Bug #46 render_path_router enforcement
+- Bug #60 voice scrub completion (2 orchestrators)
+- Bug #61 pack_run emission (2 orchestrators)
+
+Full report: Desktop/Claude/Command Room/REGRESSION_SUITE_2026-05-26.md
+```
+
+### Step 6 — Post-suite cleanup
+
+If `--cleanup` flag fired, OR M asks "cleanup test artifacts":
+
+```bash
+# Diff pre/post snapshot
+diff "$SNAPSHOT_DIR/events.jsonl.before" "$WORKSPACE_ROOT/_hq/data/events.jsonl" \
+  | grep "^>" | jq -r '. | select(.data.test_artifact == true) | .seq' > /tmp/test_seqs
+
+# Mark events as archived (don't delete — preserve audit trail)
+for seq in $(cat /tmp/test_seqs); do
+    # Append archive event
+    ...
+done
+
+# For person/org records created during testing
+jq '.entities.people | to_entries | .[] | select(.value.test_artifact == true) | .key' \
+  "$WORKSPACE_ROOT/_hq/data/entities.json" > /tmp/test_person_ids
+
+for pid in $(cat /tmp/test_person_ids); do
+    # Mark archived + test_artifact via people_writer
+    ...
+done
+```
+
+Cleanup is conservative — marks artifacts as archived rather than deleting. Audit trail preserved.
+
+## Catalog maintenance (the accumulating part)
+
+When a NEW bug surfaces in production:
+
+1. M (or verify-cr-release autonomously) adds entry to `references/bug-catalog.md`
+2. Entry includes: trigger prompt, expected pass/fail signals, severity, fix version reference
+3. The bug is now PERMANENTLY tested on every future regression-suite run
+
+This is the structural defense against re-introducing bugs. **The catalog never shrinks** — only grows.
+
+Catalog seed (v3.13.8 ship state): 61 entries covering Bugs #1-#61 + sub-bugs.
+
+## Safety: substrate-modifying tests
+
+**Critical:** running this against M's real workspace WILL create test artifacts unless explicit care is taken. Every catalog entry declares:
+
+- `modifies_substrate: true | false`
+- `expected_writes: [event_type_1, event_type_2, ...]`
+- `cleanup_strategy: archive_via_test_artifact_flag | delete_post_fire | manual_review`
+
+The skill respects these flags + executes cleanup per strategy.
+
+Substrate-modifying tests (e.g., Bug #19 disambiguation) MUST snapshot pre-fire + tag writes with `test_artifact: true`. Read-only tests (e.g., Bug #11 entity_resolve query) skip the snapshot.
+
+## Modes summary
+
+| Mode | What it tests | When to use |
+|---|---|---|
+| Default (regression) | All known-bug fixes still hold | Every release before promote |
+| Adversarial | Edge cases that historically broke things | Periodically, especially before major releases |
+| Single-bug | One bug's repro test | Debugging a specific bug, e.g., after a fix |
+| Cross-skill | Sequenced multi-fire tests | When fixing temporal substrate bugs |
+
+## Integration with ship-readiness-gate
+
+ship-readiness-gate orchestrates this skill as part of its post-push verification battery. After a push to commandroom1 main, ship-readiness-gate runs:
+1. synthetic-workspace-runtime-test (against fixtures)
+2. **bug-regression-suite (against M's workspace)** ← this skill
+3. compare-canonical-vs-freelance (per-skill ladder)
+4. Aggregate PROMOTE / HOLD / BLOCKED verdict
+
+## What this skill does NOT cover
+
+- Cowork's LLM-driven prose synthesis quality (use verify-cr-release for that)
+- Customer-shape diversity (M's workspace ≠ all customers; v3.14.x customer-shape fixtures fill this)
+- Cross-skill temporal interactions across time (cross-skill-interaction-test covers this — runs sequences across minutes/hours/days)
+- Performance at scale (scale-stress-test)
+- 24h smoke-watch passive observation (smoke-watch)
+
+Each of those gaps has a dedicated skill — bug-regression-suite is the canonical known-bug catalog.
+
+## References
+
+- `references/bug-catalog.md` — the canonical catalog (60+ entries, growing)
+- `references/adversarial-prompts.md` — edge-case prompts catalog (30+ entries)
+- `references/cleanup-helper.md` — post-suite cleanup logic
+- `references/snapshot-format.md` — pre/post snapshot format + diff logic

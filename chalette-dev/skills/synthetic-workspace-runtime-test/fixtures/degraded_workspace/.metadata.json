@@ -1,0 +1,32 @@
+{
+  "name": "degraded_workspace",
+  "description": "Edge-case failure-mode fixture. 2 Daniels with first-name collision (Bug #19), 1 person with no email (Bug #44 dead-chrome), decision events with only title/summary/notes (Bug #22 fallback chain), commitment_resolved events that are actually supersedes (Bug #24), unsanctioned event types (Bug #43). For verifying edge-case + recovery behavior.",
+  "fixture_version": "0.1-skeleton",
+  "compatible_plugin_versions": ["3.13.8", "3.13.9", "3.14.0"],
+  "status": "SKELETON — fixture content needs population in dedicated build session",
+  "characteristics": {
+    "people_count": 15,
+    "orgs_count": 8,
+    "projects_count": 5,
+    "events_count": 100,
+    "aliases_count": 30,
+    "has_malformed_lines": false,
+    "has_dual_shape_seqs": false,
+    "has_unsanctioned_events": true,
+    "unsanctioned_event_types": ["followup_pack_drafted", "scaffold_proposed"],
+    "has_first_name_collisions": true,
+    "first_name_collisions": [["Daniel Pourbaba", "Daniel Walker"]],
+    "has_unattributed_people": false,
+    "has_paused_projects": false,
+    "has_no_email_people": true,
+    "no_email_person_count": 2
+  },
+  "expected_invariants_pass": ["I1", "I2", "I3", "I4", "I7", "I9", "I10_with_warning", "I11", "I12", "I13", "I14", "I15", "I16", "I17"],
+  "expected_invariants_fail_intentional": ["I10"],
+  "expected_invariants_skip": ["I5", "I6", "I8", "I18"],
+  "fail_intentional_note": "I10 (schema_compliance) should FAIL because fixture deliberately contains unsanctioned event types — this verifies the invariant detection works",
+  "population_todo": [
+    "entities.json: 2 Daniels with distinct full names (Daniel Walker + Daniel Pourbaba) but matching first_name 'Daniel'. 2 persons with no email (Bug #44 dead-chrome test).",
+    "events.jsonl: 100 events. Include some decision events with ONLY data.title, others with ONLY data.summary, others with ONLY data.notes (Bug #22 broaden test). Include 2 commitment_resolved events that are actually supersedes (Bug #24 detection test). Include 5 unsanctioned event types (followup_pack_drafted, scaffold_proposed — Bug #43)."
+  ]
+}

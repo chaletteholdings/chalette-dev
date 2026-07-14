@@ -1,0 +1,13 @@
+{
+  "name": "chalette-dev",
+  "owner": {
+    "name": "Chalette Holdings"
+  },
+  "plugins": [
+    {
+      "name": "chalette-dev",
+      "source": "./chalette-dev",
+      "description": "Chalette Holdings internal dev & QA toolkit for Command Room — the shared testing, verification, and skill-building skills used by everyone who builds on the plugin. Extracted from the private chalette plugin 2026-07-13 so contractors/employees (Eric) run the same test battery M runs. Contains NO client data, NO business/sales skills, NO ship/promote tooling."
+    }
+  ]
+}
