@@ -782,9 +782,9 @@ def main() -> int:
          "has_first_name_collisions": True,
          "first_name_collisions": [["Sam Sample", "Sam Stone"]],
          "first_name_collision_note": (
-             "The 0.1-skeleton spec named 'Daniel Pourbaba' and 'Daniel Walker'. Neither "
-             "is in cr1's approved placeholder allowlist and 'Pourbaba' reads as a real "
-             "surname, so it was replaced with approved placeholders. Flagged to M."),
+             "The 0.1-skeleton spec used two names that read as real contact data (one "
+             "matched a real client surname). Neither was in cr1's approved placeholder "
+             "allowlist, so both were replaced with approved placeholders. Flagged to M."),
          "has_unattributed_people": False, "has_paused_projects": False,
          "has_no_email_people": True, "no_email_person_count": 2},
         ["I1", "I2", "I3", "I4", "I7", "I9", "I10_with_warning", "I11", "I12",

@@ -130,7 +130,7 @@ Every bug ever found in Command Room. Each entry is a permanent regression test 
 **Trigger:** `add a new person: Daniel`
 
 **Expected pass signals:**
-- Detects existing Daniels (Pourbaba, Spaeth, others)
+- Detects existing Daniels (Sample, Stone, others)
 - Surfaces disambiguation widget (Path B freelance form OR canonical disambiguation)
 - REFUSES to silent-create
 

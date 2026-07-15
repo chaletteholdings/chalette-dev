@@ -27,7 +27,7 @@
         "Sam Stone"
       ]
     ],
-    "first_name_collision_note": "The 0.1-skeleton spec named 'Daniel Pourbaba' and 'Daniel Walker'. Neither is in cr1's approved placeholder allowlist and 'Pourbaba' reads as a real surname, so it was replaced with approved placeholders. Flagged to M.",
+    "first_name_collision_note": "The 0.1-skeleton spec used two names that read as real contact data (one matched a real client surname). Neither was in cr1's approved placeholder allowlist, so both were replaced with approved placeholders. Flagged to M.",
     "has_unattributed_people": false,
     "has_paused_projects": false,
     "has_no_email_people": true,

@@ -94,7 +94,7 @@ Catalog lives in `references/bug-catalog.md` — markdown file with one entry pe
 `add a new person: Daniel`
 
 **Expected behavior (post-fix):**
-- Cowork detects existing Daniels (Pourbaba, Spaeth, others)
+- Cowork detects existing Daniels (Sample, Stone, others)
 - Surfaces disambiguation widget (Path B freelance elicit form OR canonical disambiguation per v3.13.8)
 - REFUSES to silent-create
 
@@ -105,14 +105,14 @@ Catalog lives in `references/bug-catalog.md` — markdown file with one entry pe
 
 **Expected fail signals (regression):**
 - Silent person creation
-- Existing Daniel record updated with new context (Pourbaba overwritten with Walker context)
+- Existing Daniel record updated with new context (Sample overwritten with Stone context)
 - MultipleCandidatesError not raised
 
 **Safety:** modifies entities.json. PRE-snapshot required. Cleanup: delete any new person record created via disambiguation widget click; if user accidentally clicked through.
 
 **Variants:**
 - Variant A: single-token (the canonical test)
-- Variant B: full-name "Daniel Walker" (should NOT trigger disambiguation — full-name distinct)
+- Variant B: full-name "Daniel Stone" (should NOT trigger disambiguation — full-name distinct)
 - Variant C: alias-like "Dan" (should trigger disambiguation if "Dan" matches multiple aliases)
 ```
 

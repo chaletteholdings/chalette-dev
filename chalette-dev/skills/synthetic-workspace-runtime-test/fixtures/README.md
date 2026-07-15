@@ -80,7 +80,7 @@ Empty entities, single seed marker event, no `aliases.json`, no `brain_name` (Bu
 
 ## Two deviations from the 0.1-skeleton spec — both flagged to M
 
-**1. `degraded_workspace` no longer uses "Daniel Pourbaba" / "Daniel Walker".** The skeleton spec named those two. Neither appears in cr1's approved placeholder allowlist, and "Pourbaba" reads as a real surname — it looks like real contact data that leaked into the fixture spec. Replaced with approved placeholders (`Sam Sample` / `Sam Stone`), which satisfies the Bug #19 first-name-collision requirement identically.
+**1. `degraded_workspace` no longer uses names that read as real contact data.** The skeleton spec named two people whose names were not in cr1's approved placeholder allowlist and one of which matched a real client surname — it looked like real contact data that leaked into the fixture spec. Replaced with approved placeholders (`Sam Sample` / `Sam Stone`), which satisfies the Bug #19 first-name-collision requirement identically.
 
 **2. `mature_workspace.has_first_name_collisions` flipped `false` → `true`.** Two reasons. Mechanically: the approved vocabulary is 11 first names × 2 surnames = 22 unique full names; 80 people cannot avoid collisions. Substantively: an 80-person org with zero repeated first names is exactly the too-clean fixture that produced a bug class in the first place — and `invariants.md` already expects collisions here (*"I7 … fixture has multi-Daniel collision"*), contradicting mature's own metadata. If you want 80 distinct full names, the approved allowlist needs extending; say the word.
 
