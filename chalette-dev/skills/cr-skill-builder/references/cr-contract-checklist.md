@@ -122,7 +122,7 @@ If the skill is invoked with a name-bearing trigger ("[skill] for [name]"), you 
 
 ```
 # WRONG
-"Your brief saved to C:\Users\asdas\Desktop\Claude\..."
+"Your brief saved to C:\Users\<someone>\Desktop\Claude\..."
 
 # RIGHT
 "Your brief saved to <workspace>\_hq\meetings\..."

@@ -38,11 +38,21 @@ DOES NOT fire on `run plugin tests` (that's run-command-room-tests — different
 
 ### Step 0 — Locate plan + workspace state
 
-When M says `verify cr release [version]`, find these files in M's workspace:
+On `verify cr release [version]`, find these files in the **resolved** workspace — which is the operator's synthetic fixture unless `config/operator.json` grants otherwise. It is M's real workspace only on M's machine:
 
 ```bash
-# M's workspace root
-WORKSPACE_ROOT="C:\Users\asdas\Desktop\Claude\Command Room"
+# Resolve the workspace root. NEVER hardcode a literal machine path.
+# Order: --workspace-root arg -> $CR_WORKSPACE_ROOT -> config/operator.json
+#        -> default to the clean_workspace synthetic fixture.
+PLUGIN_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+OPERATOR_CFG="$PLUGIN_ROOT/config/operator.json"
+FIXTURES="$PLUGIN_ROOT/skills/synthetic-workspace-runtime-test/fixtures"
+
+WORKSPACE_ROOT="${CR_WORKSPACE_ROOT:-}"
+if [ -z "$WORKSPACE_ROOT" ] && [ -f "$OPERATOR_CFG" ]; then
+  WORKSPACE_ROOT=$(python -c "import json,sys,os;print(os.path.expanduser(json.load(open(sys.argv[1])).get('workspace_root','')))" "$OPERATOR_CFG")
+fi
+[ -z "$WORKSPACE_ROOT" ] && WORKSPACE_ROOT="$FIXTURES/clean_workspace"
 
 # Locate the verification plan markdown — prefer COMPREHENSIVE_VERIFICATION_PLAN_*.md
 PLAN_FILE=$(ls -t "$WORKSPACE_ROOT"/COMPREHENSIVE_VERIFICATION_PLAN_*.md 2>/dev/null | head -1)
