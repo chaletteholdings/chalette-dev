@@ -2,7 +2,7 @@
 
 Every bug ever found in Command Room. Each entry is a permanent regression test that runs on every release. Never shrinks — only grows.
 
-**Current size:** 65 entries (Bugs #1-#61 + Sub-bug #14b, Bug #104, integration-2026-07 F-08 / F-12 / F-15) — seeded from V3.13.7 verification session + prior month; grown per cycle.
+**Current size:** 66 entries (Bugs #1-#61 + Sub-bug #14b, Bug #104, Bug #105, integration-2026-07 F-08 / F-12 / F-15) — seeded from V3.13.7 verification session + prior month; grown per cycle.
 
 **Catalog growth principle:** every new bug surfaced in production gets a permanent entry here. The catalog is the structural defense against re-introducing fixed bugs.
 
@@ -502,6 +502,37 @@ Every bug ever found in Command Room. Each entry is a permanent regression test 
 
 **Expected fail (regression):**
 - Draft lands in the connector but the `email_drafted` event count is unchanged and no voice snapshot exists (live case E2 2026-07-14) — downstream drafted-but-not-sent detection, send linkage (`draft_event_seq`), and voice learning all go blind on the non-Gmail backend
+
+---
+
+### Bug #105 — `_pid_alive` fires a real Ctrl+C on Windows (lock liveness check)
+
+**Mode:** regression (code-level — the only non-prompt entry in this catalog; see note below)
+**Severity:** SHIP-BLOCKER
+**Fixed in:** cr1 `ae399e8` (PR #30), post-v4.8.0
+**Modifies substrate:** false (synthetic temp workspaces only)
+
+**Prerequisite:** `pip install -r requirements.txt` (pyyaml + tzdata + jsonschema). **This is not optional and it is how the bug hid.** Without pyyaml the guard tier fail-fasts (`run_all.py`: "Guard tier failed — stopping before unit/runtime tiers") and the battery never reaches the unit tier where this fires. The battery survived because it was already broken; fixing the guard tier is what exposed this.
+
+**Trigger:** Windows only. `cd command-room && PYTHONUTF8=1 PYTHONIOENCODING=utf-8 python tests/run_all.py` (or fire `run plugin tests`).
+
+**Expected pass signals:**
+- **The battery reaches the end.** That is the signal — not the count. (216 suites at v4.8.0, informational only.)
+- `run_pid_alive_windows_test.py` passes all 4 checks (unit tier)
+- Deep repro (`tests/repro/mode2_pid_alive/runner.py`, ~65s): `buggy ACQUIRED 0.015s` / `fixed TIMEOUT 5.015s`
+
+**Expected fail (regression):**
+- **Mode 1 (console attached):** the battery dies with `KeyboardInterrupt` inside `WaitForSingleObject` at `run_atomic_write_multi_test.py` — the only suite reaching this path — with nobody at the keyboard. **THE TELL: the traceback is indistinguishable from a human pressing Ctrl+C, because it is the same signal.** Do not dismiss it as operator error or a cancelled run. That misreading cost most of a session; four identical failures across two shells with no one at the keyboard was the tell that was missed.
+- `run_pid_alive_windows_test.py`: `REGRESSION: _pid_alive() called os.kill(pid, sig=0) on Windows`
+- **Mode 2 (no console — Cowork):** a challenger reclaims a **live** holder's lock in ~15ms with `stale_after_s=3600`. `os.kill` raises `OSError winerror=6` ("The handle is invalid") and the old `except OSError: return False` reports "dead" for every pid.
+
+**Root cause:** `os.kill(pid, 0)` is the POSIX liveness idiom (signal 0 = no-op existence probe). On Windows CPython maps signal 0 to `CTRL_C_EVENT` (**which is 0**) and routes it to `GenerateConsoleCtrlEvent` before ever reaching `TerminateProcess`. The check never asked anything: with a console it broadcast Ctrl+C to the console process group; without one it failed and got read as "dead". **No configuration answered correctly on Windows.** Fix: `OpenProcess(SYNCHRONIZE | PROCESS_QUERY_LIMITED_INFORMATION)` + `WaitForSingleObject(h, 0) == WAIT_TIMEOUT`. POSIX path untouched.
+
+**Why the backstop did not save it:** the reclaim condition is `if not alive or stale_by_time` — an **OR**. A false-"dead" short-circuits past the timer, which is never evaluated. Bug #18's time fallback can only ever ADD reclaim cases, never PREVENT one. `writer_lock`'s 30s floor is a real floor *precisely because* it is not gated behind an `or` with a pid check (`acquire_write_lock` is mtime-only and never calls `_pid_alive`). Same backstop concept, opposite outcome; the difference is purely structural.
+
+**Instruction-layer check (per Methodology notes): N/A, deliberately.** `atomic_write.py` is a shared helper, so the 2026-07-14 rule nominally applies — but it does not fit here, and skipping it silently would be worse than saying so. That rule exists because a helper *skills are meant to call* (`render_and_relay`) is invisible if no skill text references it. `_pid_alive` is a private helper called by `multi_write_context` / `writer_lock`, never by skill prose, and no SKILL.md should ever name it. There is no instruction surface to go stale. The code-anchor check alone is sufficient **for this entry only** — the rule stands for helpers with a runtime instruction surface.
+
+**Note on format:** every other entry fires a trigger phrase in a Claude session. This one cannot — the defect is in a shared helper with no runtime instruction surface, so the battery *is* the repro. Recorded here rather than omitted, because "every bug gets a permanent entry" is the catalog's growth principle and a code-level bug is still a bug. If more of these accumulate, they may warrant their own tier.
 
 ---
 

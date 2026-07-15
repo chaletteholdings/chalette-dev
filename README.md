@@ -28,7 +28,7 @@ The shared testing, verification, and skill-building toolkit for everyone who bu
 | `bug-regression-suite` | Fires every known-bug repro prompt; every new bug you find gets added here permanently |
 | `cross-skill-interaction-test` | Multi-skill sequences over time — substrate coherence |
 | `compare-canonical-vs-freelance` | Validates rendering went through the canonical path |
-| `run-command-room-tests` | Runs the pytest suites in cr1 |
+| `run-command-room-tests` | Runs the cr1 test battery (`command-room/tests/run_all.py` — house-convention suites, not pytest; `pip install -r requirements.txt` first) |
 | `scale-stress-test`, `smoke-watch` | Scaffolds — performance at scale, post-release observation (not fully built) |
 | `cr-skill-builder` | Builds new CR skills with all contract gates enforced; also audits drafts |
 | `skill-creator`, `skill-generator`, `regenerate-skill` | General skill scaffolding and eval tooling |
