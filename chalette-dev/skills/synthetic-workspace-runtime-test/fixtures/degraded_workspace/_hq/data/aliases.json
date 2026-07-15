@@ -1,0 +1,223 @@
+{
+  "version": 1,
+  "last_updated": "2026-05-01T09:00:00",
+  "last_writer": "workspace-manager",
+  "mappings": {
+    "people": [
+      {
+        "raw": "Sam",
+        "canonical_id": "person_001",
+        "confidence": 0.5,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Sam Sample",
+        "canonical_id": "person_001",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Sam Stone",
+        "canonical_id": "person_002",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Dustin Sample",
+        "canonical_id": "person_005",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Lyra Stone",
+        "canonical_id": "person_006",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Mira Sample",
+        "canonical_id": "person_007",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Quinn Stone",
+        "canonical_id": "person_008",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Rio Sample",
+        "canonical_id": "person_009",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Sam Stone",
+        "canonical_id": "person_010",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Skyler Sample",
+        "canonical_id": "person_011",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Adan Stone",
+        "canonical_id": "person_012",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Aria Sample",
+        "canonical_id": "person_013",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bo Stone",
+        "canonical_id": "person_014",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bowie Sample",
+        "canonical_id": "person_015",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      }
+    ],
+    "projects": [
+      {
+        "raw": "Series A Raise",
+        "canonical_id": "project_001",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Board Cadence",
+        "canonical_id": "project_002",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Hiring Slate",
+        "canonical_id": "project_003",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Pricing Review",
+        "canonical_id": "project_004",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Platform Migration",
+        "canonical_id": "project_005",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Series A Raise alt5",
+        "canonical_id": "project_001",
+        "confidence": 0.7,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Board Cadence alt6",
+        "canonical_id": "project_002",
+        "confidence": 0.7,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Hiring Slate alt7",
+        "canonical_id": "project_003",
+        "confidence": 0.7,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      }
+    ],
+    "orgs": [
+      {
+        "raw": "Acme",
+        "canonical_id": "org_001",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Northstar",
+        "canonical_id": "org_002",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Category",
+        "canonical_id": "org_003",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bluebird",
+        "canonical_id": "org_004",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Cedar",
+        "canonical_id": "org_005",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Harbor",
+        "canonical_id": "org_006",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Ivory",
+        "canonical_id": "org_007",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Juniper",
+        "canonical_id": "org_008",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      }
+    ]
+  }
+}

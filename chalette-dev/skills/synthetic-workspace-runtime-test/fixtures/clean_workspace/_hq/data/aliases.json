@@ -1,0 +1,187 @@
+{
+  "version": 1,
+  "last_updated": "2026-05-01T09:00:00",
+  "last_writer": "workspace-manager",
+  "mappings": {
+    "people": [
+      {
+        "raw": "Adan",
+        "canonical_id": "person_001",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Aria",
+        "canonical_id": "person_002",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bo",
+        "canonical_id": "person_003",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bowie",
+        "canonical_id": "person_004",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Dustin",
+        "canonical_id": "person_005",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Lyra",
+        "canonical_id": "person_006",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Mira",
+        "canonical_id": "person_007",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Quinn",
+        "canonical_id": "person_008",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Rio",
+        "canonical_id": "person_009",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Sam",
+        "canonical_id": "person_010",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "adan.sample1@example.com",
+        "canonical_id": "person_001",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "aria.sample2@example.com",
+        "canonical_id": "person_002",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "bo.sample3@example.com",
+        "canonical_id": "person_003",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "bowie.sample4@example.com",
+        "canonical_id": "person_004",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "dustin.sample5@example.com",
+        "canonical_id": "person_005",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "lyra.sample6@example.com",
+        "canonical_id": "person_006",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "mira.sample7@example.com",
+        "canonical_id": "person_007",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "quinn.sample8@example.com",
+        "canonical_id": "person_008",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "rio.sample9@example.com",
+        "canonical_id": "person_009",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "sam.sample10@example.com",
+        "canonical_id": "person_010",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      }
+    ],
+    "projects": [],
+    "orgs": [
+      {
+        "raw": "Acme",
+        "canonical_id": "org_001",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Northstar",
+        "canonical_id": "org_002",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Category",
+        "canonical_id": "org_003",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bluebird",
+        "canonical_id": "org_004",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Cedar",
+        "canonical_id": "org_005",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      }
+    ]
+  }
+}

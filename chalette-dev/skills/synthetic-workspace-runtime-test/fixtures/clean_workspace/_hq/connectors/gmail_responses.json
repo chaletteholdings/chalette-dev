@@ -1,0 +1,148 @@
+{
+  "gmail_search": {
+    "queries": {
+      "in:inbox newer_than:1d": [
+        {
+          "thread_id": "thread_001",
+          "subject": "Re: item 1",
+          "from": "adan.sample1@example.com",
+          "snippet": "Synthetic thread body 1.",
+          "ts": "2026-05-01T09:00:00"
+        },
+        {
+          "thread_id": "thread_002",
+          "subject": "Re: item 2",
+          "from": "aria.sample2@example.com",
+          "snippet": "Synthetic thread body 2.",
+          "ts": "2026-05-02T09:00:00"
+        },
+        {
+          "thread_id": "thread_003",
+          "subject": "Re: item 3",
+          "from": "bo.sample3@example.com",
+          "snippet": "Synthetic thread body 3.",
+          "ts": "2026-05-03T09:00:00"
+        },
+        {
+          "thread_id": "thread_004",
+          "subject": "Re: item 4",
+          "from": "bowie.sample4@example.com",
+          "snippet": "Synthetic thread body 4.",
+          "ts": "2026-05-04T09:00:00"
+        },
+        {
+          "thread_id": "thread_005",
+          "subject": "Re: item 5",
+          "from": "dustin.sample5@example.com",
+          "snippet": "Synthetic thread body 5.",
+          "ts": "2026-05-05T09:00:00"
+        },
+        {
+          "thread_id": "thread_006",
+          "subject": "Re: item 6",
+          "from": "lyra.sample6@example.com",
+          "snippet": "Synthetic thread body 6.",
+          "ts": "2026-05-06T09:00:00"
+        },
+        {
+          "thread_id": "thread_007",
+          "subject": "Re: item 7",
+          "from": "mira.sample7@example.com",
+          "snippet": "Synthetic thread body 7.",
+          "ts": "2026-05-07T09:00:00"
+        },
+        {
+          "thread_id": "thread_008",
+          "subject": "Re: item 8",
+          "from": "quinn.sample8@example.com",
+          "snippet": "Synthetic thread body 8.",
+          "ts": "2026-05-08T09:00:00"
+        },
+        {
+          "thread_id": "thread_009",
+          "subject": "Re: item 9",
+          "from": "rio.sample9@example.com",
+          "snippet": "Synthetic thread body 9.",
+          "ts": "2026-05-09T09:00:00"
+        },
+        {
+          "thread_id": "thread_010",
+          "subject": "Re: item 10",
+          "from": "sam.sample10@example.com",
+          "snippet": "Synthetic thread body 10.",
+          "ts": "2026-05-10T09:00:00"
+        },
+        {
+          "thread_id": "thread_011",
+          "subject": "Re: item 11",
+          "from": "adan.sample1@example.com",
+          "snippet": "Synthetic thread body 11.",
+          "ts": "2026-05-11T09:00:00"
+        },
+        {
+          "thread_id": "thread_012",
+          "subject": "Re: item 12",
+          "from": "aria.sample2@example.com",
+          "snippet": "Synthetic thread body 12.",
+          "ts": "2026-05-12T09:00:00"
+        },
+        {
+          "thread_id": "thread_013",
+          "subject": "Re: item 13",
+          "from": "bo.sample3@example.com",
+          "snippet": "Synthetic thread body 13.",
+          "ts": "2026-05-13T09:00:00"
+        },
+        {
+          "thread_id": "thread_014",
+          "subject": "Re: item 14",
+          "from": "bowie.sample4@example.com",
+          "snippet": "Synthetic thread body 14.",
+          "ts": "2026-05-14T09:00:00"
+        },
+        {
+          "thread_id": "thread_015",
+          "subject": "Re: item 15",
+          "from": "dustin.sample5@example.com",
+          "snippet": "Synthetic thread body 15.",
+          "ts": "2026-05-01T09:00:00"
+        },
+        {
+          "thread_id": "thread_016",
+          "subject": "Re: item 16",
+          "from": "lyra.sample6@example.com",
+          "snippet": "Synthetic thread body 16.",
+          "ts": "2026-05-02T09:00:00"
+        },
+        {
+          "thread_id": "thread_017",
+          "subject": "Re: item 17",
+          "from": "mira.sample7@example.com",
+          "snippet": "Synthetic thread body 17.",
+          "ts": "2026-05-03T09:00:00"
+        },
+        {
+          "thread_id": "thread_018",
+          "subject": "Re: item 18",
+          "from": "quinn.sample8@example.com",
+          "snippet": "Synthetic thread body 18.",
+          "ts": "2026-05-04T09:00:00"
+        },
+        {
+          "thread_id": "thread_019",
+          "subject": "Re: item 19",
+          "from": "rio.sample9@example.com",
+          "snippet": "Synthetic thread body 19.",
+          "ts": "2026-05-05T09:00:00"
+        },
+        {
+          "thread_id": "thread_020",
+          "subject": "Re: item 20",
+          "from": "sam.sample10@example.com",
+          "snippet": "Synthetic thread body 20.",
+          "ts": "2026-05-06T09:00:00"
+        }
+      ]
+    }
+  }
+}

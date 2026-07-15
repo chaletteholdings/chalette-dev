@@ -1,9 +1,11 @@
 {
   "name": "mature_workspace",
-  "description": "Realistic mature workspace — 80 people, 20 orgs, 15 projects, 1500 events. 8 deliberately malformed events.jsonl lines (per Sub-bug #14b shatter pattern). Mix of nano-epoch + human-counter seqs (per Bug #41). Mixed person_added + person_created event names (per Bug #34). Aliases.json uses BOTH nested + flat shapes. For verifying substrate-hygiene migrations + defensive readers.",
-  "fixture_version": "0.1-skeleton",
-  "compatible_plugin_versions": ["3.13.8", "3.13.9", "3.14.0"],
-  "status": "SKELETON — fixture content needs population in dedicated build session",
+  "description": "Realistic mature workspace -- 80 people, 20 orgs, 15 projects, 1500 events. 8 malformed events.jsonl lines at 100-107 (Sub-bug #14b shatter: 7 bare-key JSON strings + 1 truncated event). Mix of nano-epoch + human-counter seqs (Bug #41). Legacy person_added then canonical person_created (Bug #34). aliases.json carries BOTH nested and flat shapes. 4 orgs with no domains (Bug #1). For verifying substrate-hygiene migrations + defensive readers.",
+  "fixture_version": "1.0",
+  "compatible_plugin_versions": [
+    "4.8.0"
+  ],
+  "status": "POPULATED",
   "characteristics": {
     "people_count": 80,
     "orgs_count": 20,
@@ -11,22 +13,39 @@
     "events_count": 1500,
     "aliases_count": 200,
     "has_malformed_lines": true,
-    "malformed_line_pattern": "lines N..N+8 shattered as 7 bare-key JSON strings + 1 truncated event raising JSONDecodeError",
+    "malformed_line_pattern": "lines 100-107 shattered as 7 bare-key JSON strings + 1 truncated event raising JSONDecodeError",
     "has_dual_shape_seqs": true,
     "dual_shape_split": "1200 human-counter seqs (1..1200) + 300 nano-epoch artifacts (1.77e18+)",
     "has_unsanctioned_events": false,
-    "has_first_name_collisions": false,
+    "has_first_name_collisions": true,
+    "first_name_collision_note": "CHANGED from false, 2026-07-15. The approved placeholder vocabulary is 11 first names x 2 surnames = 22 unique full names; 80 people cannot avoid collisions. It is also the realistic shape -- an 80-person org with zero repeated first names is the 'too clean fixture' failure mode. Collisions exercise entity_resolve, which invariants.md already expects here (I7, 'fixture has multi-Daniel collision').",
     "has_unattributed_people": true,
     "unattributed_count": 12,
     "has_paused_projects": true,
-    "paused_project_count": 3
+    "paused_project_count": 3,
+    "orgs_without_domains": 4
   },
-  "expected_invariants_pass": ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "I8", "I9", "I10", "I11", "I13", "I14", "I15", "I16", "I17"],
-  "expected_invariants_skip": ["I12", "I18"],
-  "population_todo": [
-    "entities.json: 80 persons with name pattern variety + 20 orgs (some with domains, some without per Bug #1 backfill test) + 15 projects (3 paused, 12 active)",
-    "events.jsonl: 1500 events. Lines 100-107 should be the shatter pattern from M's actual workspace (7 bare-key JSON strings + 1 truncated event). Mix legacy person_added (events 1-500) with canonical person_created (501-1500). Use human-counter seqs 1-1200 then nano-epoch artifacts for remaining 300 (per Bug #41 dual-shape).",
-    "aliases.json: 200 entries — first half nested shape, second half flat shape — to exercise both defensive read paths",
-    "connectors/*.json: realistic-volume canned responses (50 Gmail threads, 30 calendar events, 20 Granola transcripts)"
-  ]
+  "expected_invariants_pass": [
+    "I1",
+    "I2",
+    "I3",
+    "I4",
+    "I5",
+    "I6",
+    "I7",
+    "I8",
+    "I9",
+    "I10",
+    "I11",
+    "I13",
+    "I14",
+    "I15",
+    "I16",
+    "I17"
+  ],
+  "expected_invariants_skip": [
+    "I12",
+    "I18"
+  ],
+  "_generated_by": "_generate_fixtures.py (deterministic; do not hand-edit)"
 }
