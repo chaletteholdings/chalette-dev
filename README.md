@@ -8,7 +8,9 @@ The shared testing, verification, and skill-building toolkit for everyone who bu
 2. Clone the Command Room staging repo (read-only for you): `git clone https://github.com/ChaletteHQ/cr1 ~/repos/cr1`
 3. Edit `config/operator.json` on your machine if your paths differ. Leave `operator: "eric"` as is — the test skills read it to decide what you're allowed to target.
 4. In Claude Code, install the plugin from your local clone (marketplace add → this repo path), so the `chalette-dev:*` skills are available in every session.
-5. Create your synthetic test workspace at the `workspace_root` path in the config. The fixtures live in cr1 under `command-room/tests/` — `synthetic-workspace-runtime-test` sets them up for you on first run.
+5. The synthetic fixtures live in this repo at `chalette-dev/skills/synthetic-workspace-runtime-test/fixtures/` (four workspaces: clean / degraded / fresh_install / mature, built by `_generate_fixtures.py`). `synthetic-workspace-runtime-test` resolves to one of them by default; `config/operator.json` (`workspace_root: null`) points the QA skills at the `clean_workspace` fixture unless you say otherwise.
+
+**Two testing tracks** (see `CLAUDE.md`): (A) **dogfood your own Cowork workspace** as a real user — your own accounts, your own data, encouraged; (B) **controlled regression** with the QA skills against the synthetic fixtures above — these never target a real workspace. The rule "you never test against a real workspace" is about the *automated test tools*; it does not stop Track A.
 
 ## The rules of the road
 
