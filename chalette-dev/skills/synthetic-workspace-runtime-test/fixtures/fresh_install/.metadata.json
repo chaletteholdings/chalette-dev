@@ -1,27 +1,42 @@
 {
   "name": "fresh_install",
-  "description": "Day-1 customer fixture. Empty entities.json (just workspace_settings stub), empty events.jsonl, no aliases.json. For verifying first-fire / onboarding behavior + Bug #36 brain_name prompt + M1 widget rendering.",
-  "fixture_version": "0.1-skeleton",
-  "compatible_plugin_versions": ["3.13.8", "3.13.9", "3.14.0"],
-  "status": "SKELETON — fixture content needs population in dedicated build session",
+  "description": "Day-1 customer fixture. Empty entities, single seed event, no aliases.json, no brain_name set (Bug #36 prompt test). For verifying first-fire / onboarding behavior + M1 widget rendering.",
+  "fixture_version": "1.0",
+  "compatible_plugin_versions": [
+    "4.8.0"
+  ],
+  "status": "POPULATED",
   "characteristics": {
     "people_count": 0,
     "orgs_count": 0,
     "projects_count": 0,
-    "events_count": 0,
+    "events_count": 1,
     "aliases_count": 0,
     "has_brain_name_set": false,
     "has_workspace_settings_stub_only": true
   },
-  "expected_invariants_pass": ["I1", "I2", "I3", "I4", "I5", "I7", "I9", "I10", "I13", "I14", "I15", "I16", "I17"],
-  "expected_invariants_skip": ["I6", "I8", "I11", "I12", "I18"],
+  "expected_invariants_pass": [
+    "I1",
+    "I2",
+    "I3",
+    "I4",
+    "I5",
+    "I7",
+    "I9",
+    "I10",
+    "I13",
+    "I14",
+    "I15",
+    "I16",
+    "I17"
+  ],
+  "expected_invariants_skip": [
+    "I6",
+    "I8",
+    "I11",
+    "I12",
+    "I18"
+  ],
   "expected_invariants_handle_empty": "I7 (canonical_entity_resolve) handles empty alias graph (returns no candidates gracefully). I3 (pack_run_written) MUST pass even on first fire.",
-  "population_todo": [
-    "entities.json: {\"version\": 1, \"workspace_settings\": {\"user_first_name\": null, \"timezone\": null, \"shape\": \"empty\"}, \"entities\": {\"people\": {}, \"orgs\": {}, \"projects\": {}}}",
-    "events.jsonl: empty file (or single seed event)",
-    "no aliases.json yet",
-    "default CLAUDE.md from command-room-onboarding scaffold",
-    "no _people/ directory",
-    "no project folders"
-  ]
+  "_generated_by": "_generate_fixtures.py (deterministic; do not hand-edit)"
 }

@@ -1,0 +1,1087 @@
+{
+  "version": 1,
+  "last_updated": "2026-05-01T09:00:00",
+  "last_writer": "workspace-manager",
+  "mappings": {
+    "people": [
+      {
+        "raw": "Adan Sample",
+        "canonical_id": "person_001",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Aria Stone",
+        "canonical_id": "person_002",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bo Sample",
+        "canonical_id": "person_003",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bowie Stone",
+        "canonical_id": "person_004",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Dustin Sample",
+        "canonical_id": "person_005",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Lyra Stone",
+        "canonical_id": "person_006",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Mira Sample",
+        "canonical_id": "person_007",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Quinn Stone",
+        "canonical_id": "person_008",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Rio Sample",
+        "canonical_id": "person_009",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Sam Stone",
+        "canonical_id": "person_010",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Skyler Sample",
+        "canonical_id": "person_011",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Adan Stone",
+        "canonical_id": "person_012",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Aria Sample",
+        "canonical_id": "person_013",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bo Stone",
+        "canonical_id": "person_014",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bowie Sample",
+        "canonical_id": "person_015",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Dustin Stone",
+        "canonical_id": "person_016",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Lyra Sample",
+        "canonical_id": "person_017",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Mira Stone",
+        "canonical_id": "person_018",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Quinn Sample",
+        "canonical_id": "person_019",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Rio Stone",
+        "canonical_id": "person_020",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Sam Sample",
+        "canonical_id": "person_021",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Skyler Stone",
+        "canonical_id": "person_022",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Adan Sample",
+        "canonical_id": "person_023",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Aria Stone",
+        "canonical_id": "person_024",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bo Sample",
+        "canonical_id": "person_025",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bowie Stone",
+        "canonical_id": "person_026",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Dustin Sample",
+        "canonical_id": "person_027",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Lyra Stone",
+        "canonical_id": "person_028",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Mira Sample",
+        "canonical_id": "person_029",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Quinn Stone",
+        "canonical_id": "person_030",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Rio Sample",
+        "canonical_id": "person_031",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Sam Stone",
+        "canonical_id": "person_032",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Skyler Sample",
+        "canonical_id": "person_033",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Adan Stone",
+        "canonical_id": "person_034",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Aria Sample",
+        "canonical_id": "person_035",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bo Stone",
+        "canonical_id": "person_036",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bowie Sample",
+        "canonical_id": "person_037",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Dustin Stone",
+        "canonical_id": "person_038",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Lyra Sample",
+        "canonical_id": "person_039",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Mira Stone",
+        "canonical_id": "person_040",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Quinn Sample",
+        "canonical_id": "person_041",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Rio Stone",
+        "canonical_id": "person_042",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Sam Sample",
+        "canonical_id": "person_043",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Skyler Stone",
+        "canonical_id": "person_044",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Adan Sample",
+        "canonical_id": "person_045",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Aria Stone",
+        "canonical_id": "person_046",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bo Sample",
+        "canonical_id": "person_047",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bowie Stone",
+        "canonical_id": "person_048",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Dustin Sample",
+        "canonical_id": "person_049",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Lyra Stone",
+        "canonical_id": "person_050",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      }
+    ],
+    "projects": [
+      {
+        "raw": "Series A Raise",
+        "canonical_id": "project_001",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Board Cadence",
+        "canonical_id": "project_002",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Hiring Slate",
+        "canonical_id": "project_003",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Pricing Review",
+        "canonical_id": "project_004",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Platform Migration",
+        "canonical_id": "project_005",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Customer Advisory",
+        "canonical_id": "project_006",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Annual Planning",
+        "canonical_id": "project_007",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Vendor Consolidation",
+        "canonical_id": "project_008",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Brand Refresh",
+        "canonical_id": "project_009",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Data Hygiene",
+        "canonical_id": "project_010",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Partner Program",
+        "canonical_id": "project_011",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Support Rework",
+        "canonical_id": "project_012",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Compliance Pass",
+        "canonical_id": "project_013",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Market Expansion",
+        "canonical_id": "project_014",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Retention Push",
+        "canonical_id": "project_015",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Series A Raise",
+        "canonical_id": "project_001",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Board Cadence",
+        "canonical_id": "project_002",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Hiring Slate",
+        "canonical_id": "project_003",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Pricing Review",
+        "canonical_id": "project_004",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Platform Migration",
+        "canonical_id": "project_005",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Customer Advisory",
+        "canonical_id": "project_006",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Annual Planning",
+        "canonical_id": "project_007",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Vendor Consolidation",
+        "canonical_id": "project_008",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Brand Refresh",
+        "canonical_id": "project_009",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Data Hygiene",
+        "canonical_id": "project_010",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Partner Program",
+        "canonical_id": "project_011",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Support Rework",
+        "canonical_id": "project_012",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Compliance Pass",
+        "canonical_id": "project_013",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Market Expansion",
+        "canonical_id": "project_014",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Retention Push",
+        "canonical_id": "project_015",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Series A Raise",
+        "canonical_id": "project_001",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Board Cadence",
+        "canonical_id": "project_002",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Hiring Slate",
+        "canonical_id": "project_003",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Pricing Review",
+        "canonical_id": "project_004",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Platform Migration",
+        "canonical_id": "project_005",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Customer Advisory",
+        "canonical_id": "project_006",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Annual Planning",
+        "canonical_id": "project_007",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Vendor Consolidation",
+        "canonical_id": "project_008",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Brand Refresh",
+        "canonical_id": "project_009",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Data Hygiene",
+        "canonical_id": "project_010",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Partner Program",
+        "canonical_id": "project_011",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Support Rework",
+        "canonical_id": "project_012",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Compliance Pass",
+        "canonical_id": "project_013",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Market Expansion",
+        "canonical_id": "project_014",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Retention Push",
+        "canonical_id": "project_015",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Series A Raise",
+        "canonical_id": "project_001",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Board Cadence",
+        "canonical_id": "project_002",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Hiring Slate",
+        "canonical_id": "project_003",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Pricing Review",
+        "canonical_id": "project_004",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Platform Migration",
+        "canonical_id": "project_005",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      }
+    ],
+    "orgs": [
+      {
+        "raw": "Acme",
+        "canonical_id": "org_001",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Northstar",
+        "canonical_id": "org_002",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Category",
+        "canonical_id": "org_003",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bluebird",
+        "canonical_id": "org_004",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Cedar",
+        "canonical_id": "org_005",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Harbor",
+        "canonical_id": "org_006",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Ivory",
+        "canonical_id": "org_007",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Juniper",
+        "canonical_id": "org_008",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Keystone",
+        "canonical_id": "org_009",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Lantern",
+        "canonical_id": "org_010",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Meridian",
+        "canonical_id": "org_011",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Nimbus",
+        "canonical_id": "org_012",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Orchard",
+        "canonical_id": "org_013",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Pinnacle",
+        "canonical_id": "org_014",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Quarry",
+        "canonical_id": "org_015",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Ridgeline",
+        "canonical_id": "org_016",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Summit",
+        "canonical_id": "org_017",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Tidal",
+        "canonical_id": "org_018",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Vantage",
+        "canonical_id": "org_019",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Wayfare",
+        "canonical_id": "org_020",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Acme",
+        "canonical_id": "org_001",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Northstar",
+        "canonical_id": "org_002",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Category",
+        "canonical_id": "org_003",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bluebird",
+        "canonical_id": "org_004",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Cedar",
+        "canonical_id": "org_005",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Harbor",
+        "canonical_id": "org_006",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Ivory",
+        "canonical_id": "org_007",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Juniper",
+        "canonical_id": "org_008",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Keystone",
+        "canonical_id": "org_009",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Lantern",
+        "canonical_id": "org_010",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Meridian",
+        "canonical_id": "org_011",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Nimbus",
+        "canonical_id": "org_012",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Orchard",
+        "canonical_id": "org_013",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Pinnacle",
+        "canonical_id": "org_014",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Quarry",
+        "canonical_id": "org_015",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Ridgeline",
+        "canonical_id": "org_016",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Summit",
+        "canonical_id": "org_017",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Tidal",
+        "canonical_id": "org_018",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Vantage",
+        "canonical_id": "org_019",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Wayfare",
+        "canonical_id": "org_020",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Acme",
+        "canonical_id": "org_001",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Northstar",
+        "canonical_id": "org_002",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Category",
+        "canonical_id": "org_003",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Bluebird",
+        "canonical_id": "org_004",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Cedar",
+        "canonical_id": "org_005",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Harbor",
+        "canonical_id": "org_006",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Ivory",
+        "canonical_id": "org_007",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Juniper",
+        "canonical_id": "org_008",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Keystone",
+        "canonical_id": "org_009",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      },
+      {
+        "raw": "Lantern",
+        "canonical_id": "org_010",
+        "confidence": 1.0,
+        "added_ts": "2026-05-01T09:00:00",
+        "added_by": "workspace-manager"
+      }
+    ]
+  },
+  "flat": {
+    "Mira Sample": "person_095",
+    "Quinn Stone": "person_096",
+    "Rio Sample": "person_097",
+    "Sam Stone": "person_098",
+    "Skyler Sample": "person_099",
+    "Adan Stone": "person_100",
+    "Aria Sample": "person_079",
+    "Bo Stone": "person_080",
+    "Bowie Sample": "person_081",
+    "Dustin Stone": "person_082",
+    "Lyra Sample": "person_083",
+    "Mira Stone": "person_084",
+    "Quinn Sample": "person_085",
+    "Rio Stone": "person_086",
+    "Sam Sample": "person_087",
+    "Skyler Stone": "person_088",
+    "Adan Sample": "person_089",
+    "Aria Stone": "person_090",
+    "Bo Sample": "person_091",
+    "Bowie Stone": "person_092",
+    "Dustin Sample": "person_093",
+    "Lyra Stone": "person_094"
+  }
+}

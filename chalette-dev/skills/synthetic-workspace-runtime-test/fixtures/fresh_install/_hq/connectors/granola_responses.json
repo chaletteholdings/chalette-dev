@@ -1,0 +1,11 @@
+{
+  "granola_get_transcript": {
+    "doc_ids": {
+      "doc_001": {
+        "transcript": "Synthetic transcript 1. Placeholder content only.",
+        "attendees": [],
+        "duration": "30m"
+      }
+    }
+  }
+}

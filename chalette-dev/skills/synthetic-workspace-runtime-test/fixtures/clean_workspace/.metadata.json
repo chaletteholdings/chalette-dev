@@ -1,14 +1,16 @@
 {
   "name": "clean_workspace",
-  "description": "Pristine baseline — 10 people, 5 orgs, 3 projects, all canonical shapes. For verifying happy-path doesn't regress.",
-  "fixture_version": "0.1-skeleton",
-  "compatible_plugin_versions": ["3.13.8", "3.13.9", "3.14.0"],
-  "status": "SKELETON — fixture content needs population in dedicated build session",
+  "description": "Pristine baseline -- 10 people, 5 orgs, 3 projects, all canonical shapes. For verifying happy-path doesn't regress.",
+  "fixture_version": "1.0",
+  "compatible_plugin_versions": [
+    "4.8.0"
+  ],
+  "status": "POPULATED",
   "characteristics": {
     "people_count": 10,
     "orgs_count": 5,
     "projects_count": 3,
-    "events_count": 200,
+    "events_count": 206,
     "aliases_count": 25,
     "has_malformed_lines": false,
     "has_dual_shape_seqs": false,
@@ -17,12 +19,27 @@
     "has_unattributed_people": false,
     "has_paused_projects": false
   },
-  "expected_invariants_pass": ["I1", "I2", "I3", "I4", "I5", "I7", "I9", "I10", "I11", "I13", "I14", "I15", "I16", "I17"],
-  "expected_invariants_skip": ["I6", "I8", "I12", "I18"],
-  "population_todo": [
-    "entities.json: 10 placeholder persons + 5 placeholder orgs + 3 placeholder projects (use canonical placeholder names per scrub-rules.json: Sam Sample, Bo Sample, Rio Sample, etc. + Acme Co, Northstar Partners, Category Company; M can derive shape from staging clone's entities.schema.json $defs)",
-    "events.jsonl: 200 events covering all 7 canonical surfaces' expected event types (meeting_scheduled, intro_made, commitment_resolved, etc.); use seq 1-200 human-counter scale",
-    "aliases.json: 25 entries — nested {people: [...], orgs: [...], projects: [...]} shape per current canonical",
-    "connectors/*.json: canned responses for Gmail search, Calendar list, Granola transcripts sufficient for all 7 canonical surfaces to fire"
-  ]
+  "expected_invariants_pass": [
+    "I1",
+    "I2",
+    "I3",
+    "I4",
+    "I5",
+    "I7",
+    "I9",
+    "I10",
+    "I11",
+    "I13",
+    "I14",
+    "I15",
+    "I16",
+    "I17"
+  ],
+  "expected_invariants_skip": [
+    "I6",
+    "I8",
+    "I12",
+    "I18"
+  ],
+  "_generated_by": "_generate_fixtures.py (deterministic; do not hand-edit)"
 }
