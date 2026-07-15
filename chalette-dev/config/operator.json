@@ -1,0 +1,13 @@
+{
+  "_comment": "Per-machine operator identity for chalette-dev skills. Lives INSIDE the plugin dir (chalette-dev/config/) so it actually ships with the skills that read it — at the repo root it was outside the plugin payload and never loaded, which meant the synthetic-only rule was prose with nothing behind it. Each person edits this on their own clone; the committed default is the contractor-safe profile.",
+  "operator": "eric",
+  "operator_name": "Eric",
+  "role": "engineer",
+  "cr1_clone": "~/repos/cr1",
+  "_comment_workspace_root": "null = use the default synthetic fixture (skills/synthetic-workspace-runtime-test/fixtures/clean_workspace). Set a path ONLY if allowed_targets includes 'real'. Previously '~/cr-test-workspace', a directory that never existed on any machine.",
+  "workspace_root": null,
+  "_comment_allowed_targets": "'synthetic' = fixtures only. Adding 'real' lets the skills target a live workspace; that is M's profile, not a contractor's.",
+  "allowed_targets": ["synthetic"],
+  "may_ship": false,
+  "may_promote": false
+}

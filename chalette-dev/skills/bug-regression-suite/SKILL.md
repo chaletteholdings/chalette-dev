@@ -34,18 +34,48 @@ The adversarial mode adds the "try to break it" complement — fire edge-case pr
 
 ### Step 0 — Pre-fire safety
 
-Before running ANY substrate-modifying test, snapshot the workspace's mutable substrate. `WORKSPACE_ROOT` comes from `config/operator.json` (`workspace_root`) — the value below is M's machine; on any other operator's machine it points at that operator's synthetic-fixture workspace:
+**Resolve `WORKSPACE_ROOT` before anything else. Never hardcode a literal path.**
+
+Resolution order — first hit wins, and the default is always a synthetic fixture:
+
+1. `--workspace-root=<path>` CLI argument, if given
+2. `$CR_WORKSPACE_ROOT` environment variable, if set
+3. `workspace_root` in `config/operator.json` (this plugin's `config/` dir)
+4. **Default:** the `clean_workspace` synthetic fixture shipped in
+   `skills/synthetic-workspace-runtime-test/fixtures/`
 
 ```bash
-WORKSPACE_ROOT="C:\Users\asdas\Desktop\Claude\Command Room"  # read from config/operator.json, not hardcoded
+PLUGIN_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"   # skills/<name>/ -> plugin root
+OPERATOR_CFG="$PLUGIN_ROOT/config/operator.json"
+FIXTURES="$PLUGIN_ROOT/skills/synthetic-workspace-runtime-test/fixtures"
+
+WORKSPACE_ROOT="${CR_WORKSPACE_ROOT:-}"
+if [ -z "$WORKSPACE_ROOT" ] && [ -f "$OPERATOR_CFG" ]; then
+  WORKSPACE_ROOT=$(python -c "import json,sys,os;print(os.path.expanduser(json.load(open(sys.argv[1])).get('workspace_root','')))" "$OPERATOR_CFG")
+fi
+# Default: synthetic fixture. Never a literal machine path.
+[ -z "$WORKSPACE_ROOT" ] && WORKSPACE_ROOT="$FIXTURES/clean_workspace"
+
+# Refuse a real workspace unless operator.json says this operator may target one.
+MAY_TARGET_REAL=$(python -c "import json,sys,os;c=json.load(open(sys.argv[1])) if os.path.exists(sys.argv[1]) else {};print('yes' if 'real' in c.get('allowed_targets',[]) else 'no')" "$OPERATOR_CFG" 2>/dev/null || echo no)
+case "$WORKSPACE_ROOT" in
+  "$FIXTURES"/*) : ;;                       # synthetic — always allowed
+  *) [ "$MAY_TARGET_REAL" = "yes" ] || {
+       echo "REFUSING non-synthetic target '$WORKSPACE_ROOT' — operator.json does not grant allowed_targets: [\"real\"]." >&2
+       exit 2
+     } ;;
+esac
+
 SNAPSHOT_DIR="$WORKSPACE_ROOT/_hq/.system/regression-snapshots/$(date +%Y-%m-%dT%H-%M-%S)"
 mkdir -p "$SNAPSHOT_DIR"
 
 cp "$WORKSPACE_ROOT/_hq/data/entities.json" "$SNAPSHOT_DIR/entities.json.before"
 cp "$WORKSPACE_ROOT/_hq/data/events.jsonl" "$SNAPSHOT_DIR/events.jsonl.before"
-cp "$WORKSPACE_ROOT/_hq/data/aliases.json" "$SNAPSHOT_DIR/aliases.json.before"
+cp "$WORKSPACE_ROOT/_hq/data/aliases.json" "$SNAPSHOT_DIR/aliases.json.before" 2>/dev/null || true
 wc -l "$WORKSPACE_ROOT/_hq/data/events.jsonl" > "$SNAPSHOT_DIR/baseline_counts.txt"
 ```
+
+Before running ANY substrate-modifying test, snapshot the workspace's mutable substrate (above).
 
 Snapshot path captured for post-fire diff + cleanup reference.
 
