@@ -60,23 +60,57 @@ flow just sequences them and rolls their verdicts into one.
 
 ### Step 1 — Locate the plugin + run the code battery (tiers 0–2)
 
-The Command Room plugin's tests ship inside the staging clone (canonical edit
-surface) and in M's installed plugin. Prefer the staging clone:
+You are looking for the `command-room/` directory — the one with `tests/run_all.py`
+inside it. It lives in a cr1 checkout (the canonical edit surface), or in an
+installed plugin. **Search; do not assume a path.** This step used to hardcode one
+marketplace location and shell out through `sed`/`ls`, which meant it found nothing
+on a normal contributor machine and could not run on Windows at all.
 
-```bash
-STAGING=~/.claude/plugins/marketplaces/commandroom1/command-room
-if [ -d "$STAGING/tests" ]; then
-  ROOT="$STAGING"
-else
-  # fall back to the installed remote-plugin (Cowork sandbox layout)
-  SESSION_DIR=$(echo "$CLAUDE_CODE_TMPDIR" | sed "s|/tmp$||")
-  ROOT=$(ls -d "$SESSION_DIR"/mnt/.remote-plugins/plugin_* 2>/dev/null | head -1)
-fi
-cd "$ROOT" || { echo "ERROR: Command Room plugin not found"; exit 1; }
+Check these in order and take the first hit where `tests/run_all.py` actually exists:
 
-# --quick → "--tier unit" after guards; default → full code battery.
-python tests/run_all.py            # or: python tests/run_all.py --tier guard
+1. **`$CR1_ROOT`** — if that env var is set, `$CR1_ROOT/command-room` wins outright.
+   This is the escape hatch for a checkout in an unusual place.
+2. **A cr1 checkout under the home directory** — glob `~/*/cr1*/command-room` and
+   `~/cr1*/command-room`. Covers `~/repos/cr1`, `~/src/cr1`, `~/code/cr1`, and also
+   suffixed clones like `~/repos/cr1-canonical`. This is the normal case and the one
+   to expect. The trailing `*` is load-bearing: matching only a folder named exactly
+   `cr1` misses a canonical clone entirely and drops you into rule 4, which is how
+   you end up testing a stale or client copy without noticing.
+
+   **If several match**, prefer one named `cr1-canonical`; otherwise take the first
+   with a real `tests/run_all.py`. Either way, when there was more than one candidate,
+   **say which you picked and list the others** — a silently-chosen target is the
+   failure this whole step exists to prevent.
+3. **Walking up from the working directory** — if you are already inside a checkout,
+   look at each parent for a `command-room/tests/run_all.py`.
+4. **A marketplace install** — `~/.claude/plugins/marketplaces/*/command-room`.
+   These are installs, not edit surfaces, and a machine can hold several from
+   different sources. **If more than one matches, do not guess** — report them all
+   and ask for `CR1_ROOT`. Picking one silently risks reporting a verdict for a
+   stale or client copy while the contributor believes they tested their own work.
+5. **The Cowork sandbox** — `<session>/mnt/.remote-plugins/plugin_*`, where `<session>`
+   is `$CLAUDE_CODE_TMPDIR` with the trailing `/tmp` stripped.
+
+Use whatever tooling the session gives you. **On Windows prefer PowerShell**
+(`Test-Path`, `Get-ChildItem`): the Bash tool there runs with a stripped PATH, so
+`ls`, `sed`, and `head` are frequently missing — the old snippet's core problem.
+
+**If nothing hits: STOP and say so.** Report every location you tried and tell the
+contributor to set `CR1_ROOT`. Do **not** clone cr1 to make one of these paths exist
+— a missing checkout is a setup problem to surface, and a fresh clone dropped into
+the plugins directory can get picked up as a marketplace and shadow the real install.
+
+Then, from that directory:
+
 ```
+python tests/run_all.py                 # default — tiers 0-2
+python tests/run_all.py --tier guard    # --quick
+```
+
+On Windows, a wall of `UnicodeEncodeError: charmap` across ~30 suites is **not** a
+real failure — suites crash printing the ✓ glyph *after* their check passed. The
+runner pins UTF-8 itself; against an older checkout that predates that, re-run with
+`PYTHONUTF8=1` and `PYTHONIOENCODING=utf-8` set. Never report those as bugs.
 
 `run_all.py` already fails fast (stops after the guard tier if a structural
 invariant breaks) and prints a per-suite PASS/FAIL table + a TOTAL line + a final
@@ -164,7 +198,10 @@ their logic; cr-test is the conductor:
 
 ## Failure modes
 
-- **Plugin not found** → clear error + the two paths checked.
+- **Plugin not found** → clear error listing every location tried, plus the
+  `CR1_ROOT` hint. Never clone to manufacture a path; never guess a verdict.
+- **~30 suites red with `UnicodeEncodeError: charmap` (Windows)** → not a failure.
+  See Step 1. Report GREEN-pending-rerun, not RED.
 - **A tier-3 specialist skill isn't installed** → skip it with a note, don't fail
   the whole battery; downgrade to HOLD only if a gate that DID run failed.
 - **run_all.py missing (old plugin install)** → fall back to listing tests/ and
