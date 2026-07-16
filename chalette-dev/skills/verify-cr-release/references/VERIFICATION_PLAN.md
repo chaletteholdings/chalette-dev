@@ -56,6 +56,21 @@ and garbage inputs. Fresh empty folder only.
    count — do NOT hardcode a number here; a red battery *with* the UTF-8 vars set is a
    P0: capture the failing suite names. Missing deps now fail loudly with an
    install message rather than a fake green.)
+   If you see a wall of `UnicodeEncodeError: charmap` on ✓/→ glyphs, you missed the
+   UTF-8 vars above — that is not a real failure. Set them and re-run before
+   reading anything into it.
+1b. **Resolver guardrail check** (permanent — regression for F-1, the
+   `expanduser(None)` crash on the committed `workspace_root: null`). From the
+   `chalette-dev` clone:
+   ```bash
+   python -c "import json,os;p='chalette-dev/config/operator.json';c=json.load(open(p));\
+   print('resolved:', os.path.expanduser(c.get('workspace_root') or '') or '<falls through to fixture>');\
+   print('may_target_real:', 'real' in c.get('allowed_targets',[]))"
+   ```
+   **Expected:** exits 0, **no traceback**, `may_target_real: False`, and the
+   resolved path is empty (so the block falls through to `clean_workspace`) or a
+   path under `fixtures/`. A traceback here — even though it currently fails *open*
+   to the safe fixture — means the guardrail path is one `set -e` from breaking.
 2. **Install the plugin in Cowork:** Customize → Personal Plugins → Add personal
    plugin → GitHub URL `ChaletteHQ/cr1`. Full quit (confirm the process is gone in
    Task Manager), reopen.

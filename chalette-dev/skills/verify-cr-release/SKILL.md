@@ -50,7 +50,10 @@ FIXTURES="$PLUGIN_ROOT/skills/synthetic-workspace-runtime-test/fixtures"
 
 WORKSPACE_ROOT="${CR_WORKSPACE_ROOT:-}"
 if [ -z "$WORKSPACE_ROOT" ] && [ -f "$OPERATOR_CFG" ]; then
-  WORKSPACE_ROOT=$(python -c "import json,sys,os;print(os.path.expanduser(json.load(open(sys.argv[1])).get('workspace_root','')))" "$OPERATOR_CFG")
+  # `or ''` is load-bearing: workspace_root ships as null, and .get(k, '') returns
+  # None for a key that EXISTS with a null value — the '' default never applies —
+  # so expanduser(None) raised TypeError on the committed default.
+  WORKSPACE_ROOT=$(python -c "import json,sys,os;print(os.path.expanduser(json.load(open(sys.argv[1])).get('workspace_root') or ''))" "$OPERATOR_CFG")
 fi
 [ -z "$WORKSPACE_ROOT" ] && WORKSPACE_ROOT="$FIXTURES/clean_workspace"
 
