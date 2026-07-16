@@ -16,8 +16,8 @@ There are three separate testing surfaces. Do not cross them:
 1. **`cr-test` / automated battery** → runs against the built-in synthetic *fixtures*
    (`skills/synthetic-workspace-runtime-test/fixtures/`). No plan needed. Not this file.
 2. **This structured plan** → runs against a **FRESH, EMPTY test workspace** you create
-   and seed with the synthetic persona below. **Not** your real Jace workspace, **not**
-   the fixtures. A fresh folder, typed-in fake data.
+   and seed with the synthetic persona below. **Not** your own real Command Room
+   workspace, **not** the fixtures. A fresh folder, typed-in fake data.
 3. **Freeform dogfood** → you *using* Command Room in Cowork against your own real
    workspace, as a customer. Separate activity; not this file.
 
