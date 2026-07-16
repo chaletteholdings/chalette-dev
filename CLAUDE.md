@@ -54,7 +54,11 @@ fix + a regression test, then open a PR.
 
 1. Sync `main`, branch off it (`fix/*`, `findings/*`, `ci/*`, `feature/*` — the name
    isn't load-bearing).
-2. `pip install -r requirements.txt` then `python tests/run_all.py` — must be green.
+2. Run the tests that exist for the repo you're changing. **cr1:** `pip install -r
+   requirements.txt` then `python tests/run_all.py` — must be green. **chalette-dev:**
+   there is no automated battery here (skills are English prose); instead run the
+   Phase 0 checks in `verify-cr-release/references/VERIFICATION_PLAN.md` that touch
+   what you changed, and say in the PR how you verified it.
 3. Open a PR with a **plain-English explanation**: what it changes, why, the upside,
    and any risk. Assume Matthew is non-technical — write for him.
 4. Matthew reviews (he has a skill that lays your PR out for him), approves, and it
