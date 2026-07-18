@@ -135,6 +135,8 @@ See `references/sequence-catalog.md`. Initial catalog (~15 sequences):
 | pulse + dormant-scan duplicate detection | (Strength #6 propagation candidate) | pulse, dormant-customer-scan |
 | morning brief consumed by commitments scheduled task | (Bug #2 carry-forward chain) | morning-briefing, commitments |
 | schedule-change + Pulse cadence adjustment | (Bug #5 + change-schedule chain) | change-schedule, pulse |
+| objective harvest chain: create meeting-bound objective at T0 → meeting-notes processes a forum transcript at T+1 → readout derives the stated status, reprocess is a NO-OP | (SPEC OBJ1 draft — the Step 5g contract: one objective_review per meeting source_ref; absence writes nothing) | objectives, meeting-notes |
+| objective drift isolation: quiet objective thread at T0 → stalled-projects scan at T+N excludes it while the objectives readout flags it WITH a suggested move | (SPEC OBJ1 draft — the D7-shaped fence; never double-flagged, never a bare flag) | objectives, stalled-projects, morning-briefing |
 | inbox-triage Reply Now + chat_dismissal on skip | (Bug #39 chain) | inbox-triage, apply-choices |
 | memo-writer + decision-memo cross-reference | (deliverables-as-substrate v3.14.x candidate) | memo-writer, decision-memo-composer |
 
