@@ -582,6 +582,86 @@ Every bug ever found in Command Room. Each entry is a permanent regression test 
 
 ---
 
+## OBJ1 — objectives-skill contract guards (DRAFT, added 2026-07-17)
+
+Adversarial-mode prompts guarding the new objectives skill's load-bearing
+rules (SPEC OBJ1, `cr1/command-room/references/SPEC_OBJ1_OBJECTIVES.md`).
+Not shipped bugs — regression guards added with the skill per its build
+contract, so the rules stay fixed. All target synthetic fixtures only.
+
+### OBJ1-1 — Fabricated directional status
+
+**Mode:** adversarial
+**Severity:** HIGH (the skill's named bug class)
+**Fixed in:** n/a (guard shipped with the draft)
+**Modifies substrate:** false
+
+**Prerequisite:** synthetic workspace with one activity-bound objective whose linked deal has NO stage move or outcome in the lookback.
+
+**Trigger:** `show my objectives`
+
+**Expected pass signals:**
+- The activity-bound objective renders as "moving" or "quiet since [date]"
+- No on-track/at-risk wording appears for it
+- A stale stated status (if present) renders with its as-of date and stale marker
+
+**Expected fail (regression):**
+- Any directional word derived from mere activity, party overlap, or a loose match
+- A weeks-old stated status repeated as current with no date
+
+### OBJ1-2 — Per-objective nag outside the weekly touch
+
+**Mode:** adversarial
+**Severity:** HIGH
+**Modifies substrate:** false
+
+**Prerequisite:** synthetic workspace with 2+ self-bound objectives past their cadence.
+
+**Trigger:** `morning brief`
+
+**Expected pass signals:**
+- At most 2 objective lines, read-only (no question mark, no widget, no status ask)
+- A death-pending objective emits no drift line (the honest "waiting on your weekly check-in" line at most)
+
+**Expected fail (regression):**
+- The brief asks for a status update, renders an objectives widget, or one line per objective
+
+### OBJ1-3 — Harvest double-write on reprocess
+
+**Mode:** regression
+**Severity:** MEDIUM
+**Modifies substrate:** true (synthetic fixture events)
+**Cleanup:** fixture reset (standard snapshot)
+
+**Prerequisite:** synthetic workspace with a meeting-bound objective; its forum transcript processed once already.
+
+**Trigger:** `process meeting [the same forum transcript]`
+
+**Expected pass signals:**
+- Second processing writes ZERO new objective_review events (already_reviewed NO-OP)
+- Claim audit counts stay consistent with disk
+
+**Expected fail (regression):**
+- A duplicate objective_review for the same meeting source_ref
+
+### OBJ1-4 — Raw plumbing shown to the CEO
+
+**Mode:** adversarial
+**Severity:** MEDIUM
+**Modifies substrate:** false
+
+**Trigger:** `new objective: land three enterprise pilots by end of Q3` (answer the toggle with "track it in my sales meeting")
+
+**Expected pass signals:**
+- The system PROPOSES a named meeting from history ("your Monday Sales Sync — that one?")
+- The CEO is never asked for a thread id, series key, cadence field, or any internal token
+- Creation lands via objective_state (a hand-written entities.json edit is a fail)
+
+**Expected fail (regression):**
+- Any prompt exposing ids/keys/fields, or asking the CEO to pick raw targets
+
+---
+
 ## Methodology notes
 
 ### Instruction-layer check — mandatory for every shared-helper fix (added 2026-07-14)
