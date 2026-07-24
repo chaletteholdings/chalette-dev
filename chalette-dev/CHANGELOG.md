@@ -3,6 +3,77 @@
 (Release history before v0.3.0 lives in `.claude-plugin/plugin.json`'s `description` field.
 This file starts at the CONSOL1 release.)
 
+## v0.4.0 (2026-07-24) — TI2: triage-intake routes work out (contributor packet + cr1 BACKLOG)
+
+Capability addition. Skill count unchanged (**16**). Zero trigger changes — `triage-intake`'s
+frontmatter description is **byte-identical** to v0.3.1 (verified by diff against the branch base).
+
+### Added — "Routing work out" mode in `triage-intake` (`may_ship` operators ONLY)
+
+The gap: work that a fork contributor could execute cold pooled in the maintainer's own
+build-specs queue, where a contributor cannot see it, and ad-hoc handoffs had no gate standing
+between triage prose and a contributor's eyes.
+
+An item whose verdict is `SPEC` and which passes the **five-clause suitability test** — target
+repo is `cr1_clone`; fully specifiable from repo contents; buildable AND testable against the
+battery + synthetic fixtures alone; zero client/org/person names needed in spec, code, tests or
+PR text; zero ship authority — now yields two extra outputs:
+
+1. **`<specs_dir>/packets/PACKET_<TAG>.md`** — self-contained for a cold fork contributor:
+   handoff header (fork → branch → PR, what the builder never does, the BACKLOG TAG), a spec
+   body shaped per cr1's checked-in `templates/TEMPLATE_SPEC.md` with §0 **already ruled**, the
+   kickoff prompt, acceptance including the scrub AC verbatim, and a **PR-description
+   requirements** block carrying the `TEMPLATE_BUILD_REPORT` slots (deviations at top, gates
+   table with numbers incl. the mutation check demonstrated by REMOVING the fence, files
+   touched, reviewer-visible defaults). Never committed into cr1 — filled records stay out of
+   the repo (cr1 G12).
+2. **One scrubbed `READY` row on `<cr1_clone>/BACKLOG.md`** (repo root, contributor-visible via
+   fork, never fanned out to client repos — promote writes `command-room/` only).
+
+Any "no" on the suitability test → normal maintainer-side spec, no packet, no BACKLOG row. On a
+contractor profile the whole section is inert prose behind the `may_ship` gate: delivery stays
+PR-attach, `BACKLOG.md` is never touched. INTAKE1 F1 (append offers restricted to `new/`) and F5
+(resurrection guard) untouched.
+
+### Added — `scrub_roster` operator key + a FAIL-CLOSED outbound scrub gate
+
+New key in `config/operator.json`, committed default **`null`** (contractor-safe; the real value
+lives ONLY in the gitignored overlay, per the CONSOL1 D3 pattern). Before either outbound write,
+the full outbound text is grepped against every client/org/person name in the roster.
+
+- `scrub_roster` null / missing / unreadable → **both writes refused** with the explicit line
+  `scrub roster unavailable — BACKLOG/packet emission disabled`; the maintainer-side spec is
+  still delivered. Fail-closed by construction: a contractor has no roster and never needs the
+  feature.
+- A roster hit blocks the write and surfaces the offending line for rewrite — **never** an
+  automatic name substitution.
+
+This cannot ride cr1's G9 alone: G9's first-name dictionary plus placeholder allowlist cannot
+know real ORG names, which is precisely how an org name has slipped past a name guard before.
+The mechanized backstop is CI-side in cr1 (`BACKLOG.md` joins G9's staging scan).
+
+### Changed — writer contract (explicit amendment, not a silent widening)
+
+`triage-intake` may now write exactly **two** outbound surfaces, both post-scrub:
+`<specs_dir>/packets/PACKET_*.md` and `<cr1_clone>/BACKLOG.md` — the latter **staged via
+`git add`, never committed, never pushed**. No other file in any repo is ever written by triage.
+A triage session still ends with **zero new commits** in the cr1 clone; the maintainer commits
+and pushes in his own ship window. Everything else (no substrate events, no version/CHANGELOG,
+ship/promote stays with `may_ship`) is unchanged, as are the single-writer folder rules.
+
+### Changed — closing decision table gains an `Eric?` column
+
+Records the suitability verdict per `SPEC` item (`n/a` for non-SPEC verdicts, `—` on a
+contractor profile). When a packet is emitted, the staged `BACKLOG.md` diff is shown under the
+table — that staged diff IS the "this is pending" marker.
+
+### Companion change in cr1 (separate repo, separate branch)
+
+Repo-root `BACKLOG.md` seeded with its covenant header, `BACKLOG.md` added to G9's staging scan
+(`SCAN_STAGING_FILES`), G2's `BACKLOG\.md` token relabelled (the ban still holds over the plugin
+payload — the repo-root dev backlog is the only legitimate home), one `CONTRIBUTING.md` pointer,
+and regression pins for both guards. No cr1 version movement.
+
 ## v0.3.1 (2026-07-24) — MAINT2: Git-Bash fence fix + two skill retirements
 
 Maintenance batch. Skill count **18 → 16**.

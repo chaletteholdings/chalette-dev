@@ -7,7 +7,7 @@ description: "Process the intake queue (intake_root from config/operator.json, d
 
 The verify half of the intake pair. Sibling of `capture-for-code`. Turns raw captures into either a build-ready `SPEC_*.md` or an honest "don't build this" — never leaves an item in limbo silently.
 
-> **Operator-aware.** Read `config/operator.json`, then overlay `config/operator.local.json` per-key if present (gitignored; the operator's local overlay — only M has one). Keys used: `intake_root` (queue location, default `~/cr-intake`), `cr1_clone` (the repo to verify against), `chalette_clone` (a chalette030 clone, when the item targets the chalette plugin; only M has one), `specs_dir` (where specs land; default `<intake_root>/specs/`), `parking_doc` (PARK target; default `<intake_root>/PARKING.md`), `allowed_targets`, `may_ship`. **Non-M operators verify against synthetic fixtures ONLY** (`skills/synthetic-workspace-runtime-test/fixtures/`) — never a real workspace. `may_ship: false` means specs are handed to M, never built into a release by you.
+> **Operator-aware.** Read `config/operator.json`, then overlay `config/operator.local.json` per-key if present (gitignored; the operator's local overlay — only M has one). Keys used: `intake_root` (queue location, default `~/cr-intake`), `cr1_clone` (the repo to verify against), `chalette_clone` (a chalette030 clone, when the item targets the chalette plugin; only M has one), `specs_dir` (where specs land; default `<intake_root>/specs/`), `parking_doc` (PARK target; default `<intake_root>/PARKING.md`), `scrub_roster` (grep source for the outbound scrub gate; **null = outbound packet/BACKLOG emission disabled**, see "Routing work out"), `allowed_targets`, `may_ship`. **Non-M operators verify against synthetic fixtures ONLY** (`skills/synthetic-workspace-runtime-test/fixtures/`) — never a real workspace. `may_ship: false` means specs are handed to M, never built into a release by you.
 > ```python
 > import json, os, sys
 > op = {}
@@ -65,12 +65,41 @@ Specs land in the merged `specs_dir` (default `<intake_root>/specs/`; M's overla
 
 Spec hygiene: reference files by path, never inline code the builder can read; a section that restates what any Claude already knows gets cut.
 
+## Routing work out — Eric packet + BACKLOG (`may_ship` operators only)
+
+Everything in this section is gated on the merged profile having **`may_ship: true`**. On a contractor profile it is inert: delivery stays exactly as "Writing the spec" describes (attach to the PR / hand over), no packet is written, `BACKLOG.md` is never touched. A contractor does not route work to themselves.
+
+**Eric-suitability test — applied at verdict time, ALL clauses must hold:**
+
+1. Target repo is `cr1_clone` (never the chalette plugin, never the workspace).
+2. The fix is process/code-shaped and fully specifiable from repo contents alone.
+3. Buildable AND testable against the battery + synthetic fixtures alone — no real-workspace verification step.
+4. Zero client/org/person names needed in spec, code, tests, or PR text.
+5. Zero ship authority: no version bump, no CHANGELOG, no promote, no client-repo contact.
+
+Any "no" → normal M-side spec into `specs_dir`, **no packet, no BACKLOG row**. Record yes/no per SPEC-verdict item in the decision table's `Eric?` column.
+
+**Scrub gate — fail-closed, runs BEFORE either write.** Read `scrub_roster` from the merged profile and grep the full outbound text (packet body AND the BACKLOG row) against every client/org/person name in it. This does not ride cr1's G9 alone: G9's first-name dictionary cannot know real ORG names, which is exactly how org names have leaked past a name guard before.
+
+- `scrub_roster` null, missing, or unreadable → **refuse both outbound writes** with the explicit line `scrub roster unavailable — BACKLOG/packet emission disabled`, and still deliver the normal M-side spec. Never proceed on an unverified roster.
+- Roster hit → block the write, surface the offending line for rewrite. **Never auto-substitute a name.**
+- Phrase items by mechanism, never by origin: "stale-baseline drift in X guard", not the client or workspace context that surfaced it.
+
+**Packet — one file, `<specs_dir>/packets/PACKET_<TAG>.md`, self-contained for a cold fork contributor.** Never committed into cr1 (filled records stay out of the repo — G12). Structure in `references/spec-templates.md`; contents: handoff header (repo + fork→branch→PR per cr1 `CONTRIBUTING.md`, what the builder never does, the BACKLOG row TAG), the spec body shaped per cr1 `templates/TEMPLATE_SPEC.md` with §0 **already ruled** (a packet never ships with open AWAIT rows — a genuine surviving fork means the item is not packet-ready), the kickoff prompt, acceptance criteria including the scrub AC verbatim, and the PR-description-requirements block. Self-containment rule: no workspace paths (the operator's workspace folder name included), no chalette-plugin references, no operator-overlay values anywhere in packet text.
+
+**BACKLOG.md — `<cr1_clone>/BACKLOG.md`, repo root.** One row per emitted packet: `TAG · outcome (one line) · size (S/M/L) · status (READY / CLAIMED — PR # / MERGED @ short-SHA)`. Shape + covenant header: `references/spec-templates.md`.
+
+- **Stage-and-show, always:** `git -C <cr1_clone> add BACKLOG.md`, show the staged diff in the closing decision table, **STOP**. No `git commit`, no `git push`, ever, from a triage session — a triage session ends with zero new commits in `<cr1_clone>`. M commits it in his own ship window.
+- **Reconcile on every `may_ship` run** (closing batch): check rows against `git log` (merged PRs) and `done/` moves — flip statuses, and delete `MERGED` rows after one run of visibility. History lives in git; the file stays a one-screen board, not a ledger. Reconciliation edits use the same stage-and-show posture.
+
 ## Closing the batch — the decision table
 
 End with ONE screen:
 
-| Item | Type | Verdict | ICE / Sev | Recommendation | Open decisions |
-|---|---|---|---|---|---|
+| Item | Type | Verdict | ICE / Sev | Eric? | Recommendation | Open decisions |
+|---|---|---|---|---|---|---|
+
+`Eric?` — yes/no per SPEC-verdict item from the suitability test above (`n/a` for non-SPEC verdicts, `—` on a contractor profile). When a packet was emitted, the staged `BACKLOG.md` diff goes under the table.
 
 Apply rulings: move files (`new/` → `speced/` / `needs-input/` / `killed/`), append rulings into the files. Unruled items stay in `new/` untouched — never assume.
 
@@ -78,4 +107,5 @@ Apply rulings: move files (`new/` → `speced/` / `needs-input/` / `killed/`), a
 
 - Moves files OUT of `new/` (single-writer rule: capture writes `new/`, triage owns everything downstream). Never writes into `new/`.
 - `done/` moves happen when the fix/feature ships, not during triage.
+- **Outbound surfaces — exactly two, `may_ship` only, both post-scrub:** `<specs_dir>/packets/PACKET_*.md` (workspace-side) and `<cr1_clone>/BACKLOG.md` (repo-root file — **staged via `git add`, never committed, never pushed**). **No other file in any repo is ever written by triage.**
 - No substrate events, no version/CHANGELOG bumps, no commits/pushes unless asked. Ship/promote stays with M (`may_ship` in operator.json).

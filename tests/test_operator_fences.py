@@ -73,6 +73,21 @@ def test_committed_operator_workspace_root_null():
     )
 
 
+def test_committed_operator_scrub_roster_null():
+    """TI2: null is the fail-closed default AND the leak fence.
+
+    A non-null value here would be the operator's real roster path — an M-workspace path
+    committed to a repo a contractor forks. Null also disables triage-intake's outbound
+    packet/BACKLOG emission entirely, which is the correct contractor posture.
+    """
+    op = _load_committed_operator()
+    assert op.get("scrub_roster") is None, (
+        "committed operator.json must have scrub_roster == null "
+        f"(got {op.get('scrub_roster')!r}) — the real roster path is overlay-only; null keeps "
+        "the outbound scrub gate fail-closed for anyone without an overlay"
+    )
+
+
 def test_committed_operator_is_not_m():
     op = _load_committed_operator()
     assert op.get("operator") != "m", (

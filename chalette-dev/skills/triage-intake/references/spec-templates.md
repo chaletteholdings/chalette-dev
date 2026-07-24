@@ -1,4 +1,6 @@
-# Spec templates — two sizes
+# Spec templates
+
+Two M-side spec sizes (below), plus the outbound **contributor packet** wrapper and the **BACKLOG.md** shape at the end — those two are `may_ship`-only and post-scrub; see SKILL.md "Routing work out".
 
 Pick by item size. Never inflate a bug into the feature skeleton; never compress a multi-decision feature into the bug form. Both land in `<intake_root>/specs/` (intake_root from `config/operator.json`).
 
@@ -79,6 +81,67 @@ Pick by item size. Never inflate a bug into the feature skeleton; never compress
 ## 7. Kickoff prompt (paste as first message of the build session)
 <paste-ready block.>
 ```
+
+---
+
+## Contributor packet (`may_ship` only) — `<specs_dir>/packets/PACKET_<TAG>.md`
+
+Emitted ONLY when the Eric-suitability test passes on a `may_ship: true` profile, and ONLY after the scrub gate clears (`scrub_roster` null/unreadable → refuse, spec-only). Never committed into cr1.
+
+The **body** (§0–§7) is shaped per cr1's checked-in `templates/TEMPLATE_SPEC.md` — read it from the clone at write time, do not copy it here; the contributor's fork carries the same file and `CONTRIBUTING.md` binds them to it. One spec grammar on their side of the fence. The wrapper below is what goes AROUND that body.
+
+```markdown
+# PACKET_<TAG> — <outcome, plain terms>
+
+**Repo:** `ChaletteHQ/cr1` — fork → branch in your fork → PR against `main`. Reviewed and merged by the maintainer; never self-merged. Read `CONTRIBUTING.md` in the repo root first.
+**BACKLOG row:** `<TAG>` (repo-root `BACKLOG.md`). Say so when you claim it.
+**Branch:** suggested `<tag>-<short-name>`.
+**Battery:** `PYTHONUTF8=1 python tests/run_all.py` from `command-room/` — baseline **<N>/0**, re-verify at branch time.
+
+**What you never do** (mirrors CONTRIBUTING.md "What contributors never do"):
+- No version bumps, no CHANGELOG entries, no release manifests.
+- No promote / fan-out to client repos.
+- No filled BUILD/REVIEW records committed into the repo — that content goes in the PR description.
+- No merge. STOP at review.
+
+---
+
+<the spec body, §0–§7 per cr1 templates/TEMPLATE_SPEC.md. §0 rows are ALREADY RULED —
+a packet never ships with an open "AWAIT ruling" row. Acceptance carries the scrub AC verbatim:
+"no real client, person, or org name in any changed file or anywhere in the branch history —
+grep over the worktree AND full `git log -p` over every commit on the branch against the
+roster (`command-room/references/PRIVACY_POLICY.md`). Second-eyes re-runs this independently.">
+
+---
+
+## Your PR description must contain
+
+The `templates/TEMPLATE_BUILD_REPORT.md` slots — the PR description IS the build record for fork contributors (filled records are never committed):
+
+- **Deviations from this packet, loud, at the top** — anything you built differently, and why.
+- **Gates table with numbers** — full battery (N passed / N failed), guard tier, and the mutation check *demonstrated by removing the fence* (a regression test that never went red proves nothing). Show both numbers.
+- **Files touched** — every path, one line each on what changed.
+- **Reviewer-visible defaults** — every judgment call you made that the packet did not rule.
+- The org-name rule applies to PR text too: placeholder names only.
+
+---
+
+## BACKLOG.md — shape + covenant (repo root of cr1)
+
+Staged with `git add`, never committed or pushed by triage. Seeded shape:
+
+```markdown
+# BACKLOG — specs ready for contributor pickup
+
+Ready-to-build items with a maintainer-written spec behind each one. Ask the maintainer for the packet by TAG; packets come from the maintainer, not this repo.
+
+**Covenant:** every row is scrubbed — phrased by mechanism, placeholder names only, no client/org/person names and no maintainer-workspace paths. Maintained by the maintainer's triage tooling, staged only; the maintainer pushes. Process and gates: [CONTRIBUTING.md](CONTRIBUTING.md).
+
+| TAG | Outcome | Size | Status |
+|---|---|---|---|
+```
+
+Row grammar: `| <TAG> | <one line, mechanism-phrased> | S/M/L | READY \| CLAIMED — PR #<n> \| MERGED @ <short-SHA> |`. Rows are added when a packet is emitted; statuses flip on reconciliation; `MERGED` rows are deleted after one run of visibility (git holds the history). No `parked` status — `parking_doc` owns parking; BACKLOG lists READY-or-in-flight only.
 
 ---
 
