@@ -9,11 +9,15 @@ description: "INTERNAL — passive observation during the 24h post-promote smoke
 
 > **Operator profile (read first).** Load `config/operator.json`, then overlay `config/operator.local.json` per-key if it exists (gitignored; the operator's local overlay — only M has one). This skill has **no synthetic mode**: if the merged `allowed_targets` does not include `"real"`, refuse and say so (it observes a live workspace or nothing — that's honest). All paths below resolve from `workspace_root`.
 > ```python
-> import json, os
+> import json, os, sys
 > op = {}
 > for _n in ("operator.json", "operator.local.json"):
 >     _p = os.path.join(SKILL_PLUGIN_ROOT, "config", _n)
 >     if os.path.exists(_p): op.update(json.load(open(_p)))
+> # SKILL_PLUGIN_ROOT must be a NATIVE path — on Windows `C:/Users/…`, never an MSYS
+> # `/c/Users/…` (convert with `cygpath -m`): python.exe reads `/c/…` as `C:\c\…`, both
+> # files miss, and an empty profile silently becomes the default. Fail loud instead.
+> if not op: sys.exit(f"FATAL: operator profile unreadable under {SKILL_PLUGIN_ROOT}")
 > if "real" not in op.get("allowed_targets", []): refuse("smoke-watch needs an operator profile with 'real' in allowed_targets")
 > ```
 

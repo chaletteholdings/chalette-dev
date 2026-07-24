@@ -9,11 +9,15 @@ The capture half of the intake pair. Sibling of `triage-intake`. Structured capt
 
 > **Operator-aware.** Read `config/operator.json`, then overlay `config/operator.local.json` per-key if present (gitignored; the operator's local overlay — only M has one). The queue root is the merged `intake_root` (default `~/cr-intake`). Create `new/`, `needs-input/`, `speced/`, `done/`, `killed/`, `specs/` plus a one-line README on first capture if missing.
 > ```python
-> import json, os
+> import json, os, sys
 > op = {}
 > for _n in ("operator.json", "operator.local.json"):
 >     _p = os.path.join(SKILL_PLUGIN_ROOT, "config", _n)
 >     if os.path.exists(_p): op.update(json.load(open(_p)))
+> # SKILL_PLUGIN_ROOT must be a NATIVE path — on Windows `C:/Users/…`, never an MSYS
+> # `/c/Users/…` (convert with `cygpath -m`): python.exe reads `/c/…` as `C:\c\…`, both
+> # files miss, and an empty profile silently becomes the default. Fail loud instead.
+> if not op: sys.exit(f"FATAL: operator profile unreadable under {SKILL_PLUGIN_ROOT}")
 > ```
 
 ## What this is and is not

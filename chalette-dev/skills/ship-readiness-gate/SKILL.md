@@ -9,11 +9,15 @@ description: "INTERNAL — automated post-push verification orchestrator. Fires 
 
 > **Operator profile (read first).** Load `config/operator.json`, then overlay `config/operator.local.json` per-key if present (gitignored; the operator's local overlay — only M has one). Resolve `cr1_clone` (staging clone to inspect), `workspace_root` (where verdict docs land), and `allowed_targets`. **Default target is synthetic fixtures** — the `mature_workspace`/`clean_workspace`/`degraded_workspace`/`fresh_install` fixtures are populated. Targeting a real workspace requires `"real"` in `allowed_targets` (M only); any other operator that asks for `--target=m-workspace` is refused and run against synthetic.
 > ```python
-> import json, os
+> import json, os, sys
 > op = {}
 > for _n in ("operator.json", "operator.local.json"):
 >     _p = os.path.join(SKILL_PLUGIN_ROOT, "config", _n)
 >     if os.path.exists(_p): op.update(json.load(open(_p)))
+> # SKILL_PLUGIN_ROOT must be a NATIVE path — on Windows `C:/Users/…`, never an MSYS
+> # `/c/Users/…` (convert with `cygpath -m`): python.exe reads `/c/…` as `C:\c\…`, both
+> # files miss, and an empty profile silently becomes the default. Fail loud instead.
+> if not op: sys.exit(f"FATAL: operator profile unreadable under {SKILL_PLUGIN_ROOT}")
 > ```
 
 ## Why this skill exists
@@ -57,12 +61,34 @@ Always uses bug-regression-suite + synthetic-workspace-runtime-test as primary g
 ```bash
 # Locate the Command Room staging clone. Prefer the operator profile's cr1_clone
 # (M defaults it to ~/repos/cr1-canonical); fall back to an installed marketplace clone.
-SELF="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"   # chalette-dev plugin root (holds config/)
-CR1_CLONE=$(python -c "import json,os
-p={}
-for f in ('$SELF/config/operator.json','$SELF/config/operator.local.json'):
-    if os.path.exists(f): p.update(json.load(open(f)))
-print(os.path.expanduser(p.get('cr1_clone') or ''))")
+# --- operator-profile resolution (canonical pattern — keep byte-synced across skills) ---
+# Locate THIS plugin's root by searching for config/operator.json, then hand python a
+# NATIVE path. Two Git-Bash-on-Windows traps this is fenced against (MAINT2, 2026-07-24):
+#   1. `${BASH_SOURCE[0]}` is EMPTY when an agent runs this block through a Bash tool —
+#      it is not a sourced script. `dirname ""` is `.`, so the plugin root silently became
+#      whatever the cwd's grandparent happened to be.
+#   2. `pwd` under Git Bash yields an MSYS path (`/c/Users/…`). Native python.exe resolves
+#      `/c/…` to `C:\c\…`, so BOTH config reads miss, the merged profile comes back EMPTY,
+#      and resolution falls through with NO error — here that meant `cr1_clone` was invisible
+#      and the gate silently inspected a stale marketplace clone. `cygpath -m` yields
+#      `C:/Users/…`, which MSYS bash and Windows python both read.
+# Never hardcode a machine path: search, then the $CHALETTE_DEV_ROOT escape hatch, then FAIL LOUD.
+_cr_native() { if command -v cygpath >/dev/null 2>&1; then cygpath -m "$1"; else printf '%s\n' "$1"; fi; }
+DEV_PLUGIN_ROOT=""
+for _c in "${CHALETTE_DEV_ROOT:-}" "$PWD" "$PWD/chalette-dev" "$(dirname "$PWD")" \
+          ~/repos/chalette-dev/chalette-dev ~/.claude/plugins/marketplaces/*/chalette-dev; do
+  [ -n "$_c" ] && [ -f "$_c/config/operator.json" ] && DEV_PLUGIN_ROOT="$(_cr_native "$_c")" && break
+done
+[ -n "$DEV_PLUGIN_ROOT" ] || { echo "FATAL: chalette-dev plugin root not found (no config/operator.json in any searched location). Set CHALETTE_DEV_ROOT=<plugin root> and re-run." >&2; exit 1; }
+OPERATOR_CFG="$DEV_PLUGIN_ROOT/config/operator.json"
+OPERATOR_OVERLAY="$DEV_PLUGIN_ROOT/config/operator.local.json"      # gitignored M-only overlay
+# --- end operator-profile resolution ---
+CR1_CLONE=$(python -c "import json,os,sys
+p={}; _n=0
+for f in ('$OPERATOR_CFG','$OPERATOR_OVERLAY'):
+    if os.path.exists(f): p.update(json.load(open(f))); _n+=1
+if not _n: sys.exit('FATAL: operator profile unreadable at $OPERATOR_CFG')
+print(os.path.expanduser(p.get('cr1_clone') or ''))") || exit 1
 if [ -n "$CR1_CLONE" ] && [ -d "$CR1_CLONE/command-room" ]; then
     STAGING_ROOT="$CR1_CLONE/command-room"
 else

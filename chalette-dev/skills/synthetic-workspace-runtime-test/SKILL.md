@@ -82,17 +82,41 @@ Use for: first-fire / onboarding verification (Bug #36 brain_name prompt, M1 wid
 ### Step 1 — Discover plugin + select fixture
 
 ```bash
-SELF="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"   # chalette-dev plugin root (holds config/)
+# --- operator-profile resolution (canonical pattern — keep byte-synced across skills) ---
+# Locate THIS plugin's root (chalette-dev, which holds config/) by searching for
+# config/operator.json, then hand python a NATIVE path. Two Git-Bash-on-Windows traps this
+# is fenced against (MAINT2, 2026-07-24):
+#   1. `${BASH_SOURCE[0]}` is EMPTY when an agent runs this block through a Bash tool —
+#      it is not a sourced script. `dirname ""` is `.`, so the plugin root silently became
+#      whatever the cwd's grandparent happened to be.
+#   2. `pwd` under Git Bash yields an MSYS path (`/c/Users/…`). Native python.exe resolves
+#      `/c/…` to `C:\c\…`, so BOTH config reads miss, the merged profile comes back EMPTY,
+#      and resolution falls through with NO error — here that meant the `cr1_clone` fallback
+#      never fired and the fixture run had no plugin to exercise. `cygpath -m` yields
+#      `C:/Users/…`, which MSYS bash and Windows python both read.
+# Never hardcode a machine path: search, then the $CHALETTE_DEV_ROOT escape hatch, then FAIL LOUD.
+_cr_native() { if command -v cygpath >/dev/null 2>&1; then cygpath -m "$1"; else printf '%s\n' "$1"; fi; }
+DEV_PLUGIN_ROOT=""
+for _c in "${CHALETTE_DEV_ROOT:-}" "$PWD" "$PWD/chalette-dev" "$(dirname "$PWD")" \
+          ~/repos/chalette-dev/chalette-dev ~/.claude/plugins/marketplaces/*/chalette-dev; do
+  [ -n "$_c" ] && [ -f "$_c/config/operator.json" ] && DEV_PLUGIN_ROOT="$(_cr_native "$_c")" && break
+done
+[ -n "$DEV_PLUGIN_ROOT" ] || { echo "FATAL: chalette-dev plugin root not found (no config/operator.json in any searched location). Set CHALETTE_DEV_ROOT=<plugin root> and re-run." >&2; exit 1; }
+OPERATOR_CFG="$DEV_PLUGIN_ROOT/config/operator.json"
+OPERATOR_OVERLAY="$DEV_PLUGIN_ROOT/config/operator.local.json"      # gitignored M-only overlay
+# --- end operator-profile resolution ---
+
+# The Command Room plugin under test (NOT this plugin): the session's mounted copy first.
 SESSION_DIR=$(echo "$CLAUDE_CODE_TMPDIR" | sed "s|/tmp$||")
 PLUGIN_ROOT=$(ls -d "$SESSION_DIR"/mnt/.remote-plugins/plugin_* 2>/dev/null | head -1)
-# Fallback: the cr1 clone from the merged operator profile (operator.json + operator.local.json
-# overlaid per-key; gitignored, only M has one). Never a hardcoded machine/marketplace path.
+# Fallback: the cr1 clone from the merged operator profile. Never a hardcoded machine path.
 if [ -z "$PLUGIN_ROOT" ]; then
-  CR1_CLONE=$(python -c "import json,os
-p={}
-for f in ('$SELF/config/operator.json','$SELF/config/operator.local.json'):
-    if os.path.exists(f): p.update(json.load(open(f)))
-print(os.path.expanduser(p.get('cr1_clone') or ''))")
+  CR1_CLONE=$(python -c "import json,os,sys
+p={}; _n=0
+for f in ('$OPERATOR_CFG','$OPERATOR_OVERLAY'):
+    if os.path.exists(f): p.update(json.load(open(f))); _n+=1
+if not _n: sys.exit('FATAL: operator profile unreadable at $OPERATOR_CFG')
+print(os.path.expanduser(p.get('cr1_clone') or ''))") || exit 1
   [ -n "$CR1_CLONE" ] && PLUGIN_ROOT="$CR1_CLONE/command-room"
 fi
 ```

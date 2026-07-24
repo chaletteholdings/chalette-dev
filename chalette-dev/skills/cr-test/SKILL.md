@@ -74,11 +74,15 @@ Check these in order and take the first hit where `tests/run_all.py` actually ex
    This is the operator's canonical-clone preference expressed via config (M defaults it to
    `~/repos/cr1-canonical`), not a hardcoded path in prose.
    ```python
-   import json, os
+   import json, os, sys
    op = {}
    for _n in ("operator.json", "operator.local.json"):
        _p = os.path.join(SKILL_PLUGIN_ROOT, "config", _n)
        if os.path.exists(_p): op.update(json.load(open(_p)))
+   # SKILL_PLUGIN_ROOT must be a NATIVE path — on Windows `C:/Users/…`, never an MSYS
+   # `/c/Users/…` (convert with `cygpath -m`): python.exe reads `/c/…` as `C:\c\…`, both
+   # files miss, and an empty profile silently becomes the default. Fail loud instead.
+   if not op: sys.exit(f"FATAL: operator profile unreadable under {SKILL_PLUGIN_ROOT}")
    ```
 1. **`$CR1_ROOT`** — if that env var is set, `$CR1_ROOT/command-room` wins outright.
    This is the escape hatch for a checkout in an unusual place.
