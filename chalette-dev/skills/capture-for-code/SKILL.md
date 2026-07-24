@@ -7,7 +7,7 @@ description: "Capture a bug, feature idea, or new-skill idea for the Command Roo
 
 The capture half of the intake pair. Sibling of `triage-intake`. Structured capture where the observation happens; verification later, where the codebase is open.
 
-> **Operator-aware.** Read `config/operator.json` first. The queue root is `intake_root` (default `~/cr-intake`). Create `new/`, `needs-input/`, `speced/`, `done/`, `killed/` plus a one-line README on first capture if missing.
+> **Operator-aware.** Read `config/operator.json` first. The queue root is `intake_root` (default `~/cr-intake`). Create `new/`, `needs-input/`, `speced/`, `done/`, `killed/`, `specs/` plus a one-line README on first capture if missing.
 
 ## What this is and is not
 
@@ -31,7 +31,7 @@ Only if the item is a **bug** AND the repro isn't already clear: ask at most **t
 
 ### Step 4 — Duplicate check (cheap, 10 seconds)
 
-List filenames in `<intake_root>/new/`, `needs-input/`, and `speced/`. Obvious match → say so in one line and offer to append a dated note to the existing file instead of creating a twin. Filename match only, no deep-dive.
+List filenames in `<intake_root>/new/`, `needs-input/`, and `speced/`. Obvious match → say so in one line. **Append only to matches in `new/`** — offer a dated note on the existing file instead of a twin. For a match in `needs-input/` or `speced/` (triage owns those folders — the single-writer rule forbids editing them here), do NOT append: write a fresh file in `new/` whose body points at the existing item ID (e.g. "recurrence of BUG_…; see speced/…"). Filename match only, no deep-dive.
 
 ### Step 5 — Write the file
 
@@ -46,7 +46,7 @@ Path: `<intake_root>/new/<TYPE>_<YYYY-MM-DD>_<slug>.md` (TYPE ∈ BUG/IDEA/SKILL
 
 ### Step 6 — Confirm and return (one line)
 
-> *Captured → `intake/new/BUG_2026-07-23_confirm-row-dupe.md`. Triage it next session with "triage intake". — Now, back to [the interrupted task].*
+> *Captured → `~/cr-intake/new/BUG_2026-07-23_confirm-row-dupe.md`. Triage it next session with "triage intake". — Now, back to [the interrupted task].*
 
 Then actually resume the interrupted task.
 

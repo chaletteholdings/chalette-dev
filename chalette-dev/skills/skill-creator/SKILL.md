@@ -12,9 +12,9 @@ description: Create new skills, modify and improve existing skills, and measure 
 
 ## Command Room Plugin Skills — Special Rules (v2.1)
 
-**For Command Room plugin skills: prefer `chalette:cr-skill-builder` over this skill.** cr-skill-builder enforces the full 20-gate client-quality contract (event types, atomic helpers, ENTITY_RESOLVE, Voice Calibration, eval benchmarks, runtime exercise, regression check, cross-skill collision detection, etc.) that this generic skill-creator does NOT enforce. The CR plugin ships to paying clients — every gate matters.
+**For Command Room plugin skills: prefer `chalette:cr-skill-builder` over this skill.** cr-skill-builder enforces the full 27-gate client-quality contract (event types, atomic helpers, ENTITY_RESOLVE, Voice Calibration, trigger evals, runtime exercise, regression check, cross-skill collision detection, description budget, etc.) that this generic skill-creator does NOT enforce. The CR plugin ships to paying clients — every gate matters.
 
-If you're creating a CR skill and the user has invoked this skill instead, suggest switching: "For Command Room plugin skills, `chalette:cr-skill-builder` is the right tool — it enforces 20 client-quality contract gates this generic creator skips. Want me to hand off?"
+If you're creating a CR skill and the user has invoked this skill instead, suggest switching: "For Command Room plugin skills, `chalette:cr-skill-builder` is the right tool — it enforces 27 client-quality contract gates this generic creator skips. Want me to hand off?"
 
 If for any reason you must use this generic skill-creator for a CR skill (e.g., cr-skill-builder unavailable):
 

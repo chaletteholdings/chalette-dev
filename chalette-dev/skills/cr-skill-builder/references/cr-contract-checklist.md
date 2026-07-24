@@ -667,7 +667,7 @@ Durable, build-relevant gotchas used to live only in Claude's machine-local memo
 | **Cron-boundary fixture** | Now-relative offsets near a cron grid flip by time of day; keep offsets far from boundaries. | Gate 27 |
 | **Hardcoded-future-date** | No today-or-future ISO literal in tests; compute relative or annotate `# DATE_GUARD_OK`. | Gate 27 |
 | **Description-only routing** | Cowork routes on the frontmatter `description` ONLY — body trigger tables are documentation, not routing. This is the WHY behind Gates 16 + 26: all trigger-engineering budget goes into the description field, because that is the only field the router reads. | Gate 16, Gate 26 |
-| **Python-eaten escapes** | JS/CSS embedded in a non-raw triple-quoted Python string eats backslashes → a dead widget script. Use raw strings (`r"""..."""`) or externalize the asset. (Belongs in any widget-producing skill's guidance.) | Gate 7, Gate 17 |
+| **Python-eaten escapes** | JS/CSS embedded in a non-raw triple-quoted Python string eats backslashes → a dead widget script. Use raw strings (`r"""..."""`) or externalize the asset. (Belongs in any widget-producing skill's guidance.) | Gate 7, Gate 17 (instruction-layer) |
 | **OOXML zip-timestamp** | NEVER byte-compare two `.docx`/`.pptx`/`.xlsx` files in a generated test (`read_bytes() == read_bytes()`) — the zip carries per-write timestamps, so identical content compares unequal. Compare the extracted payload (`_zip_payload_identical`-style), not the raw bytes. | Gate 13 |
 
 ---

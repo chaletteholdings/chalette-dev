@@ -47,7 +47,7 @@ Pull the clone first (`git -C "$(dirname "$CR")" pull --ff-only`, per the canoni
 
 This skill is a META-skill: it does NOT write to the CR substrate (`events.jsonl`, `entities.json`). It writes to:
 
-- **Workspace drafts:** `Desktop/Claude/Command Room/Command Room/SKILL_PACKAGE_<name>_<date>.md` (Mode 2 output) or `AUDIT_<name>_<date>.md` (Mode 1 output).
+- **Workspace drafts:** `Penelopes Brain/Command Room/SKILL_PACKAGE_<name>_<date>.md` (Mode 2 output) or `AUDIT_<name>_<date>.md` (Mode 1 output).
 - **Plugin source (only on explicit M-approval at end of Phase 5):**
   - `command-room/skills/<...>/SKILL.md` (CR-internal skills go in the canonical edit surface resolved above; the marketplace clone is a read-only install cache)
   - `command-room/tests/runtime_exercise_<name>.py`
@@ -176,7 +176,7 @@ Read the **live** enum + registry from `$CR` (see "Live derivation") — never a
 Then ask:
 
 1. **What events does it READ?** (existing event types from the live enum, filtered how, sourced from which skills' writes)
-2. **What NEW events does it WRITE?** (must be registered in BOTH `events.schema.json` enum AND `shared/EVENT_TYPES.md` — I generate both diffs; Gate 1. Every event write goes through `append_event()`, never hand-rolled and never a bare `atomic_append_jsonl` on the events path — Gate 3.)
+2. **What NEW events does it WRITE?** (must be registered in BOTH `events.schema.json` enum AND `shared/EVENT_TYPES.md` — I generate both diffs; Gate 1. Prefer `append_event()` (intent-revealing); a direct `atomic_append_jsonl` on the events path is also gated — Gate 3.)
 3. **What's the shape of each new event?** (data fields)
 4. **Which existing or new skills will CONSUME these new events?** (BLOCK gate per Gate 2 — the consumer must be NAMED in the `EVENT_TYPES.md` row; if no consumer, we either don't ship the event type OR we update an existing skill to consume it in the same release)
 5. **Does it touch COMMITMENTS?** (if yes: every `commitment` write carries `data.kind ∈ {promise, task, scheduling, agenda}`, closures go only through `close_commitment()`, and any surfaced count comes from `commitment_counts()` — Gates 21 + 22)
@@ -278,7 +278,7 @@ I render:
 10. **Eval prompts file** at `tests/eval_prompts_<name>.json` (3-10 prompts + assertions for Gate 15)
 11. **Voice samples** (if composer skill) — 3 sample drafts for Gate 14 scoring
 12. **skill_config template** (if first-run questionnaire defined) at `_hq/data/skill_config/<name>.json.template`
-13. **Single output file** at `Desktop/Claude/Command Room/Command Room/SKILL_PACKAGE_<name>_<date>.md` containing all the above + a "drop these into the plugin" checklist M can walk
+13. **Single output file** at `Penelopes Brain/Command Room/SKILL_PACKAGE_<name>_<date>.md` containing all the above + a "drop these into the plugin" checklist M can walk
 
 ### Phase 6 — Defer to existing tooling
 
@@ -301,7 +301,7 @@ Input formats:
 - Path to a spec doc (parses each `### N. <skill>` section as a separate audit subject)
 - Pasted markdown (last resort)
 
-Output: `Desktop/Claude/Command Room/Command Room/AUDIT_<skill-name>_<date>.md` with verdict (SHIP / FIX-AND-SHIP / REWRITE) at the top + per-gate findings + the live guard-tier result. A red guard forces at least FIX-AND-SHIP regardless of the 27-gate outcome.
+Output: `Penelopes Brain/Command Room/AUDIT_<skill-name>_<date>.md` with verdict (SHIP / FIX-AND-SHIP / REWRITE) at the top + per-gate findings + the live guard-tier result. A red guard forces at least FIX-AND-SHIP regardless of the 27-gate outcome.
 
 ## References (what this skill reads at runtime)
 

@@ -179,7 +179,7 @@ Threshold: ≥0.85
 
 **Why:** a vague description steals triggers from existing skills (cannibalization). Negative-trigger quoting trap (single-quoted phrases in "DOES NOT fire on" become negative triggers — clarifying mentions must be unquoted).
 
-### Synthetic-workspace runtime exercise (Gate 17)
+### Synthetic-workspace runtime exercise (Gate 13)
 
 ```
 Invoke: chalette:synthetic-workspace-runtime-test
@@ -225,7 +225,7 @@ For substrate file paths used in skill code:
 
 ```python
 import os
-workspace_root = os.environ.get("WORKSPACE", os.path.expanduser("~/Desktop/Claude/Command Room"))
+workspace_root = os.environ.get("WORKSPACE", os.path.expanduser("~/Desktop/Claude/Penelopes Brain"))
 events_path = os.path.join(workspace_root, "_hq", "data", "events.jsonl")
 entities_path = os.path.join(workspace_root, "_hq", "data", "entities.json")
 ```
