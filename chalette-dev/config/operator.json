@@ -6,6 +6,8 @@
   "cr1_clone": "~/repos/cr1",
   "_comment_workspace_root": "null = use the default synthetic fixture (skills/synthetic-workspace-runtime-test/fixtures/clean_workspace). Set a path ONLY if allowed_targets includes 'real'. Previously '~/cr-test-workspace', a directory that never existed on any machine.",
   "workspace_root": null,
+  "_comment_intake_root": "Queue root for capture-for-code / triage-intake (bug+idea intake pair). Folders new/ needs-input/ speced/ done/ killed/ + specs/ are created under it on first capture. Local to each operator's machine.",
+  "intake_root": "~/cr-intake",
   "_comment_allowed_targets": "'synthetic' = fixtures only. Adding 'real' lets the skills target a live workspace; that is M's profile, not a contractor's.",
   "allowed_targets": ["synthetic"],
   "may_ship": false,
