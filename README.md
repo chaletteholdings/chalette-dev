@@ -2,7 +2,9 @@
 
 The shared testing, verification, and skill-building toolkit for everyone who builds on Command Room. Matthew (M) and Eric both install this; it is the single source of truth for how CR gets tested. Client repos, client data, and the release/promote pipeline are deliberately **not** in here.
 
-As of **CONSOL1 (2026-07-24)** this is the **single canonical home** of the shared toolkit — the 18 skills below used to be duplicated into M's private `chalette` plugin; that copy is gone. Guard 1 (`scripts/check_toolkit_overlap.py`) fails the build if any of them ever reappears in `chalette`.
+As of **CONSOL1 (2026-07-24)** this is the **single canonical home** of the shared toolkit — the skills below used to be duplicated into M's private `chalette` plugin; that copy is gone. Guard 1 (`scripts/check_toolkit_overlap.py`) fails the build if any of them ever reappears in `chalette`.
+
+**16 skills as of v0.3.1 (MAINT2, 2026-07-24).** Two were retired: `compare-canonical-vs-freelance` (its niche — validating the v3.13.8 §3.6 canonical-vs-freelance widget ladder per skill — closed; the freelance fallback it diffed against no longer exists, and the synthetic invariants plus cr1's `widget_transport` validators cover the render path now) and `run-command-room-tests` (folded into `cr-test`, which auto-discovers every suite instead of running a hardcoded five; its trigger phrases are aliases for `cr test --quick`).
 
 ## Setup (Eric)
 
@@ -31,8 +33,6 @@ As of **CONSOL1 (2026-07-24)** this is the **single canonical home** of the shar
 | `synthetic-workspace-runtime-test` | Spins up the synthetic fixture workspace and fires the canonical surfaces against it |
 | `bug-regression-suite` | Fires every known-bug repro prompt; every new bug you find gets added here permanently |
 | `cross-skill-interaction-test` | Multi-skill sequences over time — substrate coherence |
-| `compare-canonical-vs-freelance` | Validates rendering went through the canonical path |
-| `run-command-room-tests` | Runs the cr1 test battery (`command-room/tests/run_all.py` — house-convention suites, not pytest; `pip install -r requirements.txt` first) |
 | `scale-stress-test`, `smoke-watch` | Scaffolds — performance at scale, post-release observation (not fully built) |
 | `cr-skill-builder` | Builds new CR skills with all contract gates enforced; also audits drafts |
 | `capture-for-code`, `triage-intake` | The intake pair — capture a bug/idea the moment you spot it → verify it against the repo and write a spec (operator-keyed queue via `intake_root`) |

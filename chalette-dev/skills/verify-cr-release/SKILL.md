@@ -1,6 +1,6 @@
 ---
 name: verify-cr-release
-description: "INTERNAL — automated verification orchestrator for Command Room releases. Walks a verification-plan markdown sequentially: emits trigger prompts for M to paste into Cowork, receives Cowork responses pasted back into Code, auto-classifies pass/fail/partial via response classifier, logs findings, surfaces next test. Fires on 'verify cr release [version]', 'run verification suite', 'pre-ship check', 'continue verification', 'resume verification'. Designed to replace the manual confirm-prompt testing methodology that surfaced ~80% of v3.13.7 verification findings. Stateful — tracks current test position in _hq/verify-runs/active.json. Plugin-developer use only. Companions: synthetic-workspace-runtime-test, compare-canonical-vs-freelance."
+description: "INTERNAL — automated verification orchestrator for Command Room releases. Walks a verification-plan markdown sequentially: emits trigger prompts for M to paste into Cowork, receives Cowork responses pasted back into Code, auto-classifies pass/fail/partial via response classifier, logs findings, surfaces next test. Fires on 'verify cr release [version]', 'run verification suite', 'pre-ship check', 'continue verification', 'resume verification'. Designed to replace the manual confirm-prompt testing methodology that surfaced ~80% of v3.13.7 verification findings. Stateful — tracks current test position in _hq/verify-runs/active.json. Plugin-developer use only. Companions: synthetic-workspace-runtime-test, ship-readiness-gate."
 ---
 
 # verify-cr-release
@@ -32,7 +32,7 @@ This skill automates steps 1, 3, and 4 — leaving M with just the Cowork-side p
 | `verify cr release status` | Show current position + per-phase verdicts so far |
 | `verify cr release verdict` | Emit end-of-session verdict doc + production-promote recommendation |
 
-DOES NOT fire on `run plugin tests` (that's run-command-room-tests — different scope, pure-python unit suites). DOES NOT fire on `report bug` (that's the Command Room customer-facing skill).
+DOES NOT fire on `run plugin tests` (that's cr-test — different scope, pure-python unit suites). DOES NOT fire on `report bug` (that's the Command Room customer-facing skill).
 
 ## Behavior
 
@@ -250,11 +250,11 @@ Three things break this skill if not designed against:
 ## Companion skills
 
 - `synthetic-workspace-runtime-test` — pre-ship gate: fires canonical surfaces against synthetic fixtures. Catches pattern static tests miss (per V3.13.8_MASTER_PLAN §6 Principle 1).
-- `compare-canonical-vs-freelance` — post-v3.13.8 only: fires skill once through canonical + once through mocked freelance, side-by-side diff. Validates §3.6 ladder per-skill.
+- `ship-readiness-gate` — the unattended half of this gate: full battery against the fixtures + bug-catalog cross-reference → PROMOTE/HOLD/BLOCKED, no paste-back loop.
 
 ## Connection to chalette plugin family
 
-- `run-command-room-tests` — pure-python unit suites. Run BEFORE verify-cr-release in any pre-ship gate.
+- `cr-test` — the single test entry point; `cr test --quick` runs the pure-python suites (`tests/run_all.py`, auto-discovered). Run BEFORE verify-cr-release in any pre-ship gate.
 - `ship-cr-plugin` — release flow. Run AFTER verify-cr-release passes Phase A.
 - `process-bug-report` — handles customer bug reports. Out-of-band from verification cycle.
 

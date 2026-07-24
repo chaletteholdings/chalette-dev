@@ -3,6 +3,93 @@
 (Release history before v0.3.0 lives in `.claude-plugin/plugin.json`'s `description` field.
 This file starts at the CONSOL1 release.)
 
+## v0.3.1 (2026-07-24) — MAINT2: Git-Bash fence fix + two skill retirements
+
+Maintenance batch. Skill count **18 → 16**.
+
+### FIX (priority) — the operator-profile pattern silently no-opped under Git Bash on Windows
+
+`SHIP_RECORD_CONSOL2` finding 3. **Pattern-wide across all 11 reading skills, pre-existing**
+(it predates CONSOL1; the F-1 fix in `901898f` correctly matched the established pattern and
+did not introduce it).
+
+Two compounding traps, both silent:
+
+1. `${BASH_SOURCE[0]}` is **empty** when an agent runs a SKILL.md block through a Bash tool —
+   it is not a sourced script. `dirname ""` is `.`, so the plugin root resolved against
+   whatever the cwd happened to be.
+2. `pwd` under Git Bash yields an MSYS path (`/c/Users/…`). Native `python.exe` resolves a
+   leading `/c/…` against the current drive → `C:\c\Users\…`, so `os.path.exists()` returned
+   **False for both config files**. MSYS rewrites path-like ARGV for a native `.exe` but never
+   text inside a `python -c` script string — and that interpolation is exactly how the skills
+   pass the paths. The merged profile came back **empty**, resolution fell through to the
+   synthetic default, and **nothing raised**: an operator granted `allowed_targets: ["real"]`
+   silently ran synthetic.
+
+The canonical bash preamble now **searches** for `config/operator.json` (candidates: the
+`$CHALETTE_DEV_ROOT` escape hatch, `$PWD`, `$PWD/chalette-dev`, the parent, `~/repos/chalette-dev/…`,
+`~/.claude/plugins/marketplaces/*/chalette-dev` — never a hardcoded machine path), converts
+the hit with `cygpath -m` (`C:/Users/…`, readable by both MSYS bash and Windows python), and
+**fails loud** when the root or the profile is unreadable. It is delimited by
+`# --- operator-profile resolution` / `# --- end operator-profile resolution ---`, and the code
+inside is byte-synced across the four bash-form skills (comments are per-skill; code is not).
+
+- **Bash form (4):** bug-regression-suite, ship-readiness-gate, synthetic-workspace-runtime-test,
+  verify-cr-release. Also `DEV_PLUGIN_ROOT` replaces the ambiguous `PLUGIN_ROOT`/`SELF` naming —
+  in synthetic-workspace-runtime-test `PLUGIN_ROOT` means the *Command Room* plugin under test.
+- **Python form (7):** capture-for-code, cr-skill-builder, cr-test, cross-skill-interaction-test,
+  scale-stress-test, smoke-watch, triage-intake — each gains the same loud fence and states the
+  native-path contract for `SKILL_PLUGIN_ROOT`. `cr-skill-builder/references/cr-contract-checklist.md`
+  also moves off its `operator.json`-only read onto the merged-overlay form. `CLAUDE.md` documents
+  the trap so it is not reintroduced.
+
+**Guard 2 gains Fence 4 — +29 tests, 24 → 53** (51 once the two retirements below drop their
+two `quick_validate` cases). Static analysis was structurally blind to this bug, so
+the fence **executes** the shipped preamble out of each SKILL.md and asserts the merged profile
+reads at least one file: once with cwd = repo root (no env hints), once from an unrelated cwd via
+the escape hatch. Plus: an unfindable root must exit non-zero with `FATAL`; resolution code must
+stay byte-synced; `BASH_SOURCE` is banned outside comments; every operator-reading skill must
+carry the loud-failure line; and one test documents the MSYS-resolution mechanism itself.
+Parametrization is keyed on the **consumer** (`'$OPERATOR_CFG'`), not the sentinel, so a skill
+that drops the preamble fails instead of vanishing from the test run.
+Mutation-verified: reverting the preamble to the pre-MAINT2 form fails 5 tests (all 4 executable
+ones); removing only the `cygpath -m` conversion fails the repo-root resolution test.
+
+### RETIRED — compare-canonical-vs-freelance (deleted)
+
+Its validation niche is complete. It existed to validate the **v3.13.8 §3.6 widget degradation
+ladder** per skill by firing each widget skill twice — once canonical, once through a mocked
+freelance fallback — and diffing. Command Room is at v5.2.0; the freelance fallback it diffed
+against no longer exists, widget output goes through `widget_transport.render_and_persist` and its
+validators, and the property the ladder diff was inferring is asserted directly by synthetic
+invariant **I2 `no_freelance_render`** (plus I1 `canonical_render_invoked` and I16
+`file_uri_transport`). The `ship-readiness-gate` step built on it (old Step 2) is gone and its
+steps renumbered 3–6 → 2–5. Its coverage claims were **corrected, not silently inherited**:
+Bug #46 now cites I1/I2/I16, and Bug #48 (action-label drift) is stated honestly as **not**
+covered here at all — it is cr1's `CanonicalActionError` renderer validator running in the unit
+tier (`cr test --quick`); I15 covers dispatch shape, not labels.
+
+### FOLDED — run-command-room-tests → cr-test (deleted)
+
+Step-0-verified: `cr-test` **never delegated to it** — it always called `tests/run_all.py`
+directly, which discovers every suite at call time, while the retired skill ran a hardcoded five
+of 40+. Its trigger phrases now live in **cr-test's frontmatter description** (description-only
+routing — the phrase has to be in the description to route) as aliases for `cr test --quick`:
+`internal: run plugin tests`, `run command room tests`, `command room health check`,
+`verify plugin code`. cr-test's description: 607 → 905 chars, inside the ≤980 doctrine.
+
+### Sweep
+
+Every live companion reference to both retired skills removed: `ship-readiness-gate` (description
+companion list, target-mode bullet, Step 2, coverage claim, failure mode, implementation
+references), `verify-cr-release` (description companions, DOES-NOT-FIRE fence, companion-skills
+list, plugin-family list), `bug-regression-suite` (SKILL.md ladder list + `bug-catalog.md` trigger
+line), `synthetic-workspace-runtime-test` fence, `preview-command-room-widget` see-also, `cr-test`
+(3 places), `README.md` table (+ a retirement note), `CLAUDE.md` skill count, `plugin.json`
+description head. Earlier CHANGELOG entries and the `PRIOR HISTORY` half of the plugin.json
+description are **append-only history** and keep their original wording — this entry is what tells
+a reader the skills are gone.
+
 ## v0.3.0 (2026-07-24) — CONSOL1: single canonical home for the shared QA/dev toolkit
 
 chalette-dev is now the **one and only home** of the shared testing / verification /

@@ -514,7 +514,7 @@ Every bug ever found in Command Room. Each entry is a permanent regression test 
 
 **Prerequisite:** `pip install -r requirements.txt` (pyyaml + tzdata + jsonschema). **This is not optional and it is how the bug hid.** Without pyyaml the guard tier fail-fasts (`run_all.py`: "Guard tier failed — stopping before unit/runtime tiers") and the battery never reaches the unit tier where this fires. The battery survived because it was already broken; fixing the guard tier is what exposed this.
 
-**Trigger:** Windows only. `cd command-room && PYTHONUTF8=1 PYTHONIOENCODING=utf-8 python tests/run_all.py` (or fire `run plugin tests`).
+**Trigger:** Windows only. `cd command-room && PYTHONUTF8=1 PYTHONIOENCODING=utf-8 python tests/run_all.py` (or fire `cr test --quick`).
 
 **Expected pass signals:**
 - **The battery reaches the end.** That is the signal — not the count. (216 suites at v4.8.0, informational only.)

@@ -39,7 +39,7 @@ fix + a regression test, then open a PR.
 ## Single canonical home for the shared toolkit
 
 As of CONSOL1 (2026-07-24) **chalette-dev is the one and only home of the shared QA/dev
-toolkit** — the 18 skills here (bug-regression-suite, capture-for-code, cr-test,
+toolkit** — the 16 skills here (bug-regression-suite, capture-for-code, cr-test,
 cr-skill-builder, ship-readiness-gate, synthetic-workspace-runtime-test, triage-intake,
 verify-cr-release, …). They used to be duplicated into Matthew's private `chalette`
 plugin; that copy is gone. Companion references say `chalette-dev:<skill>` (or just

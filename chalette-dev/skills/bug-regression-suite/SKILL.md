@@ -321,7 +321,7 @@ Substrate-modifying tests (e.g., Bug #19 disambiguation) MUST snapshot pre-fire 
 ship-readiness-gate orchestrates this skill as part of its post-push verification battery. After a push to ChaletteHQ/cr1 main, ship-readiness-gate runs:
 1. synthetic-workspace-runtime-test (against fixtures)
 2. **bug-regression-suite (against the resolved workspace)** ← this skill
-3. compare-canonical-vs-freelance (per-skill ladder)
+3. bug-catalog cross-reference (known-bug regression vs new failure class)
 4. Aggregate PROMOTE / HOLD / BLOCKED verdict
 
 ## What this skill does NOT cover

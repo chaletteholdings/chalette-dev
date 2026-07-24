@@ -1,6 +1,6 @@
 ---
 name: ship-readiness-gate
-description: "INTERNAL — automated post-push verification orchestrator. Fires in Code (the plugin-dev environment) after a push to staging main (ChaletteHQ/cr1). Detects the fresh ship, then runs the full canonical-surface verification battery against all synthetic fixtures + cross-references findings against the bug catalog + emits a PROMOTE/HOLD/BLOCKED verdict doc. No paste-back loop required — fully unattended. Triggers: 'ship readiness gate', 'post-push verify', 'production rehearsal', 'pre-promote check'. Used to gate the production-promote decision without needing the operator to walk a Cowork verification cycle manually. Plugin-developer use only. Companion to verify-cr-release (operator-attended Cowork loop), synthetic-workspace-runtime-test (per-fire code-path gate), compare-canonical-vs-freelance (per-skill ladder validation)."
+description: "INTERNAL — automated post-push verification orchestrator. Fires in Code (the plugin-dev environment) after a push to staging main (ChaletteHQ/cr1). Detects the fresh ship, then runs the full canonical-surface verification battery against all synthetic fixtures + cross-references findings against the bug catalog + emits a PROMOTE/HOLD/BLOCKED verdict doc. No paste-back loop required — fully unattended. Triggers: 'ship readiness gate', 'post-push verify', 'production rehearsal', 'pre-promote check'. Used to gate the production-promote decision without needing the operator to walk a Cowork verification cycle manually. Plugin-developer use only. Companion to verify-cr-release (operator-attended Cowork loop) and synthetic-workspace-runtime-test (per-fire code-path gate)."
 ---
 
 # ship-readiness-gate
@@ -50,9 +50,8 @@ The skill runs:
 - **bug-regression-suite** against the resolved target (real workspace runs carry the safety envelope: pre-snapshot + test_artifact tagging + cleanup helper)
 - **cross-skill-interaction-test** against the resolved target (multi-fire sequences with substrate snapshots) — real-workspace only, per its own fence
 - **synthetic-workspace-runtime-test** against the fixtures
-- **compare-canonical-vs-freelance** post-v3.13.8 only
 
-Always uses bug-regression-suite + synthetic-workspace-runtime-test as primary gates. cross-skill-interaction-test + compare-canonical are SUPPLEMENTARY gates that activate when their dependencies (real target / post-v3.13.8) are met.
+Always uses bug-regression-suite + synthetic-workspace-runtime-test as primary gates. cross-skill-interaction-test is a SUPPLEMENTARY gate that activates when its dependency (a real target) is met.
 
 ## Behavior
 
@@ -133,23 +132,7 @@ for fixture in fixtures:
 
 See `synthetic-workspace-runtime-test/SKILL.md` for the invariant catalog (18 invariants per fire).
 
-### Step 2 — Run compare-canonical-vs-freelance against widget-rendering skills
-
-For each skill that renders interactive widgets, run the side-by-side diff:
-
-```python
-widget_skills = [
-    "email-writer", "intro-broker", "follow-up-ritual", "thread-resurrection",
-    "calendar-writer", "commitments", "show-my-list", "decision-memo-composer",
-]
-for skill in widget_skills:
-    diff = run_canonical_vs_freelance(skill)
-    verdicts[(skill, "ladder_compliance")] = check_ladder_compliance(diff)
-```
-
-(post-v3.13.8 only; pre-v3.13.8 this step skips with "BLOCKED — depends on §2.1")
-
-### Step 3 — Cross-reference against bug catalog
+### Step 2 — Cross-reference against bug catalog
 
 For every PASS/FAIL outcome, cross-reference against the latest findings log:
 
@@ -170,7 +153,7 @@ for verdict in verdicts.values():
 new_failures = [v for v in verdicts.values() if v.has_failures() and not v.matched_known_bug]
 ```
 
-### Step 4 — Aggregate verdict
+### Step 3 — Aggregate verdict
 
 ```python
 verdict = compute_ship_readiness_verdict(verdicts, regressions, new_failures)
@@ -181,7 +164,7 @@ verdict = compute_ship_readiness_verdict(verdicts, regressions, new_failures)
 # PROMOTE — all Tier 1 PASS, no regressions, no new failures
 ```
 
-### Step 5 — Emit verdict doc
+### Step 4 — Emit verdict doc
 
 Write `<workspace_root>/SHIP_READINESS_v{version}_{date}.md` (workspace_root resolved from the operator profile; a synthetic-only operator writes it to a scratch/temp dir):
 
@@ -226,7 +209,7 @@ Write `<workspace_root>/SHIP_READINESS_v{version}_{date}.md` (workspace_root res
 - {list of failing tests + likely cause + recommended action}
 ```
 
-### Step 6 — Surface to chat
+### Step 5 — Surface to chat
 
 ```
 Ship Readiness Gate — v3.13.8
@@ -267,8 +250,8 @@ Full report: <workspace_root>/SHIP_READINESS_v3.13.8_2026-05-25.md (resolved fro
 - Schema compliance (Bugs #24, #34, #43, #49) — invariant I10
 - Leak gate (Bugs #54, #57, #59) — invariant I5 + universal post-render scan
 - Atomic-write multi-write deadlock (Bug #20) — invariant I14
-- Widget ladder adherence (Bug #46) — compare-canonical-vs-freelance ladder verdict
-- Action-label drift (Bug #48) — caught in widget ladder compliance
+- Widget ladder adherence (Bug #46) — synthetic invariants **I1** (`canonical_render_invoked`), **I2** (`no_freelance_render`) and **I16** (`file_uri_transport`). I2 is the direct successor of the retired per-skill canonical-vs-freelance ladder diff: it asserts `show_widget` is never reached off the canonical path at all, which is the property the diff was inferring. (The ladder diff retired with its skill in v0.3.1 — the mocked freelance fallback it diffed against no longer exists.)
+- Action-label drift (Bug #48) — **not** a synthetic invariant. It is asserted by cr1's renderer validator (`CanonicalActionError`), which runs in the **unit tier** (`tests/run_all.py`, i.e. `cr test --quick`), not here. I15 (`apply_choices_canonical_dispatch`) covers the dispatch *shape*, not the labels. Run the unit tier before trusting this gate on label drift.
 
 **Partial coverage:**
 - Voice contract violations (Bugs #16, #60) — synthetic captures chat narration; word-boundary scan applies; but LLM-driven variations limit detection
@@ -320,8 +303,6 @@ The compression doesn't ELIMINATE the smoke window — M still observes real-use
 
 **Bug catalog drift:** if findings log moved or renamed, skill falls back to last-known-good catalog + flags the issue.
 
-**Pre-v3.13.8 ship:** `compare-canonical-vs-freelance` returns BLOCKED for the §2 step; gate continues with just synthetic + catalog cross-reference.
-
 ## Pre-promote workflow (the operator's ship ritual)
 
 ```
@@ -341,4 +322,3 @@ The compression doesn't ELIMINATE the smoke window — M still observes real-use
 - `references/bug-catalog-parser.md` — how to extract bug records from findings log
 - `references/regression-matching.md` — how to detect known-bug regressions in test failures
 - Reuses `synthetic-workspace-runtime-test` fixture system + invariant catalog
-- Reuses `compare-canonical-vs-freelance` ladder validation logic
