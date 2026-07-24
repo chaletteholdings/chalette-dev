@@ -180,9 +180,9 @@ Write `<workspace_root>/SHIP_READINESS_v{version}_{date}.md` (workspace_root res
 
 {tabular results per fixture × surface}
 
-## §2. Widget ladder compliance — render-path diffs
+## §2. Render-path invariants — I1 / I2 / I16
 
-{per-skill canonical vs freelance verdict}
+{per-fire results for I1 `canonical_render_invoked`, I2 `no_freelance_render`, I16 `file_uri_transport` — from Step 1. These three ARE the render-path check; the retired per-skill ladder diff has no successor step here (see "What this skill catches"). Report only invariants Step 1 actually returned — never a per-skill ladder tally.}
 
 ## §3. Known bug regression check
 
@@ -221,9 +221,6 @@ Canonical surfaces: 7/7 per fixture (28 total fires)
 
 PASS: 27/28 fires
 PARTIAL: 1/28 (mature_workspace × morning-briefing — I6 defensive_read partially fired but skipped_lines not surfaced)
-
-Widget ladder compliance: 8/8 skills
-PASS: 8/8
 
 Known bug regression check: 0 regressions detected
 - Bug #4 email cascade: not regressed ✓
