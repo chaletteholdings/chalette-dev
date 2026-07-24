@@ -1,19 +1,32 @@
 ---
 name: scale-stress-test
-description: "INTERNAL — verifies Command Room helpers degrade gracefully at scale. Loads M's actual events.jsonl (currently ~1830 lines, growing) + runs canonical helpers (load_open_commitments, entity_resolve, brief_writer) + measures latency / memory / correctness. Identifies performance cliffs before customers hit them. Triggers: 'scale stress test', 'performance check', 'helper scale audit'. POST-V3.13.8 useful — assumes file-URI transport + brief_writer migrations have landed. Plugin-developer use only."
+description: "INTERNAL — verifies Command Room helpers degrade gracefully at scale. Loads an events.jsonl (the operator's real workspace when allowed_targets includes 'real', else the populated synthetic mature_workspace fixture) + runs canonical helpers (load_open_commitments, entity_resolve, brief_writer) + measures latency / memory / correctness. Identifies performance cliffs before customers hit them. Triggers: 'scale stress test', 'performance check', 'helper scale audit'. Assumes file-URI transport + brief_writer migrations have landed. Plugin-developer use only."
 ---
 
 # scale-stress-test
 
-**Performance verification at M's actual data scale.** Loads real events.jsonl + measures canonical helper performance + identifies performance cliffs.
+**Performance verification at real data scale.** Loads an events.jsonl + measures canonical helper performance + identifies performance cliffs.
 
-**STATUS: SCAFFOLD.** Implementation deferred to a dedicated session post-v3.13.8 ship. Triggers + outline below.
+> **Operator profile (read first).** Load `config/operator.json`, then overlay `config/operator.local.json` per-key if it exists (gitignored; the operator's local overlay — only M has one). Resolve the events source: if the merged `allowed_targets` includes `"real"`, use `<workspace_root>/_hq/data/events.jsonl`; otherwise use the bundled synthetic `mature_workspace` fixture — this skill has a genuine synthetic mode and never assumes a live workspace.
+> ```python
+> import json, os
+> op = {}
+> for _n in ("operator.json", "operator.local.json"):
+>     _p = os.path.join(SKILL_PLUGIN_ROOT, "config", _n)
+>     if os.path.exists(_p): op.update(json.load(open(_p)))
+> if "real" in op.get("allowed_targets", []) and op.get("workspace_root"):
+>     events_path = os.path.join(os.path.expanduser(op["workspace_root"]), "_hq/data/events.jsonl")
+> else:
+>     events_path = os.path.join(SKILL_PLUGIN_ROOT, "skills/synthetic-workspace-runtime-test/fixtures/mature_workspace/_hq/data/events.jsonl")
+> ```
+
+**STATUS: SCAFFOLD.** Implementation deferred to a dedicated session. Triggers + outline below.
 
 ## When this fires (post-implementation)
 
 | Trigger | Context |
 |---|---|
-| `scale stress test` | Run all helpers against M's actual events.jsonl |
+| `scale stress test` | Run all helpers against the resolved events.jsonl (real workspace or synthetic fixture) |
 | `performance check` | Same |
 | `helper scale audit` | Same |
 | `scale stress test --helper=load_open_commitments` | Single helper deep dive |
@@ -21,11 +34,11 @@ description: "INTERNAL — verifies Command Room helpers degrade gracefully at s
 
 ## Behavior (post-implementation TODO)
 
-### Step 1 — Read M's actual events.jsonl
+### Step 1 — Read the resolved events.jsonl
 
 ```python
-events_path = Path("~/Desktop/Claude/Command Room/_hq/data/events.jsonl")
-line_count = sum(1 for _ in open(events_path))
+# events_path resolved in the operator preamble above (real workspace_root or synthetic mature_workspace fixture)
+line_count = sum(1 for _ in open(os.path.expanduser(events_path)))
 file_size = events_path.stat().st_size
 print(f"Events: {line_count} lines, {file_size} bytes")
 ```
@@ -105,7 +118,7 @@ Estimated implementation: 2-3 hours dedicated session.
 
 ## What it doesn't catch
 
-- Bugs that only surface in production environment (Cowork has different resource constraints than M's local Code)
+- Bugs that only surface in production environment (Cowork has different resource constraints than the operator's local Code)
 - Cross-skill performance interactions
 - Network latency (everything is local)
 

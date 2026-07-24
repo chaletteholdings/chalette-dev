@@ -1,0 +1,45 @@
+name: toolkit-guard
+
+# CONSOL1 structural guards.
+# - Guard 2 (operator-fence + quick_validate pytest) runs UNCONDITIONALLY on every push/PR.
+# - Guard 1 (cross-repo overlap vs chalette030) runs ONLY when the CHALETTE030_READ_TOKEN
+#   secret is present. A fork without the secret prints SKIPPED and stays green, so Eric's
+#   fork CI never fails on a private repo it cannot read.
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  guard2-fences-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install test deps
+        run: pip install pytest pyyaml
+      - name: Guard 2 — operator fences + quick_validate (all skills)
+        run: pytest tests/ -v
+
+  guard1-toolkit-overlap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Guard 1 — cross-repo toolkit overlap vs chalette030
+        env:
+          CHALETTE030_READ_TOKEN: ${{ secrets.CHALETTE030_READ_TOKEN }}
+        run: |
+          if [ -z "$CHALETTE030_READ_TOKEN" ]; then
+            echo "SKIPPED — CHALETTE030_READ_TOKEN not set; cannot read private ChaletteHQ/chalette030."
+            echo "(This is expected on forks. The guard runs in Matthew's release preflight regardless.)"
+            exit 0
+          fi
+          git clone --depth 1 \
+            "https://x-access-token:${CHALETTE030_READ_TOKEN}@github.com/ChaletteHQ/chalette030.git" \
+            /tmp/chalette030
+          python scripts/check_toolkit_overlap.py "$GITHUB_WORKSPACE" /tmp/chalette030

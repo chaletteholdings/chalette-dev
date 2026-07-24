@@ -1,0 +1,10 @@
+# Operator overlay — per-machine, gitignored. Only M keeps one; it carries his real
+# paths and the "real" allowed_targets. The committed config/operator.json stays the
+# contractor-safe default. Guard 2 (tests/test_operator_fences.py) asserts this stays untracked.
+operator.local.json
+chalette-dev/config/operator.local.json
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/

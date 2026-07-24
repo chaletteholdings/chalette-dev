@@ -38,22 +38,28 @@ DOES NOT fire on `run plugin tests` (that's run-command-room-tests — different
 
 ### Step 0 — Locate plan + workspace state
 
-On `verify cr release [version]`, find these files in the **resolved** workspace — which is the operator's synthetic fixture unless `config/operator.json` grants otherwise. It is M's real workspace only on M's machine:
+On `verify cr release [version]`, find these files in the **resolved** workspace — which is the operator's synthetic fixture unless the merged operator profile (`config/operator.json`, then `config/operator.local.json` overlaid per-key) grants otherwise. It is M's real workspace only on M's machine:
 
 ```bash
 # Resolve the workspace root. NEVER hardcode a literal machine path.
-# Order: --workspace-root arg -> $CR_WORKSPACE_ROOT -> config/operator.json
+# Order: --workspace-root arg -> $CR_WORKSPACE_ROOT -> merged operator profile
+#        (config/operator.json then config/operator.local.json overlaid per-key)
 #        -> default to the clean_workspace synthetic fixture.
 PLUGIN_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 OPERATOR_CFG="$PLUGIN_ROOT/config/operator.json"
+OPERATOR_OVERLAY="$PLUGIN_ROOT/config/operator.local.json"          # gitignored M-only overlay
 FIXTURES="$PLUGIN_ROOT/skills/synthetic-workspace-runtime-test/fixtures"
 
 WORKSPACE_ROOT="${CR_WORKSPACE_ROOT:-}"
-if [ -z "$WORKSPACE_ROOT" ] && [ -f "$OPERATOR_CFG" ]; then
+if [ -z "$WORKSPACE_ROOT" ]; then
   # `or ''` is load-bearing: workspace_root ships as null, and .get(k, '') returns
   # None for a key that EXISTS with a null value — the '' default never applies —
   # so expanduser(None) raised TypeError on the committed default.
-  WORKSPACE_ROOT=$(python -c "import json,sys,os;print(os.path.expanduser(json.load(open(sys.argv[1])).get('workspace_root') or ''))" "$OPERATOR_CFG")
+  WORKSPACE_ROOT=$(python -c "import json,os
+p={}
+for f in ('$OPERATOR_CFG','$OPERATOR_OVERLAY'):
+    if os.path.exists(f): p.update(json.load(open(f)))
+print(os.path.expanduser(p.get('workspace_root') or ''))")
 fi
 [ -z "$WORKSPACE_ROOT" ] && WORKSPACE_ROOT="$FIXTURES/clean_workspace"
 
@@ -309,7 +315,7 @@ Summary:
 Production-promote recommendation: SAFE
 New-customer onboarding: SAFE
 
-Decision doc saved to Desktop/Claude/Command Room/V3.13.8_VERIFIED_2026-05-25.md
+Decision doc saved to <workspace_root>/V3.13.8_VERIFIED_2026-05-25.md (resolved from the operator profile)
 ```
 
 ## Implementation notes

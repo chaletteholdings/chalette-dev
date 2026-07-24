@@ -17,13 +17,13 @@ metadata:
 ## Skill Boundary (v3)
 
 - **Use cr-skill-builder for:** scaffolding a NEW Command Room plugin skill (Mode 2) OR auditing an existing CR skill draft / spec doc against the 27-gate contract (Mode 1). The quality gate for any SKILL.md that ships to a paying CR client.
-- **Use `chalette:skill-creator` for:** generic skill creation outside Command Room scope, OR for the eval / packaging phases of a CR skill (this skill delegates there for Gates 15-16).
-- **Use `chalette:skill-generator` for:** project-scoped client skills ("go [project]") that live in `_hq/skills/<project>/`, not in the Command Room plugin.
-- **Use `chalette:regenerate-skill` for:** refreshing an existing project-scoped skill when its template or context changed.
+- **Use `chalette-dev:skill-creator` for:** generic skill creation outside Command Room scope, OR for the eval / packaging phases of a CR skill (this skill delegates there for Gates 15-16).
+- **Use `chalette-dev:skill-generator` for:** project-scoped client skills ("go [project]") that live in `_hq/skills/<project>/`, not in the Command Room plugin.
+- **Use `chalette-dev:regenerate-skill` for:** refreshing an existing project-scoped skill when its template or context changed.
 - **Use direct edit** for: trivial changes to an existing skill (typo, small text fix, single-line clarification). The contract gates don't help here and waste time.
-- **Use `chalette:voice-test` for:** standalone voice scoring outside a skill-build context.
-- **Use `chalette:synthetic-workspace-runtime-test` for:** running runtime exercise against synthetic fixture once the SKILL.md is drafted (Gate 13 invocation).
-- **Use `chalette:bug-regression-suite` for:** regression checks against M's workspace or synthetic fixture (Gate 18 invocation).
+- **Use `chalette-dev:voice-test` for:** standalone voice scoring outside a skill-build context.
+- **Use `chalette-dev:synthetic-workspace-runtime-test` for:** running runtime exercise against synthetic fixture once the SKILL.md is drafted (Gate 13 invocation).
+- **Use `chalette-dev:bug-regression-suite` for:** regression checks against the resolved workspace or synthetic fixture (Gate 18 invocation).
 - **Use `chalette:ship-cr-plugin` for:** the actual release flow once the ship-package is reviewed and ready.
 
 ## Live derivation — contracts are read, not vendored (v3 / D1)
@@ -31,13 +31,15 @@ metadata:
 This skill no longer trusts a vendored snapshot of cr1's contracts. The "sync references every release" rule failed empirically (the old `cr-event-type-registry.md` sat 10+ releases stale before it was deleted). Instead, the event enum, the guard registry, and the canonical verb set are **read live** from the cr1 clone at runtime. Resolve the clone path **once**, parameterized so Eric's fork works too:
 
 ```python
-# Parameterized cr1 clone path — M defaults to the canonical edit surface; Eric's fork
-# is read from config/operator.json (cr1_clone). Never hardcode a single machine's path.
+# Parameterized cr1 clone path — M defaults to the canonical edit surface; a contractor's fork
+# is read from the merged operator profile (config/operator.json, then config/operator.local.json
+# overlaid per-key; the overlay is gitignored and only M has one). Never hardcode a machine path.
 import json, os
-op = os.path.join(SKILL_PLUGIN_ROOT, "config", "operator.json")
-cr1_clone = "~/repos/cr1-canonical"                 # M-only default
-if os.path.exists(op):
-    cr1_clone = json.load(open(op)).get("cr1_clone", cr1_clone) or cr1_clone
+op = {}
+for _n in ("operator.json", "operator.local.json"):
+    _p = os.path.join(SKILL_PLUGIN_ROOT, "config", _n)
+    if os.path.exists(_p): op.update(json.load(open(_p)))
+cr1_clone = op.get("cr1_clone") or "~/repos/cr1-canonical"   # M-only default
 CR = os.path.join(os.path.expanduser(cr1_clone), "command-room")
 ```
 
@@ -45,9 +47,9 @@ Pull the clone first (`git -C "$(dirname "$CR")" pull --ff-only`, per the canoni
 
 ## Writer Contract
 
-This skill is a META-skill: it does NOT write to the CR substrate (`events.jsonl`, `entities.json`). It writes to:
+This skill is a META-skill: it does NOT write to the CR substrate (`events.jsonl`, `entities.json`). Resolve the **output dir** once from the merged operator profile: `workspace_root` if set (M writes into his `Command Room/` workspace via his overlay); otherwise a scratch dir adjacent to the resolved `cr1_clone` (e.g. `<cr1_clone>/../cr-skill-drafts/`) so a contractor operator has a real, non-hardcoded home. It writes to:
 
-- **Workspace drafts:** `Penelopes Brain/Command Room/SKILL_PACKAGE_<name>_<date>.md` (Mode 2 output) or `AUDIT_<name>_<date>.md` (Mode 1 output).
+- **Workspace drafts:** `<output_dir>/SKILL_PACKAGE_<name>_<date>.md` (Mode 2 output) or `<output_dir>/AUDIT_<name>_<date>.md` (Mode 1 output).
 - **Plugin source (only on explicit M-approval at end of Phase 5):**
   - `command-room/skills/<...>/SKILL.md` (CR-internal skills go in the canonical edit surface resolved above; the marketplace clone is a read-only install cache)
   - `command-room/tests/runtime_exercise_<name>.py`
@@ -66,14 +68,14 @@ This skill is a META-skill: it does NOT write to the CR substrate (`events.jsonl
 
 - Does NOT auto-commit. Output is a draft ship-package; M reviews + commits manually (or via `chalette:ship-cr-plugin`).
 - Does NOT auto-ship to production. v3.13.8 architectural review confirmed: production-promote needs human verification gates.
-- Does NOT replace `chalette:skill-creator`. Composes with it.
+- Does NOT replace `chalette-dev:skill-creator`. Composes with it.
 - Does NOT design the SKILL.md from a vague brief. If Phase 1 intent capture doesn't produce a clear outcome + 5+ trigger phrases + 2+ negative triggers, the skill STOPS and pushes back for clarification. Vague briefs produce vague skills.
-- Does NOT run evals itself. Defers to `chalette:skill-creator`'s Executor/Grader for Gates 15-16.
-- Does NOT run voice scoring itself. Defers to `chalette:voice-test` for composer-skill Voice Calibration (Gate 14).
-- Does NOT run regression itself. Defers to `chalette:bug-regression-suite` for the no-regression check (Gate 18).
-- Does NOT run runtime exercise itself. Defers to `chalette:synthetic-workspace-runtime-test` (Gate 13).
+- Does NOT run evals itself. Defers to `chalette-dev:skill-creator`'s Executor/Grader for Gates 15-16.
+- Does NOT run voice scoring itself. Defers to `chalette-dev:voice-test` for composer-skill Voice Calibration (Gate 14).
+- Does NOT run regression itself. Defers to `chalette-dev:bug-regression-suite` for the no-regression check (Gate 18).
+- Does NOT run runtime exercise itself. Defers to `chalette-dev:synthetic-workspace-runtime-test` (Gate 13).
 - Does NOT generate fake names / synthetic data outside the canonical placeholder set (`Sam Sample`, `Bo Sample`, `Rio Sample`, `Acme Co`, `Northstar Partners`, `Category Company`, `@example.com`). Privacy Gate 6 hard-gate.
-- Does NOT skip Voice Calibration for composer skills. Any skill detected as a composer (drafts emails / writes memos / composes replies) MUST score ≥85 on `chalette:voice-test`. No override below 70; 70-85 requires explicit M-acceptance with reason logged.
+- Does NOT skip Voice Calibration for composer skills. Any skill detected as a composer (drafts emails / writes memos / composes replies) MUST score ≥85 on `chalette-dev:voice-test`. No override below 70; 70-85 requires explicit M-acceptance with reason logged.
 - Does NOT mark a skill ship-ready until ALL Tier A static gates clear AND ALL Tier B runtime/eval gates clear. WARN-status surfaces for explicit accept; BLOCK-status halts.
 
 ## How to Use
@@ -210,11 +212,11 @@ Run all 27 gates from `references/cr-contract-checklist.md` in three tiers:
 **Tier A — Static gates (run in-builder, fast):** Gates 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27.
 
 **Tier B — Runtime + eval gates (delegated to chalette tooling):**
-- Gate 13 — runtime stub generated + `chalette:synthetic-workspace-runtime-test` PASS (absorbs the former Gate 17 runtime duplicate)
-- Gate 14 — `chalette:voice-test` ≥85 (composer skills only)
-- Gate 15 — `chalette:skill-creator` Executor+Grader ≥90% pass rate
-- Gate 16 — measured trigger eval (see below) via `chalette:skill-creator`; validation ≥0.85
-- Gate 18 — `chalette:bug-regression-suite` PASS verdict after staging-drop
+- Gate 13 — runtime stub generated + `chalette-dev:synthetic-workspace-runtime-test` PASS (absorbs the former Gate 17 runtime duplicate)
+- Gate 14 — `chalette-dev:voice-test` ≥85 (composer skills only)
+- Gate 15 — `chalette-dev:skill-creator` Executor+Grader ≥90% pass rate
+- Gate 16 — measured trigger eval (see below) via `chalette-dev:skill-creator`; validation ≥0.85
+- Gate 18 — `chalette-dev:bug-regression-suite` PASS verdict after staging-drop
 
 **Tier C — Ship-time gates (deferred to `chalette:ship-cr-plugin`):** Gates 11, 12.
 
@@ -278,16 +280,16 @@ I render:
 10. **Eval prompts file** at `tests/eval_prompts_<name>.json` (3-10 prompts + assertions for Gate 15)
 11. **Voice samples** (if composer skill) — 3 sample drafts for Gate 14 scoring
 12. **skill_config template** (if first-run questionnaire defined) at `_hq/data/skill_config/<name>.json.template`
-13. **Single output file** at `Penelopes Brain/Command Room/SKILL_PACKAGE_<name>_<date>.md` containing all the above + a "drop these into the plugin" checklist M can walk
+13. **Single output file** at `<output_dir>/SKILL_PACKAGE_<name>_<date>.md` (output_dir resolved per the Writer Contract) containing all the above + a "drop these into the plugin" checklist the operator can walk
 
 ### Phase 6 — Defer to existing tooling
 
 I surface clickable links to:
 
-- `chalette:skill-creator` → run the trigger eval + additional evals against test prompts
-- `chalette:synthetic-workspace-runtime-test` → runtime exercise against fixture
-- `chalette:verify-cr-release` → M-attended Cowork verification (for the release containing this skill)
-- `chalette:bug-regression-suite` → regression check against M's workspace post-drop
+- `chalette-dev:skill-creator` → run the trigger eval + additional evals against test prompts
+- `chalette-dev:synthetic-workspace-runtime-test` → runtime exercise against fixture
+- `chalette-dev:verify-cr-release` → M-attended Cowork verification (for the release containing this skill)
+- `chalette-dev:bug-regression-suite` → regression check against the resolved workspace post-drop
 - `chalette:ship-cr-plugin` → staging push when ready
 
 I do NOT invoke these directly. M decides when each fires.
@@ -301,7 +303,7 @@ Input formats:
 - Path to a spec doc (parses each `### N. <skill>` section as a separate audit subject)
 - Pasted markdown (last resort)
 
-Output: `Penelopes Brain/Command Room/AUDIT_<skill-name>_<date>.md` with verdict (SHIP / FIX-AND-SHIP / REWRITE) at the top + per-gate findings + the live guard-tier result. A red guard forces at least FIX-AND-SHIP regardless of the 27-gate outcome.
+Output: `<output_dir>/AUDIT_<skill-name>_<date>.md` (output_dir resolved per the Writer Contract) with verdict (SHIP / FIX-AND-SHIP / REWRITE) at the top + per-gate findings + the live guard-tier result. A red guard forces at least FIX-AND-SHIP regardless of the 27-gate outcome.
 
 ## References (what this skill reads at runtime)
 

@@ -1,11 +1,20 @@
 ---
 name: ship-readiness-gate
-description: "INTERNAL — automated post-push verification orchestrator. Fires in Code (M's plugin-dev environment) after a push to chaletteholdings/commandroom1 main. Detects the fresh ship, then runs the full canonical-surface verification battery against all synthetic fixtures + cross-references findings against the bug catalog + emits a PROMOTE/HOLD/BLOCKED verdict doc. No M paste-back loop required — fully unattended. Triggers: 'ship readiness gate', 'post-push verify', 'production rehearsal', 'pre-promote check'. Used to gate the production-promote decision (v3.6.4 → v{shipped}) without needing M to walk a Cowork verification cycle manually. Plugin-developer use only. Companion to verify-cr-release (M-attended Cowork loop), synthetic-workspace-runtime-test (per-fire code-path gate), compare-canonical-vs-freelance (per-skill ladder validation)."
+description: "INTERNAL — automated post-push verification orchestrator. Fires in Code (the plugin-dev environment) after a push to staging main (ChaletteHQ/cr1). Detects the fresh ship, then runs the full canonical-surface verification battery against all synthetic fixtures + cross-references findings against the bug catalog + emits a PROMOTE/HOLD/BLOCKED verdict doc. No paste-back loop required — fully unattended. Triggers: 'ship readiness gate', 'post-push verify', 'production rehearsal', 'pre-promote check'. Used to gate the production-promote decision without needing the operator to walk a Cowork verification cycle manually. Plugin-developer use only. Companion to verify-cr-release (operator-attended Cowork loop), synthetic-workspace-runtime-test (per-fire code-path gate), compare-canonical-vs-freelance (per-skill ladder validation)."
 ---
 
 # ship-readiness-gate
 
-**The fully-unattended pre-promote verification gate.** Fires in Code immediately after M pushes to chaletteholdings/commandroom1 main. Runs the full verification battery automatically (no Cowork paste-back loop) + emits a PROMOTE / HOLD / BLOCKED verdict on production-promote decision.
+**The fully-unattended pre-promote verification gate.** Fires in Code immediately after a push to staging main (ChaletteHQ/cr1). Runs the full verification battery automatically (no Cowork paste-back loop) + emits a PROMOTE / HOLD / BLOCKED verdict on production-promote decision.
+
+> **Operator profile (read first).** Load `config/operator.json`, then overlay `config/operator.local.json` per-key if present (gitignored; the operator's local overlay — only M has one). Resolve `cr1_clone` (staging clone to inspect), `workspace_root` (where verdict docs land), and `allowed_targets`. **Default target is synthetic fixtures** — the `mature_workspace`/`clean_workspace`/`degraded_workspace`/`fresh_install` fixtures are populated. Targeting a real workspace requires `"real"` in `allowed_targets` (M only); any other operator that asks for `--target=m-workspace` is refused and run against synthetic.
+> ```python
+> import json, os
+> op = {}
+> for _n in ("operator.json", "operator.local.json"):
+>     _p = os.path.join(SKILL_PLUGIN_ROOT, "config", _n)
+>     if os.path.exists(_p): op.update(json.load(open(_p)))
+> ```
 
 ## Why this skill exists
 
@@ -24,33 +33,41 @@ Caveat: this skill catches code-path issues but NOT Cowork-side LLM behavior. Fi
 | `production rehearsal` | Same |
 | `pre-promote check` | Same |
 | `ship readiness gate --auto-detect` | Auto-detect fresh push via git log; abort if HEAD is > 24h old |
-| `ship readiness gate --target=m-workspace` | Run battery against M's actual workspace (NOT synthetic fixtures) — preferred since fixtures unpopulated as of chalette v0.6.0 |
-| `ship readiness gate --target=synthetic` | Run battery against synthetic fixtures (requires fixtures populated) |
+| `ship readiness gate --target=m-workspace` | Run battery against the operator's real workspace (NOT synthetic fixtures) — permitted ONLY when the merged profile has `"real"` in `allowed_targets`; any other operator is refused and falls back to synthetic |
+| `ship readiness gate --target=synthetic` (default) | Run battery against the populated synthetic fixtures |
 
-DOES NOT fire on `verify cr release` (that's the M-attended Cowork loop). DOES NOT fire on `run synthetic workspace test` (that's a single-fixture single-skill test).
+DOES NOT fire on `verify cr release` (that's the operator-attended Cowork loop). DOES NOT fire on `run synthetic workspace test` (that's a single-fixture single-skill test).
 
 ### Target mode behavior
 
-**Per M's preference (2026-05-24): default target is M's actual workspace**, not synthetic fixtures. Reasons:
-- M's workspace is realistic-scale with edge cases (more thorough than skeleton fixtures)
-- Skeleton fixtures don't fully exercise canonical helpers yet
-- Real-customer testing IS the bar for "this ships safely"
+**Default target is the populated synthetic fixtures.** A real workspace is targeted only when the merged operator profile grants `"real"` in `allowed_targets` (M's profile) — the contractor-safe default runs synthetic only. When real is granted, the operator's live workspace adds realistic-scale edge cases the fixtures may not carry; when it isn't, the fixtures are the bar.
 
 The skill runs:
-- **bug-regression-suite** against M's workspace (with safety: pre-snapshot + test_artifact tagging + cleanup helper)
-- **cross-skill-interaction-test** against M's workspace (multi-fire sequences with substrate snapshots)
-- **synthetic-workspace-runtime-test** only if fixtures populated (else skipped with note)
+- **bug-regression-suite** against the resolved target (real workspace runs carry the safety envelope: pre-snapshot + test_artifact tagging + cleanup helper)
+- **cross-skill-interaction-test** against the resolved target (multi-fire sequences with substrate snapshots) — real-workspace only, per its own fence
+- **synthetic-workspace-runtime-test** against the fixtures
 - **compare-canonical-vs-freelance** post-v3.13.8 only
 
-Always uses bug-regression-suite + cross-skill-interaction-test as primary gates. Synthetic + compare-canonical are SUPPLEMENTARY gates that activate when their dependencies are met.
+Always uses bug-regression-suite + synthetic-workspace-runtime-test as primary gates. cross-skill-interaction-test + compare-canonical are SUPPLEMENTARY gates that activate when their dependencies (real target / post-v3.13.8) are met.
 
 ## Behavior
 
 ### Step 0 — Detect fresh push
 
 ```bash
-# Locate the Command Room staging clone
-STAGING_ROOT=~/.claude/plugins/marketplaces/commandroom1/command-room
+# Locate the Command Room staging clone. Prefer the operator profile's cr1_clone
+# (M defaults it to ~/repos/cr1-canonical); fall back to an installed marketplace clone.
+SELF="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"   # chalette-dev plugin root (holds config/)
+CR1_CLONE=$(python -c "import json,os
+p={}
+for f in ('$SELF/config/operator.json','$SELF/config/operator.local.json'):
+    if os.path.exists(f): p.update(json.load(open(f)))
+print(os.path.expanduser(p.get('cr1_clone') or ''))")
+if [ -n "$CR1_CLONE" ] && [ -d "$CR1_CLONE/command-room" ]; then
+    STAGING_ROOT="$CR1_CLONE/command-room"
+else
+    STAGING_ROOT=~/.claude/plugins/marketplaces/cr1/command-room
+fi
 
 cd "$STAGING_ROOT"
 git fetch origin main --quiet
@@ -111,7 +128,8 @@ for skill in widget_skills:
 For every PASS/FAIL outcome, cross-reference against the latest findings log:
 
 ```python
-findings_log = Path("~/Desktop/Claude/Command Room/TEST_SESSION_FINDINGS_2026-05-21.md")
+# The bug catalog is the canonical known-bug source, shipped in the plugin.
+findings_log = Path(SKILL_PLUGIN_ROOT) / "skills/bug-regression-suite/references/bug-catalog.md"
 known_bugs = parse_bug_catalog(findings_log)
 
 # Did any KNOWN bug surface in this run? (regression detection)
@@ -139,7 +157,7 @@ verdict = compute_ship_readiness_verdict(verdicts, regressions, new_failures)
 
 ### Step 5 — Emit verdict doc
 
-Write `Desktop/Claude/Command Room/SHIP_READINESS_v{version}_{date}.md`:
+Write `<workspace_root>/SHIP_READINESS_v{version}_{date}.md` (workspace_root resolved from the operator profile; a synthetic-only operator writes it to a scratch/temp dir):
 
 ```markdown
 # Ship Readiness Gate — v{version}
@@ -163,7 +181,7 @@ Write `Desktop/Claude/Command Room/SHIP_READINESS_v{version}_{date}.md`:
 
 ## §4. New failure classes detected
 
-{any failures that don't match catalog — surface for M's call}
+{any failures that don't match catalog — surface for the operator's call}
 
 ## §5. Production-promote recommendation
 
@@ -171,12 +189,11 @@ Write `Desktop/Claude/Command Room/SHIP_READINESS_v{version}_{date}.md`:
 
 {If PROMOTE:}
 **You may safely run:**
-- git push origin main → chaletteholdings/commandroom main
-- OR run ship-cr-plugin Step 9 production promote
+- ship-cr-plugin Step 9 production promote (fans out core to all ChaletteHQ client repos via scripts/promote_core_to_clients.py — dry-run first)
 
 {If HOLD:}
 **Pending:**
-- {list of items needing M's judgment call}
+- {list of items needing the operator's judgment call}
 
 {If BLOCKED:}
 **Must fix before promote:**
@@ -213,7 +230,7 @@ VERDICT: HOLD
 
 Recommended action: review the morning-briefing skipped_lines surface; either fix in v3.13.8.1 OR accept as known-residual-fix.
 
-Full report: Desktop/Claude/Command Room/SHIP_READINESS_v3.13.8_2026-05-25.md
+Full report: <workspace_root>/SHIP_READINESS_v3.13.8_2026-05-25.md (resolved from the operator profile)
 ```
 
 ## What this skill catches
@@ -237,7 +254,7 @@ Full report: Desktop/Claude/Command Room/SHIP_READINESS_v3.13.8_2026-05-25.md
 - Customer-specific edge cases not in fixtures
 - Cowork's prompt-pattern-matching adaptation over time
 
-**Conclusion:** This skill is ~80% of pre-promote verification. The remaining 20% needs verify-cr-release on M's actual workspace.
+**Conclusion:** This skill is ~80% of pre-promote verification. The remaining 20% needs verify-cr-release on the operator's real workspace.
 
 ## Verdict logic
 
@@ -271,20 +288,20 @@ The compression doesn't ELIMINATE the smoke window — M still observes real-use
 
 ## Failure modes
 
-**Synthetic fixtures not populated:** skill returns "BLOCKED — fixtures need population" with clear pointer to fixtures/README.md. (This is the v0.6.0 ship state until fixtures filled in.)
+**Synthetic fixtures missing:** the fixtures ship populated (`clean_workspace`/`mature_workspace`/`degraded_workspace`/`fresh_install`); if a fixture dir is absent or empty, skill returns "BLOCKED — fixtures missing" with a pointer to `synthetic-workspace-runtime-test/fixtures/README.md` and its `_generate_fixtures.py`.
 
-**Plugin code path crashes during synthetic fire:** captured in trace; surfaces as a CRASH verdict rather than PASS/FAIL. Surfaces stack trace for M debugging.
+**Plugin code path crashes during synthetic fire:** captured in trace; surfaces as a CRASH verdict rather than PASS/FAIL. Surfaces stack trace for operator debugging.
 
 **Bug catalog drift:** if findings log moved or renamed, skill falls back to last-known-good catalog + flags the issue.
 
 **Pre-v3.13.8 ship:** `compare-canonical-vs-freelance` returns BLOCKED for the §2 step; gate continues with just synthetic + catalog cross-reference.
 
-## Pre-promote workflow (M's daily ritual once v3.13.8 ships)
+## Pre-promote workflow (the operator's ship ritual)
 
 ```
-1. (Code session) Implement v3.13.8.X fixes per master plan
+1. (Code session) Implement fixes per plan
 2. Run pre-commit hook + tests pass
-3. git push to chaletteholdings/commandroom1 main
+3. git push to staging main (ChaletteHQ/cr1)
 4. (Same Code session) ship readiness gate
 5. Review SHIP_READINESS_v3.13.8.X_<date>.md
 6. If PROMOTE → safe to fire ship-cr-plugin Step 9 production promote

@@ -1,13 +1,20 @@
 ---
 name: capture-for-code
-description: "Capture a bug, feature idea, or new-skill idea for the Command Room build pipeline the moment you spot it — a one-minute structured capture that writes ONE file to the local intake queue (intake_root from config/operator.json, default ~/cr-intake/new/) and returns to the interrupted task. Capture only: no verification, no diagnosis, no spec-writing (that's triage-intake's job, run against the cr1 clone). Use when the operator says: 'capture this for code', 'log this for code', 'capture for code', 'bug for code', 'idea for code', 'skill idea for code', 'add to intake', 'log that in the intake', 'put this in the build queue', 'code handoff', 'that's a bug — log it for the pipeline'. DOES NOT fire on customer-inbound bug reports or the customer-facing report-bug flow. DOES NOT fire on bare 'I think there's a bug in X' with no capture verb — that's an investigation; fire only when the operator asks to log/capture it (including right after such an investigation)."
+description: "Capture a bug, feature idea, or new-skill idea for the Command Room build pipeline the moment you spot it — a one-minute capture that writes ONE file to the local intake queue and returns to the interrupted task. Capture only: no verification, no diagnosis, no spec-writing (that's triage-intake's job). Use when the operator says: 'capture this for code', 'log this for code', 'capture for code', 'hand this to code', 'bug for code', 'idea for code', 'skill idea for code', 'I want a skill that [X] — capture it', 'add to intake', 'log that in the intake', 'put this in the build queue', 'code handoff', 'that's a bug — log it for the pipeline'. DOES NOT fire on customer-inbound bug reports or the customer-facing report-bug flow. DOES NOT fire on 'bug from [name]' or 'bug intake' — that's process-bug-report. DOES NOT fire on bare 'I think there's a bug in X' with no capture verb — that's an investigation; fire only when the operator asks to log/capture it (including right after such an investigation)."
 ---
 
 # capture-for-code
 
 The capture half of the intake pair. Sibling of `triage-intake`. Structured capture where the observation happens; verification later, where the codebase is open.
 
-> **Operator-aware.** Read `config/operator.json` first. The queue root is `intake_root` (default `~/cr-intake`). Create `new/`, `needs-input/`, `speced/`, `done/`, `killed/`, `specs/` plus a one-line README on first capture if missing.
+> **Operator-aware.** Read `config/operator.json`, then overlay `config/operator.local.json` per-key if present (gitignored; the operator's local overlay — only M has one). The queue root is the merged `intake_root` (default `~/cr-intake`). Create `new/`, `needs-input/`, `speced/`, `done/`, `killed/`, `specs/` plus a one-line README on first capture if missing.
+> ```python
+> import json, os
+> op = {}
+> for _n in ("operator.json", "operator.local.json"):
+>     _p = os.path.join(SKILL_PLUGIN_ROOT, "config", _n)
+>     if os.path.exists(_p): op.update(json.load(open(_p)))
+> ```
 
 ## What this is and is not
 
@@ -41,7 +48,7 @@ Path: `<intake_root>/new/<TYPE>_<YYYY-MM-DD>_<slug>.md` (TYPE ∈ BUG/IDEA/SKILL
 - Bugs: **expected vs actual as separate fields**, plus repro (the exact trigger phrase counts).
 - Any root-cause guess — theirs or yours — goes ONLY under `## Hypothesis (UNVERIFIED)`. Observed behavior and speculated cause never mix.
 - Ideas: fill `impact` and `confidence` (1-5); leave `ease` as `?` — only triage (repo open) scores ease.
-- **Placeholder names only** in every field — never real client/customer names (the org-name leak rule applies to intake files like everything else).
+- **Names discipline (operator-scoped, INTAKE1 F7):** if the merged profile's `allowed_targets` does **not** include `"real"` (contractor/synthetic operator), use **placeholder names only** in every field — never real client/customer names (the org-name leak rule applies to intake files like everything else). An operator whose profile grants `"real"` (M) is capturing findings about their own real workspace and MAY record the real context needed to triage — those files live only on that operator's machine and never ship in the plugin.
 - No placeholder text; a section with nothing real gets `(none)`.
 
 ### Step 6 — Confirm and return (one line)

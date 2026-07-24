@@ -1,13 +1,23 @@
 ---
 name: smoke-watch
-description: "INTERNAL — passive observation during the 24h post-promote smoke window. Watches M's real Cowork usage (event log + chat narration when M pastes back) for architectural surprises that automated gates missed. Triggers: 'start smoke watch', 'smoke window monitor', 'watch for v[version] issues'. Compresses the V3.13.8_MASTER_PLAN §10 Decision 5 24h M-only smoke window into structured surveillance. Per the 20% gap analysis — catches bug classes that other gates can't see. Plugin-developer use only."
+description: "INTERNAL — passive observation during the 24h post-promote smoke window. Watches the operator's real Cowork usage (event log + chat narration on paste-back) for architectural surprises that automated gates missed. Requires an operator profile with 'real' in allowed_targets (config/operator.json); refuses otherwise — it has no synthetic mode. Triggers: 'start smoke watch', 'smoke window monitor', 'watch for v[version] issues'. Compresses the Decision-5 24h operator-only smoke window into structured surveillance. Catches bug classes that other gates can't see. Plugin-developer use only."
 ---
 
 # smoke-watch
 
-**Passive observation during the 24h post-promote smoke window.** Watches M's real Cowork usage for architectural surprises that the pre-promote gates missed.
+**Passive observation during the 24h post-promote smoke window.** Watches the operator's real Cowork usage for architectural surprises that the pre-promote gates missed.
 
-**STATUS: SCAFFOLD.** Implementation deferred to dedicated session — best built after first real post-v3.13.8 promote cycle so the watch patterns reflect actual smoke-window observations.
+> **Operator profile (read first).** Load `config/operator.json`, then overlay `config/operator.local.json` per-key if it exists (gitignored; the operator's local overlay — only M has one). This skill has **no synthetic mode**: if the merged `allowed_targets` does not include `"real"`, refuse and say so (it observes a live workspace or nothing — that's honest). All paths below resolve from `workspace_root`.
+> ```python
+> import json, os
+> op = {}
+> for _n in ("operator.json", "operator.local.json"):
+>     _p = os.path.join(SKILL_PLUGIN_ROOT, "config", _n)
+>     if os.path.exists(_p): op.update(json.load(open(_p)))
+> if "real" not in op.get("allowed_targets", []): refuse("smoke-watch needs an operator profile with 'real' in allowed_targets")
+> ```
+
+**STATUS: SCAFFOLD.** Implementation deferred to dedicated session — best built after a real promote cycle so the watch patterns reflect actual smoke-window observations.
 
 ## When this fires (post-implementation)
 
@@ -41,8 +51,8 @@ State persists in `_hq/.system/smoke-watches/{watch_id}.json`.
 
 For 24h, the watch:
 
-1. **Polls M's events.jsonl** every N minutes for new events
-2. **Listens for M's manual paste-backs** (when M paste-shares unusual Cowork behavior)
+1. **Polls the operator's events.jsonl** (under `workspace_root`) every N minutes for new events
+2. **Listens for the operator's manual paste-backs** (when they paste-share unusual Cowork behavior)
 3. **Checks for new error events** (pattern_break_detected, freelance_render_detected, corruption_recovery)
 4. **Aggregates regression signals** vs the bug-regression-suite catalog
 5. **Surfaces architectural surprises** to M in real-time
@@ -80,7 +90,7 @@ Both architectural surprises are PARTIAL-FIX completion items, suitable for v3.1
 ### Step 4 — Verdict outputs
 
 ```
-SMOKE_WATCH_v3.13.8_2026-05-26.md saved to Desktop/Claude/Command Room/
+SMOKE_WATCH_v3.13.8_2026-05-26.md saved under <workspace_root> (resolved from config/operator.json)
 
 Verdict: PROMOTE | ROLLBACK | HOLD
 
@@ -94,7 +104,7 @@ If ROLLBACK:
 
 If HOLD:
 - Extend smoke window
-- Specific items needing M's call
+- Specific items needing the operator's call
 ```
 
 ## Implementation TODO
@@ -118,7 +128,7 @@ Estimated implementation: 2-3 hours dedicated session post-first-promote-cycle (
 ## What it can't catch
 
 - Bugs that only surface 1+ week post-promote (would need longer windows or scheduled re-checks)
-- Issues that only happen for OTHER customers (M's workspace ≠ all customer workspaces)
+- Issues that only happen for OTHER customers (the operator's workspace ≠ all customer workspaces)
 - Bugs in adjacent systems (Anthropic infra issues, MCP connector outages)
 
 ## Integration with ship-readiness-gate

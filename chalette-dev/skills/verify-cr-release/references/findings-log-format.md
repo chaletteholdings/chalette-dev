@@ -4,7 +4,7 @@ Canonical append-only format for findings log entries. Preserves audit trail acr
 
 ## Location
 
-Findings log at: `Desktop/Claude/Command Room/TEST_SESSION_FINDINGS_<date>.md`
+Findings log at: `<workspace_root>/TEST_SESSION_FINDINGS_<date>.md` (workspace_root resolved from the operator profile — never a hardcoded machine path)
 
 If multiple findings logs exist, prefer the most recent. If none exist for the current verification session, create one with header:
 
@@ -12,10 +12,10 @@ If multiple findings logs exist, prefer the most recent. If none exist for the c
 # Command Room v<version> — Verification Session Findings
 
 **Date:** YYYY-MM-DD
-**Tester:** Matthew (via Cowork) + verify-cr-release (via Code chat)
+**Tester:** the operator (attended mode runs in M's Cowork) + verify-cr-release (via Code chat)
 **Plan:** [absolute path]
 **Plugin staging HEAD under test:** [git ref]
-**Production HEAD:** [git ref of chaletteholdings/commandroom main]
+**Production HEAD:** [cr1 git ref promoted to the ChaletteHQ client repos via promote_core_to_clients.py]
 ```
 
 ## Per-test entry format

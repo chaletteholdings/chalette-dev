@@ -36,6 +36,41 @@ Track A).
 Claude Code → analyze and root-cause here. If it's a machinery bug, write a repro +
 fix + a regression test, then open a PR.
 
+## Single canonical home for the shared toolkit
+
+As of CONSOL1 (2026-07-24) **chalette-dev is the one and only home of the shared QA/dev
+toolkit** — the 18 skills here (bug-regression-suite, capture-for-code, cr-test,
+cr-skill-builder, ship-readiness-gate, synthetic-workspace-runtime-test, triage-intake,
+verify-cr-release, …). They used to be duplicated into Matthew's private `chalette`
+plugin; that copy is gone. Companion references say `chalette-dev:<skill>` (or just
+"the <skill> skill"). Guard 1 (`scripts/check_toolkit_overlap.py`) fails the build if a
+duplicate of any of these ever reappears in the `chalette` plugin.
+
+## Operator profile — `config/operator.json` (+ optional local overlay)
+
+Every skill that targets a workspace, a clone, or an intake queue resolves it from the
+**operator profile**, never a hardcoded path:
+
+- `config/operator.json` — committed, **contractor-safe default** (operator `eric`,
+  `allowed_targets: ["synthetic"]`, `may_ship: false`, `may_promote: false`,
+  `workspace_root: null`). Edit `cr1_clone` to your own clone; leave the safety keys alone.
+- `config/operator.local.json` — **gitignored per-machine overlay.** A reading skill loads
+  `operator.json`, then overlays `operator.local.json` per-key. Only Matthew keeps one (it
+  carries his real paths and `"real"` in `allowed_targets`). **Do not edit the committed
+  `operator.json` into a real-workspace profile** — drop an overlay instead. Guard 2
+  (`tests/test_operator_fences.py`) fails CI if the committed default drifts or if
+  `operator.local.json` is ever tracked.
+
+Standard read pattern (identical in each reading skill's preflight):
+
+```python
+import json, os
+op = {}
+for _n in ("operator.json", "operator.local.json"):
+    _p = os.path.join(SKILL_PLUGIN_ROOT, "config", _n)
+    if os.path.exists(_p): op.update(json.load(open(_p)))
+```
+
 ## Hard guardrails
 
 1. **Never push to cr1 directly.** You have read access only. Fork `ChaletteHQ/cr1`,
@@ -58,7 +93,10 @@ fix + a regression test, then open a PR.
    requirements.txt` then `python tests/run_all.py` — must be green. **chalette-dev:**
    there is no automated battery here (skills are English prose); instead run the
    Phase 0 checks in `verify-cr-release/references/VERIFICATION_PLAN.md` that touch
-   what you changed, and say in the PR how you verified it.
+   what you changed, and say in the PR how you verified it. There is also a small
+   structural battery — `pytest tests/` (the operator-fence + quick_validate guards) and
+   `python scripts/check_toolkit_overlap.py <chalette-dev> <chalette>` — that CI runs on
+   every push; run `pytest tests/` locally before opening a PR.
 3. Open a PR with a **plain-English explanation**: what it changes, why, the upside,
    and any risk. Assume Matthew is non-technical — write for him.
 4. Matthew reviews (he has a skill that lays your PR out for him), approves, and it

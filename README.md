@@ -2,11 +2,13 @@
 
 The shared testing, verification, and skill-building toolkit for everyone who builds on Command Room. Matthew (M) and Eric both install this; it is the single source of truth for how CR gets tested. Client repos, client data, and the release/promote pipeline are deliberately **not** in here.
 
+As of **CONSOL1 (2026-07-24)** this is the **single canonical home** of the shared toolkit — the 18 skills below used to be duplicated into M's private `chalette` plugin; that copy is gone. Guard 1 (`scripts/check_toolkit_overlap.py`) fails the build if any of them ever reappears in `chalette`.
+
 ## Setup (Eric)
 
 1. Clone this repo: `git clone https://github.com/ChaletteHQ/chalette-dev ~/repos/chalette-dev`
 2. Clone the Command Room staging repo (read-only for you): `git clone https://github.com/ChaletteHQ/cr1 ~/repos/cr1`
-3. Edit `config/operator.json` on your machine if your paths differ. Leave `operator: "eric"` as is — the test skills read it to decide what you're allowed to target.
+3. Edit `config/operator.json` on your machine if your paths differ. Leave `operator: "eric"` and the safety keys (`allowed_targets`, `may_ship`, `may_promote`) as is — the test skills read them to decide what you're allowed to target. (M does not edit this committed file; he keeps a gitignored `config/operator.local.json` overlay that the skills merge on top of it. Guard 2 fails CI if the committed default ever drifts, or if the overlay is ever tracked.)
 4. In Claude Code, install the plugin from your local clone (marketplace add → this repo path), so the `chalette-dev:*` skills are available in every session.
 5. The synthetic fixtures live in this repo at `chalette-dev/skills/synthetic-workspace-runtime-test/fixtures/` (four workspaces: clean / degraded / fresh_install / mature, built by `_generate_fixtures.py`). `synthetic-workspace-runtime-test` resolves to one of them by default; `config/operator.json` (`workspace_root: null`) points the QA skills at the `clean_workspace` fixture unless you say otherwise.
 
@@ -33,6 +35,7 @@ The shared testing, verification, and skill-building toolkit for everyone who bu
 | `run-command-room-tests` | Runs the cr1 test battery (`command-room/tests/run_all.py` — house-convention suites, not pytest; `pip install -r requirements.txt` first) |
 | `scale-stress-test`, `smoke-watch` | Scaffolds — performance at scale, post-release observation (not fully built) |
 | `cr-skill-builder` | Builds new CR skills with all contract gates enforced; also audits drafts |
+| `capture-for-code`, `triage-intake` | The intake pair — capture a bug/idea the moment you spot it → verify it against the repo and write a spec (operator-keyed queue via `intake_root`) |
 | `skill-creator`, `skill-generator`, `regenerate-skill` | General skill scaffolding and eval tooling |
 | `voice-test` | Scores composer-skill output against the CR voice rules |
 | `preview-command-room-widget` | Renders CR widgets locally for visual checks |

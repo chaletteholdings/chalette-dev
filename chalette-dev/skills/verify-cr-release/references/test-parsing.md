@@ -4,7 +4,7 @@ How to parse a verification plan markdown into a structured test list.
 
 ## Expected plan structure
 
-The reference plan is `Desktop/Claude/Command Room/COMPREHENSIVE_VERIFICATION_PLAN_2026-05-23.md`. Format:
+The reference plan lives under the resolved `<workspace_root>` (e.g. `COMPREHENSIVE_VERIFICATION_PLAN_<date>.md`) — never a hardcoded machine path. Format:
 
 ```markdown
 ## Phase 0 — Update Cowork (do this FIRST)

@@ -680,7 +680,9 @@ Same failure class as the description-only-routing gotcha: every mechanical gate
 
 ## Catalog versioning
 
-This catalog is versioned alongside chalette plugin. v0.6.0 = 61 entries (the v3.13.7 verification session output). Future versions grow this catalog as new bugs surface.
+This catalog is versioned alongside the chalette-dev plugin. v0.6.0 = 61 entries (the v3.13.7 verification session output). Future versions grow this catalog as new bugs surface.
+
+> **Dual-copy byte-identical invariant — RETIRED (CONSOL1, 2026-07-24).** This catalog formerly lived in both `chalette` (chalette030) and `chalette-dev` and the two copies had to be kept byte-identical, with a periodic sync (the owed v0.1.3 sync) closing any drift. Consolidation makes chalette-dev the single canonical home of `bug-regression-suite`; there is exactly one copy now, so the sync obligation closes itself and the byte-identical invariant no longer applies. Guard 1 (`scripts/check_toolkit_overlap.py`) enforces that the duplicate never silently returns.
 
 When adding entries:
 1. Use the exact format above (Mode / Severity / Fixed in / Modifies substrate / Trigger / Expected pass / Expected fail)

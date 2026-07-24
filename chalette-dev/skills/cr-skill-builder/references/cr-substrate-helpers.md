@@ -147,7 +147,7 @@ cr-skill-builder delegates Tier B runtime/eval gates to these existing chalette 
 ### Voice Calibration (Gate 14 — composer skills)
 
 ```
-Invoke: chalette:voice-test
+Invoke: chalette-dev:voice-test
 Input:  sample drafts from the new composer skill (≥3 representative outputs)
 Output: score 0-100 per draft + weighted average + per-AI-tell breakdown
 Threshold: ≥85 average for ship
@@ -160,7 +160,7 @@ Threshold: ≥85 average for ship
 ### Eval Executor + Grader (Gate 15)
 
 ```
-Invoke: chalette:skill-creator (Executor + Grader sub-agents)
+Invoke: chalette-dev:skill-creator (Executor + Grader sub-agents)
 Input:  drafted SKILL.md + test prompts file (tests/eval_prompts_<skill>.json)
 Output: per-prompt verdict (PASS/FAIL) + aggregate pass rate
 Threshold: ≥90% pass rate
@@ -171,7 +171,7 @@ Threshold: ≥90% pass rate
 ### Description-improver (Gate 16)
 
 ```
-Invoke: chalette:skill-creator description-improver tool
+Invoke: chalette-dev:skill-creator description-improver tool
 Input:  drafted SKILL.md frontmatter description
 Output: triggering accuracy score 0-1 + reword suggestions
 Threshold: ≥0.85
@@ -182,7 +182,7 @@ Threshold: ≥0.85
 ### Synthetic-workspace runtime exercise (Gate 13)
 
 ```
-Invoke: chalette:synthetic-workspace-runtime-test
+Invoke: chalette-dev:synthetic-workspace-runtime-test
 Input:  --target=synthetic --skill=<new-skill-name>
 Output: PASS / WARN / BLOCK verdict + runtime exception trace if any
 Threshold: PASS only
@@ -193,7 +193,7 @@ Threshold: PASS only
 ### Bug-regression suite (Gate 18)
 
 ```
-Invoke: chalette:bug-regression-suite
+Invoke: chalette-dev:bug-regression-suite
 Input:  --target=workspace (or --target=synthetic if fixtures available)
 Output: baseline diff (PRE-drop vs POST-drop) + any newly-failing tests
 Threshold: zero newly-failing tests
@@ -225,7 +225,10 @@ For substrate file paths used in skill code:
 
 ```python
 import os
-workspace_root = os.environ.get("WORKSPACE", os.path.expanduser("~/Desktop/Claude/Penelopes Brain"))
+# Resolve from the environment / operator config — never hardcode a machine path (Gate 9).
+workspace_root = os.environ.get("WORKSPACE")
+if not workspace_root:
+    raise RuntimeError("WORKSPACE not set — resolve workspace_root from the runtime/operator config, never a literal path")
 events_path = os.path.join(workspace_root, "_hq", "data", "events.jsonl")
 entities_path = os.path.join(workspace_root, "_hq", "data", "entities.json")
 ```

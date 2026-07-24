@@ -27,7 +27,7 @@ The adversarial mode adds the "try to break it" complement — fire edge-case pr
 | `run regression suite --adversarial` | Both modes (regression + adversarial) |
 | `run regression suite --bug-id=N` | Single-bug repro only |
 | `run regression suite --target=synthetic` (default) | Against synthetic fixtures |
-| `run regression suite --target=m-workspace` | Against M's actual workspace — ONLY when `config/operator.json` in this plugin repo has `"operator": "m"`. Any other operator: refuse this target and run synthetic. |
+| `run regression suite --target=m-workspace` | Against the operator's real workspace — ONLY when the merged operator profile (`config/operator.json` + `config/operator.local.json`) has `"operator": "m"` and `allowed_targets` includes `"real"`. Any other operator: refuse this target and run synthetic. |
 | `run regression suite --cleanup` | Post-suite cleanup helper |
 
 ## Behavior
@@ -40,27 +40,37 @@ Resolution order — first hit wins, and the default is always a synthetic fixtu
 
 1. `--workspace-root=<path>` CLI argument, if given
 2. `$CR_WORKSPACE_ROOT` environment variable, if set
-3. `workspace_root` in `config/operator.json` (this plugin's `config/` dir)
+3. `workspace_root` in the merged operator profile — `config/operator.json`, then
+   `config/operator.local.json` overlaid per-key if present (gitignored; only M has one)
 4. **Default:** the `clean_workspace` synthetic fixture shipped in
    `skills/synthetic-workspace-runtime-test/fixtures/`
 
 ```bash
 PLUGIN_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"   # skills/<name>/ -> plugin root
 OPERATOR_CFG="$PLUGIN_ROOT/config/operator.json"
+OPERATOR_OVERLAY="$PLUGIN_ROOT/config/operator.local.json"          # gitignored M-only overlay
 FIXTURES="$PLUGIN_ROOT/skills/synthetic-workspace-runtime-test/fixtures"
 
+# Merged operator profile = operator.json then operator.local.json overlaid per-key.
 WORKSPACE_ROOT="${CR_WORKSPACE_ROOT:-}"
-if [ -z "$WORKSPACE_ROOT" ] && [ -f "$OPERATOR_CFG" ]; then
-  # `or ''` is load-bearing: workspace_root ships as null, and .get(k, '') returns
-  # None for a key that EXISTS with a null value — the '' default never applies —
-  # so expanduser(None) raised TypeError on the committed default.
-  WORKSPACE_ROOT=$(python -c "import json,sys,os;print(os.path.expanduser(json.load(open(sys.argv[1])).get('workspace_root') or ''))" "$OPERATOR_CFG")
+if [ -z "$WORKSPACE_ROOT" ]; then
+  # `or ''` is load-bearing: workspace_root ships as null, and .get(k) returns None
+  # for a key that EXISTS with a null value — so expanduser(None) would raise TypeError.
+  WORKSPACE_ROOT=$(python -c "import json,os
+p={}
+for f in ('$OPERATOR_CFG','$OPERATOR_OVERLAY'):
+    if os.path.exists(f): p.update(json.load(open(f)))
+print(os.path.expanduser(p.get('workspace_root') or ''))")
 fi
 # Default: synthetic fixture. Never a literal machine path.
 [ -z "$WORKSPACE_ROOT" ] && WORKSPACE_ROOT="$FIXTURES/clean_workspace"
 
-# Refuse a real workspace unless operator.json says this operator may target one.
-MAY_TARGET_REAL=$(python -c "import json,sys,os;c=json.load(open(sys.argv[1])) if os.path.exists(sys.argv[1]) else {};print('yes' if 'real' in c.get('allowed_targets',[]) else 'no')" "$OPERATOR_CFG" 2>/dev/null || echo no)
+# Refuse a real workspace unless the merged profile grants allowed_targets: ["real"].
+MAY_TARGET_REAL=$(python -c "import json,os
+p={}
+for f in ('$OPERATOR_CFG','$OPERATOR_OVERLAY'):
+    if os.path.exists(f): p.update(json.load(open(f)))
+print('yes' if 'real' in p.get('allowed_targets',[]) else 'no')" 2>/dev/null || echo no)
 case "$WORKSPACE_ROOT" in
   "$FIXTURES"/*) : ;;                       # synthetic — always allowed
   *) [ "$MAY_TARGET_REAL" = "yes" ] || {
@@ -201,7 +211,7 @@ After all selected bugs fire:
 Bug Regression Suite — run at 2026-05-26T10:00:00Z
 
 Mode: regression
-Target: M's workspace
+Target: <resolved workspace_root> (operator profile)
 Catalog: 14 Tier 1 ship-blockers + 18 Tier 2 + 12 Tier 3 adversarial = 44 tests
 
 Results:
@@ -221,7 +231,7 @@ Pending v3.13.8.1 (or follow-up):
 - Bug #60 voice scrub completion (2 orchestrators)
 - Bug #61 pack_run emission (2 orchestrators)
 
-Full report: Desktop/Claude/Command Room/REGRESSION_SUITE_2026-05-26.md
+Full report: <workspace_root>/REGRESSION_SUITE_2026-05-26.md (resolved from the operator profile)
 ```
 
 ### Step 6 — Post-suite cleanup
@@ -286,9 +296,9 @@ Substrate-modifying tests (e.g., Bug #19 disambiguation) MUST snapshot pre-fire 
 
 ## Integration with ship-readiness-gate
 
-ship-readiness-gate orchestrates this skill as part of its post-push verification battery. After a push to commandroom1 main, ship-readiness-gate runs:
+ship-readiness-gate orchestrates this skill as part of its post-push verification battery. After a push to ChaletteHQ/cr1 main, ship-readiness-gate runs:
 1. synthetic-workspace-runtime-test (against fixtures)
-2. **bug-regression-suite (against M's workspace)** ← this skill
+2. **bug-regression-suite (against the resolved workspace)** ← this skill
 3. compare-canonical-vs-freelance (per-skill ladder)
 4. Aggregate PROMOTE / HOLD / BLOCKED verdict
 
