@@ -52,10 +52,10 @@ Use for: baseline pass verification
 
 ### `fixtures/mature_workspace/` — realistic mature state
 
-Like M's actual workspace at scale:
+Like a real workspace at scale:
 - entities.json: 80 people, 20 orgs, 15 projects
 - events.jsonl: 1500 events (mix of nano-epoch + human-counter seqs per Bug #41)
-- 8 deliberately malformed events.jsonl lines (per Sub-bug #14b — line shatter pattern from M's actual workspace)
+- 8 deliberately malformed events.jsonl lines (per Sub-bug #14b — the line-shatter pattern seen in a real workspace)
 - aliases.json: 50 entries with both nested + flat shapes (per `feedback_canonical_path_improv_pattern`)
 - Mixed event types including some unsanctioned (e.g., `person_added` legacy + `person_created` canonical mixed — per Bug #34)
 
@@ -82,9 +82,19 @@ Use for: first-fire / onboarding verification (Bug #36 brain_name prompt, M1 wid
 ### Step 1 — Discover plugin + select fixture
 
 ```bash
+SELF="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"   # chalette-dev plugin root (holds config/)
 SESSION_DIR=$(echo "$CLAUDE_CODE_TMPDIR" | sed "s|/tmp$||")
 PLUGIN_ROOT=$(ls -d "$SESSION_DIR"/mnt/.remote-plugins/plugin_* 2>/dev/null | head -1)
-[ -z "$PLUGIN_ROOT" ] && PLUGIN_ROOT=~/.claude/plugins/marketplaces/commandroom1/command-room
+# Fallback: the cr1 clone from the merged operator profile (operator.json + operator.local.json
+# overlaid per-key; gitignored, only M has one). Never a hardcoded machine/marketplace path.
+if [ -z "$PLUGIN_ROOT" ]; then
+  CR1_CLONE=$(python -c "import json,os
+p={}
+for f in ('$SELF/config/operator.json','$SELF/config/operator.local.json'):
+    if os.path.exists(f): p.update(json.load(open(f)))
+print(os.path.expanduser(p.get('cr1_clone') or ''))")
+  [ -n "$CR1_CLONE" ] && PLUGIN_ROOT="$CR1_CLONE/command-room"
+fi
 ```
 
 Use chalette plugin's own `skills/synthetic-workspace-runtime-test/fixtures/` directory for fixture source.
@@ -169,10 +179,21 @@ def verify_invariants(result: FireResult, surface: str, fixture_name: str) -> li
             evidence="show_widget invoked without canonical render → freelance path detected"
         ))
     
-    # Invariant 7: schema-sanctioned event types only
+    # Invariant 7: schema-sanctioned event types only + gate routing
+    # The event gate lives inside atomic_append_jsonl (cr1 Phase 4, 2026-07-02): it REJECTS an
+    # unregistered type at append time, so a fire that tried to write one surfaces as a raised
+    # EventGateError, not a landed unsanctioned event. Assert BOTH: nothing unsanctioned reached
+    # the file, AND any surface that wrote events routed through append_event — a landed
+    # unsanctioned type (or a write that skipped append_event) means the surface bypassed the gate.
     unsanctioned = [e["type"] for e in result.events if e["type"] not in SCHEMA_ENUM]
     if unsanctioned:
         failures.append(Failure(invariant="schema_compliance", surface=surface, evidence=unsanctioned))
+    if result.wrote_events and not result.called("append_event"):
+        failures.append(Failure(
+            invariant="event_gate_routed",
+            surface=surface,
+            evidence="events written without append_event → legacy/bypass write path detected"
+        ))
     
     return failures
 ```
@@ -213,13 +234,13 @@ Recommend: address before v3.13.8 ship. Re-run after fixing.
 rm -rf "$TMPDIR"
 ```
 
-Skill writes a summary to `_hq/synthetic-test-runs/<timestamp>/report.md` in M's workspace + raw fire traces to `<timestamp>/traces/`.
+Skill writes a summary to `_hq/synthetic-test-runs/<timestamp>/report.md` under the resolved workspace (or a temp dir for synthetic-only operators) + raw fire traces to `<timestamp>/traces/`.
 
 ## Failure modes + mitigations
 
 - **Fixture out of date with plugin version:** skill detects via plugin_version vs fixture_compatibility_version mismatch in fixture's `.metadata.json`; surfaces clearly + offers to regenerate.
-- **Mocking too thin to catch real bugs:** skill captures actual tool-trace; failures include verbatim trace excerpts so M can verify manually.
-- **Fixture diverges from real workspaces over time:** quarterly fixture refresh via diff against M's current workspace shape (not content).
+- **Mocking too thin to catch real bugs:** skill captures actual tool-trace; failures include verbatim trace excerpts so the operator can verify manually.
+- **Fixture diverges from real workspaces over time:** quarterly fixture refresh via diff against the operator's real workspace shape, not content (operator=m only — the only profile with a real workspace to diff against).
 
 ## Connection to verify-cr-release
 
@@ -227,8 +248,8 @@ The skills are companions, not substitutes:
 
 | | verify-cr-release | synthetic-workspace-runtime-test |
 |---|---|---|
-| Environment | M's actual Cowork chat + Code | Pure Code subprocess |
-| Substrate | M's real workspace | Synthetic fixture |
+| Environment | the operator's actual Cowork chat + Code | Pure Code subprocess |
+| Substrate | the operator's real workspace | Synthetic fixture |
 | Speed | ~10 min per test (M-attention) | ~30 sec per fire (automated) |
 | Catches | Cowork-side LLM behavior | Plugin-side code-path behavior |
 | When to run | Pre-ship Cowork-integration gate | Pre-commit + ship-cr-plugin pre-flight |

@@ -7,7 +7,14 @@ description: "Process the intake queue (intake_root from config/operator.json, d
 
 The verify half of the intake pair. Sibling of `capture-for-code`. Turns raw captures into either a build-ready `SPEC_*.md` or an honest "don't build this" — never leaves an item in limbo silently.
 
-> **Operator-aware.** Read `config/operator.json` first: `intake_root` (queue location, default `~/cr-intake`), `cr1_clone` (the repo to verify against), `allowed_targets`. **Non-M operators verify against synthetic fixtures ONLY** (`skills/synthetic-workspace-runtime-test/fixtures/`) — never a real workspace. `may_ship: false` means specs are handed to M, never built into a release by you.
+> **Operator-aware.** Read `config/operator.json`, then overlay `config/operator.local.json` per-key if present (gitignored; the operator's local overlay — only M has one). Keys used: `intake_root` (queue location, default `~/cr-intake`), `cr1_clone` (the repo to verify against), `chalette_clone` (a chalette030 clone, when the item targets the chalette plugin; only M has one), `specs_dir` (where specs land; default `<intake_root>/specs/`), `parking_doc` (PARK target; default `<intake_root>/PARKING.md`), `allowed_targets`, `may_ship`. **Non-M operators verify against synthetic fixtures ONLY** (`skills/synthetic-workspace-runtime-test/fixtures/`) — never a real workspace. `may_ship: false` means specs are handed to M, never built into a release by you.
+> ```python
+> import json, os
+> op = {}
+> for _n in ("operator.json", "operator.local.json"):
+>     _p = os.path.join(SKILL_PLUGIN_ROOT, "config", _n)
+>     if os.path.exists(_p): op.update(json.load(open(_p)))
+> ```
 
 ## What this is and is not
 
@@ -17,8 +24,8 @@ The verify half of the intake pair. Sibling of `capture-for-code`. Turns raw cap
 
 ## Preflight (every run)
 
-1. **Sync the clone**: `git -C <cr1_clone> pull` — never triage against a stale tree.
-2. List `<intake_root>/new/`. If empty: check `needs-input/` for items since answered (a ruling note appended below the questions = answered), report the queue state in two lines, done.
+1. **Sync the clone**: `git -C <cr1_clone> pull` — never triage against a stale tree. **INTAKE1 F4 (operator-aware):** if an item targets the chalette plugin AND `chalette_clone` is set in the merged profile, also `git -C <chalette_clone> pull` before verifying that item (only M has a chalette clone; contractors skip this).
+2. List `<intake_root>/new/`. **Resurrection guard (INTAKE1 F5):** before triaging, cross-check each `new/` filename against `speced/`, `killed/`, and `done/` — an exact match means a multi-machine sync re-added an item triage already moved out of `new/`; delete-or-skip it, never re-triage. If empty: check `needs-input/` for items since answered (a ruling note appended below the questions = answered), report the queue state in two lines, done.
 3. **Stale check**: items in `new/` older than 30 days go on the decision table with a kill-or-keep prompt.
 4. If >5 items, state the count and confirm batch order (severity first, then oldest) — or take a subset.
 
@@ -44,13 +51,13 @@ The verify half of the intake pair. Sibling of `capture-for-code`. Turns raw cap
 2. **Overlap check:** ≥80% of an existing skill → recommend "extend X", not a new build; say which sections of X change.
 3. **Touch-surface inventory:** files/skills/substrate touched; new event types must register in `events.schema.json` + `EVENT_TYPES.md` with a named consumer.
 4. **Score `ease`** (1-5) in the frontmatter; ICE = impact × confidence × ease is a sort key for attention, never a verdict.
-5. **Verdict:** `SPEC` / `PARK` (real but not now — note it in the spec queue's parking doc if one exists, file to `killed/` with pointer) / `KILL` (with the honest reason).
+5. **Verdict:** `SPEC` / `PARK` (real but not now — append a one-paragraph entry to `parking_doc` from the merged profile, default `<intake_root>/PARKING.md`; M's overlay points it at his `FUTURE_WORK.md`; then file to `killed/` with a pointer) / `KILL` (with the honest reason).
 
 ## Writing the spec
 
 Templates in `references/spec-templates.md` — two sizes, pick by item, never inflate: **bug-fix spec** ≤1 page, **feature/skill spec** ≤3 pages with a §0 open-decisions table where every genuine fork gets a **recommended default** (flag ambiguity, never silently guess; blocking decisions marked `AWAIT ruling — DO NOT BUILD`).
 
-Specs land in `<intake_root>/specs/SPEC_<TAG>_<snake_name>.md` (fresh TAG — check for collisions). **Delivery to M:** attach the spec to the related cr1 PR, or hand it over in your normal channel — contractors never self-approve a spec into a build. Then rewrite the intake file to a pointer ("superseded by SPEC_XXX — <date>") and move it to `speced/`.
+Specs land in the merged `specs_dir` (default `<intake_root>/specs/`; M's overlay points it at his `build-specs/` folder), named `SPEC_<TAG>_<snake_name>.md` (fresh TAG — check for collisions). **Delivery is `may_ship`-gated:** when the merged profile has `may_ship: true` (M), the spec lands directly in `specs_dir` (his build-specs queue) ready to build; when `may_ship: false` (contractor), attach the spec to the related cr1 PR or hand it over in your normal channel — contractors never self-approve a spec into a build. Then rewrite the intake file to a pointer ("superseded by SPEC_XXX — <date>") and move it to `speced/`.
 
 Spec hygiene: reference files by path, never inline code the builder can read; a section that restates what any Claude already knows gets cut.
 

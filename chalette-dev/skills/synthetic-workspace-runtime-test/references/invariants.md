@@ -91,6 +91,14 @@ The full list of runtime invariants the skill asserts after every canonical-surf
 
 **Why:** Bug #34 (person_added) + Bug #43 (followup_pack_drafted) + Bug #49 (schema audit) — schema-additive policy.
 
+### I10b — event_gate_routed
+
+**Test:** Any surface that wrote events routed those writes through `append_event` (i.e. through `atomic_append_jsonl`, where the event gate lives).
+
+**How:** if `result.wrote_events` is true, assert `result.called("append_event")`; a landed unsanctioned type or a write that skipped `append_event` means the surface bypassed the gate.
+
+**Why:** the strict event gate now lives inside `atomic_append_jsonl` (cr1 Phase 4, 2026-07-02, confirmed live by BUILD_SB1's Gate-3 audit). This checks the live routing invariant from the read side — paired with I10 (schema_compliance) under SKILL.md Invariant 7. (CONSOL1 D6: re-added; the transition-era "rig-hygiene" grep prose was dropped.)
+
 ### I11 — closure_canonical_shape
 
 **Test:** Closure events (`commitment_resolved` / `thread_resolved` / `commitment_superseded` / `decision_resolved` / `decision_superseded`) use canonical shape:

@@ -309,7 +309,7 @@ Summary:
 Production-promote recommendation: SAFE
 New-customer onboarding: SAFE
 
-Decision doc saved to Desktop/Claude/Command Room/V3.13.8_VERIFIED_2026-05-25.md
+Decision doc saved to <workspace_root>/V3.13.8_VERIFIED_2026-05-25.md (resolved from the operator profile)
 ```
 
 ## Implementation notes

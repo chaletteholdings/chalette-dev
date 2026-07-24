@@ -12,13 +12,13 @@ description: Create new skills, modify and improve existing skills, and measure 
 
 ## Command Room Plugin Skills — Special Rules (v2.1)
 
-**For Command Room plugin skills: prefer `chalette:cr-skill-builder` over this skill.** cr-skill-builder enforces the full 27-gate client-quality contract (event types, atomic helpers, ENTITY_RESOLVE, Voice Calibration, trigger evals, runtime exercise, regression check, cross-skill collision detection, description budget, etc.) that this generic skill-creator does NOT enforce. The CR plugin ships to paying clients — every gate matters.
+**For Command Room plugin skills: prefer `chalette-dev:cr-skill-builder` over this skill.** cr-skill-builder enforces the full 27-gate client-quality contract (event types, atomic helpers, ENTITY_RESOLVE, Voice Calibration, trigger evals, runtime exercise, regression check, cross-skill collision detection, description budget, etc.) that this generic skill-creator does NOT enforce. The CR plugin ships to paying clients — every gate matters.
 
-If you're creating a CR skill and the user has invoked this skill instead, suggest switching: "For Command Room plugin skills, `chalette:cr-skill-builder` is the right tool — it enforces 27 client-quality contract gates this generic creator skips. Want me to hand off?"
+If you're creating a CR skill and the user has invoked this skill instead, suggest switching: "For Command Room plugin skills, `chalette-dev:cr-skill-builder` is the right tool — it enforces 27 client-quality contract gates this generic creator skips. Want me to hand off?"
 
 If for any reason you must use this generic skill-creator for a CR skill (e.g., cr-skill-builder unavailable):
 
-If the skill being created or edited lives under `Claude/Command Room/plugin-source-v2/skills/`, it MUST conform to the v2.1 skill shape defined in `Claude/Command Room/plugin-source-v2/references/SKILL_SHAPE_V2.md`. Before any edit or create operation on a plugin skill, read that file in full.
+If the skill being created or edited is a Command Room plugin skill (lives under the cr1 clone's `command-room/skills/` — the canonical edit surface resolved from `cr1_clone` in the operator profile), it MUST conform to the CR skill contract. `chalette-dev:cr-skill-builder` is the authority for that contract (the 27 gates + skill shape); read its `references/cr-contract-checklist.md` before any edit or create on a plugin skill.
 
 Key non-negotiables from the v2.1 shape:
 - Descriptions lead with CEO outcome, not trigger lists.

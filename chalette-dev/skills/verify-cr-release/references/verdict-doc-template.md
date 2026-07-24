@@ -1,6 +1,6 @@
 # Verdict document template
 
-When `verify cr release verdict` fires (or all tests complete), generate `V{version}_VERIFIED_{date}.md` in M's workspace using this template.
+When `verify cr release verdict` fires (or all tests complete), generate `V{version}_VERIFIED_{date}.md` under the resolved `<workspace_root>` (from the operator profile) using this template.
 
 ## Template
 

@@ -1,7 +1,6 @@
 ---
 name: voice-test
 description: "INTERNAL DIAGNOSTIC — fires solely on the exact phrase 'internal: run voice regression'. Generates test drafts from each writing skill for 1-5 scoring; not for customer chat or real-use drafting."
-template_version: 1.0.0
 ---
 
 # Voice Test

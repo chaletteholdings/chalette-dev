@@ -6,7 +6,7 @@ last_updated: 2026-07-23
 
 # CR Contract Checklist — 27 Gates
 
-Every new Command Room skill MUST pass these gates before SKILL.md ships to a customer-bound release. The gates are the unique value of `cr-skill-builder` vs `chalette:skill-creator` (which only enforces SKILL_SHAPE_V2 frontmatter).
+Every new Command Room skill MUST pass these gates before SKILL.md ships to a customer-bound release. The gates are the unique value of `cr-skill-builder` vs `chalette-dev:skill-creator` (which only enforces SKILL_SHAPE_V2 frontmatter).
 
 **Do not audit against this file's frozen contracts alone.** The event enum, the guard registry, and the canonical verb set all live in cr1 and move faster than any vendored snapshot can track (the reason the old `cr-event-type-registry.md` was deleted — it sat 10+ releases stale). The gates that depend on those contracts (1, 2, 7, 13, 17, 21, 22, 26, 27) name the **live source** to read at runtime, not a copy to trust. Phase 0 of the builder compares each reference's `cr_plugin_version_min` against the running cr1 `plugin.json` and raises a WARN banner on drift so you never silently audit against a stale contract.
 
@@ -180,7 +180,7 @@ If the skill is invoked with a name-bearing trigger ("[skill] for [name]"), you 
 
 ```
 # WRONG
-"Your brief saved to C:\Users\asdas\Desktop\Claude\..."
+"Your brief saved to C:\Users\sam\Desktop\Claude\..."
 
 # RIGHT
 "Your brief saved to <workspace>\_hq\meetings\..."
@@ -309,14 +309,14 @@ Per CONTRACT.md Rule 3.
 
 ## Gate 13 — Runtime exercise: stub generated AND synthetic-workspace PASS
 
-**Definition:** Every new skill needs a corresponding test in `tests/runtime_exercise_<skill>.py` that exercises the canonical code paths against the synthetic workspace fixture, AND `chalette:synthetic-workspace-runtime-test` MUST return a PASS verdict for the skill against that fixture. (This gate absorbs the former Gate 17, which was a verbatim duplicate — one runtime gate, not two.)
+**Definition:** Every new skill needs a corresponding test in `tests/runtime_exercise_<skill>.py` that exercises the canonical code paths against the synthetic workspace fixture, AND `chalette-dev:synthetic-workspace-runtime-test` MUST return a PASS verdict for the skill against that fixture. (This gate absorbs the former Gate 17, which was a verbatim duplicate — one runtime gate, not two.)
 
 **Severity:** BLOCK at draft-time.
 
 **How to verify:**
 1. At Phase 5, generate the test stub.
 2. Assert ≥N cases: happy path, empty substrate, name-bearing-trigger-unknown-name, first-run-default, every gate from Phase 4.
-3. Drop SKILL.md + stub into a temporary staging clone; invoke `chalette:synthetic-workspace-runtime-test --target=synthetic --skill=<new-skill-name>`.
+3. Drop SKILL.md + stub into a temporary staging clone; invoke `chalette-dev:synthetic-workspace-runtime-test --target=synthetic --skill=<new-skill-name>`.
 4. Assert the verdict is PASS (not WARN, not BLOCK) — runtime exercise catches the "static analysis passes but runtime substitutes an inferior path" class (Bug #11 / #45 / #52 / #53).
 
 **Fix template:** Auto-generated stub at Phase 5; M fills in the actual assertions. A runtime BLOCK means the canonical path wasn't actually invoked — trace the freelance substitution and pin the canonical call.
@@ -333,7 +333,7 @@ Per V3.13.8 §6 Principle 1 — static checks miss bugs that runtime exercise ca
 
 **How to verify:**
 1. Detect composer status: SKILL.md frontmatter description mentions drafting / writing / composing / replying.
-2. Invoke `chalette:voice-test` against the drafted skill's sample outputs.
+2. Invoke `chalette-dev:voice-test` against the drafted skill's sample outputs.
 3. Compare against `VOICE_SAMPLES.md` reference samples in the operator's workspace.
 4. Score = weighted combo of cadence match + vocabulary match + AI-tell scrubbing + tonal alignment.
 5. Threshold: ≥85 minimum.
@@ -356,13 +356,13 @@ Composer-skill markers (any in description triggers composer-classification):
 
 ## Gate 15 — Eval benchmark
 
-**Definition:** Each new skill MUST pass quantitative eval. `chalette:skill-creator`'s Executor/Grader runs ≥3 test prompts against the drafted skill; pass rate ≥90%.
+**Definition:** Each new skill MUST pass quantitative eval. `chalette-dev:skill-creator`'s Executor/Grader runs ≥3 test prompts against the drafted skill; pass rate ≥90%.
 
 **Severity:** BLOCK.
 
 **How to verify:**
 1. At Phase 5, render a test prompts file at `tests/eval_prompts_<skill>.json` (3-10 prompts).
-2. Invoke `chalette:skill-creator`'s Executor against the drafted SKILL.md.
+2. Invoke `chalette-dev:skill-creator`'s Executor against the drafted SKILL.md.
 3. Invoke the Grader with assertions for each prompt.
 4. Quantitative result: % prompts that produce expected output structure.
 5. Threshold: ≥90% pass rate.
@@ -385,7 +385,7 @@ Composer-skill markers (any in description triggers composer-classification):
 3. Iterate the description on the **train set only** — reword, front-load trigger stems, tighten `DOES NOT fire on` clauses.
 4. Accept when the **validation** score ≥0.85 (never tune on validation — that launders overfitting into the number).
 5. Final honest check: 5 fresh queries never seen during iteration; report the result even if it dips.
-6. Delegated runner: `chalette:skill-creator` (its Executor/Grader + description-improver, which already carries the Mar-2026 benchmark mode — verified, no sync owed).
+6. Delegated runner: `chalette-dev:skill-creator` (its Executor/Grader + description-improver, which already carries the Mar-2026 benchmark mode — verified, no sync owed).
 
 **Fix template:** For each misfire, identify whether it is a false-negative (positive that didn't fire → front-load its stem into the first 250 chars) or a false-positive (near-miss that fired → add/sharpen the `DOES NOT fire on [near-miss] — that's [neighbor]` clause). Re-run on train, re-accept on validation.
 
@@ -420,12 +420,12 @@ Per the live `GUARDS.md` **G13** row (widget-transport instruction layer) + F-15
 
 ## Gate 18 — No regression in existing skills
 
-**Definition:** After dropping new SKILL.md into staging, `chalette:bug-regression-suite` MUST produce PASS verdict. Adding a skill MUST NOT break existing skills' triggers, substrate reads, or output contracts.
+**Definition:** After dropping new SKILL.md into staging, `chalette-dev:bug-regression-suite` MUST produce PASS verdict. Adding a skill MUST NOT break existing skills' triggers, substrate reads, or output contracts.
 
 **Severity:** BLOCK.
 
 **How to verify:**
-1. Pre-drop: run `chalette:bug-regression-suite` against staging head, capture baseline.
+1. Pre-drop: run `chalette-dev:bug-regression-suite` against staging head, capture baseline.
 2. Post-drop: run again with new skill installed.
 3. Assert: no test that previously PASSED now FAILS.
 

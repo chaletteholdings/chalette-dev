@@ -1,11 +1,21 @@
 ---
 name: cross-skill-interaction-test
-description: "INTERNAL — temporal substrate-coherence verification. Fires sequences of skills across time (skill A writes substrate at T0 → skill B reads at T+N → verifies coherence). Catches bugs that surface only when one skill's writes affect another skill's reads later — e.g., meeting-notes writes a placeholder commitment + team-intelligence enriches it 10 min later (the Phase 2G duplicate-detection pattern that worked) OR show-my-list closes a wrapper + morning brief should see the source close (Bug #51). Tests against M's actual workspace. Triggers: 'run cross-skill test', 'test temporal coherence', 'verify cross-skill', 'cross-skill sequence [name]'. Plugin-developer use only. Companion to bug-regression-suite (single-fire tests) + ship-readiness-gate."
+description: "INTERNAL — temporal substrate-coherence verification. Fires sequences of skills across time (skill A writes substrate at T0 → skill B reads at T+N → verifies coherence). Catches bugs that surface only when one skill's writes affect another skill's reads later — e.g., meeting-notes writes a placeholder commitment + team-intelligence enriches it 10 min later (the Phase 2G duplicate-detection pattern that worked) OR show-my-list closes a wrapper + morning brief should see the source close (Bug #51). Runs against the operator's real Cowork workspace — permitted only when config/operator.json grants 'real'. Triggers: 'run cross-skill test', 'test temporal coherence', 'verify cross-skill', 'cross-skill sequence [name]'. Plugin-developer use only. Companion to bug-regression-suite (single-fire tests) + ship-readiness-gate."
 ---
 
 # cross-skill-interaction-test
 
 **Tests bugs that only surface when skill A's writes affect skill B's reads later.** Single-skill tests miss these — they fire one skill at a time. Real workflows have skills interacting through substrate over time. This skill tests those interactions.
+
+> **Operator profile (read first).** Load `config/operator.json`, then overlay `config/operator.local.json` per-key if present (gitignored; the operator's local overlay — only M has one). The multi-phase sequences drive a live Cowork workspace via paste-back — there is no synthetic paste-back mode — so if the merged `allowed_targets` does not include `"real"`, refuse and say so.
+> ```python
+> import json, os
+> op = {}
+> for _n in ("operator.json", "operator.local.json"):
+>     _p = os.path.join(SKILL_PLUGIN_ROOT, "config", _n)
+>     if os.path.exists(_p): op.update(json.load(open(_p)))
+> if "real" not in op.get("allowed_targets", []): refuse("cross-skill-interaction-test needs an operator profile with 'real' in allowed_targets")
+> ```
 
 ## Why this skill exists
 
@@ -64,9 +74,9 @@ Catalog in `references/sequence-catalog.md`. Each sequence has:
 **Cleanup:** none — both closures are legitimate state changes
 ```
 
-### Step 2 — Walk M through each phase
+### Step 2 — Walk the operator through each phase
 
-The skill drives M through each phase of a sequence. M:
+The skill drives the operator through each phase of a sequence. The operator:
 1. Fires the phase's trigger in Cowork
 2. Pastes Cowork response back
 3. Skill validates phase output + advances OR stops on failure

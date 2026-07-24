@@ -63,7 +63,7 @@ Each fixture should represent a DIFFERENT real-world workspace state:
 
 ### mature_workspace
 - Realistic scale (~80 people, 20 orgs, 15 projects, 1500 events)
-- 8 deliberately malformed events.jsonl lines (per M's actual workspace pattern, lines 1628-1636 shatter)
+- 8 deliberately malformed events.jsonl lines (per a real-workspace line-shatter pattern)
 - Mix of nano-epoch + human-counter seqs (per Bug #41 dual-shape)
 - Some events use legacy `person_added`, others use canonical `person_created` (per Bug #34)
 - Aliases.json uses BOTH nested + flat shapes (per defensive-read pattern)

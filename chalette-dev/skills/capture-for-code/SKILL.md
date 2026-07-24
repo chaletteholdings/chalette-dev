@@ -7,7 +7,14 @@ description: "Capture a bug, feature idea, or new-skill idea for the Command Roo
 
 The capture half of the intake pair. Sibling of `triage-intake`. Structured capture where the observation happens; verification later, where the codebase is open.
 
-> **Operator-aware.** Read `config/operator.json` first. The queue root is `intake_root` (default `~/cr-intake`). Create `new/`, `needs-input/`, `speced/`, `done/`, `killed/`, `specs/` plus a one-line README on first capture if missing.
+> **Operator-aware.** Read `config/operator.json`, then overlay `config/operator.local.json` per-key if present (gitignored; the operator's local overlay — only M has one). The queue root is the merged `intake_root` (default `~/cr-intake`). Create `new/`, `needs-input/`, `speced/`, `done/`, `killed/`, `specs/` plus a one-line README on first capture if missing.
+> ```python
+> import json, os
+> op = {}
+> for _n in ("operator.json", "operator.local.json"):
+>     _p = os.path.join(SKILL_PLUGIN_ROOT, "config", _n)
+>     if os.path.exists(_p): op.update(json.load(open(_p)))
+> ```
 
 ## What this is and is not
 
@@ -41,7 +48,7 @@ Path: `<intake_root>/new/<TYPE>_<YYYY-MM-DD>_<slug>.md` (TYPE ∈ BUG/IDEA/SKILL
 - Bugs: **expected vs actual as separate fields**, plus repro (the exact trigger phrase counts).
 - Any root-cause guess — theirs or yours — goes ONLY under `## Hypothesis (UNVERIFIED)`. Observed behavior and speculated cause never mix.
 - Ideas: fill `impact` and `confidence` (1-5); leave `ease` as `?` — only triage (repo open) scores ease.
-- **Placeholder names only** in every field — never real client/customer names (the org-name leak rule applies to intake files like everything else).
+- **Names discipline (operator-scoped, INTAKE1 F7):** if the merged profile's `allowed_targets` does **not** include `"real"` (contractor/synthetic operator), use **placeholder names only** in every field — never real client/customer names (the org-name leak rule applies to intake files like everything else). An operator whose profile grants `"real"` (M) is capturing findings about their own real workspace and MAY record the real context needed to triage — those files live only on that operator's machine and never ship in the plugin.
 - No placeholder text; a section with nothing real gets `(none)`.
 
 ### Step 6 — Confirm and return (one line)

@@ -41,7 +41,7 @@ The deep-testing weeks surfaced a layered truth about what catches what:
 | 2 · runtime | code-path simulation vs synthetic data: `runtime_exercise_*`, spec-example render | `tests/run_all.py --tier runtime` | **HARD** |
 | 3 · integration | multi-fire sequences + regression vs a real/synthetic workspace | delegate → `synthetic-workspace-runtime-test`, `cross-skill-interaction-test`, `bug-regression-suite` | **SOFT** (HOLD) |
 | 4 · ship verdict | unattended pre-promote battery + bug-catalog cross-ref | delegate → `ship-readiness-gate` | emits PROMOTE/HOLD/BLOCKED |
-| 5 · attended | Cowork paste-back LLM-behavior verification | delegate → `verify-cr-release` (M-attended; NOT auto-run) | M's call |
+| 5 · attended | Cowork paste-back LLM-behavior verification | delegate → `verify-cr-release` (operator-attended; NOT auto-run) | the ship operator's call (`may_ship`) |
 
 Tiers 0–2 are pure code and run in this skill directly (~10s). Tiers 3–5 are
 heavier and delegate to the specialist skills, which keep their own logic — this
@@ -54,7 +54,7 @@ flow just sequences them and rolls their verdicts into one.
 | `cr test --quick` | tiers 0–1 only | mid-edit sanity check, seconds |
 | `cr test` / `test command room` / `run the battery` | tiers 0–2 (full code battery) | default — before any commit |
 | `cr test --ship` / `badass test` | tiers 0–4 (adds integration + ship verdict) | before a production-promote decision |
-| `cr test --attended` | tiers 0–5 (adds the Cowork loop) | full pre-release gate with M present |
+| `cr test --attended` | tiers 0–5 (adds the Cowork loop) | full pre-release gate with the operator present |
 
 ## Behavior
 
@@ -68,6 +68,18 @@ on a normal contributor machine and could not run on Windows at all.
 
 Check these in order and take the first hit where `tests/run_all.py` actually exists:
 
+0. **`cr1_clone` from the operator profile** — read `config/operator.json`, then overlay
+   `config/operator.local.json` per-key if present (gitignored; only M has one). If the merged
+   `cr1_clone` is set and `<cr1_clone>/command-room/tests/run_all.py` exists, use it outright.
+   This is the operator's canonical-clone preference expressed via config (M defaults it to
+   `~/repos/cr1-canonical`), not a hardcoded path in prose.
+   ```python
+   import json, os
+   op = {}
+   for _n in ("operator.json", "operator.local.json"):
+       _p = os.path.join(SKILL_PLUGIN_ROOT, "config", _n)
+       if os.path.exists(_p): op.update(json.load(open(_p)))
+   ```
 1. **`$CR1_ROOT`** — if that env var is set, `$CR1_ROOT/command-room` wins outright.
    This is the escape hatch for a checkout in an unusual place.
 2. **A cr1 checkout under the home directory** — glob `~/*/cr1*/command-room` and
@@ -142,9 +154,9 @@ Fold its verdict into the consolidated call below.
 
 ### Step 4 — Attended tier (only on `--attended`)
 
-Point M to `verify-cr-release` for the Cowork paste-back loop (LLM-behavior /
+Point the operator to `verify-cr-release` for the Cowork paste-back loop (LLM-behavior /
 voice / tone — the ~20% no code battery can cover). Do NOT try to automate this;
-it needs M present. Just hand off cleanly with the version under test.
+it needs the operator present. Just hand off cleanly with the version under test.
 
 ### Step 5 — One consolidated verdict
 
