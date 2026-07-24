@@ -1,7 +1,7 @@
 ---
 title: Canonical Substrate Helpers — when to use which + quality-gate delegated tooling
-cr_plugin_version_min: 3.13.8.3
-last_updated: 2026-05-26
+cr_plugin_version_min: 5.2.0
+last_updated: 2026-07-23
 ---
 
 # Canonical Substrate Helpers
@@ -122,7 +122,7 @@ if config is None:
     save_skill_config(workspace_root, skill_name, config_dict, schema_version=1)
 ```
 
-**Helper:** `command-room/shared/scripts/skill_config_writer.py` (to be added at v3.14 ship time alongside first config-aware skills)
+**Helper:** `command-room/shared/scripts/skill_config_writer.py` (shipped — no longer "to be added"; exposes `load_skill_config` / `save_skill_config` / `wipe_skill_config`)
 **Why:** 5-question cap + schema validation + atomic write + emits `skill_first_run_configured` event.
 
 ---

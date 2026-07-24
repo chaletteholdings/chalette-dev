@@ -1,7 +1,7 @@
 ---
 title: First-Run Questionnaire Convention
-cr_plugin_version_min: 3.13.8.3
-last_updated: 2026-05-26
+cr_plugin_version_min: 5.2.0
+last_updated: 2026-07-23
 ---
 
 # First-Run Questionnaire Convention
@@ -185,9 +185,9 @@ cr-skill-builder Phase 3 walks M through drafting questions. For each question, 
 
 Output: a config object schema dropped into `command-room/shared/data-schemas/<skill_name>_config.schema.json` + a template at `_hq/data/skill_config/<skill_name>.json.template`.
 
-## New event types this pattern introduces
+## Event types this pattern uses
 
-To be added to `events.schema.json` enum (Gate 1) when the first-run pattern ships:
+Already registered in the live `events.schema.json` enum (verify at Phase 0 — do not re-add):
 
 - `skill_first_run_configured` — emitted on first questionnaire completion. Shape:
   ```json
@@ -220,7 +220,7 @@ wipe_skill_config(workspace_root, skill_name) -> None  # for reconfigure flow
 
 Internally uses `atomic_write_json`. Validates against `skill_config.schema.json`.
 
-To be added at v3.14 ship time alongside the first set of config-aware skills (customer-health-scorer, okr-tracker, 1on1-tracker, weekly-review-coach, stalled-project-detection enhancement).
+Shipped and load-bearing — the first config-aware skills already depend on it. (No longer "to be added": the v3.14-era marker is retired.)
 
 ## Example questionnaire (customer-health-scorer)
 
