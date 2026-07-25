@@ -14,6 +14,8 @@
   "specs_dir": null,
   "_comment_parking_doc": "PARK-verdict target for triage-intake. null = <intake_root>/PARKING.md. M's overlay points it at his FUTURE_WORK.md.",
   "parking_doc": null,
+  "_comment_scrub_roster": "Path to the operator's real client/org/person roster, used ONLY as the grep source for triage-intake's outbound scrub gate (contributor packets + the cr1 BACKLOG.md row). FAIL-CLOSED: null or unreadable disables both outbound surfaces entirely — a contractor profile has no roster and never needs the feature. Real value lives ONLY in the gitignored overlay; the committed default stays null (Guard 2 enforces it).",
+  "scrub_roster": null,
   "_comment_allowed_targets": "'synthetic' = fixtures only. Adding 'real' lets the skills target a live workspace; that is M's profile, not a contractor's.",
   "allowed_targets": ["synthetic"],
   "may_ship": false,
