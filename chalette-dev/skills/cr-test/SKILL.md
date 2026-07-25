@@ -1,6 +1,6 @@
 ---
 name: cr-test
-description: "INTERNAL — the single entry point for testing Command Room. Orchestrates the full battery in tiers (static guards → unit → runtime → integration → ship verdict), fail-fast, and emits ONE consolidated GREEN/HOLD/RED verdict. Replaces having to remember run-command-room-tests / synthetic-workspace-runtime-test / bug-regression-suite / cross-skill-interaction-test / ship-readiness-gate individually — it sequences and delegates to them. Fires on 'cr test', 'test command room', 'run the battery', 'full test', 'badass test', 'cr test --quick', 'cr test --ship'. Plugin-developer use only; not customer chat."
+description: "INTERNAL — the single entry point for testing Command Room. Orchestrates the full battery in tiers (static guards → unit → runtime → integration → ship verdict), fail-fast, and emits ONE consolidated GREEN/HOLD/RED verdict. Replaces having to remember synthetic-workspace-runtime-test / bug-regression-suite / cross-skill-interaction-test / ship-readiness-gate individually — it sequences and delegates to them. Fires on 'cr test', 'test command room', 'run the battery', 'full test', 'badass test', 'cr test --quick', 'cr test --ship'. Absorbs the retired run-command-room-tests entry point: 'internal: run plugin tests', 'run command room tests', 'command room health check' and 'verify plugin code' are aliases for 'cr test --quick' — tiers 0-1, the pure-python suites, discovered at call time by tests/run_all.py instead of the old hardcoded list of five. Plugin-developer use only; not customer chat."
 ---
 
 # cr-test — the Command Room test battery
@@ -24,10 +24,10 @@ The deep-testing weeks surfaced a layered truth about what catches what:
    writer emits passes its unit test (the test feeds it the phantom name) while
    doing nothing in every real workspace. The `run_event_contract_test` guard
    exists for exactly this and runs in the guard tier.
-3. **A hardcoded test list goes stale silently** — `run-command-room-tests`
-   shipped running 5 of 40+ suites for months. This flow calls
-   `tests/run_all.py`, which DISCOVERS every suite at call time. New test file =
-   automatically in the battery.
+3. **A hardcoded test list goes stale silently** — the old `run-command-room-tests`
+   skill (retired in v0.3.1, its triggers now alias to `cr test --quick`) shipped
+   running 5 of 40+ suites for months. This flow calls `tests/run_all.py`, which
+   DISCOVERS every suite at call time. New test file = automatically in the battery.
 4. **Runtime > static for destructive bugs** — the window=3 quarantine bug that
    would have destroyed real customer events passed every unit test; the runtime
    exercise caught it. Runtime tier is non-optional before a ship verdict.
@@ -52,6 +52,7 @@ flow just sequences them and rolls their verdicts into one.
 | Trigger | Runs | When |
 |---|---|---|
 | `cr test --quick` | tiers 0–1 only | mid-edit sanity check, seconds |
+| `internal: run plugin tests` / `run command room tests` / `command room health check` / `verify plugin code` | tiers 0–1 (alias for `cr test --quick`) | the retired run-command-room-tests entry point, folded in here (v0.3.1) |
 | `cr test` / `test command room` / `run the battery` | tiers 0–2 (full code battery) | default — before any commit |
 | `cr test --ship` / `badass test` | tiers 0–4 (adds integration + ship verdict) | before a production-promote decision |
 | `cr test --attended` | tiers 0–5 (adds the Cowork loop) | full pre-release gate with the operator present |
@@ -74,11 +75,15 @@ Check these in order and take the first hit where `tests/run_all.py` actually ex
    This is the operator's canonical-clone preference expressed via config (M defaults it to
    `~/repos/cr1-canonical`), not a hardcoded path in prose.
    ```python
-   import json, os
+   import json, os, sys
    op = {}
    for _n in ("operator.json", "operator.local.json"):
        _p = os.path.join(SKILL_PLUGIN_ROOT, "config", _n)
        if os.path.exists(_p): op.update(json.load(open(_p)))
+   # SKILL_PLUGIN_ROOT must be a NATIVE path — on Windows `C:/Users/…`, never an MSYS
+   # `/c/Users/…` (convert with `cygpath -m`): python.exe reads `/c/…` as `C:\c\…`, both
+   # files miss, and an empty profile silently becomes the default. Fail loud instead.
+   if not op: sys.exit(f"FATAL: operator profile unreadable under {SKILL_PLUGIN_ROOT}")
    ```
 1. **`$CR1_ROOT`** — if that env var is set, `$CR1_ROOT/command-room` wins outright.
    This is the escape hatch for a checkout in an unusual place.
@@ -197,10 +202,10 @@ chat.
 This skill is the **single entry point**. The specialists still exist and keep
 their logic; cr-test is the conductor:
 
-- `run-command-room-tests` → superseded as an entry point. Its job (run the
-  python suites) is now `tests/run_all.py`, which cr-test calls and which
-  auto-discovers ALL suites instead of a stale list of five. Keep the old trigger
-  working as an alias to `cr test --quick` if convenient.
+- `run-command-room-tests` → **retired and deleted in v0.3.1** (it never had a
+  delegating caller — cr-test always called `tests/run_all.py` directly, which
+  auto-discovers ALL suites instead of its stale list of five). Its trigger phrases
+  live on in this skill's description as aliases for `cr test --quick`.
 - `synthetic-workspace-runtime-test`, `cross-skill-interaction-test`,
   `bug-regression-suite` → tier 3, delegated.
 - `ship-readiness-gate` → tier 4, delegated.

@@ -1,6 +1,6 @@
 ---
 name: verify-cr-release
-description: "INTERNAL — automated verification orchestrator for Command Room releases. Walks a verification-plan markdown sequentially: emits trigger prompts for M to paste into Cowork, receives Cowork responses pasted back into Code, auto-classifies pass/fail/partial via response classifier, logs findings, surfaces next test. Fires on 'verify cr release [version]', 'run verification suite', 'pre-ship check', 'continue verification', 'resume verification'. Designed to replace the manual confirm-prompt testing methodology that surfaced ~80% of v3.13.7 verification findings. Stateful — tracks current test position in _hq/verify-runs/active.json. Plugin-developer use only. Companions: synthetic-workspace-runtime-test, compare-canonical-vs-freelance."
+description: "INTERNAL — automated verification orchestrator for Command Room releases. Walks a verification-plan markdown sequentially: emits trigger prompts for M to paste into Cowork, receives Cowork responses pasted back into Code, auto-classifies pass/fail/partial via response classifier, logs findings, surfaces next test. Fires on 'verify cr release [version]', 'run verification suite', 'pre-ship check', 'continue verification', 'resume verification'. Designed to replace the manual confirm-prompt testing methodology that surfaced ~80% of v3.13.7 verification findings. Stateful — tracks current test position in _hq/verify-runs/active.json. Plugin-developer use only. Companions: synthetic-workspace-runtime-test, ship-readiness-gate."
 ---
 
 # verify-cr-release
@@ -32,7 +32,7 @@ This skill automates steps 1, 3, and 4 — leaving M with just the Cowork-side p
 | `verify cr release status` | Show current position + per-phase verdicts so far |
 | `verify cr release verdict` | Emit end-of-session verdict doc + production-promote recommendation |
 
-DOES NOT fire on `run plugin tests` (that's run-command-room-tests — different scope, pure-python unit suites). DOES NOT fire on `report bug` (that's the Command Room customer-facing skill).
+DOES NOT fire on `run plugin tests` (that's cr-test — different scope, pure-python unit suites). DOES NOT fire on `report bug` (that's the Command Room customer-facing skill).
 
 ## Behavior
 
@@ -45,21 +45,42 @@ On `verify cr release [version]`, find these files in the **resolved** workspace
 # Order: --workspace-root arg -> $CR_WORKSPACE_ROOT -> merged operator profile
 #        (config/operator.json then config/operator.local.json overlaid per-key)
 #        -> default to the clean_workspace synthetic fixture.
-PLUGIN_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-OPERATOR_CFG="$PLUGIN_ROOT/config/operator.json"
-OPERATOR_OVERLAY="$PLUGIN_ROOT/config/operator.local.json"          # gitignored M-only overlay
-FIXTURES="$PLUGIN_ROOT/skills/synthetic-workspace-runtime-test/fixtures"
+# --- operator-profile resolution (canonical pattern — keep byte-synced across skills) ---
+# Locate THIS plugin's root by searching for config/operator.json, then hand python a
+# NATIVE path. Two Git-Bash-on-Windows traps this is fenced against (MAINT2, 2026-07-24):
+#   1. `${BASH_SOURCE[0]}` is EMPTY when an agent runs this block through a Bash tool —
+#      it is not a sourced script. `dirname ""` is `.`, so the plugin root silently became
+#      whatever the cwd's grandparent happened to be.
+#   2. `pwd` under Git Bash yields an MSYS path (`/c/Users/…`). Native python.exe resolves
+#      `/c/…` to `C:\c\…`, so BOTH config reads miss, the merged profile comes back EMPTY,
+#      and resolution falls through to the synthetic fixture with NO error — an operator
+#      granted `real` silently ran synthetic. `cygpath -m` yields `C:/Users/…`, which MSYS
+#      bash and Windows python both read.
+# Never hardcode a machine path: search, then the $CHALETTE_DEV_ROOT escape hatch, then FAIL LOUD.
+_cr_native() { if command -v cygpath >/dev/null 2>&1; then cygpath -m "$1"; else printf '%s\n' "$1"; fi; }
+DEV_PLUGIN_ROOT=""
+for _c in "${CHALETTE_DEV_ROOT:-}" "$PWD" "$PWD/chalette-dev" "$(dirname "$PWD")" \
+          ~/repos/chalette-dev/chalette-dev ~/.claude/plugins/marketplaces/*/chalette-dev; do
+  [ -n "$_c" ] && [ -f "$_c/config/operator.json" ] && DEV_PLUGIN_ROOT="$(_cr_native "$_c")" && break
+done
+[ -n "$DEV_PLUGIN_ROOT" ] || { echo "FATAL: chalette-dev plugin root not found (no config/operator.json in any searched location). Set CHALETTE_DEV_ROOT=<plugin root> and re-run." >&2; exit 1; }
+OPERATOR_CFG="$DEV_PLUGIN_ROOT/config/operator.json"
+OPERATOR_OVERLAY="$DEV_PLUGIN_ROOT/config/operator.local.json"      # gitignored M-only overlay
+# --- end operator-profile resolution ---
+FIXTURES="$DEV_PLUGIN_ROOT/skills/synthetic-workspace-runtime-test/fixtures"
 
 WORKSPACE_ROOT="${CR_WORKSPACE_ROOT:-}"
 if [ -z "$WORKSPACE_ROOT" ]; then
   # `or ''` is load-bearing: workspace_root ships as null, and .get(k, '') returns
   # None for a key that EXISTS with a null value — the '' default never applies —
   # so expanduser(None) raised TypeError on the committed default.
-  WORKSPACE_ROOT=$(python -c "import json,os
-p={}
+  # `sys.exit` on zero files read: an empty merged profile must NEVER pass silently.
+  WORKSPACE_ROOT=$(python -c "import json,os,sys
+p={}; _n=0
 for f in ('$OPERATOR_CFG','$OPERATOR_OVERLAY'):
-    if os.path.exists(f): p.update(json.load(open(f)))
-print(os.path.expanduser(p.get('workspace_root') or ''))")
+    if os.path.exists(f): p.update(json.load(open(f))); _n+=1
+if not _n: sys.exit('FATAL: operator profile unreadable at $OPERATOR_CFG')
+print(os.path.expanduser(p.get('workspace_root') or ''))") || exit 1
 fi
 [ -z "$WORKSPACE_ROOT" ] && WORKSPACE_ROOT="$FIXTURES/clean_workspace"
 
@@ -229,11 +250,11 @@ Three things break this skill if not designed against:
 ## Companion skills
 
 - `synthetic-workspace-runtime-test` — pre-ship gate: fires canonical surfaces against synthetic fixtures. Catches pattern static tests miss (per V3.13.8_MASTER_PLAN §6 Principle 1).
-- `compare-canonical-vs-freelance` — post-v3.13.8 only: fires skill once through canonical + once through mocked freelance, side-by-side diff. Validates §3.6 ladder per-skill.
+- `ship-readiness-gate` — the unattended half of this gate: full battery against the fixtures + bug-catalog cross-reference → PROMOTE/HOLD/BLOCKED, no paste-back loop.
 
 ## Connection to chalette plugin family
 
-- `run-command-room-tests` — pure-python unit suites. Run BEFORE verify-cr-release in any pre-ship gate.
+- `cr-test` — the single test entry point; `cr test --quick` runs the pure-python suites (`tests/run_all.py`, auto-discovered). Run BEFORE verify-cr-release in any pre-ship gate.
 - `ship-cr-plugin` — release flow. Run AFTER verify-cr-release passes Phase A.
 - `process-bug-report` — handles customer bug reports. Out-of-band from verification cycle.
 

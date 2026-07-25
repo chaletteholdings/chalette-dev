@@ -139,6 +139,6 @@ Mode 2 (last actual fire):
 
 ## See also
 
-- `run command room tests` — runs the test suites; pairs with this skill for "is the build healthy AND does it look right?"
+- `cr test --quick` (also `run command room tests`) — runs the test suites; pairs with this skill for "is the build healthy AND does it look right?"
 - `verify command room prompts` — confirms registered scheduled-task prompt versions
 - `usage report` — surfaces telemetry from past fires (different read of events.jsonl — focused on cost/usage, not visual replay)

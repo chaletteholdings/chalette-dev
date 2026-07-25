@@ -29,11 +29,16 @@ Gates 1, 2, 7, 13, 17, 21, 22, 26, 27 read contracts that live in the cr1 tree, 
 
 ```python
 # Resolve the cr1 clone path — parameterized, not hardcoded, so Eric's fork works too.
-import json, os
-op = os.path.join(SKILL_PLUGIN_ROOT, "config", "operator.json")
-cr1_clone = "~/repos/cr1-canonical"          # M-only default (canonical edit surface)
-if os.path.exists(op):
-    cr1_clone = json.load(open(op)).get("cr1_clone", cr1_clone) or cr1_clone
+import json, os, sys
+op = {}
+for _n in ("operator.json", "operator.local.json"):
+    _p = os.path.join(SKILL_PLUGIN_ROOT, "config", _n)
+    if os.path.exists(_p): op.update(json.load(open(_p)))
+# SKILL_PLUGIN_ROOT must be a NATIVE path — on Windows `C:/Users/…`, never an MSYS
+# `/c/Users/…` (convert with `cygpath -m`): python.exe reads `/c/…` as `C:\c\…`, both
+# files miss, and an empty profile silently becomes the default. Fail loud instead.
+if not op: sys.exit(f"FATAL: operator profile unreadable under {SKILL_PLUGIN_ROOT}")
+cr1_clone = op.get("cr1_clone") or "~/repos/cr1-canonical"   # M-only default (canonical edit surface)
 CR = os.path.join(os.path.expanduser(cr1_clone), "command-room")
 ```
 

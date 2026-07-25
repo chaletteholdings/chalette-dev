@@ -39,7 +39,7 @@ fix + a regression test, then open a PR.
 ## Single canonical home for the shared toolkit
 
 As of CONSOL1 (2026-07-24) **chalette-dev is the one and only home of the shared QA/dev
-toolkit** — the 18 skills here (bug-regression-suite, capture-for-code, cr-test,
+toolkit** — the 16 skills here (bug-regression-suite, capture-for-code, cr-test,
 cr-skill-builder, ship-readiness-gate, synthetic-workspace-runtime-test, triage-intake,
 verify-cr-release, …). They used to be duplicated into Matthew's private `chalette`
 plugin; that copy is gone. Companion references say `chalette-dev:<skill>` (or just
@@ -64,12 +64,28 @@ Every skill that targets a workspace, a clone, or an intake queue resolves it fr
 Standard read pattern (identical in each reading skill's preflight):
 
 ```python
-import json, os
+import json, os, sys
 op = {}
 for _n in ("operator.json", "operator.local.json"):
     _p = os.path.join(SKILL_PLUGIN_ROOT, "config", _n)
     if os.path.exists(_p): op.update(json.load(open(_p)))
+# SKILL_PLUGIN_ROOT must be a NATIVE path — on Windows `C:/Users/…`, never an MSYS
+# `/c/Users/…` (convert with `cygpath -m`): python.exe reads `/c/…` as `C:\c\…`, both
+# files miss, and an empty profile silently becomes the default. Fail loud instead.
+if not op: sys.exit(f"FATAL: operator profile unreadable under {SKILL_PLUGIN_ROOT}")
 ```
+
+**Windows/Git-Bash trap (fixed in MAINT2, 2026-07-24 — do not reintroduce).** The bash
+form of this preamble used to build the plugin root from `${BASH_SOURCE[0]}` and `pwd`.
+`BASH_SOURCE` is empty when an agent runs the block through a Bash tool (it is not a
+sourced script), and `pwd` under Git Bash yields an MSYS path (`/c/Users/…`) that native
+`python.exe` resolves to `C:\c\…`. Both config reads missed, the merged profile came back
+empty, and every skill silently fell through to its default — an operator granted `real`
+ran synthetic with no error. The canonical bash preamble now searches for
+`config/operator.json` (with a `$CHALETTE_DEV_ROOT` escape hatch), converts with
+`cygpath -m`, and **fails loud** on an unreadable profile. It is delimited by
+`# --- operator-profile resolution` / `# --- end operator-profile resolution ---` and
+`tests/test_operator_fences.py` executes it out of each SKILL.md on every CI run.
 
 ## Hard guardrails
 

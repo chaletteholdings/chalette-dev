@@ -46,31 +46,53 @@ Resolution order — first hit wins, and the default is always a synthetic fixtu
    `skills/synthetic-workspace-runtime-test/fixtures/`
 
 ```bash
-PLUGIN_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"   # skills/<name>/ -> plugin root
-OPERATOR_CFG="$PLUGIN_ROOT/config/operator.json"
-OPERATOR_OVERLAY="$PLUGIN_ROOT/config/operator.local.json"          # gitignored M-only overlay
-FIXTURES="$PLUGIN_ROOT/skills/synthetic-workspace-runtime-test/fixtures"
+# --- operator-profile resolution (canonical pattern — keep byte-synced across skills) ---
+# Locate THIS plugin's root by searching for config/operator.json, then hand python a
+# NATIVE path. Two Git-Bash-on-Windows traps this is fenced against (MAINT2, 2026-07-24):
+#   1. `${BASH_SOURCE[0]}` is EMPTY when an agent runs this block through a Bash tool —
+#      it is not a sourced script. `dirname ""` is `.`, so the plugin root silently became
+#      whatever the cwd's grandparent happened to be.
+#   2. `pwd` under Git Bash yields an MSYS path (`/c/Users/…`). Native python.exe resolves
+#      `/c/…` to `C:\c\…`, so BOTH config reads miss, the merged profile comes back EMPTY,
+#      and resolution falls through to the synthetic fixture with NO error — an operator
+#      granted `real` silently ran synthetic. `cygpath -m` yields `C:/Users/…`, which MSYS
+#      bash and Windows python both read.
+# Never hardcode a machine path: search, then the $CHALETTE_DEV_ROOT escape hatch, then FAIL LOUD.
+_cr_native() { if command -v cygpath >/dev/null 2>&1; then cygpath -m "$1"; else printf '%s\n' "$1"; fi; }
+DEV_PLUGIN_ROOT=""
+for _c in "${CHALETTE_DEV_ROOT:-}" "$PWD" "$PWD/chalette-dev" "$(dirname "$PWD")" \
+          ~/repos/chalette-dev/chalette-dev ~/.claude/plugins/marketplaces/*/chalette-dev; do
+  [ -n "$_c" ] && [ -f "$_c/config/operator.json" ] && DEV_PLUGIN_ROOT="$(_cr_native "$_c")" && break
+done
+[ -n "$DEV_PLUGIN_ROOT" ] || { echo "FATAL: chalette-dev plugin root not found (no config/operator.json in any searched location). Set CHALETTE_DEV_ROOT=<plugin root> and re-run." >&2; exit 1; }
+OPERATOR_CFG="$DEV_PLUGIN_ROOT/config/operator.json"
+OPERATOR_OVERLAY="$DEV_PLUGIN_ROOT/config/operator.local.json"      # gitignored M-only overlay
+# --- end operator-profile resolution ---
+FIXTURES="$DEV_PLUGIN_ROOT/skills/synthetic-workspace-runtime-test/fixtures"
 
 # Merged operator profile = operator.json then operator.local.json overlaid per-key.
 WORKSPACE_ROOT="${CR_WORKSPACE_ROOT:-}"
 if [ -z "$WORKSPACE_ROOT" ]; then
   # `or ''` is load-bearing: workspace_root ships as null, and .get(k) returns None
   # for a key that EXISTS with a null value — so expanduser(None) would raise TypeError.
-  WORKSPACE_ROOT=$(python -c "import json,os
-p={}
+  # `sys.exit` on zero files read: an empty merged profile must NEVER pass silently.
+  WORKSPACE_ROOT=$(python -c "import json,os,sys
+p={}; _n=0
 for f in ('$OPERATOR_CFG','$OPERATOR_OVERLAY'):
-    if os.path.exists(f): p.update(json.load(open(f)))
-print(os.path.expanduser(p.get('workspace_root') or ''))")
+    if os.path.exists(f): p.update(json.load(open(f))); _n+=1
+if not _n: sys.exit('FATAL: operator profile unreadable at $OPERATOR_CFG')
+print(os.path.expanduser(p.get('workspace_root') or ''))") || exit 1
 fi
 # Default: synthetic fixture. Never a literal machine path.
 [ -z "$WORKSPACE_ROOT" ] && WORKSPACE_ROOT="$FIXTURES/clean_workspace"
 
 # Refuse a real workspace unless the merged profile grants allowed_targets: ["real"].
-MAY_TARGET_REAL=$(python -c "import json,os
-p={}
+MAY_TARGET_REAL=$(python -c "import json,os,sys
+p={}; _n=0
 for f in ('$OPERATOR_CFG','$OPERATOR_OVERLAY'):
-    if os.path.exists(f): p.update(json.load(open(f)))
-print('yes' if 'real' in p.get('allowed_targets',[]) else 'no')" 2>/dev/null || echo no)
+    if os.path.exists(f): p.update(json.load(open(f))); _n+=1
+if not _n: sys.exit('FATAL: operator profile unreadable at $OPERATOR_CFG')
+print('yes' if 'real' in p.get('allowed_targets',[]) else 'no')") || exit 1
 case "$WORKSPACE_ROOT" in
   "$FIXTURES"/*) : ;;                       # synthetic — always allowed
   *) [ "$MAY_TARGET_REAL" = "yes" ] || {
@@ -299,7 +321,7 @@ Substrate-modifying tests (e.g., Bug #19 disambiguation) MUST snapshot pre-fire 
 ship-readiness-gate orchestrates this skill as part of its post-push verification battery. After a push to ChaletteHQ/cr1 main, ship-readiness-gate runs:
 1. synthetic-workspace-runtime-test (against fixtures)
 2. **bug-regression-suite (against the resolved workspace)** ← this skill
-3. compare-canonical-vs-freelance (per-skill ladder)
+3. bug-catalog cross-reference (known-bug regression vs new failure class)
 4. Aggregate PROMOTE / HOLD / BLOCKED verdict
 
 ## What this skill does NOT cover
