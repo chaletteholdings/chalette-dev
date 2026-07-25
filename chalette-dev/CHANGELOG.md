@@ -41,10 +41,13 @@ New key in `config/operator.json`, committed default **`null`** (contractor-safe
 lives ONLY in the gitignored overlay, per the CONSOL1 D3 pattern). Before either outbound write,
 the full outbound text is grepped against every client/org/person name in the roster.
 
-- `scrub_roster` null / missing / unreadable → **both writes refused** with the explicit line
-  `scrub roster unavailable — BACKLOG/packet emission disabled`; the maintainer-side spec is
-  still delivered. Fail-closed by construction: a contractor has no roster and never needs the
-  feature.
+- `scrub_roster` null / missing / unreadable / **readable but yielding zero names** → **both
+  writes refused** with the explicit line `scrub roster unavailable — BACKLOG/packet emission
+  disabled`; the maintainer-side spec is still delivered. Fail-closed by construction: a
+  contractor has no roster and never needs the feature. An empty or truncated roster is an
+  unavailable roster, never an all-clear (REVIEW_TI2 F-1 — Drive-sync truncation is a live
+  failure mode on this substrate). The grep matches individual name tokens as well as full
+  names, case-insensitive.
 - A roster hit blocks the write and surfaces the offending line for rewrite — **never** an
   automatic name substitution.
 
