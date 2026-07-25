@@ -89,6 +89,14 @@ def test_fail_closed_refusal_clause_present_and_in_scope():
     assert "scrub_roster" in body, (
         "the refusal clause does not name the scrub_roster key it governs"
     )
+    # REVIEW_TI2 F-1: a roster that reads fine but yields no names (Drive-sync
+    # truncation is a live failure mode on this substrate) must also refuse.
+    # Without this the gate degrades to permit-everything on a readable file.
+    assert re.search(r"zero names|no names", body, re.I), (
+        "the fail-closed rule covers null/missing/unreadable but not an "
+        "empty-but-readable roster — a truncated roster would silently degrade "
+        "the gate to permit-everything (REVIEW_TI2 F-1)"
+    )
 
 
 def test_no_auto_substitute_clause_present():

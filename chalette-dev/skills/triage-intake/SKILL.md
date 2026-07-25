@@ -81,7 +81,7 @@ Any "no" → normal M-side spec into `specs_dir`, **no packet, no BACKLOG row**.
 
 **Scrub gate — fail-closed, runs BEFORE either write.** Read `scrub_roster` from the merged profile and grep the full outbound text (packet body AND the BACKLOG row) against every client/org/person name in it. This does not ride cr1's G9 alone: G9's first-name dictionary cannot know real ORG names, which is exactly how org names have leaked past a name guard before.
 
-- `scrub_roster` null, missing, or unreadable → **refuse both outbound writes** with the explicit line `scrub roster unavailable — BACKLOG/packet emission disabled`, and still deliver the normal M-side spec. Never proceed on an unverified roster.
+- `scrub_roster` null, missing, unreadable, or **readable but yielding zero names** → **refuse both outbound writes** with the explicit line `scrub roster unavailable — BACKLOG/packet emission disabled`, and still deliver the normal M-side spec. An empty or truncated roster is an unavailable roster, never an all-clear. Never proceed on an unverified roster. Grep **individual name tokens as well as full names, case-insensitive** — a bare first name or a possessive form is a hit.
 - Roster hit → block the write, surface the offending line for rewrite. **Never auto-substitute a name.**
 - Phrase items by mechanism, never by origin: "stale-baseline drift in X guard", not the client or workspace context that surfaced it.
 
