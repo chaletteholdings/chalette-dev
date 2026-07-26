@@ -233,9 +233,12 @@ their logic; cr-test is the conductor:
   ceremony. What was worth keeping was kept, not deleted: its verification plan is now
   `cr-test/references/VERIFICATION_PLAN.md` (tier 5's structured half) and its response
   classifier + findings-log format moved to `bug-regression-suite/references/`, where
-  their existing citers still reach them. Its trigger phrases (`verify cr release`,
-  `run verification suite`, `pre-ship check`, `continue verification`) are **deliberately
-  not** re-homed — no skill claims them now; `cr test --attended` is the entry point.
+  their existing citers still reach them. Its trigger phrases were **re-homed onto this
+  skill**, not orphaned: `verify cr release` and `run verification suite` alias
+  `cr test --attended`, and `pre-ship check` aliases `cr test --ship` — all three are
+  claimed in this skill's own description above. Only `continue verification` /
+  `resume verification` were **deliberately dropped**: they resumed a stateful session
+  that no longer exists, so re-homing them would promise resumption nothing provides.
 - `ship-cr-plugin` → the release flow. Run cr-test --ship BEFORE it; it has its
   own in-line structural-guard gate as a backstop.
 

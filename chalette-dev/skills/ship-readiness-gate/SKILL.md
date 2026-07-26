@@ -40,7 +40,7 @@ Caveat: this skill catches code-path issues but NOT Cowork-side LLM behavior. Fi
 | `ship readiness gate --target=m-workspace` | Run battery against the operator's real workspace (NOT synthetic fixtures) — permitted ONLY when the merged profile has `"real"` in `allowed_targets`; any other operator is refused and falls back to synthetic |
 | `ship readiness gate --target=synthetic` (default) | Run battery against the populated synthetic fixtures |
 
-DOES NOT fire on `verify cr release` / `run verification suite` (no skill owns those — they alias `cr test --attended`, the hand-walked dogfood ritual; `verify-cr-release` is retired). DOES NOT fire on `run synthetic workspace test` (that's a single-fixture single-skill test).
+DOES NOT fire on `verify cr release` / `run verification suite` (`cr-test` owns those — they alias `cr test --attended`, the hand-walked dogfood ritual, since `verify-cr-release` was retired). DOES NOT fire on `run synthetic workspace test` (that's a single-fixture single-skill test).
 
 ### Target mode behavior
 

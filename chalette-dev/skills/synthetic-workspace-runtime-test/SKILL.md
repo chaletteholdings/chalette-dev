@@ -34,7 +34,7 @@ This skill closes that gap by running ACTUAL skill code paths against ACTUAL sub
 | `synthetic workspace test [skill_name]` | Run gate against a specific skill only |
 | `synthetic workspace test --fixtures` | Show available fixtures + their characteristics |
 
-DOES NOT fire on `verify cr release` / `run verification suite` (no skill owns those — they alias `cr test --attended`, the hand-walked dogfood ritual; `verify-cr-release` is retired). DOES NOT fire on `run plugin tests` (that's cr-test's `--quick` tier — pure-python unit suites, no real substrate).
+DOES NOT fire on `verify cr release` / `run verification suite` (`cr-test` owns those — they alias `cr test --attended`, the hand-walked dogfood ritual, since `verify-cr-release` was retired). DOES NOT fire on `run plugin tests` (that's cr-test's `--quick` tier — pure-python unit suites, no real substrate).
 
 ## Fixtures (in `fixtures/`)
 
