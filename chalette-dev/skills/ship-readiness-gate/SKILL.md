@@ -1,6 +1,6 @@
 ---
 name: ship-readiness-gate
-description: "INTERNAL — automated post-push verification orchestrator. Fires in Code (the plugin-dev environment) after a push to staging main (ChaletteHQ/cr1). Detects the fresh ship, then runs the full canonical-surface verification battery against all synthetic fixtures + cross-references findings against the bug catalog + emits a PROMOTE/HOLD/BLOCKED verdict doc. No paste-back loop required — fully unattended. Triggers: 'ship readiness gate', 'post-push verify', 'production rehearsal', 'pre-promote check'. Used to gate the production-promote decision without needing the operator to walk a Cowork verification cycle manually. Plugin-developer use only. Companion to verify-cr-release (operator-attended Cowork loop) and synthetic-workspace-runtime-test (per-fire code-path gate)."
+description: "INTERNAL — automated post-push verification orchestrator. Fires in Code (the plugin-dev environment) after a push to staging main (ChaletteHQ/cr1). Detects the fresh ship, then runs the full canonical-surface verification battery against all synthetic fixtures + cross-references findings against the bug catalog + emits a PROMOTE/HOLD/BLOCKED verdict doc. No paste-back loop required — fully unattended. Triggers: 'ship readiness gate', 'post-push verify', 'production rehearsal', 'pre-promote check'. Used to gate the production-promote decision without needing the operator to walk a Cowork verification cycle manually. Plugin-developer use only. Companion to cr-test (the single entry point; this skill is its tier 4) and synthetic-workspace-runtime-test (per-fire code-path gate)."
 ---
 
 # ship-readiness-gate
@@ -40,7 +40,7 @@ Caveat: this skill catches code-path issues but NOT Cowork-side LLM behavior. Fi
 | `ship readiness gate --target=m-workspace` | Run battery against the operator's real workspace (NOT synthetic fixtures) — permitted ONLY when the merged profile has `"real"` in `allowed_targets`; any other operator is refused and falls back to synthetic |
 | `ship readiness gate --target=synthetic` (default) | Run battery against the populated synthetic fixtures |
 
-DOES NOT fire on `verify cr release` (that's the operator-attended Cowork loop). DOES NOT fire on `run synthetic workspace test` (that's a single-fixture single-skill test).
+DOES NOT fire on `verify cr release` / `run verification suite` (no skill owns those — they alias `cr test --attended`, the hand-walked dogfood ritual; `verify-cr-release` is retired). DOES NOT fire on `run synthetic workspace test` (that's a single-fixture single-skill test).
 
 ### Target mode behavior
 
@@ -254,13 +254,20 @@ Full report: <workspace_root>/SHIP_READINESS_v3.13.8_2026-05-25.md (resolved fro
 - Voice contract violations (Bugs #16, #60) — synthetic captures chat narration; word-boundary scan applies; but LLM-driven variations limit detection
 - Cross-mount corruption (Bug #55) — environmental, can't be reproduced synthetically
 
-**NO coverage (still requires Cowork-side verify-cr-release):**
+**NO coverage (still requires the attended tier, Cowork-side):**
 - Cowork LLM judgment quality
 - Voice / tone subjective assessment
 - Customer-specific edge cases not in fixtures
 - Cowork's prompt-pattern-matching adaptation over time
+- Virgin-workspace onboarding + honest empty states (a fixture is never a first-run)
+- Destructive / garbage-input probes, and the fresh-runtime skill-load canary
 
-**Conclusion:** This skill is ~80% of pre-promote verification. The remaining 20% needs verify-cr-release on the operator's real workspace.
+**Conclusion:** This skill is ~80% of pre-promote verification. The remaining 20% is the attended tier — `cr test --attended`: freeform dogfood on a real workspace **plus** `cr-test/references/VERIFICATION_PLAN.md` walked against a fresh empty workspace.
+
+**Read this before trusting that 20%.** It used to be driven by a skill (`verify-cr-release`, retired) that tracked position through the plan, auto-classified each pasted-back response, and emitted a verdict doc. Nothing does that now — the attended tier is walked **by hand**. So the 20% is still *addressable*, but it is no longer *enforced*: there is no mechanical guarantee that every plan item was actually run, no auto-classified findings, and no verdict artifact to point at. Two consequences for this gate:
+
+1. **Never infer the attended tier from a PROMOTE here.** This verdict speaks to the 80% only. A PROMOTE plus an unwalked plan is an 80% ship.
+2. **Make the operator say it.** Before a promote, ask what was actually walked, and record the answer in the verdict doc — "attended: dogfood only, plan not walked" is a legitimate and useful thing to write down. Silence is not coverage.
 
 ## Verdict logic
 

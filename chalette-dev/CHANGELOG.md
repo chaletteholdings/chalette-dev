@@ -3,6 +3,93 @@
 (Release history before v0.3.0 lives in `.claude-plugin/plugin.json`'s `description` field.
 This file starts at the CONSOL1 release.)
 
+## Unreleased — VCRRETIRE: `verify-cr-release` retired, tier 5 becomes the dogfood ritual
+
+Retirement. Skill count **16 → 15**. No version bump in this change — the `plugin.json`
+version + description still describe v0.4.0 and are owed at the next cut (see "Owed at ship").
+
+**The ruling (2026-07-25, M):** the tier-5 paste-back orchestrator retires. Dogfood-before-promote
+plus BIG-TEST carry the attended layer now, so the loop's state tracking (`_hq/verify-runs/active.json`),
+prompt-rotation templates, phase-decision gates, and verdict-doc generation are ceremony we no longer
+run. This is the retirement `chalette030 review-cr-build/SKILL.md:27` predicted and pinned the
+authority chain for ("dogfood-before-promote plus BIG-TEST, as an M ruling, and **never** on
+`review-cr-build`'s existence") — that note is updated in place rather than deleted, so the reasoning
+survives the thing it was reasoning about.
+
+### Retired
+
+- `skills/verify-cr-release/` — deleted. `SKILL.md` plus the four paste-back-machinery references
+  (`confirm-prompt-templates.md`, `phase-decision-gates.md`, `test-parsing.md`,
+  `verdict-doc-template.md`), each verified to have **zero** citers outside the retired skill.
+
+### Kept, not deleted — three reference docs relocated to their real owners
+
+The skill owned assets that other skills cite **by name**. Deleting the folder wholesale would
+have turned every citer into a dangling read (the DANGLING_READ / G3 dead-ref class). Each moved
+with `git mv`, so history follows the file:
+
+| Doc | New home | Why there | Citers repointed |
+|---|---|---|---|
+| `VERIFICATION_PLAN.md` | `skills/cr-test/references/` | `cr-test` owns tier 5; this is tier 5's structured half. Repo-level asset, **not** the retired skill's private detail — line 3 always said "the plan Eric maintains" | `CLAUDE.md` (Eric's PR procedure), `README.md` |
+| `response-classifier.md` | `skills/bug-regression-suite/references/` | that skill fires prompts and classifies responses — step 3 of its own procedure | `bug-regression-suite/SKILL.md`, `synthetic-workspace-runtime-test/references/invariants.md` (I5) |
+| `findings-log-format.md` | `skills/bug-regression-suite/references/` | keeps the classify-and-log pair together; `cleanup-helper.md` already integrated with it | `synthetic-workspace-runtime-test/references/invariants.md`, `cleanup-helper.md` |
+
+Both relocated shared docs gained a **"shared asset — cited across skills, sweep the citers before
+moving"** header, so the next retirement doesn't re-orphan them the same way.
+
+### Changed — tier 5 is now "the dogfood ritual," and it is explicitly two halves
+
+`cr-test` Step 4 + the tier table no longer hand off to a skill. Tier 5 is walked **by hand**, and
+it is stated as **both**: (1) freeform dogfood on the operator's real workspace, and (2) the
+structured plan against a **fresh, empty** workspace. This distinction is load-bearing and was
+already written down in the plan itself (surfaces #2 vs #3): dogfood runs on a mature real
+workspace, so it structurally **cannot** reach virgin-workspace onboarding, honest empty states,
+the Phase-3 destructive/garbage probes (which must never touch a real workspace), late-fire
+behavior, or the fresh-runtime skill-load canary. `cr-test` now refuses to call tier 5 covered on
+dogfood alone. `CLAUDE.md` / `README.md` grew a **Track C** to match — the two-track framing had no
+slot for the plan.
+
+### Changed — routing for the orphaned trigger phrases
+
+`verify cr release` and `run verification suite` alias `cr test --attended`; `pre-ship check`
+aliases `cr test --ship` (no collision with `ship-readiness-gate`'s own `pre-promote check`).
+`continue verification` / `resume verification` are **deliberately dropped** — they resumed a
+stateful session that no longer exists, and re-homing them would promise resumption nothing
+provides. The two DOES-NOT-FIRE fences that pointed at the dead skill
+(`ship-readiness-gate:43`, `synthetic-workspace-runtime-test:37`) now name where the phrases
+actually go; left as-was they would have told those skills not to fire on phrases **no** skill
+owned. `cr-test`'s description is 1007/1024 — the `run-command-room-tests` clause was compressed
+to buy the room.
+
+### Changed — `ship-readiness-gate`'s ~80/20 coverage claim, corrected rather than deleted
+
+The "remaining 20% needs verify-cr-release" sentence named a skill that no longer exists. It was
+**not** quietly dropped. The 20% is still *addressable* — same attended tier — but it is no longer
+*enforced*: nothing tracks position through the plan, auto-classifies responses, or emits a verdict
+artifact. The gate now says so, adds the two coverage lines a fixture can never satisfy
+(virgin onboarding, destructive probes / loader canary), and carries two consequences: never infer
+the attended tier from a PROMOTE, and make the operator state what was actually walked — "attended:
+dogfood only, plan not walked" is a legitimate verdict-doc line. **Silence is not coverage.**
+
+### Companion sweep
+
+`bug-regression-suite` (description + 3 body sites + `cleanup-helper.md`),
+`synthetic-workspace-runtime-test` (description, fence, the comparison table rewritten to
+"attended tier", `fire-mocking.md` ×2, `invariants.md` ×2), `ship-readiness-gate` (description,
+fence, coverage block), `cr-skill-builder` (companion list), `cr-test` (description, tier table,
+Step 4, consolidation map), `CLAUDE.md` ×3, `README.md` ×3. In `chalette030`:
+`review-cr-build/SKILL.md` ×3 (description fence, §3 retirement-chain note, DOES-NOT-FIRE line).
+
+### Owed at ship (not done here — build-only change)
+
+1. `plugin.json` version bump + description entry (skill count 16 → 15). Its historical
+   `v0.1.0` prose naming `verify-cr-release` among the extracted 16 is accurate history — leave it.
+2. `chalette030` `plugin.json` description ("20 skills… verify-cr-release…" in the CONSOL1
+   paragraph) + `README.md:7` list — both are prose inventories of the *moved* toolkit, and both
+   still name the retired skill. Not touched here: chalette030 carries uncommitted WIP and this
+   change edits only the files its sweep requires.
+3. Cowork mirror.
+
 ## v0.4.0 (2026-07-24) — TI2: triage-intake routes work out (contributor packet + cr1 BACKLOG)
 
 Capability addition. Skill count unchanged (**16**). Zero trigger changes — `triage-intake`'s

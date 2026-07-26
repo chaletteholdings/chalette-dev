@@ -4,7 +4,7 @@ The shared testing, verification, and skill-building toolkit for everyone who bu
 
 As of **CONSOL1 (2026-07-24)** this is the **single canonical home** of the shared toolkit — the skills below used to be duplicated into M's private `chalette` plugin; that copy is gone. Guard 1 (`scripts/check_toolkit_overlap.py`) fails the build if any of them ever reappears in `chalette`.
 
-**16 skills as of v0.3.1 (MAINT2, 2026-07-24).** Two were retired: `compare-canonical-vs-freelance` (its niche — validating the v3.13.8 §3.6 canonical-vs-freelance widget ladder per skill — closed; the freelance fallback it diffed against no longer exists, and the synthetic invariants plus cr1's `widget_transport` validators cover the render path now) and `run-command-room-tests` (folded into `cr-test`, which auto-discovers every suite instead of running a hardcoded five; its trigger phrases are aliases for `cr test --quick`).
+**15 skills** (16 as of the last release, v0.4.0; the third retirement below lands with the next one). Three have been retired: `compare-canonical-vs-freelance` (its niche — validating the v3.13.8 §3.6 canonical-vs-freelance widget ladder per skill — closed; the freelance fallback it diffed against no longer exists, and the synthetic invariants plus cr1's `widget_transport` validators cover the render path now), `run-command-room-tests` (folded into `cr-test`, which auto-discovers every suite instead of running a hardcoded five; its trigger phrases are aliases for `cr test --quick`), and `verify-cr-release` (the tier-5 paste-back orchestrator — retired per M's ruling: dogfood-before-promote plus BIG-TEST carry the attended layer, so the loop's state tracking and prompt ceremony went away. **What it owned was kept, not deleted:** its verification plan is now `cr-test/references/VERIFICATION_PLAN.md`, and its response classifier + findings-log format moved to `bug-regression-suite/references/`. `verify cr release` / `run verification suite` now alias `cr test --attended`).
 
 ## Setup (Eric)
 
@@ -14,7 +14,7 @@ As of **CONSOL1 (2026-07-24)** this is the **single canonical home** of the shar
 4. In Claude Code, install the plugin from your local clone (marketplace add → this repo path), so the `chalette-dev:*` skills are available in every session.
 5. The synthetic fixtures live in this repo at `chalette-dev/skills/synthetic-workspace-runtime-test/fixtures/` (four workspaces: clean / degraded / fresh_install / mature, built by `_generate_fixtures.py`). `synthetic-workspace-runtime-test` resolves to one of them by default; `config/operator.json` (`workspace_root: null`) points the QA skills at the `clean_workspace` fixture unless you say otherwise.
 
-**Two testing tracks** (see `CLAUDE.md`): (A) **dogfood your own Cowork workspace** as a real user — your own accounts, your own data, encouraged; (B) **controlled regression** with the QA skills against the synthetic fixtures above — these never target a real workspace. The rule "you never test against a real workspace" is about the *automated test tools*; it does not stop Track A.
+**Three testing tracks** (see `CLAUDE.md`): (A) **dogfood your own Cowork workspace** as a real user — your own accounts, your own data, encouraged; (B) **controlled regression** with the QA skills against the synthetic fixtures above — these never target a real workspace; (C) **the structured plan**, `skills/cr-test/references/VERIFICATION_PLAN.md`, walked by hand against a **fresh, empty** test workspace (this is the plan Eric maintains, and the only track that reaches virgin onboarding, empty states, and the destructive probes). The rule "you never test against a real workspace" is about the *automated test tools*; it does not stop Track A. A + C together are `cr test --attended`; no skill drives them.
 
 ## The rules of the road
 
@@ -27,8 +27,7 @@ As of **CONSOL1 (2026-07-24)** this is the **single canonical home** of the shar
 
 | Skill | What it does |
 |---|---|
-| `cr-test` | The one-command entry point — sequences the whole test battery and gives a GREEN/HOLD/RED verdict |
-| `verify-cr-release` | Walks a release verification plan step by step (the prompt/paste loop) |
+| `cr-test` | The one-command entry point — sequences the whole test battery and gives a GREEN/HOLD/RED verdict. Also owns `references/VERIFICATION_PLAN.md`, the hand-walked attended plan (tier 5) |
 | `ship-readiness-gate` | Unattended post-push verification → PROMOTE/HOLD/BLOCKED verdict |
 | `synthetic-workspace-runtime-test` | Spins up the synthetic fixture workspace and fires the canonical surfaces against it |
 | `bug-regression-suite` | Fires every known-bug repro prompt; every new bug you find gets added here permanently |

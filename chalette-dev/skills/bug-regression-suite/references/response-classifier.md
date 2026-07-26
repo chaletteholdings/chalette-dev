@@ -2,6 +2,12 @@
 
 Regex + heuristic patterns for auto-classifying Cowork responses as PASS / PARTIAL / FAIL / NEW_BUG / NEEDS_HUMAN_REVIEW.
 
+> **Shared asset — cited across skills. Don't move or delete without sweeping the citers.**
+> Lives here because `bug-regression-suite` fires prompts and classifies the responses, but
+> `synthetic-workspace-runtime-test/references/invariants.md` also cites it (I5, the leak
+> scan's regex catalog). It moved here when `verify-cr-release` was retired; a second
+> orphaning is a dangling read for every citer.
+
 ## Classification flow
 
 ```
@@ -178,7 +184,7 @@ The classifier returns a structured verdict:
 
 ## Calibration
 
-Initial regex catalogs are calibrated from this session's v3.13.7 verification responses. As more verifications run, calibration improves. The verify-cr-release skill writes a `classifier_calibration_<session>.jsonl` log of (regex, matched, true_verdict, predicted_verdict) tuples for offline calibration tuning.
+Initial regex catalogs are calibrated from this session's v3.13.7 verification responses. As more verifications run, calibration improves. Any caller that classifies at volume should write a `classifier_calibration_<session>.jsonl` log of (regex, matched, true_verdict, predicted_verdict) tuples for offline calibration tuning. (The retired `verify-cr-release` skill wrote this log automatically; no skill does so today, so a calibration pass is a deliberate manual step.)
 
 ## When classifier fails (NEEDS_HUMAN_REVIEW)
 

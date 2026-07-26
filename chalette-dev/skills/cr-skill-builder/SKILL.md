@@ -292,7 +292,7 @@ I surface clickable links to:
 
 - `chalette-dev:skill-creator` → run the trigger eval + additional evals against test prompts
 - `chalette-dev:synthetic-workspace-runtime-test` → runtime exercise against fixture
-- `chalette-dev:verify-cr-release` → M-attended Cowork verification (for the release containing this skill)
+- `chalette-dev:cr-test --attended` → the attended tier for the release containing this skill: dogfood + `cr-test/references/VERIFICATION_PLAN.md`, walked by hand (this replaced the retired `verify-cr-release`)
 - `chalette-dev:bug-regression-suite` → regression check against the resolved workspace post-drop
 - `chalette:ship-cr-plugin` → staging push when ready
 

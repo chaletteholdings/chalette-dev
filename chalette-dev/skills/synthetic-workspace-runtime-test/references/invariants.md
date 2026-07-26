@@ -47,7 +47,7 @@ The full list of runtime invariants the skill asserts after every canonical-surf
 
 **Test:** No leak tokens in widget HTML OR chat narration OR appended event data fields.
 
-**How:** Tag-stripped run-collapsed word-boundary-anchored scan per Bug #54 refinement. Regex catalog per `response-classifier.md` in verify-cr-release.
+**How:** Tag-stripped run-collapsed word-boundary-anchored scan per Bug #54 refinement. Regex catalog per `skills/bug-regression-suite/references/response-classifier.md`.
 
 **Why:** Bug #54 / #57 / #59 / #60 — universal leak gate.
 
@@ -200,4 +200,4 @@ When an invariant fails, capture:
 - Likely cause hypothesis (cross-referenced to known bug catalog)
 - Recommended action
 
-Format per `references/findings-log-format.md` in verify-cr-release skill.
+Format per `skills/bug-regression-suite/references/findings-log-format.md`.
