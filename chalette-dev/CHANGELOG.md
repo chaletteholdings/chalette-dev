@@ -3,10 +3,12 @@
 (Release history before v0.3.0 lives in `.claude-plugin/plugin.json`'s `description` field.
 This file starts at the CONSOL1 release.)
 
-## Unreleased — VCRRETIRE: `verify-cr-release` retired, tier 5 becomes the dogfood ritual
+## v0.4.1 (2026-07-27) — VCRRETIRE: `verify-cr-release` retired, tier 5 becomes the dogfood ritual
 
-Retirement. Skill count **16 → 15**. No version bump in this change — the `plugin.json`
-version + description still describe v0.4.0 and are owed at the next cut (see "Owed at ship").
+Retirement. Skill count **16 → 15**. PATCH bump, per this repo's own convention: retirements
+and fixes take a patch (v0.3.1 carried two retirements plus the Git-Bash fix), a capability
+addition takes a minor (v0.4.0 TI2). VCRRETIRE removes a skill and re-homes what it owned;
+it adds nothing.
 
 **The ruling (2026-07-25, M):** the tier-5 paste-back orchestrator retires. Dogfood-before-promote
 plus BIG-TEST carry the attended layer now, so the loop's state tracking (`_hq/verify-runs/active.json`),
@@ -80,15 +82,17 @@ fence, coverage block), `cr-skill-builder` (companion list), `cr-test` (descript
 Step 4, consolidation map), `CLAUDE.md` ×3, `README.md` ×3. In `chalette030`:
 `review-cr-build/SKILL.md` ×3 (description fence, §3 retirement-chain note, DOES-NOT-FIRE line).
 
-### Owed at ship (not done here — build-only change)
+### Owed at ship — closed at the v0.4.1 cut (2026-07-27)
 
-1. `plugin.json` version bump + description entry (skill count 16 → 15). Its historical
-   `v0.1.0` prose naming `verify-cr-release` among the extracted 16 is accurate history — leave it.
-2. `chalette030` `plugin.json` description ("20 skills… verify-cr-release…" in the CONSOL1
-   paragraph) + `README.md:7` list — both are prose inventories of the *moved* toolkit, and both
-   still name the retired skill. Not touched here: chalette030 carries uncommitted WIP and this
-   change edits only the files its sweep requires.
-3. Cowork mirror.
+1. **Done.** `plugin.json` version bump 0.4.0 → 0.4.1 + description entry (skill count 16 → 15).
+   Its historical `v0.1.0` prose naming `verify-cr-release` among the extracted 16 is accurate
+   history — left as written.
+2. **Done.** `README.md:7` skill-count parenthetical settled to "15 skills (as of v0.4.1)".
+   `chalette030`'s `plugin.json` description names the retired skill inside a sentence about
+   what *moved out* at CONSOL1 — that sentence is accurate history (all 18 did move), so it
+   gained a "three have since been retired there" clause rather than a rewritten roster.
+   chalette030's own CHANGELOG entries are append-only and were not touched.
+3. Cowork mirror — carried at the ship step.
 
 ## v0.4.0 (2026-07-24) — TI2: triage-intake routes work out (contributor packet + cr1 BACKLOG)
 
