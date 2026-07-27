@@ -124,7 +124,8 @@ This is approximate — real orchestrator execution is LLM-driven (Cowork interp
 - Voice / tone of generated content
 - M's subjective quality assessment
 
-For those: use verify-cr-release (the M-attended Cowork loop).
+For those: use the attended tier — `cr test --attended`, walked by hand (dogfood plus
+`cr-test/references/VERIFICATION_PLAN.md`). No skill orchestrates it.
 
 ## What the synthetic mode CAN catch (the high-leverage stuff)
 
@@ -135,7 +136,7 @@ For those: use verify-cr-release (the M-attended Cowork loop).
 - Multi-write atomic-lock deadlock (Bug #20 class)
 - Schema-enum violations (Bug #43 class)
 
-These are the bug classes that "verify-cr-release manual loop on Cowork" catches slowly, but synthetic-runtime catches in 30 seconds.
+These are the bug classes that the attended Cowork loop catches slowly, but synthetic-runtime catches in 30 seconds.
 
 ## Trace capture format
 

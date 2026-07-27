@@ -1,9 +1,15 @@
 # Command Room — Verification Plan (living document)
 
-**This is the plan `verify-cr-release` walks, and it's the plan Eric maintains.**
-It is a checklist of what matters and what "good" looks like, phase by phase. Adapted
-from M's original Erick test runner (v4.5.1); keep it current — see "Maintaining this
-plan" at the bottom.
+**This is the plan the operator walks by hand — `cr-test` tier 5 (attended) — and it's
+the plan Eric maintains.** It is a checklist of what matters and what "good" looks like,
+phase by phase. Adapted from M's original Erick test runner (v4.5.1); keep it current —
+see "Maintaining this plan" at the bottom.
+
+There is no orchestrator skill for it. The paste-back orchestration that used to walk it
+(`verify-cr-release`) was retired — its response classifier and findings-log format were
+kept and moved to `bug-regression-suite/references/`, and its state-tracking, prompt
+templates, and verdict-doc generation were dropped. **The plan itself is the asset; you
+walk it yourself.** Nothing automates Phases 1–4, and nothing is supposed to.
 
 **Current target version:** v4.8.0 (update this line each release).
 
@@ -13,13 +19,18 @@ plan" at the bottom.
 
 There are three separate testing surfaces. Do not cross them:
 
-1. **`cr-test` / automated battery** → runs against the built-in synthetic *fixtures*
-   (`skills/synthetic-workspace-runtime-test/fixtures/`). No plan needed. Not this file.
-2. **This structured plan** → runs against a **FRESH, EMPTY test workspace** you create
-   and seed with the synthetic persona below. **Not** your own real Command Room
-   workspace, **not** the fixtures. A fresh folder, typed-in fake data.
+1. **`cr-test` tiers 0–4 / automated battery** → runs against the built-in synthetic
+   *fixtures* (`skills/synthetic-workspace-runtime-test/fixtures/`). Pure code, no plan
+   needed. Not this file.
+2. **This structured plan — `cr-test` tier 5** → walked by hand against a **FRESH, EMPTY
+   test workspace** you create and seed with the synthetic persona below. **Not** your own
+   real Command Room workspace, **not** the fixtures. A fresh folder, typed-in fake data.
 3. **Freeform dogfood** → you *using* Command Room in Cowork against your own real
-   workspace, as a customer. Separate activity; not this file.
+   workspace, as a customer. The other half of tier 5, and a genuinely separate activity —
+   it is **not** a substitute for this file. Dogfood runs on a mature real workspace, so it
+   structurally cannot reach what Phases 1–4 below reach: virgin-workspace onboarding,
+   honest empty states, the destructive and garbage-input probes, or the fresh-loader
+   skill canary. Do both; neither covers the other.
 
 **Never run this plan against a real workspace** — Phase 3 deliberately tries deletions
 and garbage inputs. Fresh empty folder only.
@@ -43,8 +54,8 @@ and garbage inputs. Fresh empty folder only.
 
 ## Phase 0 — Machine verification (scripted, ~30 min)
 
-1. **Clone + battery.** `verify-cr-release` resolves to the synthetic fixture by
-   default; for the raw battery:
+1. **Clone + battery.** `cr test` runs this for you against the synthetic fixture; for
+   the raw battery by hand:
    ```bash
    git clone https://github.com/ChaletteHQ/cr1.git ~/repos/cr1
    cd ~/repos/cr1

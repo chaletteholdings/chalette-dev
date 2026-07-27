@@ -1,6 +1,6 @@
 ---
 name: synthetic-workspace-runtime-test
-description: "INTERNAL — pre-ship gate that spins up a synthetic workspace fixture (clean substrate + 8 deliberately-malformed lines + curated entities/aliases/events) and fires the 7 canonical-scope surfaces against it. Asserts: canonical render path was actually invoked (not freelance), canonical events written with correct shapes, no leak tokens in any output, defensive readers tolerate malformed lines. Triggers: 'run synthetic workspace test', 'pre-ship runtime gate', 'synthetic e2e'. Designed to catch the 'static analysis passes but runtime substitutes inferior path' bug class that v3.13.x verification surfaced repeatedly (Bug #11 / #45 / #52 / #53). Plugin-developer use only. Per V3.13.8_MASTER_PLAN §6 Principle 1: runtime exercise, not static check. Companion to verify-cr-release (which is M-attended Cowork loop)."
+description: "INTERNAL — pre-ship gate that spins up a synthetic workspace fixture (clean substrate + 8 deliberately-malformed lines + curated entities/aliases/events) and fires the 7 canonical-scope surfaces against it. Asserts: canonical render path was actually invoked (not freelance), canonical events written with correct shapes, no leak tokens in any output, defensive readers tolerate malformed lines. Triggers: 'run synthetic workspace test', 'pre-ship runtime gate', 'synthetic e2e'. Designed to catch the 'static analysis passes but runtime substitutes inferior path' bug class that v3.13.x verification surfaced repeatedly (Bug #11 / #45 / #52 / #53). Plugin-developer use only. Per V3.13.8_MASTER_PLAN §6 Principle 1: runtime exercise, not static check. Companion to cr-test (the single entry point; this skill is part of its tier 3)."
 ---
 
 # synthetic-workspace-runtime-test
@@ -34,7 +34,7 @@ This skill closes that gap by running ACTUAL skill code paths against ACTUAL sub
 | `synthetic workspace test [skill_name]` | Run gate against a specific skill only |
 | `synthetic workspace test --fixtures` | Show available fixtures + their characteristics |
 
-DOES NOT fire on `verify cr release` (that's the M-attended Cowork loop). DOES NOT fire on `run plugin tests` (that's cr-test's `--quick` tier — pure-python unit suites, no real substrate).
+DOES NOT fire on `verify cr release` / `run verification suite` (`cr-test` owns those — they alias `cr test --attended`, the hand-walked dogfood ritual, since `verify-cr-release` was retired). DOES NOT fire on `run plugin tests` (that's cr-test's `--quick` tier — pure-python unit suites, no real substrate).
 
 ## Fixtures (in `fixtures/`)
 
@@ -266,19 +266,23 @@ Skill writes a summary to `_hq/synthetic-test-runs/<timestamp>/report.md` under 
 - **Mocking too thin to catch real bugs:** skill captures actual tool-trace; failures include verbatim trace excerpts so the operator can verify manually.
 - **Fixture diverges from real workspaces over time:** quarterly fixture refresh via diff against the operator's real workspace shape, not content (operator=m only — the only profile with a real workspace to diff against).
 
-## Connection to verify-cr-release
+## Connection to the attended tier
 
-The skills are companions, not substitutes:
+This skill and the attended tier are companions, not substitutes. (The attended side used
+to be a skill — `verify-cr-release` — which is retired; the tier itself is not.)
 
-| | verify-cr-release | synthetic-workspace-runtime-test |
+| | attended tier (`cr test --attended`) | synthetic-workspace-runtime-test |
 |---|---|---|
 | Environment | the operator's actual Cowork chat + Code | Pure Code subprocess |
-| Substrate | the operator's real workspace | Synthetic fixture |
-| Speed | ~10 min per test (M-attention) | ~30 sec per fire (automated) |
-| Catches | Cowork-side LLM behavior | Plugin-side code-path behavior |
-| When to run | Pre-ship Cowork-integration gate | Pre-commit + ship-cr-plugin pre-flight |
+| Substrate | the operator's real workspace (dogfood) + a fresh empty workspace (the plan) | Synthetic fixture |
+| Speed | hours, operator-attended | ~30 sec per fire (automated) |
+| Catches | Cowork-side LLM behavior, voice, onboarding, empty states | Plugin-side code-path behavior |
+| When to run | Pre-promote gate | Pre-commit + ship-cr-plugin pre-flight |
+| Driven by | **the operator, by hand** — no skill orchestrates it | this skill, automated |
 
-Run synthetic-workspace-runtime-test FIRST (catches code-path issues before they reach Cowork) — THEN verify-cr-release (catches Cowork-side runtime behavior).
+Run synthetic-workspace-runtime-test FIRST (catches code-path issues before they reach
+Cowork) — THEN the attended tier (catches Cowork-side runtime behavior). Order matters:
+attended time is expensive and shouldn't be spent on bugs a subprocess finds in 30 seconds.
 
 ## Implementation notes
 

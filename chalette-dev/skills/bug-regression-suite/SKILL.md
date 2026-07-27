@@ -1,6 +1,6 @@
 ---
 name: bug-regression-suite
-description: "INTERNAL — accumulated test corpus + adversarial-prompt suite (one skill, two modes). Mode 1 (regression): fires a curated catalog of known-bug repro prompts against the target workspace; asserts each fix held. Mode 2 (adversarial): fires edge-case prompts designed to elicit NEW failure modes; surfaces any architectural surprises. Catalog grows over time — every new bug found becomes a permanent regression test. Target defaults to synthetic fixtures; M's actual workspace is reachable via --target=m-workspace ONLY when config/operator.json identifies the operator as M. Triggers: 'run regression suite', 'bug regression', 'red team', 'adversarial check', 'verify bugs fixed'. All substrate-modifying tests pre-snapshot + tag test_artifact=true + emit post-suite cleanup helper. Plugin-developer use only. Companions: verify-cr-release, ship-readiness-gate."
+description: "INTERNAL — accumulated test corpus + adversarial-prompt suite (one skill, two modes). Mode 1 (regression): fires a curated catalog of known-bug repro prompts against the target workspace; asserts each fix held. Mode 2 (adversarial): fires edge-case prompts designed to elicit NEW failure modes; surfaces any architectural surprises. Catalog grows over time — every new bug found becomes a permanent regression test. Target defaults to synthetic fixtures; M's actual workspace is reachable via --target=m-workspace ONLY when config/operator.json identifies the operator as M. Triggers: 'run regression suite', 'bug regression', 'red team', 'adversarial check', 'verify bugs fixed'. All substrate-modifying tests pre-snapshot + tag test_artifact=true + emit post-suite cleanup helper. Plugin-developer use only. Companions: cr-test, ship-readiness-gate."
 ---
 
 # bug-regression-suite
@@ -159,7 +159,7 @@ For each bug entry (or filtered subset per `--bug-id` flag):
 
 1. Emit the trigger prompt to M (M pastes into Cowork)
 2. Wait for M's paste-back of Cowork response
-3. Run response classifier (see verify-cr-release's response-classifier.md)
+3. Run response classifier (see `references/response-classifier.md`)
 4. Verdict: PASS (fix held) / FAIL (regression detected) / PARTIAL (works by good faith, no structural guarantee)
 5. Log to findings + advance to next bug
 
@@ -287,7 +287,7 @@ Cleanup is conservative — marks artifacts as archived rather than deleting. Au
 
 When a NEW bug surfaces in production:
 
-1. M (or verify-cr-release autonomously) adds entry to `references/bug-catalog.md`
+1. M adds entry to `references/bug-catalog.md` (this used to also happen autonomously from the retired `verify-cr-release`; it is a manual step now)
 2. Entry includes: trigger prompt, expected pass/fail signals, severity, fix version reference
 3. The bug is now PERMANENTLY tested on every future regression-suite run
 
@@ -326,7 +326,7 @@ ship-readiness-gate orchestrates this skill as part of its post-push verificatio
 
 ## What this skill does NOT cover
 
-- Cowork's LLM-driven prose synthesis quality (use verify-cr-release for that)
+- Cowork's LLM-driven prose synthesis quality (that's the attended tier — `cr test --attended`, walked by hand)
 - Customer-shape diversity (M's workspace ≠ all customers; v3.14.x customer-shape fixtures fill this)
 - Cross-skill temporal interactions across time (cross-skill-interaction-test covers this — runs sequences across minutes/hours/days)
 - Performance at scale (scale-stress-test)

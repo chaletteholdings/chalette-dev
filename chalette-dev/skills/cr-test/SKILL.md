@@ -1,6 +1,6 @@
 ---
 name: cr-test
-description: "INTERNAL — the single entry point for testing Command Room. Orchestrates the full battery in tiers (static guards → unit → runtime → integration → ship verdict), fail-fast, and emits ONE consolidated GREEN/HOLD/RED verdict. Replaces having to remember synthetic-workspace-runtime-test / bug-regression-suite / cross-skill-interaction-test / ship-readiness-gate individually — it sequences and delegates to them. Fires on 'cr test', 'test command room', 'run the battery', 'full test', 'badass test', 'cr test --quick', 'cr test --ship'. Absorbs the retired run-command-room-tests entry point: 'internal: run plugin tests', 'run command room tests', 'command room health check' and 'verify plugin code' are aliases for 'cr test --quick' — tiers 0-1, the pure-python suites, discovered at call time by tests/run_all.py instead of the old hardcoded list of five. Plugin-developer use only; not customer chat."
+description: "INTERNAL — the single entry point for testing Command Room. Orchestrates the full battery in tiers (static guards → unit → runtime → integration → ship verdict), fail-fast, and emits ONE consolidated GREEN/HOLD/RED verdict. Replaces having to remember synthetic-workspace-runtime-test / bug-regression-suite / cross-skill-interaction-test / ship-readiness-gate individually — it sequences and delegates to them. Fires on 'cr test', 'test command room', 'run the battery', 'full test', 'badass test', 'cr test --quick', 'cr test --ship', 'cr test --attended'. Absorbs two retired entry points. run-command-room-tests: 'internal: run plugin tests', 'run command room tests', 'command room health check', 'verify plugin code' alias 'cr test --quick' — tiers 0-1, auto-discovered by tests/run_all.py. verify-cr-release: 'verify cr release', 'run verification suite' alias '--attended'; 'pre-ship check' aliases '--ship'. Tier 5 = the dogfood ritual, walked by hand. Plugin-developer use only; not customer chat."
 ---
 
 # cr-test — the Command Room test battery
@@ -41,7 +41,7 @@ The deep-testing weeks surfaced a layered truth about what catches what:
 | 2 · runtime | code-path simulation vs synthetic data: `runtime_exercise_*`, spec-example render | `tests/run_all.py --tier runtime` | **HARD** |
 | 3 · integration | multi-fire sequences + regression vs a real/synthetic workspace | delegate → `synthetic-workspace-runtime-test`, `cross-skill-interaction-test`, `bug-regression-suite` | **SOFT** (HOLD) |
 | 4 · ship verdict | unattended pre-promote battery + bug-catalog cross-ref | delegate → `ship-readiness-gate` | emits PROMOTE/HOLD/BLOCKED |
-| 5 · attended | Cowork paste-back LLM-behavior verification | delegate → `verify-cr-release` (operator-attended; NOT auto-run) | the ship operator's call (`may_ship`) |
+| 5 · attended | the dogfood ritual: freeform real-workspace dogfood **+** walk `references/VERIFICATION_PLAN.md` against a fresh test workspace | hand off to the operator — **no skill; walked by hand** (NOT auto-run) | the ship operator's call (`may_ship`) |
 
 Tiers 0–2 are pure code and run in this skill directly (~10s). Tiers 3–5 are
 heavier and delegate to the specialist skills, which keep their own logic — this
@@ -159,9 +159,25 @@ Fold its verdict into the consolidated call below.
 
 ### Step 4 — Attended tier (only on `--attended`)
 
-Point the operator to `verify-cr-release` for the Cowork paste-back loop (LLM-behavior /
-voice / tone — the ~20% no code battery can cover). Do NOT try to automate this;
-it needs the operator present. Just hand off cleanly with the version under test.
+Hand off to the operator for **the dogfood ritual** — the LLM-behavior / voice / tone
+layer no code battery can cover. There is no skill for this tier; it is walked by hand.
+Do NOT try to automate it, and do NOT report a tier-5 result you did not watch happen.
+
+Hand off cleanly with the version under test and **both halves**, because they cover
+different things:
+
+1. **Freeform dogfood** — the operator uses Command Room in their own Cowork against
+   their own real workspace, as a customer, and reads the outputs. Catches voice, tone,
+   judgment quality, and real-data edge cases. This is `CLAUDE.md` Track A.
+2. **The structured plan** — `references/VERIFICATION_PLAN.md`, walked against a
+   **fresh, empty** test workspace seeded with the synthetic persona. Catches what
+   dogfood structurally cannot: virgin-workspace onboarding, honest empty states, the
+   destructive/garbage-input probes (Phase 3 deliberately tries deletions, so it must
+   never run against a real workspace), late-fire behavior, and the fresh-loader skill
+   canary. Eric maintains this plan; ~90% is stable release to release.
+
+Dogfood alone is **not** tier 5. If the operator is only doing (1), say so in the verdict
+rather than calling the attended tier covered.
 
 ### Step 5 — One consolidated verdict
 
@@ -209,7 +225,20 @@ their logic; cr-test is the conductor:
 - `synthetic-workspace-runtime-test`, `cross-skill-interaction-test`,
   `bug-regression-suite` → tier 3, delegated.
 - `ship-readiness-gate` → tier 4, delegated.
-- `verify-cr-release` → tier 5, attended, handed off (not auto-run).
+- `verify-cr-release` → **retired and deleted** (the paste-back orchestrator for tier 5).
+  Its niche — driving the attended loop prompt-by-prompt and auto-classifying pasted-back
+  responses — closed: dogfood-before-promote plus BIG-TEST now carry the attended layer,
+  per M's ruling. Tier 5 is now **the dogfood ritual, walked by hand** (see Step 4); the
+  skill's own state tracking, prompt templates, and verdict-doc generation were dropped as
+  ceremony. What was worth keeping was kept, not deleted: its verification plan is now
+  `cr-test/references/VERIFICATION_PLAN.md` (tier 5's structured half) and its response
+  classifier + findings-log format moved to `bug-regression-suite/references/`, where
+  their existing citers still reach them. Its trigger phrases were **re-homed onto this
+  skill**, not orphaned: `verify cr release` and `run verification suite` alias
+  `cr test --attended`, and `pre-ship check` aliases `cr test --ship` — all three are
+  claimed in this skill's own description above. Only `continue verification` /
+  `resume verification` were **deliberately dropped**: they resumed a stateful session
+  that no longer exists, so re-homing them would promise resumption nothing provides.
 - `ship-cr-plugin` → the release flow. Run cr-test --ship BEFORE it; it has its
   own in-line structural-guard gate as a backstop.
 

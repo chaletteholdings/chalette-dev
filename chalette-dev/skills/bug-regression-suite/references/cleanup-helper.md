@@ -208,6 +208,6 @@ DON'T cleanup if:
 
 In ambiguous cases, surface to M with an explicit list of "found these test_artifact records — archive them?" decision.
 
-## Integration with verify-cr-release findings log
+## Integration with the findings log
 
 Cleanup events get logged to the canonical findings log alongside the test verdicts. Audit trail is preserved end-to-end.
