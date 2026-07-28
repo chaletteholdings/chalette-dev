@@ -33,10 +33,25 @@ implication. Now there is.
 ### Added — `may_build_own_spec` in `config/operator.json`
 
 Third authority key, placed next to `may_ship` / `may_promote` so all three read together.
-**Committed default `false`**, like the other two; the real grant lives ONLY in the
-gitignored `config/operator.local.json` overlay, per machine. Independent of `may_ship` in
-both directions: a contractor can carry spec→build in one pass while holding zero ship
-authority.
+Independent of `may_ship` in both directions: a contractor carries spec→build in one pass
+while holding zero ship authority.
+
+**It ships `true` — the one authority key that does.** The spec ruled it overlay-only with
+a committed `false`, matching the other two. M overruled that on the call, and he is right:
+an overlay is a hand-created, gitignored file, so the grant would have been invisible to
+`git pull`, absent on a fresh clone, and silently lost the first time Eric re-cloned — a
+setup step that can be forgotten, guarding something a PR review already catches. Shipping
+it on means **a plain `git pull` is the entire setup**. What that costs: the value travels
+with the repo, so a future contributor inherits build authority rather than being granted
+it one at a time. With two collaborators on a private repo, and with `may_ship` /
+`may_promote` / `allowed_targets` all still shipping locked, that is a real but small price
+and M took it knowingly.
+
+The safety keys are unchanged and still ship locked. **"Contractor-safe" now means zero
+ship authority and synthetic targets only — it no longer means zero authority**, and both
+`operator.json`'s header comment and `CLAUDE.md` say so, because that phrase is load-bearing
+in three places and a reader who assumes the old meaning would read the new default as a
+regression.
 
 ### Changed — two sentences in `skills/triage-intake/SKILL.md`
 
@@ -55,11 +70,12 @@ authority.
   contract still bind in full.
 
 **Deviation from the spec, deliberate: the granted branch fires on `may_build_own_spec:
-true` OR `may_ship: true`.** Re-gating on the new key alone would have regressed M's own
-flow — his overlay predates the key, so it would have fallen through to the committed
-`false` and his triage sessions would have started telling him to hand his own specs over.
-A ship operator may always build his own spec. No overlay edit needed on either machine
-beyond Eric's one key.
+true` OR `may_ship: true`.** Under the spec's overlay-only design this was load-bearing —
+M's overlay predates the key, so re-gating on the new key alone would have fallen through
+to the committed `false` and started telling the maintainer to hand his own specs over.
+Once the shipped value became `true` the clause stopped being load-bearing, but it is kept:
+a ship operator may always build his own spec, including one who deliberately turns the key
+off in an overlay. **Neither machine needs an overlay edit for this release.**
 
 ### NOT changed — deliberately
 
@@ -76,11 +92,16 @@ beyond Eric's one key.
 
 ### Guards
 
-- **Guard 2** (`tests/test_operator_fences.py`) pins `may_build_own_spec == false` in the
-  committed default, exactly as it pins `may_ship` / `may_promote`. Mutation-verified both
-  directions: committed value flipped to `true` → **1 failed, 49 passed** (fence RED);
-  assertion then removed with the bad value still in place → **49 passed, 0 failed** (only
-  the fence caught it). Restored byte-identical, back to **50 passed, 9 skipped**.
+- **Guard 2** (`tests/test_operator_fences.py`) pins `may_build_own_spec == true`. **This
+  fence runs the opposite direction from its two neighbours, deliberately.** It is not a
+  safety fence — it is a don't-silently-take-it-away fence: a revert to `false` sends every
+  contractor back to the pre-build handoff with no error and no clue why, which is precisely
+  the failure GATE1 exists to prevent. The real safety fences (`may_ship`, `may_promote`,
+  `allowed_targets`, `workspace_root`, `scrub_roster`) still pin the locked values and are
+  untouched. Mutation-verified both directions against the shipped value: reverted to
+  `false` → **1 failed, 49 passed** (fence RED); assertion then removed with the bad value
+  still in place → **49 passed, 0 failed** (only the fence caught it). Restored
+  byte-identical, back to **50 passed, 9 skipped**.
 - **Guard 3** (`tests/test_triage_outbound_fences.py`) gains three instruction-layer fences
   on the new delivery rule — same class as the existing outbound fences, one section over.
   The rule is prose and can fail in **both** directions: narrowed back to `may_ship` (the
@@ -95,16 +116,18 @@ beyond Eric's one key.
 
 ### Docs
 
-- `README.md` **step 3a** is the delivery half of this change and the reason it is not
-  inert: the toolkit's docs said only M keeps an overlay, so nothing told Eric to create
-  one — the key would have stayed `false` on the only machine it was written for. Step 3a
-  gives him the exact two-line `config/operator.local.json`, states what it grants, and
-  states what it does not. The safety-key list and the "All work goes through PRs" rule
-  name the new key; skill-count line repointed to v0.5.0.
-- `CLAUDE.md` enumerates `may_build_own_spec: false` in the committed default, records that
-  Eric now keeps an overlay too, and carries a three-row authority table. It also states
-  the thing worth being honest about: these keys are a **coordination contract, not a
-  security boundary** — the boundary is GitHub access (read-only on cr1, fork→PR, M merges).
+- `README.md` gains **"What you can and can't do"** — all four authority keys in plain
+  English with what each ships as, written for the contractor rather than the maintainer.
+  This section is why the release is not inert: the docs previously said only M keeps an
+  overlay, so under the spec's overlay-only design nothing would have told Eric the key
+  existed. Setup step 3 now says explicitly that there is **nothing to create or turn on**.
+  The "All work goes through PRs" rule names the PR as the review point; skill-count line
+  repointed to v0.5.0.
+- `CLAUDE.md` enumerates `may_build_own_spec: true` in the committed default, carries a
+  four-column authority table (grants / ships / what Guard 2 pins), and explains why one
+  fence points the other way. It also states the thing worth being honest about: these keys
+  are a **coordination contract, not a security boundary** — the boundary is GitHub access
+  (read-only on cr1, fork→PR, M merges).
 
 ### Same-class sweep — the overlay claim that GATE1 makes false
 

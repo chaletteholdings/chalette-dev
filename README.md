@@ -10,18 +10,25 @@ As of **CONSOL1 (2026-07-24)** this is the **single canonical home** of the shar
 
 1. Clone this repo: `git clone https://github.com/ChaletteHQ/chalette-dev ~/repos/chalette-dev`
 2. Clone the Command Room staging repo (read-only for you): `git clone https://github.com/ChaletteHQ/cr1 ~/repos/cr1`
-3. Edit `config/operator.json` on your machine if your paths differ. Leave `operator: "eric"` and the safety keys (`allowed_targets`, `may_ship`, `may_promote`, `may_build_own_spec`) as is — the test skills read them to decide what you're allowed to target, and Guard 2 fails CI if any of them drifts in the committed file. Anything you're granted beyond the committed default goes in your own **overlay** instead — see step 3a.
-3a. **Your overlay — `config/operator.local.json`** (same folder, gitignored, never committed; Guard 2 asserts it stays untracked). The skills load `operator.json` first, then overlay this file per-key, so it holds the grants that are yours and not every clone's. M keeps one for his real paths; **as of v0.5.0 you keep one too**, for build authority:
-   ```json
-   {
-     "may_build_own_spec": true
-   }
-   ```
-   That one key lets a spec your own `triage-intake` session writes go straight into your specs queue ready to build, in one pass, with the **pull request as the review point** — no hand-the-spec-over step first. It grants **nothing else**: `may_ship` and `may_promote` stay `false`, so no version bumps, no CHANGELOG entries, no promote, no merging your own PR. Those are still M's, and they're also enforced outside this file by your GitHub access.
+3. Edit `config/operator.json` on your machine if your paths differ. Leave `operator: "eric"` and the four authority keys (`allowed_targets`, `may_ship`, `may_promote`, `may_build_own_spec`) exactly as they ship — the skills read them to decide what you're allowed to target, and Guard 2 fails CI if any of them drifts. **There is nothing for you to create or turn on**; what you're granted is already in the file. See "What you can and can't do" below.
+   *(There is also an optional gitignored `config/operator.local.json` overlay, loaded on top of `operator.json` per-key. You don't need one — M keeps one for his real machine paths. If you ever add one, it must never be committed; Guard 2 asserts that.)*
 4. In Claude Code, install the plugin from your local clone (marketplace add → this repo path), so the `chalette-dev:*` skills are available in every session.
 5. The synthetic fixtures live in this repo at `chalette-dev/skills/synthetic-workspace-runtime-test/fixtures/` (four workspaces: clean / degraded / fresh_install / mature, built by `_generate_fixtures.py`). `synthetic-workspace-runtime-test` resolves to one of them by default; `config/operator.json` (`workspace_root: null`) points the QA skills at the `clean_workspace` fixture unless you say otherwise.
 
 **Three testing tracks** (see `CLAUDE.md`): (A) **dogfood your own Cowork workspace** as a real user — your own accounts, your own data, encouraged; (B) **controlled regression** with the QA skills against the synthetic fixtures above — these never target a real workspace; (C) **the structured plan**, `skills/cr-test/references/VERIFICATION_PLAN.md`, walked by hand against a **fresh, empty** test workspace (this is the plan Eric maintains, and the only track that reaches virgin onboarding, empty states, and the destructive probes). The rule "you never test against a real workspace" is about the *automated test tools*; it does not stop Track A. A + C together are `cr test --attended`; no skill drives them.
+
+## What you can and can't do
+
+The four authority keys in `config/operator.json`, in plain English. All four ship set correctly — **nothing to turn on**:
+
+| Key | Ships | What it means for you |
+|---|---|---|
+| `may_build_own_spec` | **`true`** | **You can write a spec and build from it in one pass.** No stopping to get the spec approved first — the pull request is where M reviews. (GATE1, v0.5.0.) |
+| `may_ship` | `false` | No version bumps, no CHANGELOG entries, no releases, no merging your own PR. |
+| `may_promote` | `false` | No fan-out to client repos. |
+| `allowed_targets` | `["synthetic"]` | The automated test skills run against the synthetic fixtures, never a real workspace. (Doesn't stop you dogfooding your own Command Room — that's Track A.) |
+
+Build authority and ship authority are separate on purpose; being granted the first grants none of the second. And these keys are a working agreement, not a lock — what actually holds is your GitHub access: read-only on cr1, fork → PR, M merges.
 
 ## The rules of the road
 

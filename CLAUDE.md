@@ -65,29 +65,40 @@ Every skill that targets a workspace, a clone, or an intake queue resolves it fr
 
 - `config/operator.json` — committed, **contractor-safe default** (operator `eric`,
   `allowed_targets: ["synthetic"]`, `may_ship: false`, `may_promote: false`,
-  `may_build_own_spec: false`, `workspace_root: null`). Edit `cr1_clone` to your own clone;
-  leave the safety keys alone.
+  `may_build_own_spec: true`, `workspace_root: null`). Edit `cr1_clone` to your own clone;
+  leave the authority keys alone. **"Contractor-safe" means zero ship authority and
+  synthetic targets only — as of GATE1 it does not mean zero authority.**
 - `config/operator.local.json` — **gitignored per-machine overlay.** A reading skill loads
   `operator.json`, then overlays `operator.local.json` per-key. Matthew keeps one (his real
-  paths and `"real"` in `allowed_targets`); **as of GATE1 (v0.5.0) Eric keeps one too**,
-  carrying exactly `{"may_build_own_spec": true}` — see README step 3a. **Do not edit the
-  committed `operator.json` into a granted profile** — drop an overlay instead. Guard 2
-  (`tests/test_operator_fences.py`) fails CI if the committed default drifts or if
+  paths and `"real"` in `allowed_targets`); not every operator has one, and **Eric does not
+  need one** — everything he is granted ships in the committed file. **Do not edit the
+  committed `operator.json` into a real-workspace profile** — drop an overlay instead.
+  Guard 2 (`tests/test_operator_fences.py`) fails CI if the committed default drifts or if
   `operator.local.json` is ever tracked.
 
 **Three separate authorities — do not conflate them** (GATE1, 2026-07-27). `may_ship`
 used to imply all three by accident, which meant a contractor who could not ship also
 could not build from a spec his own triage session had just written:
 
-| Key | Grants | Eric |
-|---|---|---|
-| `may_build_own_spec` | build directly from a spec you wrote yourself, one pass, **PR is the review point** | **yes** (overlay) |
-| `may_ship` | version bump, CHANGELOG, release, self-merge | no |
-| `may_promote` | fan-out to client repos | no |
+| Key | Grants | Ships | Guard 2 pins |
+|---|---|---|---|
+| `may_build_own_spec` | build directly from a spec you wrote yourself, one pass, **PR is the review point** | **`true`** | `true` |
+| `may_ship` | version bump, CHANGELOG, release, self-merge | `false` | `false` |
+| `may_promote` | fan-out to client repos | `false` | `false` |
 
-Building from your own spec grants **no** ship authority. Note these keys are a
-*coordination* contract, not a security boundary — the boundary is GitHub access (read-only
-on cr1, fork→PR, Matthew merges).
+Building from your own spec grants **no** ship authority — that separation is the whole
+point of the split.
+
+`may_build_own_spec` is the one authority key that **ships on** (Matthew's ruling,
+2026-07-27): it grants nothing a PR review doesn't already catch, and putting it in a
+hand-created overlay meant a re-clone silently lost it. Guard 2 therefore pins it **`true`**
+— that fence runs the opposite direction from its two neighbours, and it is not a safety
+fence but a don't-silently-take-it-away fence: a revert to `false` sends contractors back
+to the pre-build handoff with no error and no clue why. The safety fences are `may_ship` /
+`may_promote` / `allowed_targets`, and they are untouched by this.
+
+Note these keys are a *coordination* contract, not a security boundary — the boundary is
+GitHub access (read-only on cr1, fork→PR, Matthew merges).
 
 Standard read pattern (identical in each reading skill's preflight):
 
