@@ -7,7 +7,7 @@ description: "Capture a bug, feature idea, or new-skill idea for the Command Roo
 
 The capture half of the intake pair. Sibling of `triage-intake`. Structured capture where the observation happens; verification later, where the codebase is open.
 
-> **Operator-aware.** Read `config/operator.json`, then overlay `config/operator.local.json` per-key if present (gitignored; the operator's local overlay — only M has one). The queue root is the merged `intake_root` (default `~/cr-intake`). Create `new/`, `needs-input/`, `speced/`, `done/`, `killed/`, `specs/` plus a one-line README on first capture if missing.
+> **Operator-aware.** Read `config/operator.json`, then overlay `config/operator.local.json` per-key if present (gitignored; the operator's local overlay — not every operator has one). The queue root is the merged `intake_root` (default `~/cr-intake`). Create `new/`, `needs-input/`, `speced/`, `done/`, `killed/`, `specs/` plus a one-line README on first capture if missing.
 > ```python
 > import json, os, sys
 > op = {}

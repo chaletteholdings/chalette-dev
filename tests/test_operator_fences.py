@@ -65,6 +65,22 @@ def test_committed_operator_may_promote_false():
     assert op.get("may_promote") is False, "committed operator.json must have may_promote == false"
 
 
+def test_committed_operator_may_build_own_spec_false():
+    """GATE1: the third authority key, pinned the same way as the other two.
+
+    `may_build_own_spec` grants spec->build in one pass; it is deliberately independent
+    of `may_ship` (a contractor can build and still hold zero ship authority). The grant
+    is per-machine and lives ONLY in the gitignored overlay — if it ever lands `true` in
+    the committed default, every clone and every fork silently inherits build authority.
+    """
+    op = _load_committed_operator()
+    assert op.get("may_build_own_spec") is False, (
+        "committed operator.json must have may_build_own_spec == false "
+        f"(got {op.get('may_build_own_spec')!r}) — build-from-own-spec is granted per "
+        "machine in the overlay, never as the committed default"
+    )
+
+
 def test_committed_operator_workspace_root_null():
     op = _load_committed_operator()
     assert op.get("workspace_root") is None, (

@@ -7,7 +7,7 @@ description: "INTERNAL — automated post-push verification orchestrator. Fires 
 
 **The fully-unattended pre-promote verification gate.** Fires in Code immediately after a push to staging main (ChaletteHQ/cr1). Runs the full verification battery automatically (no Cowork paste-back loop) + emits a PROMOTE / HOLD / BLOCKED verdict on production-promote decision.
 
-> **Operator profile (read first).** Load `config/operator.json`, then overlay `config/operator.local.json` per-key if present (gitignored; the operator's local overlay — only M has one). Resolve `cr1_clone` (staging clone to inspect), `workspace_root` (where verdict docs land), and `allowed_targets`. **Default target is synthetic fixtures** — the `mature_workspace`/`clean_workspace`/`degraded_workspace`/`fresh_install` fixtures are populated. Targeting a real workspace requires `"real"` in `allowed_targets` (M only); any other operator that asks for `--target=m-workspace` is refused and run against synthetic.
+> **Operator profile (read first).** Load `config/operator.json`, then overlay `config/operator.local.json` per-key if present (gitignored; the operator's local overlay — not every operator has one). Resolve `cr1_clone` (staging clone to inspect), `workspace_root` (where verdict docs land), and `allowed_targets`. **Default target is synthetic fixtures** — the `mature_workspace`/`clean_workspace`/`degraded_workspace`/`fresh_install` fixtures are populated. Targeting a real workspace requires `"real"` in `allowed_targets` (M only); any other operator that asks for `--target=m-workspace` is refused and run against synthetic.
 > ```python
 > import json, os, sys
 > op = {}

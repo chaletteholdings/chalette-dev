@@ -4,13 +4,20 @@ The shared testing, verification, and skill-building toolkit for everyone who bu
 
 As of **CONSOL1 (2026-07-24)** this is the **single canonical home** of the shared toolkit — the skills below used to be duplicated into M's private `chalette` plugin; that copy is gone. Guard 1 (`scripts/check_toolkit_overlap.py`) fails the build if any of them ever reappears in `chalette`.
 
-**15 skills** (as of v0.4.1). Three have been retired: `compare-canonical-vs-freelance` (its niche — validating the v3.13.8 §3.6 canonical-vs-freelance widget ladder per skill — closed; the freelance fallback it diffed against no longer exists, and the synthetic invariants plus cr1's `widget_transport` validators cover the render path now), `run-command-room-tests` (folded into `cr-test`, which auto-discovers every suite instead of running a hardcoded five; its trigger phrases are aliases for `cr test --quick`), and `verify-cr-release` (the tier-5 paste-back orchestrator — retired per M's ruling: dogfood-before-promote plus BIG-TEST carry the attended layer, so the loop's state tracking and prompt ceremony went away. **What it owned was kept, not deleted:** its verification plan is now `cr-test/references/VERIFICATION_PLAN.md`, and its response classifier + findings-log format moved to `bug-regression-suite/references/`. `verify cr release` / `run verification suite` now alias `cr test --attended`).
+**15 skills** (as of v0.5.0). Three have been retired: `compare-canonical-vs-freelance` (its niche — validating the v3.13.8 §3.6 canonical-vs-freelance widget ladder per skill — closed; the freelance fallback it diffed against no longer exists, and the synthetic invariants plus cr1's `widget_transport` validators cover the render path now), `run-command-room-tests` (folded into `cr-test`, which auto-discovers every suite instead of running a hardcoded five; its trigger phrases are aliases for `cr test --quick`), and `verify-cr-release` (the tier-5 paste-back orchestrator — retired per M's ruling: dogfood-before-promote plus BIG-TEST carry the attended layer, so the loop's state tracking and prompt ceremony went away. **What it owned was kept, not deleted:** its verification plan is now `cr-test/references/VERIFICATION_PLAN.md`, and its response classifier + findings-log format moved to `bug-regression-suite/references/`. `verify cr release` / `run verification suite` now alias `cr test --attended`).
 
 ## Setup (Eric)
 
 1. Clone this repo: `git clone https://github.com/ChaletteHQ/chalette-dev ~/repos/chalette-dev`
 2. Clone the Command Room staging repo (read-only for you): `git clone https://github.com/ChaletteHQ/cr1 ~/repos/cr1`
-3. Edit `config/operator.json` on your machine if your paths differ. Leave `operator: "eric"` and the safety keys (`allowed_targets`, `may_ship`, `may_promote`) as is — the test skills read them to decide what you're allowed to target. (M does not edit this committed file; he keeps a gitignored `config/operator.local.json` overlay that the skills merge on top of it. Guard 2 fails CI if the committed default ever drifts, or if the overlay is ever tracked.)
+3. Edit `config/operator.json` on your machine if your paths differ. Leave `operator: "eric"` and the safety keys (`allowed_targets`, `may_ship`, `may_promote`, `may_build_own_spec`) as is — the test skills read them to decide what you're allowed to target, and Guard 2 fails CI if any of them drifts in the committed file. Anything you're granted beyond the committed default goes in your own **overlay** instead — see step 3a.
+3a. **Your overlay — `config/operator.local.json`** (same folder, gitignored, never committed; Guard 2 asserts it stays untracked). The skills load `operator.json` first, then overlay this file per-key, so it holds the grants that are yours and not every clone's. M keeps one for his real paths; **as of v0.5.0 you keep one too**, for build authority:
+   ```json
+   {
+     "may_build_own_spec": true
+   }
+   ```
+   That one key lets a spec your own `triage-intake` session writes go straight into your specs queue ready to build, in one pass, with the **pull request as the review point** — no hand-the-spec-over step first. It grants **nothing else**: `may_ship` and `may_promote` stay `false`, so no version bumps, no CHANGELOG entries, no promote, no merging your own PR. Those are still M's, and they're also enforced outside this file by your GitHub access.
 4. In Claude Code, install the plugin from your local clone (marketplace add → this repo path), so the `chalette-dev:*` skills are available in every session.
 5. The synthetic fixtures live in this repo at `chalette-dev/skills/synthetic-workspace-runtime-test/fixtures/` (four workspaces: clean / degraded / fresh_install / mature, built by `_generate_fixtures.py`). `synthetic-workspace-runtime-test` resolves to one of them by default; `config/operator.json` (`workspace_root: null`) points the QA skills at the `clean_workspace` fixture unless you say otherwise.
 
@@ -20,7 +27,7 @@ As of **CONSOL1 (2026-07-24)** this is the **single canonical home** of the shar
 
 - **You never test against a real workspace.** All skills here run against synthetic fixtures for any operator that isn't M. This is enforced in the skills and in `config/operator.json` (`allowed_targets: ["synthetic"]`).
 - **You never ship.** Releases, version bumps, and promotion to client repos are M's alone. The ship tooling is not in this plugin on purpose.
-- **All work goes through PRs.** You have read access to cr1: fork it, build on a branch in your fork, open a PR against cr1 `main`. M reviews, adjusts, merges.
+- **All work goes through PRs.** You have read access to cr1: fork it, build on a branch in your fork, open a PR against cr1 `main`. M reviews, adjusts, merges. **The PR is the review point** — as of v0.5.0 that includes specs you wrote yourself and built from in one pass (`may_build_own_spec`), so there is no separate approve-the-spec step in front of the build. If a decision is genuinely architecture-shaping, send M a one-line heads-up and keep building unless he objects.
 - **The skills are English on purpose.** SKILL.md files are the product. Your lane is the rails around them — tests, validation, schema, CI, tooling. Don't rewrite prompt logic as code.
 
 ## What's in here

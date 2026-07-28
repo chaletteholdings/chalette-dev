@@ -70,7 +70,7 @@ on a normal contributor machine and could not run on Windows at all.
 Check these in order and take the first hit where `tests/run_all.py` actually exists:
 
 0. **`cr1_clone` from the operator profile** — read `config/operator.json`, then overlay
-   `config/operator.local.json` per-key if present (gitignored; only M has one). If the merged
+   `config/operator.local.json` per-key if present (gitignored; not every operator has one). If the merged
    `cr1_clone` is set and `<cr1_clone>/command-room/tests/run_all.py` exists, use it outright.
    This is the operator's canonical-clone preference expressed via config (M defaults it to
    `~/repos/cr1-canonical`), not a hardcoded path in prose.

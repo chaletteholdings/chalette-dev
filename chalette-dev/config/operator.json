@@ -19,5 +19,7 @@
   "_comment_allowed_targets": "'synthetic' = fixtures only. Adding 'real' lets the skills target a live workspace; that is M's profile, not a contractor's.",
   "allowed_targets": ["synthetic"],
   "may_ship": false,
-  "may_promote": false
+  "may_promote": false,
+  "_comment_may_build_own_spec": "Whether this operator may build directly from a spec their own triage session wrote. Independent of may_ship: a contractor can carry spec->build in one pass while still holding ZERO ship authority (no version bump, no CHANGELOG, no promote, no self-merge). Committed default stays false; real value lives ONLY in the gitignored overlay. Guard 2 pins the committed default.",
+  "may_build_own_spec": false
 }

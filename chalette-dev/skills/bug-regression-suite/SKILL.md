@@ -41,7 +41,7 @@ Resolution order — first hit wins, and the default is always a synthetic fixtu
 1. `--workspace-root=<path>` CLI argument, if given
 2. `$CR_WORKSPACE_ROOT` environment variable, if set
 3. `workspace_root` in the merged operator profile — `config/operator.json`, then
-   `config/operator.local.json` overlaid per-key if present (gitignored; only M has one)
+   `config/operator.local.json` overlaid per-key if present (gitignored; not every operator has one)
 4. **Default:** the `clean_workspace` synthetic fixture shipped in
    `skills/synthetic-workspace-runtime-test/fixtures/`
 

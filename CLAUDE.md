@@ -65,13 +65,29 @@ Every skill that targets a workspace, a clone, or an intake queue resolves it fr
 
 - `config/operator.json` — committed, **contractor-safe default** (operator `eric`,
   `allowed_targets: ["synthetic"]`, `may_ship: false`, `may_promote: false`,
-  `workspace_root: null`). Edit `cr1_clone` to your own clone; leave the safety keys alone.
+  `may_build_own_spec: false`, `workspace_root: null`). Edit `cr1_clone` to your own clone;
+  leave the safety keys alone.
 - `config/operator.local.json` — **gitignored per-machine overlay.** A reading skill loads
-  `operator.json`, then overlays `operator.local.json` per-key. Only Matthew keeps one (it
-  carries his real paths and `"real"` in `allowed_targets`). **Do not edit the committed
-  `operator.json` into a real-workspace profile** — drop an overlay instead. Guard 2
+  `operator.json`, then overlays `operator.local.json` per-key. Matthew keeps one (his real
+  paths and `"real"` in `allowed_targets`); **as of GATE1 (v0.5.0) Eric keeps one too**,
+  carrying exactly `{"may_build_own_spec": true}` — see README step 3a. **Do not edit the
+  committed `operator.json` into a granted profile** — drop an overlay instead. Guard 2
   (`tests/test_operator_fences.py`) fails CI if the committed default drifts or if
   `operator.local.json` is ever tracked.
+
+**Three separate authorities — do not conflate them** (GATE1, 2026-07-27). `may_ship`
+used to imply all three by accident, which meant a contractor who could not ship also
+could not build from a spec his own triage session had just written:
+
+| Key | Grants | Eric |
+|---|---|---|
+| `may_build_own_spec` | build directly from a spec you wrote yourself, one pass, **PR is the review point** | **yes** (overlay) |
+| `may_ship` | version bump, CHANGELOG, release, self-merge | no |
+| `may_promote` | fan-out to client repos | no |
+
+Building from your own spec grants **no** ship authority. Note these keys are a
+*coordination* contract, not a security boundary — the boundary is GitHub access (read-only
+on cr1, fork→PR, Matthew merges).
 
 Standard read pattern (identical in each reading skill's preflight):
 
