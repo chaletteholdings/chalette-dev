@@ -3,6 +3,163 @@
 (Release history before v0.3.0 lives in `.claude-plugin/plugin.json`'s `description` field.
 This file starts at the CONSOL1 release.)
 
+## v0.5.0 (2026-07-27) — GATE1: build authority decoupled from `may_ship`
+
+Capability addition. Skill count unchanged (**15**). MINOR bump, per this repo's own
+convention: retirements and fixes take a patch (v0.4.1 VCRRETIRE, v0.3.1 MAINT2), a
+capability addition takes a minor (v0.4.0 TI2). GATE1 adds an operator key and a new
+delivery path; it removes nothing.
+
+**The ruling (2026-07-27, M, by phone):** Eric writes a spec and builds from it in one
+continuous pass. Review happens **once**, at the pull request, before anything is pushed
+or shipped. The pre-build approval step goes away. What does **not** change: zero ship
+authority — no version bumps, no CHANGELOG entries, no promote/fan-out, no merging his
+own PR. M stays the final gate before anything lands.
+
+**Why this had to be a code change and not a verbal agreement.** The pre-build gate was
+prose inside `skills/triage-intake/SKILL.md`, and prose re-asserts itself on every run: the
+next `triage intake` session would read "contractors never self-approve a spec into a
+build" and tell Eric to hand the spec over again, regardless of what was agreed on a call.
+Same instruction-layer-drift class the intake queue already tracks — a skill's prose
+contradicting the actual intent with nothing to catch it. Fixed in the text, and fenced.
+
+### Root cause — one key was carrying three authorities
+
+`may_ship` conflated (1) may I build from a spec I wrote myself, (2) may I bump the
+version / write CHANGELOG / cut a release, and (3) may I promote to client repos. M grants
+(1) and withholds (2) and (3). There was no key for (1) — it rode `may_ship` by
+implication. Now there is.
+
+### Added — `may_build_own_spec` in `config/operator.json`
+
+Third authority key, placed next to `may_ship` / `may_promote` so all three read together.
+Independent of `may_ship` in both directions: a contractor carries spec→build in one pass
+while holding zero ship authority.
+
+**It ships `true` — the one authority key that does.** The spec ruled it overlay-only with
+a committed `false`, matching the other two. M overruled that on the call, and he is right:
+an overlay is a hand-created, gitignored file, so the grant would have been invisible to
+`git pull`, absent on a fresh clone, and silently lost the first time Eric re-cloned — a
+setup step that can be forgotten, guarding something a PR review already catches. Shipping
+it on means **a plain `git pull` is the entire setup**. What that costs: the value travels
+with the repo, so a future contributor inherits build authority rather than being granted
+it one at a time. With two collaborators on a private repo, and with `may_ship` /
+`may_promote` / `allowed_targets` all still shipping locked, that is a real but small price
+and M took it knowingly.
+
+The safety keys are unchanged and still ship locked. **"Contractor-safe" now means zero
+ship authority and synthetic targets only — it no longer means zero authority**, and both
+`operator.json`'s header comment and `CLAUDE.md` say so, because that phrase is load-bearing
+in three places and a reader who assumes the old meaning would read the new default as a
+regression.
+
+### Changed — two sentences in `skills/triage-intake/SKILL.md`
+
+- **Operator-aware blockquote:** `may_build_own_spec` added to the keys-used list, and the
+  closing sentence split so the two authorities are stated separately instead of one
+  implying the other. `may_ship: false` now spells out what it actually withholds (version
+  bump, CHANGELOG, release, promote, self-merge) and states that it binds regardless of the
+  build grant.
+- **"Writing the spec" delivery rule:** re-gated from `may_ship` onto `may_build_own_spec`.
+  Granted → the spec lands in `specs_dir` ready to build **regardless of `may_ship`**, the
+  build proceeds in a normal build session, and **the PR is the review point** (no
+  approve-the-spec step in front of it). Ungranted → the previous behaviour verbatim
+  (attach to the related cr1 PR / hand over; contractors never self-approve a spec into a
+  build). The granted branch carries the load-bearing sentence explicitly: building from
+  your own spec does **not** grant ship authority — the `may_ship` rules in the Writer
+  contract still bind in full.
+
+**Deviation from the spec, deliberate: the granted branch fires on `may_build_own_spec:
+true` OR `may_ship: true`.** Under the spec's overlay-only design this was load-bearing —
+M's overlay predates the key, so re-gating on the new key alone would have fallen through
+to the committed `false` and started telling the maintainer to hand his own specs over.
+Once the shipped value became `true` the clause stopped being load-bearing, but it is kept:
+a ship operator may always build his own spec, including one who deliberately turns the key
+off in an overlay. **Neither machine needs an overlay edit for this release.**
+
+### NOT changed — deliberately
+
+- **"Routing work out" stays gated on `may_ship`.** Contributor packets and the cr1
+  `BACKLOG.md` route work OUT to other people; that is genuinely a ship-operator function,
+  and a contractor does not route work to themselves. Same for the three `may_ship`
+  references in `references/spec-templates.md`.
+- The Writer contract line "Ship/promote stays with M (`may_ship` in operator.json)".
+- The `triage-intake` frontmatter **description** is byte-identical — zero trigger changes,
+  G11 description budget untouched. Body text only.
+- `cr-test`'s tier-5 "the ship operator's call (`may_ship`)" — a different concept.
+- `allowed_targets` stays `["synthetic"]` for contractors. This grants build authority, not
+  real-workspace access. `may_promote` untouched.
+
+### Guards
+
+- **Guard 2** (`tests/test_operator_fences.py`) pins `may_build_own_spec == true`. **This
+  fence runs the opposite direction from its two neighbours, deliberately.** It is not a
+  safety fence — it is a don't-silently-take-it-away fence: a revert to `false` sends every
+  contractor back to the pre-build handoff with no error and no clue why, which is precisely
+  the failure GATE1 exists to prevent. The real safety fences (`may_ship`, `may_promote`,
+  `allowed_targets`, `workspace_root`, `scrub_roster`) still pin the locked values and are
+  untouched. Mutation-verified both directions against the shipped value: reverted to
+  `false` → **1 failed, 49 passed** (fence RED); assertion then removed with the bad value
+  still in place → **49 passed, 0 failed** (only the fence caught it). Restored
+  byte-identical, back to **50 passed, 9 skipped**.
+- **Guard 3** (`tests/test_triage_outbound_fences.py`) gains three instruction-layer fences
+  on the new delivery rule — same class as the existing outbound fences, one section over.
+  The rule is prose and can fail in **both** directions: narrowed back to `may_ship` (the
+  handoff silently returns) or widened to no gate at all (every profile self-approves its
+  own specs). Mutation-verified: drift back to the old sentence → **3 failed**; false-branch
+  deleted → **1 failed**; "does not grant ship authority" sentence deleted → **1 failed**;
+  fences removed with the prose still drifted → **9 passed** (green, i.e. nothing else was
+  catching it). Guard 3 total 9 → 12.
+- Battery **50 passed, 9 skipped** (the 9 are the bash-preamble tests, skipped for no
+  `bash` on PATH in this shell; CI runs them on ubuntu). `quick_validate` green on all 15
+  skills — it is Guard 2 Fence 3, so the battery number covers it.
+
+### Docs
+
+- `README.md` gains **"What you can and can't do"** — all four authority keys in plain
+  English with what each ships as, written for the contractor rather than the maintainer.
+  This section is why the release is not inert: the docs previously said only M keeps an
+  overlay, so under the spec's overlay-only design nothing would have told Eric the key
+  existed. Setup step 3 now says explicitly that there is **nothing to create or turn on**.
+  The "All work goes through PRs" rule names the PR as the review point; skill-count line
+  repointed to v0.5.0.
+- `CLAUDE.md` enumerates `may_build_own_spec: true` in the committed default, carries a
+  four-column authority table (grants / ships / what Guard 2 pins), and explains why one
+  fence points the other way. It also states the thing worth being honest about: these keys
+  are a **coordination contract, not a security boundary** — the boundary is GitHub access
+  (read-only on cr1, fork→PR, M merges).
+
+### Same-class sweep — the overlay claim that GATE1 makes false
+
+Nine `SKILL.md` files carried the parenthetical **"only M has one"** about
+`config/operator.local.json`. The moment Eric keeps an overlay that is simply untrue, and a
+false statement in the instruction layer is the exact class this release exists to fix.
+Swept to **"not every operator has one"** — descriptive prose that gates nothing (the gates
+are `allowed_targets` / `may_ship` / `may_build_own_spec`), so no behaviour moves:
+`bug-regression-suite`, `capture-for-code`, `cr-skill-builder`, `cr-test`,
+`cross-skill-interaction-test`, `scale-stress-test`, `ship-readiness-gate`, `smoke-watch`,
+`triage-intake`.
+
+Two sites deliberately **excluded** and verified still carrying the old phrase:
+`config/operator.json`'s `_comment_chalette_clone` (that one is about a chalette030 **clone**
+— still true), and `plugin.json`'s description (a historical narrative chain; you do not
+rewrite history to match the present).
+
+**Zero trigger changes, proven not asserted:** each of the 9 changed files had its
+frontmatter `description` compared byte-for-byte against `HEAD` — 9 same, 0 changed. Routing
+runs on descriptions only, so this is the fence between a body-text edit and a silent
+re-route of the whole plugin.
+
+### Known limitation — the `§0 AWAIT ruling` tradeoff, accepted knowingly
+
+Specs carry a `§0 Open decisions` table whose rows are marked `AWAIT ruling — DO NOT BUILD`
+on genuine design forks. Eric now rules those himself and builds. The template already has
+the slot for surfacing it: the PR description's "Reviewer-visible defaults — every judgment
+call you made that the spec did not rule." The cost accepted: a rejected **approach** at PR
+time wastes the whole build, where a two-minute answer beforehand would not have. Middle
+ground, no ceremony and no gate — for architecture-shaping decisions only, a one-line
+heads-up, and keep building unless M objects. Working practice, not a code change.
+
 ## v0.4.1 (2026-07-27) — VCRRETIRE: `verify-cr-release` retired, tier 5 becomes the dogfood ritual
 
 Retirement. Skill count **16 → 15**. PATCH bump, per this repo's own convention: retirements

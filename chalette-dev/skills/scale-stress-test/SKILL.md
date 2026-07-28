@@ -7,7 +7,7 @@ description: "INTERNAL — verifies Command Room helpers degrade gracefully at s
 
 **Performance verification at real data scale.** Loads an events.jsonl + measures canonical helper performance + identifies performance cliffs.
 
-> **Operator profile (read first).** Load `config/operator.json`, then overlay `config/operator.local.json` per-key if it exists (gitignored; the operator's local overlay — only M has one). Resolve the events source: if the merged `allowed_targets` includes `"real"`, use `<workspace_root>/_hq/data/events.jsonl`; otherwise use the bundled synthetic `mature_workspace` fixture — this skill has a genuine synthetic mode and never assumes a live workspace.
+> **Operator profile (read first).** Load `config/operator.json`, then overlay `config/operator.local.json` per-key if it exists (gitignored; the operator's local overlay — not every operator has one). Resolve the events source: if the merged `allowed_targets` includes `"real"`, use `<workspace_root>/_hq/data/events.jsonl`; otherwise use the bundled synthetic `mature_workspace` fixture — this skill has a genuine synthetic mode and never assumes a live workspace.
 > ```python
 > import json, os, sys
 > op = {}

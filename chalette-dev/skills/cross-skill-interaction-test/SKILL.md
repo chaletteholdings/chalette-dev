@@ -7,7 +7,7 @@ description: "INTERNAL — temporal substrate-coherence verification. Fires sequ
 
 **Tests bugs that only surface when skill A's writes affect skill B's reads later.** Single-skill tests miss these — they fire one skill at a time. Real workflows have skills interacting through substrate over time. This skill tests those interactions.
 
-> **Operator profile (read first).** Load `config/operator.json`, then overlay `config/operator.local.json` per-key if present (gitignored; the operator's local overlay — only M has one). The multi-phase sequences drive a live Cowork workspace via paste-back — there is no synthetic paste-back mode — so if the merged `allowed_targets` does not include `"real"`, refuse and say so.
+> **Operator profile (read first).** Load `config/operator.json`, then overlay `config/operator.local.json` per-key if present (gitignored; the operator's local overlay — not every operator has one). The multi-phase sequences drive a live Cowork workspace via paste-back — there is no synthetic paste-back mode — so if the merged `allowed_targets` does not include `"real"`, refuse and say so.
 > ```python
 > import json, os, sys
 > op = {}

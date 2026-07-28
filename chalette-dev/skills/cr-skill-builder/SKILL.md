@@ -33,7 +33,7 @@ This skill no longer trusts a vendored snapshot of cr1's contracts. The "sync re
 ```python
 # Parameterized cr1 clone path — M defaults to the canonical edit surface; a contractor's fork
 # is read from the merged operator profile (config/operator.json, then config/operator.local.json
-# overlaid per-key; the overlay is gitignored and only M has one). Never hardcode a machine path.
+# overlaid per-key; the overlay is gitignored and not every operator has one). Never hardcode a machine path.
 import json, os, sys
 op = {}
 for _n in ("operator.json", "operator.local.json"):

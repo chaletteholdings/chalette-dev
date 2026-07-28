@@ -63,6 +63,60 @@ def _outbound_section():
     return rest[: nxt.start()] if nxt else rest
 
 
+def _writing_the_spec_section():
+    """The 'Writing the spec' section body — heading to the next H2."""
+    text = _text(SKILL_MD)
+    m = re.search(r"^## Writing the spec\s*$", text, re.M)
+    assert m, "triage-intake/SKILL.md has no '## Writing the spec' section"
+    rest = text[m.end():]
+    nxt = re.search(r"^## ", rest, re.M)
+    return rest[: nxt.start()] if nxt else rest
+
+
+# ---- GATE1: spec DELIVERY is gated on may_build_own_spec, not may_ship ----------------
+#
+# Same fence class as the rest of this file, one section over. The delivery rule is prose,
+# and it can fail in BOTH directions:
+#   - narrowed back to may_ship  -> the pre-build handoff silently returns and the operator
+#     is told to hand the spec over, which is the instruction-layer drift GATE1 removed;
+#   - widened to no gate at all  -> every profile self-approves its own specs into builds.
+# Both are one careless edit away and neither turns anything else red.
+
+def test_spec_delivery_is_gated_on_may_build_own_spec():
+    body = _writing_the_spec_section()
+    assert "may_build_own_spec" in body, (
+        "the 'Writing the spec' delivery rule no longer names may_build_own_spec — "
+        "delivery has drifted back onto may_ship, which re-imposes the pre-build "
+        "handoff GATE1 removed (and conflates build authority with ship authority again)"
+    )
+    assert re.search(r"gated|when the merged profile has", body), (
+        "may_build_own_spec appears in the section but not as the gating condition"
+    )
+
+
+def test_spec_delivery_retains_the_false_branch():
+    """The gate must still REFUSE on a profile that was granted nothing."""
+    body = _writing_the_spec_section()
+    assert re.search(r"may_build_own_spec:\s*false", body), (
+        "the delivery rule has no `may_build_own_spec: false` branch — an ungranted "
+        "profile would self-approve its own spec into a build"
+    )
+    assert "never self-approve" in body, (
+        "the 'contractors never self-approve a spec into a build' clause is gone from "
+        "the false branch — that clause IS the ungranted-profile behaviour"
+    )
+
+
+def test_building_own_spec_does_not_grant_ship_authority():
+    """GATE1's whole point: the two authorities are split, not merged."""
+    body = _writing_the_spec_section()
+    assert re.search(r"not.{0,40}grant ship authority", body, re.I | re.S), (
+        "the delivery rule no longer states that building from your own spec does NOT "
+        "grant ship authority — without it the next reader takes the build grant as a "
+        "general loosening and the may_ship rules read as advisory"
+    )
+
+
 def test_outbound_section_is_may_ship_gated():
     body = _outbound_section()
     assert "may_ship" in body, (

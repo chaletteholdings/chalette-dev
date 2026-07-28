@@ -7,7 +7,7 @@ description: "INTERNAL — passive observation during the 24h post-promote smoke
 
 **Passive observation during the 24h post-promote smoke window.** Watches the operator's real Cowork usage for architectural surprises that the pre-promote gates missed.
 
-> **Operator profile (read first).** Load `config/operator.json`, then overlay `config/operator.local.json` per-key if it exists (gitignored; the operator's local overlay — only M has one). This skill has **no synthetic mode**: if the merged `allowed_targets` does not include `"real"`, refuse and say so (it observes a live workspace or nothing — that's honest). All paths below resolve from `workspace_root`.
+> **Operator profile (read first).** Load `config/operator.json`, then overlay `config/operator.local.json` per-key if it exists (gitignored; the operator's local overlay — not every operator has one). This skill has **no synthetic mode**: if the merged `allowed_targets` does not include `"real"`, refuse and say so (it observes a live workspace or nothing — that's honest). All paths below resolve from `workspace_root`.
 > ```python
 > import json, os, sys
 > op = {}

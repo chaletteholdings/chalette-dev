@@ -65,6 +65,31 @@ def test_committed_operator_may_promote_false():
     assert op.get("may_promote") is False, "committed operator.json must have may_promote == false"
 
 
+def test_committed_operator_may_build_own_spec_true():
+    """GATE1: the third authority key — the one that is pinned ON, on purpose.
+
+    `may_build_own_spec` grants spec->build in one pass and is deliberately independent
+    of `may_ship` (a contractor builds and still holds zero ship authority; the pull
+    request is the review point). M ruled 2026-07-27 that it SHIPS on rather than being
+    granted per-machine in the overlay: it grants nothing a PR review doesn't already
+    catch, and an overlay is a hand-created file that a re-clone silently loses.
+
+    So this fence runs the OPPOSITE direction from its two neighbours. It is not a
+    safety fence, it is a don't-silently-take-it-away fence: a revert to `false` sends
+    every contractor back to the pre-build handoff with no error and no clue why. The
+    safety fences are `may_ship` / `may_promote` / `allowed_targets` above, and they are
+    unaffected by this one — that separation IS the GATE1 change.
+    """
+    op = _load_committed_operator()
+    assert op.get("may_build_own_spec") is True, (
+        "committed operator.json must have may_build_own_spec == true "
+        f"(got {op.get('may_build_own_spec')!r}) — build-from-own-spec ships ON (M's "
+        "ruling 2026-07-27). Reverting it silently reimposes the pre-build handoff. If "
+        "the ruling has genuinely changed, change this fence deliberately and say so in "
+        "the CHANGELOG; do not let it drift."
+    )
+
+
 def test_committed_operator_workspace_root_null():
     op = _load_committed_operator()
     assert op.get("workspace_root") is None, (
