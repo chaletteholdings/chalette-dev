@@ -3,6 +3,58 @@
 (Release history before v0.3.0 lives in `.claude-plugin/plugin.json`'s `description` field.
 This file starts at the CONSOL1 release.)
 
+## v0.5.1 (2026-07-29) — REFGAP1: cross-skill-interaction-test references recovered + dangling-reference guard
+
+Fix + fence. Skill count unchanged (**15**). PATCH bump per this repo's convention
+(fixes take a patch).
+
+**The bug (found at the v5.5.1 attended gate, 2026-07-29):** `cross-skill-interaction-test`
+Step 1 loads `references/sequence-catalog.md` (plus `temporal-wait-strategy.md` and
+`multi-phase-verdict-aggregation.md`), but git tracked only SKILL.md — the `references/`
+directory existed and was empty, so the skill failed on a missing file even with a valid
+operator profile. The 16-row table inline in SKILL.md is a summary index, not the
+executable catalog.
+
+**Recovery finding — the files never existed.** Before writing anything, the "recover the
+originals" path was exhausted: chalette-dev, chalette030, and retired-plugin git history
+never tracked any of the three under any path, and no session transcript contains a write
+of them. BUILD_VCRRETIRE §7 (2026-07-26) had already recorded all three inside a
+13-citation dangling-read set across five skills. So the three docs were **authored from
+SKILL.md's own inline content** — the format example (the Bug #51 cascade sequence, which
+ships READY) and the index table (17 rows today: the original 15 plus the two OBJ1
+sequences added in `6636e80`). Every other catalog entry ships **DRAFT** with an explicit
+promotion rule: walk it once, confirm the expected substrate writes, then mark READY —
+and DRAFT failures report ADVISORY, not blocking, so an unverified draft expectation can
+never assert a phantom regression. Event names in expected-writes were checked against
+cr1's `events.schema.json`; the catalog also flags that *pulse* and the *commitments
+scheduled task* are scheduled surfaces, not `skills/` dirs, and that the row's
+*weekly-audit* surface is now `cleanup`. Each file carries a provenance header so nobody
+hunts a "lost original" again.
+
+### Added — Guard 4: `tests/test_reference_integrity.py`
+
+The mechanization BUILD_VCRRETIRE deferred: every `references/*.md` a SKILL.md cites must
+be **git-tracked** (not merely on disk — untracked is absent at client install), present,
+and non-empty. Bare citations resolve against the citing skill; `other-skill/references/…`
+prefixed citations resolve against the named skill **when it exists in this repo** —
+cross-repo citations (`command-room/…` lives in cr1, verified present there) are outside
+this guard's jurisdiction and skipped. The remaining 8 pre-existing dangling citations
+(bug-regression-suite ×2, ship-readiness-gate ×3, skill-generator ×2, and skill-creator's
+mis-citation of a checklist that actually lives under `cr-skill-builder/references/`) are
+**grandfathered in a baseline that ratchets both ways**: a NEW dangling citation fails
+immediately, and fixing a grandfathered one without deleting its baseline row also fails,
+so a stale row cannot mask a re-regression. Coverage is asserted, not assumed: the scan
+must visit every skill's SKILL.md, plus three controls — positive (the three repaired
+citations resolve tracked), negative (a fabricated citation registers as dangling), and a
+misattribution pin (a prefixed citation resolves to its OWNER, not the citing skill — the
+false-dangling the naive resolver produced during this very build). Mutation-verified
+both directions: untracking the catalog → 2 red; satisfying a baseline entry → ratchet
+red; restored → green. Battery 59 → **65 passed**; Guard 1 OK (15 / 20 / 0).
+
+**Deliberately NOT done here:** authoring the 8 grandfathered reference docs (each
+belongs to its owning skill's build, with review), and any SKILL.md text change —
+frontmatter descriptions are untouched repo-wide, so zero trigger changes.
+
 ## v0.5.0 (2026-07-27) — GATE1: build authority decoupled from `may_ship`
 
 Capability addition. Skill count unchanged (**15**). MINOR bump, per this repo's own
