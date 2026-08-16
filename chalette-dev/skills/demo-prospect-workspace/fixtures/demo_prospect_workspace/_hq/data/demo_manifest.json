@@ -1,0 +1,18 @@
+{
+  "generator": "demo-prospect-workspace",
+  "generator_version": 1,
+  "created": "2026-08-01",
+  "expires": "2026-08-08",
+  "reference_date": "2026-08-01",
+  "prospect_org_id": "org_harborlight",
+  "prospect_name": "Harborlight Provisions",
+  "primary_person_id": "person_001",
+  "primary_is_real_person": true,
+  "synthetic": true,
+  "marker_convention": {
+    "events": "every rendered text field (meeting title and summary, decision text and rationale, commitment title, interaction summary, note text) starts with '[DEMO] '",
+    "threads": "display_name and next_step start with '[DEMO] '",
+    "people": "every invented person's canonical_name ends with ' (Demo)' — suffix keeps names sortable and alias-resolvable while rendering the marker wherever the name renders; the primary seat (primary_person_id) is the real call attendee and renders clean like the org, disclosed by their '[DEMO]'-prefixed items, the footer, CLAUDE.md, and this manifest",
+    "workspace": "brand footer_line is exactly 'DEMO · illustrative data' on every generated document"
+  }
+}
