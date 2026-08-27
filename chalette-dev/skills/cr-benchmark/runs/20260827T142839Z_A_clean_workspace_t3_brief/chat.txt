@@ -1,0 +1,35 @@
+Morning, Sam — Atlas here with today's read.
+
+**Morning briefing — Thursday, August 27, 2026**
+
+⚠️ **I can't give you a real "today" — your calendar and mail connectors are serving canned test data, not your live accounts.** Everything below the line is honest; the calendar and inbox sections are missing because I won't invent them.
+
+**How I know.** I asked the mail connector twice with different queries — `newer_than:1d`, then `after:2026/08/25 is:unread`. Both returned the *identical* 20 threads, all dated May 1–14, subjects "Re: item 1" … "Re: item 20", bodies "Synthetic thread body N." It echoed my query back but ignored it. The calendar's "today" window returns five events titled "Sync 1"–"Sync 5", dated **May 1–5** — nearly four months stale. Both are reading from fixture files in `_hq/connectors/`, not from your accounts.
+
+So: **no calendar section, no overnight-inbox section today.** A brief that listed "10:00 Sync 1 with Aria" would be fabrication.
+
+---
+
+**What's actually real — your commitment substrate**
+
+This part is genuine data (206 events, none malformed), though it also stops on **May 30 — 89 days ago**.
+
+Commitments: **0 you owe · 40 owed to you** · 0 overdue · nothing needing your reply.
+
+That's the headline and it's unusual: **nothing is on your plate.** All 40 open items are owed *to* you, split exactly between two people — **Bowie Sample (20)** and **Rio Sample (20)**. None carry a due date, so none can be flagged overdue, and none surfaced as needing your attention.
+
+**Two things worth your call:**
+
+1. **Six completions aren't sticking.** There are 6 `commitment_resolved` records — someone marked items done — but they're not closing anything. They target commitment ids `cmt_000002`, `cmt_000007`, `cmt_000012`, `cmt_000017`, `cmt_000022`, `cmt_000027`, and the commitment records they point at carry **no id field at all**. So the closure never matches and the items stay open forever. Your true open count is **34, not 40** — the number above is inflated by six items you've already finished.
+
+2. **The 20/20 split is a fixture artifact, not a real pattern.** Two people owing you exactly 20 things each, every commitment undated, every thread named "item N" — that's generated data. I'd treat the 40 as a shape to verify, not a backlog to chase.
+
+**Also:** I haven't been able to check your sent mail at all (no reconcile cursor), so anything I *did* surface as yours would have needed softening. Moot today, since nothing is.
+
+---
+
+**Your one move today:** fix the connectors. Not triage — the briefing is only as good as its inputs, and right now both live inputs are placeholders. Until they point at your real accounts, this brief can't answer the question you actually asked.
+
+Two things I'd want to know: is this workspace a test fixture you're deliberately running against, or did it get pointed at the wrong accounts? And are **Bowie** and **Rio** real counterparties with 34 genuinely open items — or is that whole set synthetic too?
+
+One process note: I didn't write anything to the workspace. No receipt was owed (nothing numbered to close against), and I wasn't going to log a state event into a substrate this uncertain.

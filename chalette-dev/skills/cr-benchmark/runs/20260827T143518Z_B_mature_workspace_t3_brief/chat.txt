@@ -1,0 +1,16 @@
+I pulled both sources, but I can't give you a real brief — **the data coming back is placeholder/test data, not your actual calendar and inbox.** Here's the evidence:
+
+**Calendar** — I asked for `today` (2026-08-27). It returned 5 events titled "Sync 1" through "Sync 5", dated **May 1–5, 2026** — nearly four months ago, and not today at all. Attendees are `aria.sample1@example.com`, `bo.stone2@example.com`, etc.
+
+**Email** — I searched `newer_than:3d`. It returned 50 threads titled "Re: item 1" … "Re: item 50", every snippet reading literally "Synthetic thread body N", all timestamped **May 1–14, 2026**.
+
+**Workspace files** — same pattern. `entities.json` has 80 people who are 8 names (Aria Sample, Bo Stone, Bowie Sample, Dustin Stone, Lyra Sample, Mira Stone, Quinn Sample, Rio Stone, Sam Sample, Skyler Stone) cycled repeatedly across 20 generically-named orgs. `events.jsonl` has 1,508 entries titled "Mature sync 1", "Mature item 3", and at the tail, "Nano-epoch artifact 297" with sequence numbers like `1770000000297000000` — a synthetic counter, not a real log. Those tail entries are also dated **2026-11-17**, three months in the *future*.
+
+So there's nothing here I can honestly summarize. Fabricating a plausible-sounding brief from "Sync 3" and "Synthetic thread body 12" would be worse than useless — you'd walk into your day trusting it.
+
+Two likely causes worth checking:
+
+1. **The MCP connectors are pointed at a fixture/demo backend** rather than your real Google account. The date mismatch is the tell: a live calendar cannot return May events for a "today" query. Re-authenticating the `calendar` and `gmail` MCP servers against your actual account is the first thing I'd try.
+2. **The `_hq/data` files were seeded by a generator and never populated with real data.** `last_writer` is `workspace-manager` and `last_updated` is 2026-05-01 across all three files — they look untouched since scaffolding.
+
+Want me to dig into the MCP server config to see what these connectors are actually pointed at? Or if you know this is a sandbox and real credentials live elsewhere, tell me where and I'll re-run the brief against them.

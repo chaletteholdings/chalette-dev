@@ -1,0 +1,799 @@
+{
+  "run_id": "20260827T143617Z_A_mature_workspace_t1_transcripts",
+  "arm": "A",
+  "fixture": "mature_workspace",
+  "task": "t1_transcripts",
+  "model_id": "claude-opus-5",
+  "wall_ms": 516342,
+  "tokens": {
+    "input": 4719,
+    "output": 42490,
+    "cache_read": 3337882,
+    "cache_creation": 114803
+  },
+  "is_error": false,
+  "timed_out": false,
+  "extraction": {
+    "rows": [
+      {
+        "label_id": "bench_01_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 1201, \"type\": \"commitment\"} send the revised pricing sheet for the Acme Co renewal  I'll send the revised pricing sheet to you by Tuesday "
+      },
+      {
+        "label_id": "bench_01_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 1202, \"type\": \"commitment\"} introduce Bo to the Cedar Works finance lead over email  sure, will do, I'll make the intro over email "
+      },
+      {
+        "label_id": "bench_01_c3",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1203, \"type\": \"commitment\"} send the Acme usage report for the renewal call  I'll send you the Acme usage report by Friday "
+      },
+      {
+        "label_id": "bench_01_c4",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_01_c5",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_01_c6",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_02_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1204, \"type\": \"commitment\"} pull together the Q2 revenue numbers  I'll pull the Q2 revenue numbers together by Thursday "
+      },
+      {
+        "label_id": "bench_02_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 1205, \"type\": \"commitment\"} draft the board deck for Quinn to sanity-check the hiring slide  I'm going to draft the board deck by Friday "
+      },
+      {
+        "label_id": "bench_02_c3",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1206, \"type\": \"commitment\"} get the board pre-read memo out ahead of the deck  I should be able to get the pre-read memo out ahead of the deck, I'll try for Wednesday "
+      },
+      {
+        "label_id": "bench_02_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_02_c5",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_02_c6",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1207, \"type\": \"commitment\"} book the board dinner for Wednesday night  I'll book the board dinner for Wednesday night "
+      },
+      {
+        "label_id": "bench_02_c7",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1208, \"type\": \"commitment\"} send the equity grants file to the auditors  Quinn told the auditors she'd send them the equity grants file by Tuesday "
+      },
+      {
+        "label_id": "bench_03_c1",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1209, \"type\": \"commitment\"} send the signed services contract for countersignature  Dustin is going to send the signed services contract over to Lyra tomorrow "
+      },
+      {
+        "label_id": "bench_03_c2",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1210, \"type\": \"commitment\"} send the security questionnaire  Bowie owes Lyra the security questionnaire, he told her end of week "
+      },
+      {
+        "label_id": "bench_03_c3",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 1211, \"type\": \"commitment\"} get the vendor comparison matrix over before the renewal date  I'll get the vendor comparison matrix to you by Thursday "
+      },
+      {
+        "label_id": "bench_03_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_03_c5",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_03_c6",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1212, \"type\": \"commitment\"} cancel the old vendor account so billing stops doubling  I'll cancel the old vendor account before month end "
+      },
+      {
+        "label_id": "bench_03_c7",
+        "expected": "observed",
+        "rail_shadowed": false,
+        "assigned": "observed",
+        "evidence": "{\"seq\": 1246, \"type\": \"commitment_observed\"} introduce Lyra to the Cedar Works ops lead  Dustin owes Lyra an intro to the Cedar Works ops lead, no date on it "
+      },
+      {
+        "label_id": "bench_03_c8",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_04_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1213, \"type\": \"commitment\"} schedule the panel interviews for both platform finalists  I'll schedule the panel interviews for both candidates this week "
+      },
+      {
+        "label_id": "bench_04_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 1214, \"type\": \"commitment\"} send the offer template so it is ready for Thursday  I'll send you the offer template tonight "
+      },
+      {
+        "label_id": "bench_04_c3",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1215, \"type\": \"commitment\"} draft the panel scoring rubric  I guess I can take a stab at a draft "
+      },
+      {
+        "label_id": "bench_04_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_04_c5",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_04_c6",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_04_c7",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1216, \"type\": \"commitment\"} post the job description for the data role  I'll post the job description for the data role tomorrow morning "
+      },
+      {
+        "label_id": "bench_05_c1",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "mentioned_only",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_05_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 1217, \"type\": \"commitment\"} send the updated cap table to counsel, who are blocked on it  yes, will do, Wednesday at the latest "
+      },
+      {
+        "label_id": "bench_05_c3",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_05_c4",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 1218, \"type\": \"commitment\"} send the wire instructions to counsel so closing is not blocked  I'll send the wire instructions to counsel today "
+      },
+      {
+        "label_id": "bench_05_c5",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_05_c6",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_06_c1",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1219, \"type\": \"commitment\"} send Northstar Partners the renewal terms  Aria is going to send Northstar the renewal terms on Monday "
+      },
+      {
+        "label_id": "bench_06_c2",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1220, \"type\": \"commitment\"} get the Northstar team the corrected data feed  Bowie told the Northstar team he'd get them the corrected data feed by Friday "
+      },
+      {
+        "label_id": "bench_06_c3",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 1221, \"type\": \"commitment\"} follow up with the Northstar Partners exec sponsor on the renewal  I'll follow up with the Northstar Partners exec sponsor next week "
+      },
+      {
+        "label_id": "bench_06_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_06_c5",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1222, \"type\": \"commitment\"} send the partner health dashboard link  I'll send you the partner health dashboard link tonight "
+      },
+      {
+        "label_id": "bench_06_c6",
+        "expected": "observed",
+        "rail_shadowed": false,
+        "assigned": "observed",
+        "evidence": "{\"seq\": 1247, \"type\": \"commitment_observed\"} walk the Northstar team through the reporting portal  Aria told the Northstar team she'd walk them through the reporting portal "
+      },
+      {
+        "label_id": "bench_06_c7",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_07_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1223, \"type\": \"commitment\"} finish the server inventory list that unblocks the cutover plan  I'll have the server inventory list finished by Wednesday "
+      },
+      {
+        "label_id": "bench_07_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1224, \"type\": \"commitment\"} write the cutover runbook  I'll write the cutover runbook by Friday "
+      },
+      {
+        "label_id": "bench_07_c3",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_07_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_07_c5",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1226, \"type\": \"commitment\"} sign the datacenter vendor SOW so hardware is covered  Mira also promised the datacenter vendor she'd sign the SOW by Thursday "
+      },
+      {
+        "label_id": "bench_07_c6",
+        "expected": "observed",
+        "rail_shadowed": false,
+        "assigned": "observed",
+        "evidence": "{\"seq\": 1248, \"type\": \"commitment_observed\"} send the network vendor an updated contact list  I still owe the network vendor an updated contact list - no deadline on it "
+      },
+      {
+        "label_id": "bench_07_c7",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 1227, \"type\": \"commitment\"} approve the maintenance window request  I'll approve the maintenance window request this afternoon "
+      },
+      {
+        "label_id": "bench_07_c8",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_08_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 1228, \"type\": \"commitment\"} call the Acme Co COO about the month-end outage  I'll call the Acme Co chief operating officer today, before five "
+      },
+      {
+        "label_id": "bench_08_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1229, \"type\": \"commitment\"} write the incident postmortem and send it to the Acme team  I'll write the incident postmortem by Thursday and send it to their team "
+      },
+      {
+        "label_id": "bench_08_c3",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1230, \"type\": \"commitment\"} process the service credit for Acme Co  Rio told their account manager he'd process the service credit this week "
+      },
+      {
+        "label_id": "bench_08_c4",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 1231, \"type\": \"commitment\"} send the escalation contact sheet  I'll send you the escalation contact sheet tonight "
+      },
+      {
+        "label_id": "bench_08_c5",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1232, \"type\": \"commitment\"} get an exec summary in front of the Acme Co CEO  I'll try to get an exec summary in front of their CEO this week, travel permitting "
+      },
+      {
+        "label_id": "bench_08_c6",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_09_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 1233, \"type\": \"commitment\"} send the planning template and last quarter's scorecard  I'll send you the planning template and last quarter's scorecard by end of day Friday "
+      },
+      {
+        "label_id": "bench_09_c2",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_09_c3",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_09_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_09_c5",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1234, \"type\": \"commitment\"} circulate the kickoff agenda  I'll circulate the kickoff agenda by Monday "
+      },
+      {
+        "label_id": "bench_09_c6",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1235, \"type\": \"commitment\"} close out the budget template  Bo told finance he'd close out the budget template by Friday "
+      },
+      {
+        "label_id": "bench_10_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 1236, \"type\": \"commitment\"} send the data room checklist to Bo and Quinn  I'll send you both the data room checklist tomorrow "
+      },
+      {
+        "label_id": "bench_10_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1237, \"type\": \"commitment\"} update the financial model with the May actuals  I'll update the financial model with the May actuals by Wednesday "
+      },
+      {
+        "label_id": "bench_10_c3",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1238, \"type\": \"commitment\"} finish the legal review of the SAFE docs before the partner meeting  Rio said he'll finish the legal review of the SAFE docs before the partner meeting "
+      },
+      {
+        "label_id": "bench_10_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_10_c5",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1239, \"type\": \"commitment\"} schedule the 30-minute partner meeting prep call  I'll schedule the partner meeting prep call for Monday morning "
+      },
+      {
+        "label_id": "bench_10_c6",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_10_c7",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_11_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1240, \"type\": \"commitment\"} book the Thursday roadmap walkthrough on Sam's calendar  sure, I'll book the Thursday slot when we hang up "
+      },
+      {
+        "label_id": "bench_11_c2",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_11_c3",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_11_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_11_c5",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 1241, \"type\": \"commitment\"} send the roadmap doc ahead of the Thursday walkthrough  I'll send you the roadmap doc before the Thursday walkthrough "
+      },
+      {
+        "label_id": "bench_11_c6",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_12_c1",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1242, \"type\": \"commitment\"} publish the OKR tracker to the whole team  Mira committed to publishing the OKR tracker to the whole team by Monday "
+      },
+      {
+        "label_id": "bench_12_c2",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1243, \"type\": \"commitment\"} deliver the escalation training session  Quinn told the support leads she'd deliver the escalation training session next week "
+      },
+      {
+        "label_id": "bench_12_c3",
+        "expected": "observed",
+        "rail_shadowed": false,
+        "assigned": "observed",
+        "evidence": "{\"seq\": 1249, \"type\": \"commitment_observed\"} run a tools walkthrough for the interns  Quinn promised the interns a proper tools walkthrough, no session picked yet "
+      },
+      {
+        "label_id": "bench_12_c4",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 1244, \"type\": \"commitment\"} record the async QA video for the unanswered all-hands questions  I'll record the async QA video for the questions we didn't get to, this week "
+      },
+      {
+        "label_id": "bench_12_c5",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_12_c6",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_12_c7",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "review",
+        "evidence": "{\"seq\": 1245, \"type\": \"commitment\"} compile the open questions doc from the all-hands  yes, I'll have the questions doc out by tomorrow "
+      },
+      {
+        "label_id": "bench_12_c8",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      }
+    ],
+    "counts": {
+      "book_expected": 30,
+      "book_captured": 30,
+      "book_exact": 15,
+      "review_expected": 7,
+      "review_captured": 3,
+      "review_exact": 3,
+      "observed_expected": 15,
+      "observed_undated_expected": 4,
+      "observed_undated_exact": 4,
+      "observed_shadowed_expected": 11,
+      "observed_shadowed_open_ok": 11,
+      "observed_shadowed_as_observed": 0,
+      "observed_exact": 4,
+      "observed_as_open": 11,
+      "observed_captured_any": 15,
+      "reject_expected": 30,
+      "reject_false_captures": 0,
+      "owner_lane_recall": 0.8919,
+      "owner_lane_precision_vs_planted": 1.0,
+      "unplanted_captures": 0
+    },
+    "unplanted": []
+  },
+  "entities": {
+    "rows": [
+      {
+        "label_id": "bench_01_e1",
+        "surface": "Bo",
+        "expected": "Bo Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_01_e2",
+        "surface": "Cedar Works",
+        "expected": "Cedar Works",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_02_e1",
+        "surface": "Quinn",
+        "expected": "Quinn Sample",
+        "verdict": "partial_surface_only"
+      },
+      {
+        "label_id": "bench_02_e2",
+        "surface": "Mira",
+        "expected": "Mira Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_03_e1",
+        "surface": "Dustin",
+        "expected": "Dustin Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_03_e2",
+        "surface": "Lyra",
+        "expected": "Lyra Sample",
+        "verdict": "partial_surface_only"
+      },
+      {
+        "label_id": "bench_03_e3",
+        "surface": "Bowie",
+        "expected": "Bowie Sample",
+        "verdict": "partial_surface_only"
+      },
+      {
+        "label_id": "bench_04_e1",
+        "surface": "Quinn",
+        "expected": "Quinn Sample",
+        "verdict": "partial_surface_only"
+      },
+      {
+        "label_id": "bench_04_e2",
+        "surface": "Aria",
+        "expected": "Aria Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_05_e1",
+        "surface": "Skyler Stone",
+        "expected": "UNKNOWN_PERSON",
+        "verdict": "missed",
+        "wrong_bind": null
+      },
+      {
+        "label_id": "bench_06_e1",
+        "surface": "Northstar",
+        "expected": "Northstar Partners",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_06_e2",
+        "surface": "Aria",
+        "expected": "Aria Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_07_e1",
+        "surface": "Dustin",
+        "expected": "Dustin Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_07_e2",
+        "surface": "Bowie",
+        "expected": "Bowie Sample",
+        "verdict": "partial_surface_only"
+      },
+      {
+        "label_id": "bench_08_e1",
+        "surface": "mira.sample7@example.com",
+        "expected": "Mira Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_08_e2",
+        "surface": "Acme Co",
+        "expected": "Acme Co",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_09_e1",
+        "surface": "Aria",
+        "expected": "Aria Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_10_e1",
+        "surface": "Rio",
+        "expected": "Rio Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_11_e1",
+        "surface": "Bluebird Group",
+        "expected": "Bluebird Group",
+        "verdict": "missed"
+      },
+      {
+        "label_id": "bench_12_e1",
+        "surface": "Lyra",
+        "expected": "Lyra Sample",
+        "verdict": "partial_surface_only"
+      },
+      {
+        "label_id": "bench_12_e2",
+        "surface": "Quinn",
+        "expected": "Quinn Sample",
+        "verdict": "partial_surface_only"
+      }
+    ],
+    "counts": {
+      "right": 12,
+      "partial_surface_only": 7,
+      "missed": 2
+    }
+  },
+  "hallucination": {
+    "invented_person_names": {
+      "Bo Sample": 3,
+      "Mira Sample": 1,
+      "Dustin Sample": 1,
+      "Rio Sample": 1
+    },
+    "count": 6
+  },
+  "leaks": {
+    "hits": {
+      "internal_id": {
+        "count": 2,
+        "samples": [
+          "person_001",
+          "person_009"
+        ]
+      },
+      "substrate_path_events": {
+        "count": 2,
+        "samples": [
+          "events.jsonl",
+          "events.jsonl"
+        ]
+      },
+      "substrate_path_aliases": {
+        "count": 1,
+        "samples": [
+          "aliases.json"
+        ]
+      },
+      "substrate_path_hq": {
+        "count": 1,
+        "samples": [
+          "_hq/data"
+        ]
+      }
+    },
+    "count": 6
+  },
+  "event_validity": {
+    "events": 49,
+    "invalid": 0,
+    "errors": []
+  },
+  "metric_validity_note": "hallucination and entity metrics are clean-roster-bound and N/A on this fixture pending per-fixture transcript binding; extraction, routing, leaks, event validity, and cost are valid"
+}

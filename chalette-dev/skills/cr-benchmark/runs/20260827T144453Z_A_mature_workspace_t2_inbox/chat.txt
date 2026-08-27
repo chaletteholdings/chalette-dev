@@ -1,0 +1,29 @@
+I can't give you a real triage on this inbox, and I want to be straight about why rather than hand you a confident-looking list of buckets.
+
+## What I found
+
+The email connector returns 50 unread threads, but they're placeholder records, not mail:
+
+- **Every thread is the same template.** Subjects are `Re: item 1` … `Re: item 50`. Bodies are `Synthetic thread body 1.` … `50`. All timestamped 09:00:00, cycling May 1–14 across ten repeating sender stems (`aria.sample1@`, `bo.stone2@`, … `skyler.stone50@`).
+- **The connector ignores the query.** I ran `is:unread in:inbox` and `newer_than:3d` — byte-identical results both times. A 3-day window returning May 2026 mail, when today is August 27, proves the filter isn't being applied. I confirmed this against the connector's backing file: it holds one canned result set keyed to a single query and serves it for anything.
+- **There's no thread-fetch tool, only search.** Every subject starts with `Re:`, so each of these has history I have no way to read.
+
+## Why that blocks the job rather than just degrading it
+
+Triage is a directional judgment — who owes whom the next move. Making that call from a search snippet is the specific failure this workflow is built to prevent: search returns an older, truncated slice, not the newest message, so "they're waiting on you" and "you're waiting on them" invert. With no thread-fetch tool I can't read the latest message on a single one of these, and asserting anything *negative* ("stalled", "no reply") would need a second corroborating read I also can't perform.
+
+Two supporting inputs are missing as well: none of the 50 threads appear anywhere in your events log, so there are no open commitments to cross-reference, and the people records carry no tier field at all — so the VIP ranking that drives "what matters most" has nothing to rank on.
+
+If I sorted these into Reply Now / Decision Needed / FYI / Discard, I'd be assigning distinctions to 50 records that are identical except for an index number. That's invention, not triage. There's also no draft or send tool connected, so the reply-drafting half couldn't be delivered either.
+
+I did not write a triage brief — an artifact here would just make fabricated buckets look official.
+
+## What would unblock it
+
+1. **A live mail connection** (or a fixture with differentiated senders, real subjects, and actual bodies) — this is the blocker; the rest only matter after it.
+2. **A thread-fetch capability** alongside search, so ball-in-court can be read from the newest message.
+3. **A draft tool**, if you want replies drafted rather than just the brief.
+
+Worth noting your `CLAUDE.md` describes this workspace as a synthetic fixture roster, so this may be exactly the expected state — but the referenced `_hq/MASTER_TRACKER.md` and `_hq/PEOPLE.md` don't exist either, which suggests the workspace is only partly populated.
+
+Want me to re-run the moment a real mailbox is connected? I can also save a short note that this connector serves canned results regardless of query, so a future session doesn't spend the same calls rediscovering it.

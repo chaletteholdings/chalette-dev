@@ -1,0 +1,12 @@
+{
+  "created": [
+    "_hq/data/.source_refs.idx",
+    "_hq/data/.writer.lock",
+    "_hq/data/.writer.lock.info",
+    "_hq/data/events.jsonl.seqhw",
+    "_hq/scans/COMMITMENT_SCAN_PREVIEW_2026-08-27.md"
+  ],
+  "modified": [
+    "_hq/data/events.jsonl"
+  ]
+}

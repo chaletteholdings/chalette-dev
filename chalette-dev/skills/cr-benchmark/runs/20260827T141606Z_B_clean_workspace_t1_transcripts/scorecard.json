@@ -1,0 +1,795 @@
+{
+  "run_id": "20260827T141606Z_B_clean_workspace_t1_transcripts",
+  "arm": "B",
+  "fixture": "clean_workspace",
+  "task": "t1_transcripts",
+  "model_id": "claude-opus-5",
+  "wall_ms": 322295,
+  "tokens": {
+    "input": 3723,
+    "output": 27930,
+    "cache_read": 756930,
+    "cache_creation": 112080
+  },
+  "is_error": false,
+  "timed_out": false,
+  "extraction": {
+    "rows": [
+      {
+        "label_id": "bench_01_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 213, \"type\": \"commitment\"}  Sam Sample: Send the revised pricing sheet for the Acme Co renewal [to: Bo Sample] - due Tue 2026-05-05  "
+      },
+      {
+        "label_id": "bench_01_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 219, \"type\": \"commitment\"}  Sam Sample: Introduce Bo to the Cedar Works finance lead over email [to: Bo Sample / Cedar Works] - due Fri 2026-05-08  "
+      },
+      {
+        "label_id": "bench_01_c3",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 231, \"type\": \"commitment\"}  Bo Sample: Send the Acme usage report for the renewal call [to: Sam Sample] - due Fri 2026-05-08  "
+      },
+      {
+        "label_id": "bench_01_c4",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 253, \"type\": \"commitment\"}  [TENTATIVE] Sam Sample: Draft the customer case study ahead of the Acme renewal [to: Bo Sample] - no due date (might, no promises)  "
+      },
+      {
+        "label_id": "bench_01_c5",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_01_c6",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_02_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 229, \"type\": \"commitment\"}  Mira Sample: Pull together the Q2 revenue numbers [to: Sam Sample] - due Thu 2026-05-07  "
+      },
+      {
+        "label_id": "bench_02_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 217, \"type\": \"commitment\"}  Sam Sample: Draft the board deck (Quinn to sanity-check the hiring slide) [to: Mira Sample / Quinn Sample] - due Fri 2026-05-08  "
+      },
+      {
+        "label_id": "bench_02_c3",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 254, \"type\": \"commitment\"}  [TENTATIVE] Sam Sample: Get the board pre-read memo out ahead of the deck [to: Mira Sample] - due Wed 2026-05-06  "
+      },
+      {
+        "label_id": "bench_02_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_02_c5",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_02_c6",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 226, \"type\": \"commitment\"}  Mira Sample: Book the board dinner at the usual place - due Wed 2026-05-06  "
+      },
+      {
+        "label_id": "bench_02_c7",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "book",
+        "evidence": "{\"seq\": 238, \"type\": \"commitment\"}  [REPORTED SECONDHAND] Quinn Sample: Send the equity grants file [to: auditors] - due Tue 2026-05-05  "
+      },
+      {
+        "label_id": "bench_03_c1",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "book",
+        "evidence": "{\"seq\": 239, \"type\": \"commitment\"}  [REPORTED SECONDHAND] Dustin Sample: Send the signed services contract for countersign [to: Lyra Sample] - due Tue 2026-05-05  "
+      },
+      {
+        "label_id": "bench_03_c2",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "book",
+        "evidence": "{\"seq\": 244, \"type\": \"commitment\"}  [REPORTED SECONDHAND] Bowie Sample: Send the security questionnaire [to: Lyra Sample] - due Fri 2026-05-08  "
+      },
+      {
+        "label_id": "bench_03_c3",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 215, \"type\": \"commitment\"}  Sam Sample: Send the vendor comparison matrix so a pick happens before the renewal date [to: Rio Sample] - due Thu 2026-05-07  "
+      },
+      {
+        "label_id": "bench_03_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "mentioned_only",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_03_c5",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_03_c6",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 237, \"type\": \"commitment\"}  Rio Sample: Cancel the old vendor account to stop double-paying - due Sun 2026-05-31  "
+      },
+      {
+        "label_id": "bench_03_c7",
+        "expected": "observed",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 249, \"type\": \"commitment\"}  [REPORTED SECONDHAND] Dustin Sample: Introduce Lyra to the Cedar Works ops lead [to: Lyra Sample / Cedar Works] - no due date (no date agreed)  "
+      },
+      {
+        "label_id": "bench_03_c8",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_04_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 233, \"type\": \"commitment\"}  Quinn Sample: Schedule panel interviews for both platform finalists - due Fri 2026-05-08  "
+      },
+      {
+        "label_id": "bench_04_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 210, \"type\": \"commitment\"}  Sam Sample: Send the offer template so it's ready if the panel goes well [to: Quinn Sample] - due Mon 2026-05-04  "
+      },
+      {
+        "label_id": "bench_04_c3",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 256, \"type\": \"commitment\"}  [TENTATIVE] Aria Sample: Draft the panel scoring rubric [to: Sam Sample] - no due date (no deadline set)  "
+      },
+      {
+        "label_id": "bench_04_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "mentioned_only",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_04_c5",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_04_c6",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "mentioned_only",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_04_c7",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 224, \"type\": \"commitment\"}  Aria Sample: Post the job description for the data role - due Tue 2026-05-05  "
+      },
+      {
+        "label_id": "bench_05_c1",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_05_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 214, \"type\": \"commitment\"}  Sam Sample: Send the updated cap table (counsel is blocked on it) [to: counsel] - due Wed 2026-05-06  "
+      },
+      {
+        "label_id": "bench_05_c3",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_05_c4",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 208, \"type\": \"commitment\"}  Sam Sample: Send wire instructions to counsel so closing isn't blocked [to: counsel] - due Mon 2026-05-04  "
+      },
+      {
+        "label_id": "bench_05_c5",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 258, \"type\": \"commitment\"}  [TENTATIVE] Bo Sample: Pull together an investor FAQ [to: Sam Sample] - no due date (if the inbound keeps up)  "
+      },
+      {
+        "label_id": "bench_05_c6",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_06_c1",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_06_c2",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "book",
+        "evidence": "{\"seq\": 245, \"type\": \"commitment\"}  [REPORTED SECONDHAND] Bowie Sample: Deliver the corrected data feed [to: Northstar Partners team] - due Fri 2026-05-08  "
+      },
+      {
+        "label_id": "bench_06_c3",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 221, \"type\": \"commitment\"}  Sam Sample: Follow up with the Northstar Partners exec sponsor to land the renewal [to: Northstar Partners] - due Fri 2026-05-15  "
+      },
+      {
+        "label_id": "bench_06_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_06_c5",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 222, \"type\": \"commitment\"}  Lyra Sample: Send the partner health dashboard link [to: Sam Sample] - due Mon 2026-05-04  "
+      },
+      {
+        "label_id": "bench_06_c6",
+        "expected": "observed",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 250, \"type\": \"commitment\"}  [REPORTED SECONDHAND] Aria Sample: Walk the Northstar team through the reporting portal [to: Northstar Partners team] - no due date (committed, no day picked) "
+      },
+      {
+        "label_id": "bench_06_c7",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_07_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 227, \"type\": \"commitment\"}  Dustin Sample: Finish the server inventory list (unblocks the cutover plan) [to: ops / Sam Sample] - due Wed 2026-05-06  "
+      },
+      {
+        "label_id": "bench_07_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 232, \"type\": \"commitment\"}  Bowie Sample: Write the cutover runbook [to: ops team] - due Fri 2026-05-08  "
+      },
+      {
+        "label_id": "bench_07_c3",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "mentioned_only",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_07_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_07_c5",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "chat_capture",
+        "evidence": "- **Mira → datacenter vendor:** sign the SOW — Thu 5/7"
+      },
+      {
+        "label_id": "bench_07_c6",
+        "expected": "observed",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 251, \"type\": \"commitment\"}  Bowie Sample: Send an updated contact list [to: network vendor] - no due date (no deadline, just owed)  "
+      },
+      {
+        "label_id": "bench_07_c7",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 209, \"type\": \"commitment\"}  Sam Sample: Approve the maintenance window request [to: ops (Dustin Sample)] - due Mon 2026-05-04  "
+      },
+      {
+        "label_id": "bench_07_c8",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_08_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 207, \"type\": \"commitment\"}  Sam Sample: Call the Acme Co chief operating officer about the outage [to: Acme Co (COO)] - due Mon 2026-05-04  "
+      },
+      {
+        "label_id": "bench_08_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 230, \"type\": \"commitment\"}  Mira Sample: Write the incident postmortem and send it in writing [to: Acme Co team] - due Thu 2026-05-07  "
+      },
+      {
+        "label_id": "bench_08_c3",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "book",
+        "evidence": "{\"seq\": 246, \"type\": \"commitment\"}  [REPORTED SECONDHAND] Rio Sample: Process the service credit [to: Acme Co account manager] - due Fri 2026-05-08  "
+      },
+      {
+        "label_id": "bench_08_c4",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 211, \"type\": \"commitment\"}  Sam Sample: Send the escalation contact sheet [to: Mira Sample] - due Mon 2026-05-04  "
+      },
+      {
+        "label_id": "bench_08_c5",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 255, \"type\": \"commitment\"}  [TENTATIVE] Sam Sample: Get an exec summary in front of the Acme Co CEO [to: Acme Co (CEO)] - due Fri 2026-05-08  "
+      },
+      {
+        "label_id": "bench_08_c6",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_09_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 218, \"type\": \"commitment\"}  Sam Sample: Send the planning template and last quarter's scorecard [to: Aria Sample] - due Fri 2026-05-08  "
+      },
+      {
+        "label_id": "bench_09_c2",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 257, \"type\": \"commitment\"}  [TENTATIVE] Aria Sample: Collect department pre-reads before kickoff [to: department leads] - no due date (if the leads cooperate)  "
+      },
+      {
+        "label_id": "bench_09_c3",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_09_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_09_c5",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 235, \"type\": \"commitment\"}  Aria Sample: Circulate the kickoff agenda [to: department leads] - due Mon 2026-05-11  "
+      },
+      {
+        "label_id": "bench_09_c6",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "book",
+        "evidence": "{\"seq\": 243, \"type\": \"commitment\"}  [REPORTED SECONDHAND] Bo Sample: Close out the budget template [to: finance] - due Fri 2026-05-08  "
+      },
+      {
+        "label_id": "bench_10_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 212, \"type\": \"commitment\"}  Sam Sample: Send the data room checklist so it gets populated once, properly [to: Bo Sample and Quinn Sample] - due Tue 2026-05-05  "
+      },
+      {
+        "label_id": "bench_10_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 228, \"type\": \"commitment\"}  Quinn Sample: Update the financial model with May actuals [to: Bo Sample / Sam Sample] - due Wed 2026-05-06  "
+      },
+      {
+        "label_id": "bench_10_c3",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "book",
+        "evidence": "{\"seq\": 248, \"type\": \"commitment\"}  [REPORTED SECONDHAND] Rio Sample: Finish the legal review of the SAFE docs [to: Bo Sample / Sam Sample] - no due date (before the partner meeting)  "
+      },
+      {
+        "label_id": "bench_10_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_10_c5",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 234, \"type\": \"commitment\"}  Bo Sample: Schedule the 30-minute partner meeting prep call [to: Sam Sample / Quinn Sample] - due Mon 2026-05-11  "
+      },
+      {
+        "label_id": "bench_10_c6",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 259, \"type\": \"commitment\"}  [TENTATIVE] Quinn Sample: Get the cohort analysis in before the partner meeting [to: Bo Sample / Sam Sample] - no due date (depends on the data pull)  "
+      },
+      {
+        "label_id": "bench_10_c7",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "mentioned_only",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_11_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 223, \"type\": \"commitment\"}  Dustin Sample: Book a 30-minute Thursday afternoon roadmap walkthrough on Sam's calendar [to: Sam Sample] - due Mon 2026-05-04  "
+      },
+      {
+        "label_id": "bench_11_c2",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_11_c3",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_11_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_11_c5",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 216, \"type\": \"commitment\"}  Sam Sample: Send the roadmap doc ahead of the Thursday walkthrough [to: Dustin Sample] - due Thu 2026-05-07  "
+      },
+      {
+        "label_id": "bench_11_c6",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_12_c1",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "book",
+        "evidence": "{\"seq\": 241, \"type\": \"commitment\"}  [REPORTED SECONDHAND] Mira Sample: Publish the OKR tracker to the whole team [to: whole team] - due Mon 2026-05-11  "
+      },
+      {
+        "label_id": "bench_12_c2",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "book",
+        "evidence": "{\"seq\": 247, \"type\": \"commitment\"}  [REPORTED SECONDHAND] Quinn Sample: Deliver the escalation training session [to: support leads] - due Fri 2026-05-15  "
+      },
+      {
+        "label_id": "bench_12_c3",
+        "expected": "observed",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 252, \"type\": \"commitment\"}  [REPORTED SECONDHAND] Quinn Sample: Run a proper tools walkthrough [to: interns] - no due date (no session picked)  "
+      },
+      {
+        "label_id": "bench_12_c4",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_12_c5",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_12_c6",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_12_c7",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "book",
+        "evidence": "{\"seq\": 225, \"type\": \"commitment\"}  Bowie Sample: Compile the open-questions doc from the all-hands [to: Sam Sample] - due Tue 2026-05-05  "
+      },
+      {
+        "label_id": "bench_12_c8",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      }
+    ],
+    "counts": {
+      "book_expected": 30,
+      "book_captured": 29,
+      "book_exact": 29,
+      "review_expected": 7,
+      "review_captured": 7,
+      "review_exact": 0,
+      "observed_expected": 15,
+      "observed_undated_expected": 4,
+      "observed_undated_exact": 0,
+      "observed_shadowed_expected": 11,
+      "observed_shadowed_open_ok": 10,
+      "observed_shadowed_as_observed": 0,
+      "observed_exact": 0,
+      "observed_as_open": 13,
+      "observed_captured_any": 14,
+      "reject_expected": 30,
+      "reject_false_captures": 0,
+      "owner_lane_recall": 0.973,
+      "owner_lane_precision_vs_planted": 1.0,
+      "unplanted_captures": 3
+    },
+    "unplanted": [
+      {
+        "channel": "events",
+        "route": "book",
+        "text": " Sam Sample: Record the async Q&A video covering all-hands questions not reached [to: whole team] - due Fri 2026-05-08  "
+      },
+      {
+        "channel": "events",
+        "route": "book",
+        "text": " [REPORTED SECONDHAND] Aria Sample: Send the renewal terms [to: Northstar Partners] - due Mon 2026-05-11  "
+      },
+      {
+        "channel": "events",
+        "route": "book",
+        "text": " [REPORTED SECONDHAND] Mira Sample: Sign the datacenter SOW so hardware is covered [to: datacenter vendor] - due Thu 2026-05-07  "
+      }
+    ]
+  },
+  "entities": {
+    "rows": [
+      {
+        "label_id": "bench_01_e1",
+        "surface": "Bo",
+        "expected": "Bo Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_01_e2",
+        "surface": "Cedar Works",
+        "expected": "Cedar Works",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_02_e1",
+        "surface": "Quinn",
+        "expected": "Quinn Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_02_e2",
+        "surface": "Mira",
+        "expected": "Mira Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_03_e1",
+        "surface": "Dustin",
+        "expected": "Dustin Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_03_e2",
+        "surface": "Lyra",
+        "expected": "Lyra Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_03_e3",
+        "surface": "Bowie",
+        "expected": "Bowie Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_04_e1",
+        "surface": "Quinn",
+        "expected": "Quinn Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_04_e2",
+        "surface": "Aria",
+        "expected": "Aria Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_05_e1",
+        "surface": "Skyler Stone",
+        "expected": "UNKNOWN_PERSON",
+        "verdict": "missed",
+        "wrong_bind": null
+      },
+      {
+        "label_id": "bench_06_e1",
+        "surface": "Northstar",
+        "expected": "Northstar Partners",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_06_e2",
+        "surface": "Aria",
+        "expected": "Aria Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_07_e1",
+        "surface": "Dustin",
+        "expected": "Dustin Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_07_e2",
+        "surface": "Bowie",
+        "expected": "Bowie Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_08_e1",
+        "surface": "mira.sample7@example.com",
+        "expected": "Mira Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_08_e2",
+        "surface": "Acme Co",
+        "expected": "Acme Co",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_09_e1",
+        "surface": "Aria",
+        "expected": "Aria Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_10_e1",
+        "surface": "Rio",
+        "expected": "Rio Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_11_e1",
+        "surface": "Bluebird Group",
+        "expected": "Bluebird Group",
+        "verdict": "missed"
+      },
+      {
+        "label_id": "bench_12_e1",
+        "surface": "Lyra",
+        "expected": "Lyra Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_12_e2",
+        "surface": "Quinn",
+        "expected": "Quinn Sample",
+        "verdict": "right"
+      }
+    ],
+    "counts": {
+      "right": 19,
+      "missed": 2
+    }
+  },
+  "hallucination": {
+    "invented_person_names": {},
+    "count": 0
+  },
+  "leaks": {
+    "hits": {
+      "commitment_id": {
+        "count": 2,
+        "samples": [
+          "cmt_000207",
+          "cmt_000259"
+        ]
+      },
+      "substrate_path_events": {
+        "count": 1,
+        "samples": [
+          "events.jsonl"
+        ]
+      }
+    },
+    "count": 3
+  },
+  "event_validity": {
+    "events": 53,
+    "invalid": 0,
+    "errors": []
+  }
+}

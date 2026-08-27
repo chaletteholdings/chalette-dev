@@ -1,0 +1,814 @@
+{
+  "run_id": "20260827T142816Z_B_mature_workspace_t1_transcripts",
+  "arm": "B",
+  "fixture": "mature_workspace",
+  "task": "t1_transcripts",
+  "model_id": "claude-opus-5",
+  "wall_ms": 397560,
+  "tokens": {
+    "input": 3634,
+    "output": 34547,
+    "cache_read": 973898,
+    "cache_creation": 58988
+  },
+  "is_error": false,
+  "timed_out": false,
+  "extraction": {
+    "rows": [
+      {
+        "label_id": "bench_01_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Revised pricing sheet (Acme renewal) | Bo | Tue May 5 | Pipeline sync |"
+      },
+      {
+        "label_id": "bench_01_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Intro to Cedar Works finance lead | Bo | Week of May 4 | Pipeline sync |"
+      },
+      {
+        "label_id": "bench_01_c3",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Acme usage report | Sam | Fri May 8 |"
+      },
+      {
+        "label_id": "bench_01_c4",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "- **Sam** → customer case study draft before the Acme renewal — *\"might be able to, no promises\"*"
+      },
+      {
+        "label_id": "bench_01_c5",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_01_c6",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_02_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Q2 revenue numbers | Sam | Thu May 7 |"
+      },
+      {
+        "label_id": "bench_02_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "{\"seq\": 1770000000311000000, \"ts\": \"2026-05-04T09:00:00\", \"type\": \"commitment\", \"source_skill\": \"meeting-notes\", \"primary_thread_id\": null, \"related_thread_ids\": [], \"classification_confidence\": null,"
+      },
+      {
+        "label_id": "bench_02_c3",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "- **Sam** → board pre-read memo ahead of the deck, aiming Wed May 6 — *\"I should be able to... I'll try for\"*"
+      },
+      {
+        "label_id": "bench_02_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "mentioned_only",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_02_c5",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_02_c6",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Book board dinner | — (logistics) | Wed May 6 night |"
+      },
+      {
+        "label_id": "bench_02_c7",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "chat_capture",
+        "evidence": "| Equity grants file | Auditors | Tue May 5 |"
+      },
+      {
+        "label_id": "bench_03_c1",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "chat_capture",
+        "evidence": "| Signed services contract (for countersign) | Lyra | Tue May 5 |"
+      },
+      {
+        "label_id": "bench_03_c2",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "chat_capture",
+        "evidence": "| Security questionnaire | Lyra | Fri May 8 (end of week) |"
+      },
+      {
+        "label_id": "bench_03_c3",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Vendor comparison matrix | Rio | Thu May 7 | Vendor contract call |"
+      },
+      {
+        "label_id": "bench_03_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_03_c5",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_03_c6",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "{\"seq\": 1770000000344000000, \"ts\": \"2026-05-04T09:00:00\", \"type\": \"commitment\", \"source_skill\": \"meeting-notes\", \"primary_thread_id\": null, \"related_thread_ids\": [], \"classification_confidence\": null,"
+      },
+      {
+        "label_id": "bench_03_c7",
+        "expected": "observed",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Intro to Cedar Works ops lead | Lyra | **no date** |"
+      },
+      {
+        "label_id": "bench_03_c8",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_04_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Schedule panel interviews for both finalists | Candidates | Week of May 4 (\"calendars permitting\") |"
+      },
+      {
+        "label_id": "bench_04_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Offer template | Quinn | Mon May 4, that night | Hiring slate |"
+      },
+      {
+        "label_id": "bench_04_c3",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "- **Aria** → panel scoring rubric draft — *\"I guess I can take a stab\"*, no date"
+      },
+      {
+        "label_id": "bench_04_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "mentioned_only",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_04_c5",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "mentioned_only",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_04_c6",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_04_c7",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "{\"seq\": 1770000000331000000, \"ts\": \"2026-05-04T09:00:00\", \"type\": \"commitment\", \"source_skill\": \"meeting-notes\", \"primary_thread_id\": null, \"related_thread_ids\": [], \"classification_confidence\": null,"
+      },
+      {
+        "label_id": "bench_05_c1",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_05_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Updated cap table | Counsel | Wed May 6 | Data room walkthrough |"
+      },
+      {
+        "label_id": "bench_05_c3",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_05_c4",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Wire instructions | Counsel | Mon May 4 (same day) | Data room walkthrough |"
+      },
+      {
+        "label_id": "bench_05_c5",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "- **Bo** → investor FAQ — *\"could probably, if the inbound keeps up\"*"
+      },
+      {
+        "label_id": "bench_05_c6",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_06_c1",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_06_c2",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "chat_capture",
+        "evidence": "| Corrected data feed | Northstar team | Fri May 8 |"
+      },
+      {
+        "label_id": "bench_06_c3",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Follow up with exec sponsor | Northstar Partners | Week of May 11 | Partner renewal |"
+      },
+      {
+        "label_id": "bench_06_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_06_c5",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Partner health dashboard link | Sam | Mon May 4, that night |"
+      },
+      {
+        "label_id": "bench_06_c6",
+        "expected": "observed",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Walk through reporting portal | Northstar team | **committed, no day picked** |"
+      },
+      {
+        "label_id": "bench_06_c7",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_07_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Server inventory list | Ops team | Wed May 6 |"
+      },
+      {
+        "label_id": "bench_07_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Cutover runbook | Ops team | Fri May 8 |"
+      },
+      {
+        "label_id": "bench_07_c3",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_07_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_07_c5",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "chat_capture",
+        "evidence": "| Sign the SOW | Datacenter vendor | Thu May 7 |"
+      },
+      {
+        "label_id": "bench_07_c6",
+        "expected": "observed",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Updated contact list | Network vendor | **no deadline** |"
+      },
+      {
+        "label_id": "bench_07_c7",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Approve maintenance window request | Dustin / Bowie | Mon May 4, afternoon | Ops standup |"
+      },
+      {
+        "label_id": "bench_07_c8",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "mentioned_only",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_08_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Call Acme Co COO re: outage | Acme Co | Mon May 4, before 5pm | Customer escalation |"
+      },
+      {
+        "label_id": "bench_08_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Incident postmortem, in writing | Acme Co team | Thu May 7 |"
+      },
+      {
+        "label_id": "bench_08_c3",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "chat_capture",
+        "evidence": "| Process service credit | Acme account manager | Week of May 4 |"
+      },
+      {
+        "label_id": "bench_08_c4",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Escalation contact sheet | Mira | Mon May 4, that night | Customer escalation |"
+      },
+      {
+        "label_id": "bench_08_c5",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "- **Sam** → exec summary to Acme's CEO, week of May 4 — *\"travel permitting\"*"
+      },
+      {
+        "label_id": "bench_08_c6",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "mentioned_only",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_09_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Planning template + last quarter's scorecard | Aria | Fri May 8, EOD | Quarterly planning |"
+      },
+      {
+        "label_id": "bench_09_c2",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "- **Aria** → collect department pre-reads before kickoff — *\"might try, if the leads cooperate\"*"
+      },
+      {
+        "label_id": "bench_09_c3",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_09_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "mentioned_only",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_09_c5",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Circulate kickoff agenda | Planning attendees | Mon May 11 |"
+      },
+      {
+        "label_id": "bench_09_c6",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "chat_capture",
+        "evidence": "| Close out budget template | Finance | Fri May 8 |"
+      },
+      {
+        "label_id": "bench_10_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Data room checklist | Bo + Quinn | Tue May 5 | Fundraise check-in |"
+      },
+      {
+        "label_id": "bench_10_c2",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Update financial model w/ May actuals | Bo / Sam | Wed May 6 |"
+      },
+      {
+        "label_id": "bench_10_c3",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "chat_capture",
+        "evidence": "{\"seq\": 1770000000343000000, \"ts\": \"2026-05-04T09:00:00\", \"type\": \"commitment\", \"source_skill\": \"meeting-notes\", \"primary_thread_id\": null, \"related_thread_ids\": [], \"classification_confidence\": null,"
+      },
+      {
+        "label_id": "bench_10_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "mentioned_only",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_10_c5",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Schedule partner-meeting prep call (30 min) | Sam + Quinn | For Mon May 11 morning |"
+      },
+      {
+        "label_id": "bench_10_c6",
+        "expected": "review",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "- **Quinn** → cohort analysis before the partner meeting — *\"depends on the data pull\"*"
+      },
+      {
+        "label_id": "bench_10_c7",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_11_c1",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_11_c2",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "mentioned_only",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_11_c3",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_11_c4",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_11_c5",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Roadmap doc | Dustin | Before Thu May 7 walkthrough | Calendar chatter |"
+      },
+      {
+        "label_id": "bench_11_c6",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "mentioned_only",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_12_c1",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "chat_capture",
+        "evidence": "| Publish OKR tracker | Whole team | Mon May 11 |"
+      },
+      {
+        "label_id": "bench_12_c2",
+        "expected": "observed",
+        "rail_shadowed": true,
+        "assigned": "chat_capture",
+        "evidence": "| Escalation training session | Support leads | Week of May 11 |"
+      },
+      {
+        "label_id": "bench_12_c3",
+        "expected": "observed",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Tools walkthrough | Interns | **no session picked** |"
+      },
+      {
+        "label_id": "bench_12_c4",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_12_c5",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_12_c6",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "absent",
+        "evidence": ""
+      },
+      {
+        "label_id": "bench_12_c7",
+        "expected": "book",
+        "rail_shadowed": false,
+        "assigned": "chat_capture",
+        "evidence": "| Open questions doc from all-hands | Sam | Tue May 5 |"
+      },
+      {
+        "label_id": "bench_12_c8",
+        "expected": "reject",
+        "rail_shadowed": false,
+        "assigned": "mentioned_only",
+        "evidence": ""
+      }
+    ],
+    "counts": {
+      "book_expected": 30,
+      "book_captured": 28,
+      "book_exact": 0,
+      "review_expected": 7,
+      "review_captured": 7,
+      "review_exact": 0,
+      "observed_expected": 15,
+      "observed_undated_expected": 4,
+      "observed_undated_exact": 0,
+      "observed_shadowed_expected": 11,
+      "observed_shadowed_open_ok": 10,
+      "observed_shadowed_as_observed": 0,
+      "observed_exact": 0,
+      "observed_as_open": 0,
+      "observed_captured_any": 14,
+      "reject_expected": 30,
+      "reject_false_captures": 0,
+      "owner_lane_recall": 0.9459,
+      "owner_lane_precision_vs_planted": 1.0,
+      "unplanted_captures": 0
+    },
+    "unplanted": []
+  },
+  "entities": {
+    "rows": [
+      {
+        "label_id": "bench_01_e1",
+        "surface": "Bo",
+        "expected": "Bo Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_01_e2",
+        "surface": "Cedar Works",
+        "expected": "Cedar Works",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_02_e1",
+        "surface": "Quinn",
+        "expected": "Quinn Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_02_e2",
+        "surface": "Mira",
+        "expected": "Mira Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_03_e1",
+        "surface": "Dustin",
+        "expected": "Dustin Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_03_e2",
+        "surface": "Lyra",
+        "expected": "Lyra Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_03_e3",
+        "surface": "Bowie",
+        "expected": "Bowie Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_04_e1",
+        "surface": "Quinn",
+        "expected": "Quinn Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_04_e2",
+        "surface": "Aria",
+        "expected": "Aria Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_05_e1",
+        "surface": "Skyler Stone",
+        "expected": "UNKNOWN_PERSON",
+        "verdict": "right",
+        "wrong_bind": null
+      },
+      {
+        "label_id": "bench_06_e1",
+        "surface": "Northstar",
+        "expected": "Northstar Partners",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_06_e2",
+        "surface": "Aria",
+        "expected": "Aria Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_07_e1",
+        "surface": "Dustin",
+        "expected": "Dustin Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_07_e2",
+        "surface": "Bowie",
+        "expected": "Bowie Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_08_e1",
+        "surface": "mira.sample7@example.com",
+        "expected": "Mira Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_08_e2",
+        "surface": "Acme Co",
+        "expected": "Acme Co",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_09_e1",
+        "surface": "Aria",
+        "expected": "Aria Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_10_e1",
+        "surface": "Rio",
+        "expected": "Rio Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_11_e1",
+        "surface": "Bluebird Group",
+        "expected": "Bluebird Group",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_12_e1",
+        "surface": "Lyra",
+        "expected": "Lyra Sample",
+        "verdict": "right"
+      },
+      {
+        "label_id": "bench_12_e2",
+        "surface": "Quinn",
+        "expected": "Quinn Sample",
+        "verdict": "right"
+      }
+    ],
+    "counts": {
+      "right": 21
+    }
+  },
+  "hallucination": {
+    "invented_person_names": {
+      "Dustin Sample": 6,
+      "Mira Sample": 7,
+      "Bo Sample": 11,
+      "Rio Sample": 4
+    },
+    "count": 28
+  },
+  "leaks": {
+    "hits": {
+      "internal_id": {
+        "count": 19,
+        "samples": [
+          "person_009",
+          "person_099",
+          "person_080"
+        ]
+      },
+      "substrate_path_events": {
+        "count": 4,
+        "samples": [
+          "events.jsonl",
+          "events.jsonl",
+          "events.jsonl"
+        ]
+      },
+      "substrate_path_entities": {
+        "count": 1,
+        "samples": [
+          "entities.json"
+        ]
+      },
+      "substrate_path_aliases": {
+        "count": 2,
+        "samples": [
+          "aliases.json",
+          "aliases.json"
+        ]
+      },
+      "substrate_path_hq": {
+        "count": 1,
+        "samples": [
+          "_hq/data"
+        ]
+      },
+      "voice_classifier": {
+        "count": 53,
+        "samples": [
+          "classification_confidence",
+          "classification_confidence",
+          "classification_confidence"
+        ]
+      }
+    },
+    "count": 80
+  },
+  "event_validity": {
+    "events": 0,
+    "invalid": 0,
+    "errors": []
+  },
+  "metric_validity_note": "hallucination and entity metrics are clean-roster-bound and N/A on this fixture pending per-fixture transcript binding; extraction, routing, leaks, event validity, and cost are valid"
+}

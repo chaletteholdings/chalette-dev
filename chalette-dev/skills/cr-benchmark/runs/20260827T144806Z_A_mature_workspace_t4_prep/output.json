@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 195520,
+  "duration_api_ms": 190751,
+  "ttft_ms": 3508,
+  "ttft_stream_ms": 1259,
+  "time_to_request_ms": 41,
+  "num_turns": 33,
+  "result": "I dug into this and I'm going to stop short of building the brief, because I can't answer your first question — \"who am I meeting\" — and the reason matters more than a document would.\n\n## There is no upcoming meeting I can find\n\nToday is **Thu Aug 27, 2026**. I queried the calendar both ways:\n\n- `today` → 5 events, dated **May 1–5, 2026**\n- `next_7_days` → 30 events, dated **May 1–7, 2026**\n\nEvery event the calendar returns is roughly **four months in the past**, while the connector labels them \"today\" and \"next 7 days.\" There is not a single future-dated event on it. So either the calendar feed is stale/misconfigured, or it's pointed at the wrong account — but I can't pick \"your upcoming meeting\" out of it, and guessing one would mean prepping you for the wrong room.\n\n## Two of the three connectors aren't returning trustworthy data\n\nI tested rather than assumed:\n\n- **Mail search ignores the query.** I searched `aria.sample1@example.com`, then searched a deliberately nonsense address (`zzz_nonexistent_sender_xyz@nowhere.invalid`). Both returned the **identical 50 threads**. It echoes `query_used` back but doesn't filter on it. Any \"recent email with your attendee\" line I wrote would be me inventing the filtering. Bodies are also placeholder text (\"Synthetic thread body 12\").\n- **Your workspace substrate is partly corrupt.** `_hq/data/events.jsonl` has a broken region around lines 100–107 (one unterminated record, seven orphaned fragments). It also carries events dated to **Nov 17, 2026** — three months ahead — with junk sequence numbers, and Aria Sample's \"person created\" record is dated **Sep 24, 2026**, also in the future.\n- **Identity resolution is unsafe.** There are **80 people records but only 10 distinct names** — eight separate \"Aria Sample\" records, eight \"Bo Stone,\" each with a different email and a different org. \"Prep me for the Aria meeting\" has eight possible answers. Granola compounds it: it calls your counterparts *Bo Sample, Mira Sample, Dustin Sample*, while the entity file calls them *Bo **Stone**, Mira **Stone**, Dustin **Stone***.\n\nAlso worth flagging: `CLAUDE.md` points to `_hq/MASTER_TRACKER.md`, `_hq/PEOPLE.md`, `_hq/BUSINESS_CONTEXT.md`, and per-project session notes. **None of those files exist** — the workspace only has `_hq/data/` and `_hq/connectors/`.\n\n## What *is* real: the Granola transcripts\n\nI read all 12. These have genuine substance — actual dialogue, actual commitments. The catch: **all 12 are dated May 4, 2026**, so everything below is ~115 days stale. Here's what was open, by counterpart:\n\n**Things you owe**\n- **Bo** — revised pricing sheet (Tue); intro to the Cedar Works finance lead; cap table to counsel (Wed); wire instructions to counsel\n- **Mira** — board deck draft (Fri); call the Acme COO \"today, before five\"; escalation contact sheet\n- **Aria** — planning template + last quarter's scorecard (EOD Fri)\n- **Rio** — vendor comparison matrix (Thu)\n- **Quinn** — offer template; data room checklist\n- **Dustin** — roadmap doc before the Thursday walkthrough\n- **Lyra** — follow up with the Northstar exec sponsor\n\n**Things owed to you**\n- **Bo** — Acme usage report (Fri)\n- **Mira** — Q2 revenue numbers (Thu); incident postmortem (Thu)\n- **Quinn** — panel interviews scheduled; financial model w/ May actuals (Wed)\n- **Aria** — kickoff agenda (Mon); data-role JD posted; scoring rubric draft\n- **Dustin** — server inventory list (Wed)\n- **Bowie** — cutover runbook (Fri); all-hands questions doc\n\nThe soft ones are deliberately excluded — \"I might get the case study drafted, no promises,\" \"someday we should redo onboarding.\" Those aren't commitments and shouldn't be walked into a room as if they were.\n\n## What I need from you\n\n1. **Which meeting?** Name the person or company and I'll build the full brief off it.\n2. **Is the calendar connector pointed at the right account?** Four-month-old events returned as \"today\" is the thing to fix first — it'll break your morning briefing and auto-prep the same way.\n3. **Want me to prep from the May 4 transcript baseline anyway?** I can do that honestly, labeled as a 115-day-old starting point rather than current state — genuinely useful for a re-engagement call, misleading for anything else.\n\nI'd rather hand you this than a polished four-page brief that reads authoritative and is built on a calendar that can't see the future and a mail search that ignores what you ask it.",
+  "stop_reason": "end_turn",
+  "session_id": "9e2418a9-c550-4a82-bf74-7890ce952449",
+  "total_cost_usd": 1.8383749999999996,
+  "usage": {
+    "input_tokens": 4290,
+    "cache_creation_input_tokens": 100691,
+    "cache_read_input_tokens": 890214,
+    "output_tokens": 14572,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 100691,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2730,
+        "cache_read_input_tokens": 87655,
+        "cache_creation_input_tokens": 4537,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4537
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 543,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006079999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-5": {
+      "inputTokens": 4290,
+      "outputTokens": 14572,
+      "cacheReadInputTokens": 890214,
+      "cacheCreationInputTokens": 100691,
+      "webSearchRequests": 0,
+      "costUSD": 1.837767,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "6e00bd22-9ff6-4308-914e-af6ba170e08b"
+}

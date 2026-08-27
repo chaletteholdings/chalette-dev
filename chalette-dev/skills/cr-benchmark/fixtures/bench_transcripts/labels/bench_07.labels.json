@@ -44,9 +44,11 @@
       "label_id": "bench_07_c5",
       "expected_route": "observed",
       "keyphrase": "sign the SOW",
+      "rail_shadowed": true,
       "gist": "Mira to sign the datacenter vendor SOW by Thursday",
       "owner_name": "Mira Sample",
       "counterparty_name": null,
+      "due_hint": "Thursday",
       "why": "third-party promise to a vendor, relayed"
     },
     {

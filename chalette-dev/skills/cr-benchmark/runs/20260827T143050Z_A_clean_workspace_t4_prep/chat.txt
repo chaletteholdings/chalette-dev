@@ -1,0 +1,18 @@
+I stopped short of writing the prep, because there isn't an upcoming meeting to prep — and the workspace can't currently support one. Three findings:
+
+**1. Nothing on your calendar is actually upcoming.**
+Today is **2026-08-27**. The calendar connector returns events dated **May 1–7, 2026** — roughly four months in the past. It also returns the *same past events* for both the `today` and `next_7_days` windows, which means it's serving a fixed fixture set and ignoring the window entirely. So "your upcoming meeting" doesn't resolve to anything real.
+
+**2. The workspace files CLAUDE.md points to don't exist.**
+`_hq/MASTER_TRACKER.md`, `_hq/BUSINESS_CONTEXT.md`, and `_hq/PEOPLE.md` are all absent — as are the per-project `SESSION_NOTES_SAM.md` folders. `_hq/` contains only `data/`, `connectors/`, `views/`, and `.system/`. The session rule to read the tracker first had nothing to read.
+
+**3. The underlying records are placeholder, not content.**
+There *is* structured history — 206 events across commitments, decisions, and meetings, plus a 10-person / 5-org entity graph. But the substance is generic: meetings titled "Sync 1"–"Sync 10", commitments reading "Follow up on item 2", decisions reading "Chose option A for item 3." Gmail and Granola fixtures are pinned to the same May 2026 window.
+
+I could have mapped an attendee to their open items and handed you a confident-looking briefing. It would have told you Aria Sample has an open "Follow up on item 2" — formatted like intelligence, carrying none. Your own CLAUDE.md flags this roster as a synthetic fixture, and the data matches that.
+
+**To get you real prep, one of these:**
+
+- **Which meeting is actually real?** Name it or the person, and I'll pull what genuinely exists for them.
+- **Is the calendar connector meant to be live?** If it should be hitting a real calendar, the stuck-in-May window is a connector bug worth fixing before any prep is trustworthy — I can dig into `_hq/connectors/calendar_responses.json`.
+- **Should the workspace be seeded?** If the tracker and people files were expected to be there, something didn't get built or got cleared — worth knowing which before we write on top of it.

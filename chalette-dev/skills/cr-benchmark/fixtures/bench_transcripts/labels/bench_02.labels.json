@@ -65,9 +65,11 @@
       "label_id": "bench_02_c7",
       "expected_route": "observed",
       "keyphrase": "equity grants file",
+      "rail_shadowed": true,
       "gist": "Quinn to send the auditors the equity grants file by Tuesday",
       "owner_name": "Quinn Sample",
       "counterparty_name": null,
+      "due_hint": "Tuesday",
       "why": "third-party commitment to the auditors, relayed"
     }
   ],

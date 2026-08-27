@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 114303,
+  "duration_api_ms": 112060,
+  "ttft_ms": 1524,
+  "ttft_stream_ms": 818,
+  "time_to_request_ms": 36,
+  "num_turns": 15,
+  "result": "I dug through the event log and all three connectors. I can't write you a week wrap — and the reason is worth more than the wrap would have been.\n\n## Bottom line\n\nThere is nothing real in your data to summarize. The week's events exist, but they're placeholder rows, not records of anything that happened.\n\n## What the log actually contains\n\n`_hq/data/events.jsonl` has 42 events for Aug 21–27: 21 meetings, 10 commitments, 8 pack_runs, 3 person_created. Every one is templated:\n\n- Every meeting title in the entire 1,200-event log is `\"Mature sync <seq>\"` — e.g. `Mature sync 709`. 581 of them. Zero real titles.\n- Every commitment is `\"Mature item <seq>\"` — `Mature item 711`, `Mature item 714`. 291 of them. Zero real text.\n- Every event lands at exactly `09:00:00`, exactly 6 per day, 200 days straight, including all 58 weekend days.\n\nThe number in each title is just the sequence number. This is generator output.\n\n## Why \"open\" and \"slipped\" can't be answered even in principle\n\nThe commitment schema is `{kind, owner_id, text}` — all 291 of them. There is no due date, no status, no completion flag, and no closing event type anywhere in the log. Nothing can ever move from open to done. Any \"still open\" list I produced would just be every commitment ever written, and \"slipped\" would be undefined. The schema doesn't support the question.\n\n## The connectors are serving stale fixtures\n\n- **Gmail** — `newer_than:7d` returned 50 threads from **May 2026**, ~3.5 months stale. Bodies read `\"Synthetic thread body 1.\"`\n- **Calendar** — `next_7_days` returned events dated **May 1–7, 2026**, in the past.\n- **Granola** — all 12 meetings dated **2026-05-04**.\n\nNone of them know what today is.\n\n## Separate integrity problems I hit on the way\n\n1. **Corrupt rows** — `events.jsonl` lines 100–106 are bare strings: `\"seq\"`, `\"ts\"`, `\"type\"`, `\"source_skill\"`, `\"person_ids\"`, `\"org_ids\"`, `\"data\"`. A header object was written one key per line. 8 unparseable lines total.\n2. **786 future-dated events** in a file CLAUDE.md describes as an append-only log of *past* activity — running through 2026-11-17, nearly three months out.\n3. **A foreign 300-event block** on 2026-11-17, all titled `\"Nano-epoch artifact N\"`, with seq numbers around `1.77e18` (nanosecond epochs) against the normal file's 1–714. A different writer dumped into this file.\n4. **`friday_wrap` fires on a 6-day cycle, not weekly** — it ran Sunday 8/23, Monday 8/17, Tuesday 8/11, Wednesday 8/5. It has hit Friday 6 times out of 31 runs. If you've been getting these wraps, they've been arriving on arbitrary days.\n5. **`entities.json` is frozen** — `last_updated: 2026-05-01`, never touched since, even though three people were \"created\" this week per the event log.\n\n## What I'd need\n\nPoint me at the real source. If `_hq/data` is a seeded scaffold that never got wired to live capture, the fix is upstream of me. If you believe real meetings and commitments *were* being written here, then something is overwriting them with generated rows — findings 1 and 3 suggest at least two writers are fighting over this file, and that's the thing to chase first.\n\nTell me which, and I'll either wrap the real week or help track down the writer.",
+  "stop_reason": "end_turn",
+  "session_id": "6db5e7a4-0ff2-4bcf-b8d7-300b0d4835a4",
+  "total_cost_usd": 0.7297895,
+  "usage": {
+    "input_tokens": 3354,
+    "cache_creation_input_tokens": 33941,
+    "cache_read_input_tokens": 311497,
+    "output_tokens": 8690,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 33941,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2146,
+        "cache_read_input_tokens": 51569,
+        "cache_creation_input_tokens": 1797,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1797
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 536,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000611,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-5": {
+      "inputTokens": 3354,
+      "outputTokens": 8690,
+      "cacheReadInputTokens": 311497,
+      "cacheCreationInputTokens": 33941,
+      "webSearchRequests": 0,
+      "costUSD": 0.7291785000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "63cbbe73-187e-4db3-9bf8-fbcda9a81270"
+}

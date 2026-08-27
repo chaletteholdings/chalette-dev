@@ -1,0 +1,48 @@
+{
+  "run_id": "20260827T144806Z_A_mature_workspace_t4_prep",
+  "arm": "A",
+  "fixture": "mature_workspace",
+  "task": "t4_prep",
+  "model_id": "claude-opus-5",
+  "wall_ms": 197155,
+  "tokens": {
+    "input": 4290,
+    "output": 14572,
+    "cache_read": 890214,
+    "cache_creation": 100691
+  },
+  "is_error": false,
+  "timed_out": false,
+  "hallucination": {
+    "invented_person_names": {
+      "Bo Sample": 1,
+      "Mira Sample": 1,
+      "Dustin Sample": 1
+    },
+    "count": 3
+  },
+  "leaks": {
+    "hits": {
+      "substrate_path_events": {
+        "count": 1,
+        "samples": [
+          "events.jsonl"
+        ]
+      },
+      "substrate_path_hq": {
+        "count": 2,
+        "samples": [
+          "_hq/data",
+          "_hq/data"
+        ]
+      }
+    },
+    "count": 3
+  },
+  "event_validity": {
+    "events": 0,
+    "invalid": 0,
+    "errors": []
+  },
+  "metric_validity_note": "hallucination and entity metrics are clean-roster-bound and N/A on this fixture pending per-fixture transcript binding; extraction, routing, leaks, event validity, and cost are valid"
+}

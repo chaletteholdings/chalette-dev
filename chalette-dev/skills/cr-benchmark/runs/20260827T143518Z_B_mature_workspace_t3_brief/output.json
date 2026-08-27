@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 27465,
+  "duration_api_ms": 25523,
+  "ttft_ms": 1689,
+  "ttft_stream_ms": 945,
+  "time_to_request_ms": 38,
+  "num_turns": 6,
+  "result": "I pulled both sources, but I can't give you a real brief — **the data coming back is placeholder/test data, not your actual calendar and inbox.** Here's the evidence:\n\n**Calendar** — I asked for `today` (2026-08-27). It returned 5 events titled \"Sync 1\" through \"Sync 5\", dated **May 1–5, 2026** — nearly four months ago, and not today at all. Attendees are `aria.sample1@example.com`, `bo.stone2@example.com`, etc.\n\n**Email** — I searched `newer_than:3d`. It returned 50 threads titled \"Re: item 1\" … \"Re: item 50\", every snippet reading literally \"Synthetic thread body N\", all timestamped **May 1–14, 2026**.\n\n**Workspace files** — same pattern. `entities.json` has 80 people who are 8 names (Aria Sample, Bo Stone, Bowie Sample, Dustin Stone, Lyra Sample, Mira Stone, Quinn Sample, Rio Stone, Sam Sample, Skyler Stone) cycled repeatedly across 20 generically-named orgs. `events.jsonl` has 1,508 entries titled \"Mature sync 1\", \"Mature item 3\", and at the tail, \"Nano-epoch artifact 297\" with sequence numbers like `1770000000297000000` — a synthetic counter, not a real log. Those tail entries are also dated **2026-11-17**, three months in the *future*.\n\nSo there's nothing here I can honestly summarize. Fabricating a plausible-sounding brief from \"Sync 3\" and \"Synthetic thread body 12\" would be worse than useless — you'd walk into your day trusting it.\n\nTwo likely causes worth checking:\n\n1. **The MCP connectors are pointed at a fixture/demo backend** rather than your real Google account. The date mismatch is the tell: a live calendar cannot return May events for a \"today\" query. Re-authenticating the `calendar` and `gmail` MCP servers against your actual account is the first thing I'd try.\n2. **The `_hq/data` files were seeded by a generator and never populated with real data.** `last_writer` is `workspace-manager` and `last_updated` is 2026-05-01 across all three files — they look untouched since scaffolding.\n\nWant me to dig into the MCP server config to see what these connectors are actually pointed at? Or if you know this is a sandbox and real credentials live elsewhere, tell me where and I'll re-run the brief against them.",
+  "stop_reason": "end_turn",
+  "session_id": "75ab5ee9-a4bb-484f-9f6e-b39dbcea18b2",
+  "total_cost_usd": 0.5370455,
+  "usage": {
+    "input_tokens": 3215,
+    "cache_creation_input_tokens": 40329,
+    "cache_read_input_tokens": 154865,
+    "output_tokens": 1586,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 40329,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 874,
+        "cache_read_input_tokens": 58096,
+        "cache_creation_input_tokens": 1664,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1664
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 533,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000598,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-5": {
+      "inputTokens": 3215,
+      "outputTokens": 1586,
+      "cacheReadInputTokens": 154865,
+      "cacheCreationInputTokens": 40329,
+      "webSearchRequests": 0,
+      "costUSD": 0.5364475,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "ccda1f43-9d4d-42b4-903a-7f492c050431"
+}

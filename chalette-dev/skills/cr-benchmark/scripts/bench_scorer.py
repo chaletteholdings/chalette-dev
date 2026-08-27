@@ -486,6 +486,15 @@ def score_run(run_dir: Path, labels: list[dict], patterns: dict[str, str],
     validity = score_event_validity(run, cr1)
     if validity is not None:
         card["event_validity"] = validity
+    if meta["fixture"] != "clean_workspace":
+        # The transcript set (labels + attendee names) binds to the
+        # clean_workspace roster; other fixtures use different name/surname
+        # assignments (e.g. mature has Bo Stone, not Bo Sample), so
+        # name-keyed metrics score against the wrong roster there.
+        card["metric_validity_note"] = (
+            "hallucination and entity metrics are clean-roster-bound and "
+            "N/A on this fixture pending per-fixture transcript binding; "
+            "extraction, routing, leaks, event validity, and cost are valid")
     (run_dir / "scorecard.json").write_text(
         json.dumps(card, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return card
@@ -517,9 +526,13 @@ def scoreboard_md(cards: list[dict]) -> str:
         if ev and ev["events"]:
             notes.append(f"evValid={ev['events'] - ev['invalid']}/{ev['events']}")
         tok = (c.get("tokens") or {}).get("output")
+        halluc = str(c["hallucination"]["count"])
+        if c.get("metric_validity_note"):
+            halluc += "*"
+            notes.append("*name-keyed metrics N/A on this fixture (clean-roster-bound labels)")
         lines.append(f"| {c['run_id']} | {c['arm']} | {c['task']} | "
                      f"{(c.get('wall_ms') or 0) / 1000:.0f} | {tok} | "
-                     f"{c['leaks']['count']} | {c['hallucination']['count']} | "
+                     f"{c['leaks']['count']} | {halluc} | "
                      f"{'; '.join(notes)} |")
     lines.append("")
     return "\n".join(lines)

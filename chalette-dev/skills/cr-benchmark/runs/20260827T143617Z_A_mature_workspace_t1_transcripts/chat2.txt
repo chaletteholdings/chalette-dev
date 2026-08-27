@@ -1,0 +1,26 @@
+Done — all 45 logged, plus the 4 set-aside items. Verified after the write.
+
+**What landed** — 49 events, seq 1201–1249, written through the locked batch appender in one call:
+
+- **45 open commitments** — 41 promises, 4 scheduling. 43 are overdue, 2 undated.
+- **4 set aside** as `commitment_observed` — the third-party items with no date, kept searchable and promotable but not asking for attention.
+- Every one carries a minted id, `origin: connector`, and `source_ref: granola:bench_NN`, so a re-scan won't duplicate them.
+- Backup of the pre-write file is in the scratchpad if you want to roll back.
+
+**Three things I did not do silently:**
+
+**1. I didn't invent owner ids.** Only your 17 resolve to a real person (`person_009`). The other 28 carry the name as free-text — `owner_external: "Bo"`, `"Mira"`, etc. — because guessing between five identical "Aria Sample" records would have put false precision in your ledger. Those 28 are flagged for your review, so **30 items sit in your unconfirmed bucket** (28 unresolved owners + 3 hedged promises, one item being both). They're logged and readable; they just don't have a person attached yet.
+
+**2. The gate caught two defects in my own draft before they landed.** I had classified "approve the maintenance window request" as a self-owned task, but Dustin was waiting on it — the CTS1 check flagged it and I moved it to a promise. And my first test run silently skipped the event gate entirely because I'd named the temp file `test_events.jsonl` instead of `events.jsonl`; the helper only gates files with the exact name. Re-ran properly.
+
+**3. Thread stamps are null.** The gate warned these will be invisible to any daily surface that filters on `primary_thread_id`. I checked rather than assumed: the open-commitment loader reads all 45 fine, so nothing is lost — but project-scoped views won't show them. Your existing 291 commitments are in the same state, which is likely why your commitments surfaces looked empty in the first place.
+
+**Still no widget.** `show_widget` isn't connected in this session, so this is text and has no one-tap done/defer actions.
+
+**On the corruption** — I left it alone. It's Bug #68 in `atomic_write.py`: a writer passed a bare dict, so the loop iterated the dict's *keys* and wrote each as its own line. The helper now guards against it, and my append preserved lines 100–107 byte-for-byte. Readers skip them defensively and say so. Fixing it means either an amnesty repair pass or accepting one permanently lost event — append-only doctrine says don't rewrite history casually.
+
+Three things worth your call:
+
+1. **Sample vs. Stone** — if "Bo Sample" in the transcript is "Bo Stone" at Northstar, tell me and I'll add the aliases. That plus a rule for picking among the duplicate records would let me attach owners to all 28 via reassignment events.
+2. **Your roster has 80 people cycling 10 names across 20 orgs.** Is that real, or duplicated fixture data? If it's duplication, deduping entities first makes every future scan cleaner.
+3. **Want the 12 meetings mapped to projects?** Ops standup → Platform Migration, Vendor contract call → Vendor Consolidation, and so on. That would make these visible in project views — but `_hq/MASTER_TRACKER.md` doesn't exist, so I'd need you to confirm the mapping.

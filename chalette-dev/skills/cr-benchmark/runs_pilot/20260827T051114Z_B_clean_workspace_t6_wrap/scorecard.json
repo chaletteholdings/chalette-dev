@@ -1,0 +1,37 @@
+{
+  "run_id": "20260827T051114Z_B_clean_workspace_t6_wrap",
+  "arm": "B",
+  "fixture": "clean_workspace",
+  "task": "t6_wrap",
+  "model_id": "claude-opus-4-8",
+  "wall_ms": 63594,
+  "tokens": {
+    "input": 3409,
+    "output": 3355,
+    "cache_read": 189606,
+    "cache_creation": 88930
+  },
+  "is_error": false,
+  "timed_out": false,
+  "hallucination": {
+    "invented_person_names": {},
+    "count": 0
+  },
+  "leaks": {
+    "hits": {
+      "substrate_path_events": {
+        "count": 2,
+        "samples": [
+          "events.jsonl",
+          "events.jsonl"
+        ]
+      }
+    },
+    "count": 2
+  },
+  "event_validity": {
+    "events": 0,
+    "invalid": 0,
+    "errors": []
+  }
+}

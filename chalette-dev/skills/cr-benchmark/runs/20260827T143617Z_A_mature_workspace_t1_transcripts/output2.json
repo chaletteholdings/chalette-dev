@@ -1,0 +1,62 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 229460,
+  "duration_api_ms": 222791,
+  "ttft_ms": 21353,
+  "ttft_stream_ms": 870,
+  "time_to_request_ms": 79,
+  "num_turns": 18,
+  "result": "Done — all 45 logged, plus the 4 set-aside items. Verified after the write.\n\n**What landed** — 49 events, seq 1201–1249, written through the locked batch appender in one call:\n\n- **45 open commitments** — 41 promises, 4 scheduling. 43 are overdue, 2 undated.\n- **4 set aside** as `commitment_observed` — the third-party items with no date, kept searchable and promotable but not asking for attention.\n- Every one carries a minted id, `origin: connector`, and `source_ref: granola:bench_NN`, so a re-scan won't duplicate them.\n- Backup of the pre-write file is in the scratchpad if you want to roll back.\n\n**Three things I did not do silently:**\n\n**1. I didn't invent owner ids.** Only your 17 resolve to a real person (`person_009`). The other 28 carry the name as free-text — `owner_external: \"Bo\"`, `\"Mira\"`, etc. — because guessing between five identical \"Aria Sample\" records would have put false precision in your ledger. Those 28 are flagged for your review, so **30 items sit in your unconfirmed bucket** (28 unresolved owners + 3 hedged promises, one item being both). They're logged and readable; they just don't have a person attached yet.\n\n**2. The gate caught two defects in my own draft before they landed.** I had classified \"approve the maintenance window request\" as a self-owned task, but Dustin was waiting on it — the CTS1 check flagged it and I moved it to a promise. And my first test run silently skipped the event gate entirely because I'd named the temp file `test_events.jsonl` instead of `events.jsonl`; the helper only gates files with the exact name. Re-ran properly.\n\n**3. Thread stamps are null.** The gate warned these will be invisible to any daily surface that filters on `primary_thread_id`. I checked rather than assumed: the open-commitment loader reads all 45 fine, so nothing is lost — but project-scoped views won't show them. Your existing 291 commitments are in the same state, which is likely why your commitments surfaces looked empty in the first place.\n\n**Still no widget.** `show_widget` isn't connected in this session, so this is text and has no one-tap done/defer actions.\n\n**On the corruption** — I left it alone. It's Bug #68 in `atomic_write.py`: a writer passed a bare dict, so the loop iterated the dict's *keys* and wrote each as its own line. The helper now guards against it, and my append preserved lines 100–107 byte-for-byte. Readers skip them defensively and say so. Fixing it means either an amnesty repair pass or accepting one permanently lost event — append-only doctrine says don't rewrite history casually.\n\nThree things worth your call:\n\n1. **Sample vs. Stone** — if \"Bo Sample\" in the transcript is \"Bo Stone\" at Northstar, tell me and I'll add the aliases. That plus a rule for picking among the duplicate records would let me attach owners to all 28 via reassignment events.\n2. **Your roster has 80 people cycling 10 names across 20 orgs.** Is that real, or duplicated fixture data? If it's duplication, deduping entities first makes every future scan cleaner.\n3. **Want the 12 meetings mapped to projects?** Ops standup → Platform Migration, Vendor contract call → Vendor Consolidation, and so on. That would make these visible in project views — but `_hq/MASTER_TRACKER.md` doesn't exist, so I'd need you to confirm the mapping.",
+  "stop_reason": "end_turn",
+  "session_id": "cf094f91-3fe3-4fec-b25b-9faaa556a69d",
+  "total_cost_usd": 1.7708595000000003,
+  "usage": {
+    "input_tokens": 292,
+    "cache_creation_input_tokens": 30132,
+    "cache_read_input_tokens": 2039609,
+    "output_tokens": 17931,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 30132,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1573,
+        "cache_read_input_tokens": 131830,
+        "cache_creation_input_tokens": 919,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 919
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-opus-5": {
+      "inputTokens": 292,
+      "outputTokens": 17931,
+      "cacheReadInputTokens": 2039609,
+      "cacheCreationInputTokens": 30132,
+      "webSearchRequests": 0,
+      "costUSD": 1.7708595000000003,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "f61c19be-73f4-40b9-9375-f00752f44d2b"
+}

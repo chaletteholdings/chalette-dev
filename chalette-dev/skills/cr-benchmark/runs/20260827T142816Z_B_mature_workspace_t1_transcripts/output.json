@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 101177,
+  "duration_api_ms": 100109,
+  "ttft_ms": 1443,
+  "ttft_stream_ms": 1211,
+  "time_to_request_ms": 38,
+  "num_turns": 15,
+  "result": "All 12 transcripts pulled. One thing up front: **every meeting is dated 2026-05-04 (a Monday), but today is 2026-08-27** — these are ~16 weeks old, so all the deadlines below have long passed. I've resolved relative dates (\"Tuesday\", \"tomorrow\") against the meeting date.\n\n## Firm commitments — 36 total\n\n### Sam (you) — 15\n| Owes what | To whom | By when | Source |\n|---|---|---|---|\n| Wire instructions | Counsel | Mon May 4 (same day) | Data room walkthrough |\n| Call Acme Co COO re: outage | Acme Co | Mon May 4, before 5pm | Customer escalation |\n| Approve maintenance window request | Dustin / Bowie | Mon May 4, afternoon | Ops standup |\n| Offer template | Quinn | Mon May 4, that night | Hiring slate |\n| Escalation contact sheet | Mira | Mon May 4, that night | Customer escalation |\n| Revised pricing sheet (Acme renewal) | Bo | Tue May 5 | Pipeline sync |\n| Data room checklist | Bo + Quinn | Tue May 5 | Fundraise check-in |\n| Updated cap table | Counsel | Wed May 6 | Data room walkthrough |\n| Vendor comparison matrix | Rio | Thu May 7 | Vendor contract call |\n| Roadmap doc | Dustin | Before Thu May 7 walkthrough | Calendar chatter |\n| Intro to Cedar Works finance lead | Bo | Week of May 4 | Pipeline sync |\n| Board deck draft | Quinn (for hiring-slide check) | Fri May 8 | Board prep |\n| Planning template + last quarter's scorecard | Aria | Fri May 8, EOD | Quarterly planning |\n| Async Q&A video (all-hands leftovers) | Whole team | Week of May 4 | All-hands recap |\n| Follow up with exec sponsor | Northstar Partners | Week of May 11 | Partner renewal |\n\n### Mira — 5\n| Owes what | To whom | By when |\n|---|---|---|\n| Book board dinner | — (logistics) | Wed May 6 night |\n| Q2 revenue numbers | Sam | Thu May 7 |\n| Incident postmortem, in writing | Acme Co team | Thu May 7 |\n| Sign the SOW | Datacenter vendor | Thu May 7 |\n| Publish OKR tracker | Whole team | Mon May 11 |\n\n### Bowie — 5\n| Owes what | To whom | By when |\n|---|---|---|\n| Open questions doc from all-hands | Sam | Tue May 5 |\n| Corrected data feed | Northstar team | Fri May 8 |\n| Security questionnaire | Lyra | Fri May 8 (end of week) |\n| Cutover runbook | Ops team | Fri May 8 |\n| Walk team through the runbook | Ops team | Mon May 11 |\n| Updated contact list | Network vendor | **no deadline** |\n\n### Quinn — 4\n| Owes what | To whom | By when |\n|---|---|---|\n| Equity grants file | Auditors | Tue May 5 |\n| Update financial model w/ May actuals | Bo / Sam | Wed May 6 |\n| Schedule panel interviews for both finalists | Candidates | Week of May 4 (\"calendars permitting\") |\n| Escalation training session | Support leads | Week of May 11 |\n| Tools walkthrough | Interns | **no session picked** |\n\n### Aria — 3\n| Owes what | To whom | By when |\n|---|---|---|\n| Post data-role job description | — | Tue May 5, morning |\n| Renewal terms | Northstar Partners | Mon May 11 |\n| Circulate kickoff agenda | Planning attendees | Mon May 11 |\n| Walk through reporting portal | Northstar team | **committed, no day picked** |\n\n### Dustin — 3\n| Owes what | To whom | By when |\n|---|---|---|\n| Book Thursday roadmap slot | Sam | Immediately after the call |\n| Signed services contract (for countersign) | Lyra | Tue May 5 |\n| Server inventory list | Ops team | Wed May 6 |\n| Intro to Cedar Works ops lead | Lyra | **no date** |\n\n### Bo — 3\n| Owes what | To whom | By when |\n|---|---|---|\n| Acme usage report | Sam | Fri May 8 |\n| Close out budget template | Finance | Fri May 8 |\n| Schedule partner-meeting prep call (30 min) | Sam + Quinn | For Mon May 11 morning |\n\n### Rio — 3\n| Owes what | To whom | By when |\n|---|---|---|\n| Process service credit | Acme account manager | Week of May 4 |\n| Legal review of SAFE docs | Bo / Sam | Before the partner meeting |\n| Cancel old vendor account | — | Before May 31 |\n\n### Lyra — 1\n| Owes what | To whom | By when |\n|---|---|---|\n| Partner health dashboard link | Sam | Mon May 4, that night |\n\n## Hedged — stated as intent, not commitment (7)\n\nThese all came with explicit escape hatches. I'd track them separately rather than as owed work:\n\n- **Sam** → customer case study draft before the Acme renewal — *\"might be able to, no promises\"*\n- **Sam** → board pre-read memo ahead of the deck, aiming Wed May 6 — *\"I should be able to... I'll try for\"*\n- **Sam** → exec summary to Acme's CEO, week of May 4 — *\"travel permitting\"*\n- **Aria** → panel scoring rubric draft — *\"I guess I can take a stab\"*, no date\n- **Aria** → collect department pre-reads before kickoff — *\"might try, if the leads cooperate\"*\n- **Quinn** → cohort analysis before the partner meeting — *\"depends on the data pull\"*\n- **Bo** → investor FAQ — *\"could probably, if the inbound keeps up\"*\n\n## Deliberately not commitments\n\n- **Dropped:** Sam's diligence-folder export — Bo corrected mid-meeting that the shared-drive export already covers the historicals. Superseded, don't chase it.\n- **Parked with no owner:** customer comms before cutover. Dustin said \"we'll get it drafted at some point\"; you replied *\"that's not an owner. park it.\"* Still unowned — this is the one real gap I'd revisit.\n- **Already done, mentioned only as status:** Rio's W-9, Rio clicking through the vendor portal invite, Bo renaming the June diligence folder, Bo refreshing the pitch deck, Aria pinging the recruiter, the printer fix.\n- **Someday pile (~20 items)** — onboarding flow redesign, cleaner dashboard, customer-logo slide, churn narrative, vendor consolidation, comp bands, referral bonus, coffee with Skyler Stone, Category Company bundle, partner-reporting automation, backup vendor, zero-downtime, SLA tiers, one-week planning, chief of staff, narrative workshop, team lunch, Bluebird Group visit, conference room screen, four-day week, snacks. Plus the brand redo, which you explicitly killed, and the spring offsite, which is conditional on hitting the number.\n\n## Two things worth a second look\n\n1. **Undated but real** — five commitments have an owner and a clear deliverable but no date: Bowie→network vendor contact list, Dustin→Lyra Cedar Works intro, Aria→Northstar portal walkthrough, Quinn→interns tools walkthrough, Aria's scoring rubric. These are the ones that quietly rot.\n2. **Transcript glitch in Customer escalation** — you told Mira to reach you \"through mira.sample7@example.com threads,\" and she pointed out that's her own address. No action item, but the fallback channel you meant to give her never actually got communicated.\n\nWant me to append these to `_hq/data/events.jsonl`, or write them out as a standalone tracker file?",
+  "stop_reason": "end_turn",
+  "session_id": "32547ef9-df16-4652-8c5c-3b6773347408",
+  "total_cost_usd": 0.49045250000000007,
+  "usage": {
+    "input_tokens": 3346,
+    "cache_creation_input_tokens": 16649,
+    "cache_read_input_tokens": 133909,
+    "output_tokens": 9586,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 16649,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 8614,
+        "cache_read_input_tokens": 32669,
+        "cache_creation_input_tokens": 3382,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3382
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 553,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000628,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-5": {
+      "inputTokens": 3346,
+      "outputTokens": 9586,
+      "cacheReadInputTokens": 133909,
+      "cacheCreationInputTokens": 16649,
+      "webSearchRequests": 0,
+      "costUSD": 0.4898245,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "b0789c75-cd0d-42f0-8cbe-f919649c5c74"
+}

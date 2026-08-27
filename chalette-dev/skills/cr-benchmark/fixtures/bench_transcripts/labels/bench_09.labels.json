@@ -52,9 +52,11 @@
       "label_id": "bench_09_c6",
       "expected_route": "observed",
       "keyphrase": "budget template",
+      "rail_shadowed": true,
       "gist": "Bo to close out the budget template with finance by Friday",
       "owner_name": "Bo Sample",
       "counterparty_name": null,
+      "due_hint": "Friday",
       "why": "third-party commitment to finance, relayed"
     }
   ],

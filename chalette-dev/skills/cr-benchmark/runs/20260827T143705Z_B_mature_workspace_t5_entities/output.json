@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 146390,
+  "duration_api_ms": 141783,
+  "ttft_ms": 1637,
+  "ttft_stream_ms": 833,
+  "time_to_request_ms": 33,
+  "num_turns": 16,
+  "result": "I dug into all three files, and I have to give you an answer you won't like: **I can't answer any of these, because `_hq/data/` is generated placeholder data, not a real record of your world.**\n\nI'd rather tell you that than hand you a confident-sounding briefing built on nothing. Here's what I found:\n\n**The content is auto-generated filler.** All 881 meetings are titled `Mature sync 86`, `Mature sync 166`, `Nano-epoch artifact 6`… and all 291 commitments are `Mature item 246`. Every single one. There is no real subject matter anywhere in the log.\n\n**Names don't identify anyone.** There are exactly 10 distinct names in the roster, each duplicated across **8 separate person IDs** with different emails and different employers:\n\n- \"Quinn Sample\" → `person_007` (Ivory Systems), `person_017` (Summit Works), `person_027`, `_037`, `_047`, `_057`, `_067`, `_077`\n- \"Mira Stone\" → 8 records, split between Harbor Labs and Ridgeline Co\n- \"Skyler Stone\" → 8 records, split between Lantern Group and Wayfare Co\n\nSo \"who is Mira\" has eight equally valid answers. For the record, \"Sam Sample\" is duplicated 8× too.\n\n**Nothing can be \"open.\"** Commitments have only `kind`, `text`, and `owner_id` — no status, no due date — and there's no completion event type in the schema. There's no mechanism by which anything could be open or closed.\n\n**\"Together\" isn't representable.** Every event has exactly one participant (1,281 events with one `person_id`, 219 with none). The log contains no shared meeting between any two people, ever — so there's no \"you and Mira\" to report.\n\n**The timeline is broken.** 300 events (20% of the file) are stamped `2026-11-17` — three months from now — with sequence numbers like `1.77e18`, which is a nanosecond epoch timestamp jammed into a `seq` field. And `person_created` events land *after* meetings that person supposedly attended.\n\nTwo smaller things worth fixing regardless: `events.jsonl` lines 100–107 are corrupt (one record pretty-printed across 8 lines, so it fails to parse), and `aliases.json` maps only 50 of the 80 people in `entities.json`.\n\nTo your literal question \"do we know anyone named Skyler?\" — the name appears, 8 times, exactly like every other name. That's a property of the generator, not evidence you know a Skyler.\n\nI've noted this in memory so I don't re-derive it next session. If there's a real data source that should be feeding this — a calendar, CRM export, meeting-notes pipeline — point me at it and I'll load it properly. If you expected this store to already be real, then the ingestion never ran and that's the actual bug to chase.",
+  "stop_reason": "end_turn",
+  "session_id": "b2c5ca25-ccb9-4dfe-8d22-a34ca399291d",
+  "total_cost_usd": 0.8938424999999999,
+  "usage": {
+    "input_tokens": 3368,
+    "cache_creation_input_tokens": 31003,
+    "cache_read_input_tokens": 624275,
+    "output_tokens": 10168,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 31003,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 930,
+        "cache_read_input_tokens": 52611,
+        "cache_creation_input_tokens": 280,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 280
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 555,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000635,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-5": {
+      "inputTokens": 3368,
+      "outputTokens": 10168,
+      "cacheReadInputTokens": 624275,
+      "cacheCreationInputTokens": 31003,
+      "webSearchRequests": 0,
+      "costUSD": 0.8932074999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "cbb685fd-6608-4dd0-a283-26896f69e290"
+}

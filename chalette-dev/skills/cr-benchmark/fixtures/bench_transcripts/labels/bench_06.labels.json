@@ -13,18 +13,22 @@
       "label_id": "bench_06_c1",
       "expected_route": "observed",
       "keyphrase": "renewal terms on Monday",
+      "rail_shadowed": true,
       "gist": "Aria to send Northstar the renewal terms on Monday",
       "owner_name": "Aria Sample",
       "counterparty_name": null,
+      "due_hint": "Monday",
       "why": "third-party to external org"
     },
     {
       "label_id": "bench_06_c2",
       "expected_route": "observed",
       "keyphrase": "corrected data feed",
+      "rail_shadowed": true,
       "gist": "Bowie to get Northstar the corrected data feed by Friday",
       "owner_name": "Bowie Sample",
       "counterparty_name": null,
+      "due_hint": "Friday",
       "why": "third-party to external org"
     },
     {

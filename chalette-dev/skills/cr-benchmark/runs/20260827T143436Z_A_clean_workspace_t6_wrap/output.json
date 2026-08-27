@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 85413,
+  "duration_api_ms": 82406,
+  "ttft_ms": 1589,
+  "ttft_stream_ms": 844,
+  "time_to_request_ms": 39,
+  "num_turns": 16,
+  "result": "## There is no week to wrap — the workspace stopped receiving data on 2026-05-30\n\nI checked before concluding that. Every source came back empty for the last 7 days (Aug 20–27):\n\n| Source | Most recent item |\n|---|---|\n| Event log (`events.jsonl`) | **2026-05-30** — 206 events, none after |\n| Granola | 12 meetings, all dated **2026-05-04** |\n| Calendar | 5 events, **2026-05-01 → 05-05** |\n| Gmail | 20 threads, **2026-05-01 → 05-14** |\n\nEvery one of the 298 dated records in the workspace falls in May 2026. Nothing is 89 days quiet by coincidence.\n\n**The connectors look misconfigured, not idle.** I queried Gmail with `newer_than:7d` and it returned May threads anyway — the query filter isn't being honored, so it's serving a fixed stale set. Calendar's \"today\" window does the same. That's a wiring problem to fix before any recap is meaningful; a \"quiet week\" would show empty results, not old ones.\n\nI did **not** write the usual recap `.docx`. An Aug 27-dated artifact would assert I'd covered a week I couldn't see, and it'd log a receipt saying everything before now is handled — which would bury this gap instead of surfacing it.\n\n## What's actually on file (as of 2026-05-30, not this week)\n\n- **34 commitments still open** — 40 logged, 6 closed on May 30. Split evenly: **Bowie Sample** owns 17, **Rio Sample** owns 17.\n- **Zero commitments are yours.** Across all 40, not one has you as owner. For a CEO three months into a Series A raise, that's either a capture gap or a real delegation picture worth knowing about.\n- **Last active week (May 24–30):** 46 events — 8 meetings, 8 decisions, 8 commitments, 8 drafts.\n- **All three projects were live and evenly weighted:** Board Cadence 14 meetings, Series A Raise 13, Hiring Slate 13.\n\n## Also missing\n\n`CLAUDE.md` points at files that aren't here: `_hq/MASTER_TRACKER.md`, `_hq/PEOPLE.md`, `_hq/BUSINESS_CONTEXT.md`, and the per-project `SESSION_NOTES_SAM.md` files. `_hq/views/` is empty. So the tracker's \"Next Action\" column can't be checked either — that's why I can't tell you what slipped in the sense you meant.\n\n## What I'd do\n\n1. **Reconnect Gmail / Calendar / Granola** — that's the blocker; everything else is downstream of it.\n2. Once they're live, re-run this and you'll get a real recap.\n3. In the meantime, want me to recap **the week of May 24–30** properly, labeled as the last active week? It has real content (46 events). Say the word and I'll run it on that window.\n\nOne thing worth your call now regardless of connectors: **do those 34 open commitments reflect reality, or did capture stop before your own items got logged?** If it's the latter, the whole open-items picture is understating what you owe.",
+  "stop_reason": "end_turn",
+  "session_id": "4eb5a319-ec02-4116-8482-2c2dcadc6b38",
+  "total_cost_usd": 1.6470775,
+  "usage": {
+    "input_tokens": 4151,
+    "cache_creation_input_tokens": 123207,
+    "cache_read_input_tokens": 501743,
+    "output_tokens": 5711,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 123207,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1621,
+        "cache_read_input_tokens": 85121,
+        "cache_creation_input_tokens": 1577,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1577
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 536,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000606,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-5": {
+      "inputTokens": 4151,
+      "outputTokens": 5711,
+      "cacheReadInputTokens": 501743,
+      "cacheCreationInputTokens": 123207,
+      "webSearchRequests": 0,
+      "costUSD": 1.6464715,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "7fa5d349-5707-434c-9da5-04bc5a6357b8"
+}

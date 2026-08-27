@@ -13,18 +13,22 @@
       "label_id": "bench_03_c1",
       "expected_route": "observed",
       "keyphrase": "signed services contract",
+      "rail_shadowed": true,
       "gist": "Dustin to send the signed services contract to Lyra",
       "owner_name": "Dustin Sample",
       "counterparty_name": "Lyra Sample",
+      "due_hint": "tomorrow",
       "why": "third-party to third-party; workspace owner not a party"
     },
     {
       "label_id": "bench_03_c2",
       "expected_route": "observed",
       "keyphrase": "security questionnaire",
+      "rail_shadowed": true,
       "gist": "Bowie owes Lyra the security questionnaire by end of week",
       "owner_name": "Bowie Sample",
       "counterparty_name": "Lyra Sample",
+      "due_hint": "end of week",
       "why": "third-party to third-party"
     },
     {

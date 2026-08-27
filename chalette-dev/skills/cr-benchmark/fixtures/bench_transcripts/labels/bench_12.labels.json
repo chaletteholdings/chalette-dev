@@ -14,18 +14,22 @@
       "label_id": "bench_12_c1",
       "expected_route": "observed",
       "keyphrase": "OKR tracker",
+      "rail_shadowed": true,
       "gist": "Mira to publish the OKR tracker to the team by Monday",
       "owner_name": "Mira Sample",
       "counterparty_name": null,
+      "due_hint": "Monday",
       "why": "third-party commitment to the team, relayed"
     },
     {
       "label_id": "bench_12_c2",
       "expected_route": "observed",
       "keyphrase": "escalation training",
+      "rail_shadowed": true,
       "gist": "Quinn to deliver the escalation training session next week",
       "owner_name": "Quinn Sample",
       "counterparty_name": null,
+      "due_hint": "next week",
       "why": "third-party commitment to support leads, relayed"
     },
     {

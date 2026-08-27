@@ -1,0 +1,35 @@
+## There is no week to wrap — the workspace stopped receiving data on 2026-05-30
+
+I checked before concluding that. Every source came back empty for the last 7 days (Aug 20–27):
+
+| Source | Most recent item |
+|---|---|
+| Event log (`events.jsonl`) | **2026-05-30** — 206 events, none after |
+| Granola | 12 meetings, all dated **2026-05-04** |
+| Calendar | 5 events, **2026-05-01 → 05-05** |
+| Gmail | 20 threads, **2026-05-01 → 05-14** |
+
+Every one of the 298 dated records in the workspace falls in May 2026. Nothing is 89 days quiet by coincidence.
+
+**The connectors look misconfigured, not idle.** I queried Gmail with `newer_than:7d` and it returned May threads anyway — the query filter isn't being honored, so it's serving a fixed stale set. Calendar's "today" window does the same. That's a wiring problem to fix before any recap is meaningful; a "quiet week" would show empty results, not old ones.
+
+I did **not** write the usual recap `.docx`. An Aug 27-dated artifact would assert I'd covered a week I couldn't see, and it'd log a receipt saying everything before now is handled — which would bury this gap instead of surfacing it.
+
+## What's actually on file (as of 2026-05-30, not this week)
+
+- **34 commitments still open** — 40 logged, 6 closed on May 30. Split evenly: **Bowie Sample** owns 17, **Rio Sample** owns 17.
+- **Zero commitments are yours.** Across all 40, not one has you as owner. For a CEO three months into a Series A raise, that's either a capture gap or a real delegation picture worth knowing about.
+- **Last active week (May 24–30):** 46 events — 8 meetings, 8 decisions, 8 commitments, 8 drafts.
+- **All three projects were live and evenly weighted:** Board Cadence 14 meetings, Series A Raise 13, Hiring Slate 13.
+
+## Also missing
+
+`CLAUDE.md` points at files that aren't here: `_hq/MASTER_TRACKER.md`, `_hq/PEOPLE.md`, `_hq/BUSINESS_CONTEXT.md`, and the per-project `SESSION_NOTES_SAM.md` files. `_hq/views/` is empty. So the tracker's "Next Action" column can't be checked either — that's why I can't tell you what slipped in the sense you meant.
+
+## What I'd do
+
+1. **Reconnect Gmail / Calendar / Granola** — that's the blocker; everything else is downstream of it.
+2. Once they're live, re-run this and you'll get a real recap.
+3. In the meantime, want me to recap **the week of May 24–30** properly, labeled as the last active week? It has real content (46 events). Say the word and I'll run it on that window.
+
+One thing worth your call now regardless of connectors: **do those 34 open commitments reflect reality, or did capture stop before your own items got logged?** If it's the latter, the whole open-items picture is understating what you owe.

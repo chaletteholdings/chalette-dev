@@ -1,0 +1,30 @@
+I can't prep you for it, because there is no upcoming meeting in this data — and the deeper problem is that none of these sources are live. They're all serving synthetic fixture data.
+
+## The contradiction
+
+I asked the calendar for **today** (2026-08-27). It returned five events dated **May 1–5, 2026** — roughly four months in the past. `next_7_days` returned 30 events, every one dated May 1–7. There are **zero events in the actual next seven days**.
+
+A "today" query returning May dates in August isn't a stale entry or two. The tool isn't reading a real calendar.
+
+## Why I'm confident it's fixture data
+
+Every source agrees, and each one fails a different way:
+
+- **All 160 email addresses are `@example.com`** — RFC 2606 reserved. That domain is specifically set aside so it can never receive mail.
+- **All 100 people** are `<First> Sample` or `<First> Stone` (Aria Sample, Bo Stone…). Orgs include "Acme Co" and, literally, **"Category Company"**.
+- **Gmail**: I searched `newer_than:14d`. It returned threads timestamped **May 2026**, subjects `"Re: item 1"…"Re: item 50"`, bodies reading `"Synthetic thread body 1."` The filter was ignored and the content is self-labeled.
+- **Granola**: doc ids `bench_01`…`bench_12`, all 12 meetings on the *same* date (2026-05-04), all exactly 30m.
+- **`events.jsonl`** (1,508 records): only two title templates ever occur — `"Mature sync N"` and `"Nano-epoch artifact N"`. Every commitment is `"Mature item N"`. Exactly 6 events/day at exactly `09:00:00`, mechanically, through November 2026.
+
+Note also that "Sam Sample" — you, per `CLAUDE.md` — exists *inside* the fixture set as `sam.sample9@example.com`, listed as an attendee of syncs rather than their owner. The persona is part of the generated data.
+
+## What I'd need
+
+Writing you a briefing here would mean inventing the attendee, the history, and the open items — the underlying records contain no real content to draw on. `"Mature item 3"` has no substance to summarize.
+
+Two ways forward:
+
+1. **If the integrations should be live** — the calendar, Gmail, and Granola MCP servers appear pointed at a test dataset. Worth checking which account/config they're bound to; the `newer_than:14d` filter being silently ignored suggests a mock server, not a misconfigured real one.
+2. **If you just want the prep** — tell me who you're meeting and roughly when, and I'll pull what's actually available. Or paste the invite.
+
+For reference, the briefing I'd build once there's real data: who they are and last contact, open commitments in both directions (with ages), the live thread state, and the two or three things likely to come up that you'd want an answer ready for.

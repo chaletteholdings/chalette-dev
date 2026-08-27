@@ -1,0 +1,92 @@
+I pulled all 12 transcripts and extracted the commitments. Three things to flag up front, then the list.
+
+**The widget rail didn't run.** Your commitments list should come through `widget_transport.render_and_persist` → `show_widget`. `show_widget` isn't a connected tool in this session, so there's nothing to relay the rendered page to. This is text instead of a widget, and it has no one-tap actions as a result.
+
+**"Recent" is off by ~4 months.** All 12 transcripts are dated **2026-05-04** — 115 days ago. Every due date below is long past. These are a backlog, not a fresh action list.
+
+**Nothing has been written to your tracker yet** — see the blockers after the list.
+
+---
+
+## You owe — 17
+
+| Due | What | To |
+|---|---|---|
+| May 4 | send the offer template so it's ready for Thursday | Quinn |
+| May 4 | send the wire instructions so closing isn't blocked | counsel |
+| May 4 | approve the maintenance window request | Dustin |
+| May 4 | call the Acme Co COO about the month-end outage | Acme Co |
+| May 4 | send the escalation contact sheet | Mira |
+| May 5 | send the revised pricing sheet for the Acme renewal | Bo |
+| May 5 | send the data room checklist | Bo + Quinn |
+| May 6 | send the updated cap table — they're blocked on it | counsel |
+| May 6 | get the board pre-read memo out ⚠️ | Mira |
+| May 7 | get the vendor comparison matrix over before the renewal date | Rio |
+| May 7 | send the roadmap doc ahead of the Thursday walkthrough | Dustin |
+| May 8 | introduce Bo to the Cedar Works finance lead | Bo |
+| May 8 | draft the board deck for Quinn to check the hiring slide | Quinn |
+| May 8 | send the planning template + last quarter's scorecard | Aria |
+| May 8 | record the async QA video for unanswered all-hands questions | the team |
+| May 8 | get an exec summary in front of the Acme CEO ⚠️ | Acme Co |
+| May 15 | follow up with the Northstar exec sponsor on the renewal | Lyra |
+
+## Owed to you — 16
+
+| Due | Who | What |
+|---|---|---|
+| May 4 | Dustin | book the Thursday roadmap walkthrough on your calendar |
+| May 4 | Lyra | send the partner health dashboard link |
+| May 5 | Aria | post the job description for the data role |
+| May 5 | Bowie | compile the open questions doc from the all-hands |
+| May 6 | Dustin | finish the server inventory list — unblocks the cutover plan |
+| May 6 | Mira | book the board dinner |
+| May 6 | Quinn | update the financial model with May actuals |
+| May 7 | Mira | pull together the Q2 revenue numbers |
+| May 8 | Bo | send the Acme usage report for the renewal call |
+| May 8 | Bowie | write the cutover runbook |
+| May 8 | Quinn | schedule the panel interviews for both platform finalists |
+| May 11 | Aria | circulate the kickoff agenda |
+| May 11 | Bo | schedule the 30-min partner meeting prep call |
+| May 11 | Bowie | walk the team through the cutover runbook |
+| May 31 | Rio | cancel the old vendor account so billing stops doubling |
+| — | Rio | finish the legal review of the SAFE docs before the partner meeting |
+| — | Aria | draft the panel scoring rubric ⚠️ |
+
+## Between other people, but dated — 12
+
+Tracked because a date is riding on them: Quinn → auditors (equity grants file, May 5) · Dustin → Lyra (signed services contract, May 5) · Mira → datacenter vendor (sign the SOW, May 7) · Mira → Acme (incident postmortem, May 7) · Bo → finance (budget template, May 8) · Bowie → Lyra (security questionnaire, May 8) · Bowie → Northstar (corrected data feed, May 8) · Rio → Acme (service credit, May 8) · Aria → Northstar (renewal terms, May 11) · Mira → the team (OKR tracker, May 11) · Quinn → support leads (escalation training, May 15).
+
+## ⚠️ Three need your call
+
+Real deliverables, but hedged language — I won't call these promises for you:
+- **Your board pre-read memo** — "I should be able to… I'll try for Wednesday"
+- **Your exec summary to the Acme CEO** — "I'll try… travel permitting"
+- **Aria's scoring rubric** — "I guess I can take a stab at a draft"
+
+## Set aside — 4
+
+Other people's business, no date attached, and you said as much in the room ("their thread", "hers to run", "that's between you and them"): Dustin → Lyra intro to the Cedar Works ops lead · Aria → Northstar reporting-portal walkthrough · Bowie → network vendor contact list · Quinn → interns tools walkthrough. Kept on file, not asking for attention.
+
+**Skipped 24 threads as noise** — "someday" items, wishful asides, and things already done. Two worth naming: your **diligence folder export** in the data-room call was *retracted* mid-conversation (Bo: the shared drive export already covers the historicals), and the **customer comms** in ops standup you explicitly parked — "that's not an owner." Neither is tracked.
+
+---
+
+## Two blockers before I write any of this down
+
+**1. Owner names don't resolve.** Only "Sam Sample" maps to a unique person. Every other name in these transcripts is either ambiguous or absent:
+- `aliases.json` maps *"Aria Sample"* to **five** different ids (person_001, _011, _021, _031, _041). Same for Bowie, Lyra, Quinn. Your roster has 80 people cycling the same 10 names across 20 orgs.
+- The transcripts say **"Bo Sample," "Mira Sample," "Dustin Sample," "Rio Sample."** Your aliases only know **"Bo Stone," "Mira Stone," "Dustin Stone," "Rio Stone."** Those four resolve to *nothing*.
+
+Writing now lands 28 of 45 commitments with no owner — which is worse than not writing them.
+
+**2. Your events file is corrupted.** Around line 100 of `_hq/data/events.jsonl`, one event was written exploded — its field *names* on separate lines (`"seq"`, `"ts"`, `"type"`…) instead of as an object. Line 107 is a JSON object truncated mid-string. After that, sequence numbers restart at 100, so **seq 107 now exists twice**. That's one lost event, one broken event, and duplicate keys that any reader walking the file will trip on.
+
+Preview saved to `_hq/scans/COMMITMENT_SCAN_PREVIEW_2026-08-27.md`.
+
+---
+
+Three questions:
+
+1. **On the Sample/Stone split** — is "Bo Sample" in the transcript the same person as "Bo Stone" at Northstar Partners, or is the transcript naming someone else? Same question for Mira, Dustin, Rio. If they're the same, I can add the aliases and the resolution problem mostly goes away.
+2. **The five-way name collisions** — is the 80-person roster real, or is it duplicated fixture data? If it's duplication, the fix is deduping entities first; if it's real, I need org context per meeting to pick the right Aria.
+3. **Given these are 115 days old** — do you want all 45 backfilled as open items, or should I only write the ones you'd still act on and drop the rest as expired?

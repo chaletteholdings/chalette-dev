@@ -35,9 +35,11 @@
       "label_id": "bench_08_c3",
       "expected_route": "observed",
       "keyphrase": "service credit",
+      "rail_shadowed": true,
       "gist": "Rio to process the Acme Co service credit this week",
       "owner_name": "Rio Sample",
       "counterparty_name": null,
+      "due_hint": "this week",
       "why": "third-party promise relayed secondhand"
     },
     {

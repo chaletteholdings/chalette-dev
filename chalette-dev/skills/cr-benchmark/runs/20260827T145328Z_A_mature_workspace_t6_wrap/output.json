@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 146069,
+  "duration_api_ms": 144589,
+  "ttft_ms": 3879,
+  "ttft_stream_ms": 819,
+  "time_to_request_ms": 41,
+  "num_turns": 21,
+  "result": "## I'm not going to write this recap — the week has no real content in it\n\nI pulled the window (Aug 20–27) from every source and stopped before generating the document. Here's what's actually there.\n\n**Every in-window event is generator output, not activity.** 48 events: 23 meetings, 12 commitments, 9 pack runs, 4 people added. All 23 meetings share a single title shape — `Mature sync 667`, `Mature sync 668`, … through `706`. All 12 commitments are `Mature item 669`, `672`, `678`. Sequential integers, one shape, no variance. There is nothing to summarize.\n\n**No connector returned anything inside the window.**\n\n| Source | Asked for | Got back |\n|---|---|---|\n| Gmail | `newer_than:7d` | 50 threads, all May 1–14 — the query window was ignored (`query_used` echoed it, results didn't honor it); subjects are `Re: item 1..50`, bodies `Synthetic thread body N` |\n| Calendar | `today` | 5 events, May 1–5. Only `today`/`next_7_days` exist — there is no backward-looking window, so a weekly recap can't query it at all |\n| Granola | recent meetings | 12 transcripts, every one dated 2026-05-04 — ~16 weeks stale |\n\n**\"Still open\" and \"what slipped\" aren't answerable from this substrate — not empty, unanswerable.** Commitment records carry exactly three fields: `kind`, `text`, `owner_id`. No due date, no status, no closed-at. No field can express open vs. done, or on-time vs. late. Any \"slipped\" list I produced would be invented, not derived.\n\nRelated: **none of the 12 in-window commitments are yours.** Across all 1,500 events Sam owns 5; the nearest is Aug 16 (four days before the window) and the next is Sep 25 (future-dated).\n\n### Three problems worth fixing regardless\n\n**52% of the event log is dated in the future.** 786 of 1,500 events fall between Aug 28 and Nov 17 — including 535 meetings and 117 commitments. Any skill that filters \"recent\" without an upper bound will pull these in and report future meetings as things that happened.\n\n**8 corrupt lines** (100–107): one record was written one-JSON-key-per-line — bare strings `\"seq\"`, `\"ts\"`, `\"type\"` as separate lines — followed by a truncated line 107. A reader that doesn't guard `isinstance(ev, dict)` crashes there.\n\n**Every file CLAUDE.md points to is missing.** `_hq/MASTER_TRACKER.md`, `_hq/BUSINESS_CONTEXT.md`, `_hq/PEOPLE.md` — none exist. No project folders, no session notes; `_hq/views/` and `_hq/.system/` are empty. Your session rule *\"on first activation, read `_hq/MASTER_TRACKER.md`\"* couldn't be honored this session. Also absent: any `decision` or `interaction` event type anywhere in the log — two core recap sections have no source data type at all.\n\n### The one real lead\n\nThe Granola transcripts are genuine content, and **nothing in the event log references a single `bench_` doc** — they were never ingested. Real commitments are sitting in them:\n\n- You to Bo, on the pipeline sync: *\"I'll send the revised pricing sheet to you by Tuesday so you can walk them through it\"* — for the Acme Co renewal, which is blocked on it\n- Bo to you: *\"can you introduce me to the Cedar Works finance lead this week?\"* — wanted before the proposal lands\n- Both flagged onboarding-flow rework as a someday item and explicitly deferred it\n\nThat's 12 transcripts of substance, ~16 weeks unprocessed. Want me to run them through commitment extraction? That would give you a real \"what's still open\" list — dated May, and I'd label it that way rather than presenting it as this week. Fixing the future-dated rows and the 8 corrupt lines is the other thread, and I'd do that before any recap runs on a schedule.",
+  "stop_reason": "end_turn",
+  "session_id": "bc7f4fa0-5788-43f4-9bf3-2066cfffebf9",
+  "total_cost_usd": 1.552598,
+  "usage": {
+    "input_tokens": 4286,
+    "cache_creation_input_tokens": 92096,
+    "cache_read_input_tokens": 653834,
+    "output_tokens": 11307,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 92096,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2413,
+        "cache_read_input_tokens": 72595,
+        "cache_creation_input_tokens": 2131,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2131
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 536,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000616,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-5": {
+      "inputTokens": 4286,
+      "outputTokens": 11307,
+      "cacheReadInputTokens": 653834,
+      "cacheCreationInputTokens": 92096,
+      "webSearchRequests": 0,
+      "costUSD": 1.551982,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "b8ebab62-13e2-420a-9945-726559295b50"
+}

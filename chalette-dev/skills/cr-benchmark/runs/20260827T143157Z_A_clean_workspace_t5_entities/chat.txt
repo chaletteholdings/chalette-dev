@@ -1,0 +1,53 @@
+Both gates ran clean — all three names resolved at full confidence, and the commitment surface came from the canonical loader (closure-suppressed), not grep.
+
+One thing shapes all three answers, so up front: **your event ledger and your transcripts disagree.** The ledger is entirely synthetic filler — "Sync 176", "Follow up on item 137", "Decision 143". Meanwhile 12 real transcripts sit in the connector with **zero of them processed** (no transcript refs in the ledger, none of their titles present). Latest ledger entry is 2026-05-30, latest transcript 2026-05-04 — today is 2026-08-27, so everything below is ~3–4 months stale.
+
+## 1. Quinn — Quinn Sample, Northstar Partners
+
+**Tracked open commitments: zero.** All 40 open items in the ledger belong to Bowie and Rio. Quinn owns none.
+
+But she's carrying five things in the unprocessed transcripts (all 2026-05-04, so every deadline below has long since passed):
+
+- Schedule panel interviews for both platform finalists — *Hiring slate review*
+- Update the financial model with May actuals, by Wednesday — *Fundraise check-in*
+- Send the auditors the equity grants file, by Tuesday — *Board prep* (reported by Mira)
+- Deliver the escalation training session to support leads — *All-hands recap*
+- Tools walkthrough for the interns, no session picked — *All-hands recap*
+
+**You owe Quinn** the offer template (promised "tonight") and the board deck she's meant to sanity-check the hiring slide on.
+
+Treat these as unconfirmed extractions, not tracked commitments — they've never been through capture.
+
+## 2. Mira — Mira Sample, Acme Co
+
+Her record is a **stub**: name, email, org. No role, no notes, no project links, and **zero events** — no meetings, no commitments, no email. By the ledger alone you'd conclude you have nothing going on with her.
+
+The transcripts say otherwise — she's your most substantive counterpart in the set, attending two meetings and named in two more:
+
+- **Board prep** (with you): pulling Q2 revenue numbers by Thursday; booking the board dinner
+- **Customer escalation** (with you): the Acme Co outage hit their month-end close, their COO is upset — she's writing the incident postmortem
+- Signing the datacenter SOW by Thursday — *Ops standup*
+- Publishing the OKR tracker company-wide by Monday — *All-hands recap*
+
+**You owe her** the escalation contact sheet, a call to the Acme COO ("today, before five"), and an exec summary to their CEO.
+
+Reading across those, she functions as your Acme Co relationship owner and board/ops coordinator — but that's my inference from transcripts, not anything stored on her record.
+
+⚠️ One discrepancy: the escalation transcript has `mira.sample7@example.com` claimed as her address, but her record and your mail both say `mira.sample6@example.com` — and `.sample7` is Quinn's pattern. I haven't touched the record; the stored address is the one to trust.
+
+## 3. Skyler — you know **two**
+
+- **Skyler Sample** — Cedar Works, `skyler.sample10@example.com`. In your contacts. 20 drafted emails, May 2–29. No meetings, no commitments, and she appears in **no** transcript.
+- **Skyler Stone** — *not* in your workspace. Bo raised her in the *Data room walkthrough*: "met a sharp operator last week, Skyler Stone, might be worth a coffee sometime." You said put it on the someday list. No record, no contact info.
+
+Worth separating — if you were reaching for "Skyler," Bo's intro offer is the one that would otherwise be invisible.
+
+---
+
+I read the workspace only; nothing was written.
+
+Three things I'd want your call on:
+
+1. **Should I process those 12 transcripts?** That's where all your real signal is, and it's currently unreachable by every commitment surface you have. It would also give Mira an actual record.
+2. **Mira's record is empty — want me to add her role and how you know her?** Right now she's invisible to briefings and call prep despite being deep in the Acme escalation.
+3. **Skyler Stone — add her as a contact with Bo as the intro path, or leave her on the someday pile?**

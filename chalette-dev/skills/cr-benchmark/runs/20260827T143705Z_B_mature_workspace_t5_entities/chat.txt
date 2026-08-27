@@ -1,0 +1,25 @@
+I dug into all three files, and I have to give you an answer you won't like: **I can't answer any of these, because `_hq/data/` is generated placeholder data, not a real record of your world.**
+
+I'd rather tell you that than hand you a confident-sounding briefing built on nothing. Here's what I found:
+
+**The content is auto-generated filler.** All 881 meetings are titled `Mature sync 86`, `Mature sync 166`, `Nano-epoch artifact 6`… and all 291 commitments are `Mature item 246`. Every single one. There is no real subject matter anywhere in the log.
+
+**Names don't identify anyone.** There are exactly 10 distinct names in the roster, each duplicated across **8 separate person IDs** with different emails and different employers:
+
+- "Quinn Sample" → `person_007` (Ivory Systems), `person_017` (Summit Works), `person_027`, `_037`, `_047`, `_057`, `_067`, `_077`
+- "Mira Stone" → 8 records, split between Harbor Labs and Ridgeline Co
+- "Skyler Stone" → 8 records, split between Lantern Group and Wayfare Co
+
+So "who is Mira" has eight equally valid answers. For the record, "Sam Sample" is duplicated 8× too.
+
+**Nothing can be "open."** Commitments have only `kind`, `text`, and `owner_id` — no status, no due date — and there's no completion event type in the schema. There's no mechanism by which anything could be open or closed.
+
+**"Together" isn't representable.** Every event has exactly one participant (1,281 events with one `person_id`, 219 with none). The log contains no shared meeting between any two people, ever — so there's no "you and Mira" to report.
+
+**The timeline is broken.** 300 events (20% of the file) are stamped `2026-11-17` — three months from now — with sequence numbers like `1.77e18`, which is a nanosecond epoch timestamp jammed into a `seq` field. And `person_created` events land *after* meetings that person supposedly attended.
+
+Two smaller things worth fixing regardless: `events.jsonl` lines 100–107 are corrupt (one record pretty-printed across 8 lines, so it fails to parse), and `aliases.json` maps only 50 of the 80 people in `entities.json`.
+
+To your literal question "do we know anyone named Skyler?" — the name appears, 8 times, exactly like every other name. That's a property of the generator, not evidence you know a Skyler.
+
+I've noted this in memory so I don't re-derive it next session. If there's a real data source that should be feeding this — a calendar, CRM export, meeting-notes pipeline — point me at it and I'll load it properly. If you expected this store to already be real, then the ingestion never ran and that's the actual bug to chase.

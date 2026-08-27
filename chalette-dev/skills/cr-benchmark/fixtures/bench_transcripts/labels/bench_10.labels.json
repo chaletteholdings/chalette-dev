@@ -32,9 +32,11 @@
       "label_id": "bench_10_c3",
       "expected_route": "observed",
       "keyphrase": "legal review of the SAFE",
+      "rail_shadowed": true,
       "gist": "Rio to finish the SAFE docs legal review before the partner meeting",
       "owner_name": "Rio Sample",
       "counterparty_name": "Bo Sample",
+      "due_hint": "before the partner meeting",
       "why": "third-party promise relayed by Bo"
     },
     {

@@ -1,0 +1,51 @@
+I dug into this and I'm going to stop short of building the brief, because I can't answer your first question — "who am I meeting" — and the reason matters more than a document would.
+
+## There is no upcoming meeting I can find
+
+Today is **Thu Aug 27, 2026**. I queried the calendar both ways:
+
+- `today` → 5 events, dated **May 1–5, 2026**
+- `next_7_days` → 30 events, dated **May 1–7, 2026**
+
+Every event the calendar returns is roughly **four months in the past**, while the connector labels them "today" and "next 7 days." There is not a single future-dated event on it. So either the calendar feed is stale/misconfigured, or it's pointed at the wrong account — but I can't pick "your upcoming meeting" out of it, and guessing one would mean prepping you for the wrong room.
+
+## Two of the three connectors aren't returning trustworthy data
+
+I tested rather than assumed:
+
+- **Mail search ignores the query.** I searched `aria.sample1@example.com`, then searched a deliberately nonsense address (`zzz_nonexistent_sender_xyz@nowhere.invalid`). Both returned the **identical 50 threads**. It echoes `query_used` back but doesn't filter on it. Any "recent email with your attendee" line I wrote would be me inventing the filtering. Bodies are also placeholder text ("Synthetic thread body 12").
+- **Your workspace substrate is partly corrupt.** `_hq/data/events.jsonl` has a broken region around lines 100–107 (one unterminated record, seven orphaned fragments). It also carries events dated to **Nov 17, 2026** — three months ahead — with junk sequence numbers, and Aria Sample's "person created" record is dated **Sep 24, 2026**, also in the future.
+- **Identity resolution is unsafe.** There are **80 people records but only 10 distinct names** — eight separate "Aria Sample" records, eight "Bo Stone," each with a different email and a different org. "Prep me for the Aria meeting" has eight possible answers. Granola compounds it: it calls your counterparts *Bo Sample, Mira Sample, Dustin Sample*, while the entity file calls them *Bo **Stone**, Mira **Stone**, Dustin **Stone***.
+
+Also worth flagging: `CLAUDE.md` points to `_hq/MASTER_TRACKER.md`, `_hq/PEOPLE.md`, `_hq/BUSINESS_CONTEXT.md`, and per-project session notes. **None of those files exist** — the workspace only has `_hq/data/` and `_hq/connectors/`.
+
+## What *is* real: the Granola transcripts
+
+I read all 12. These have genuine substance — actual dialogue, actual commitments. The catch: **all 12 are dated May 4, 2026**, so everything below is ~115 days stale. Here's what was open, by counterpart:
+
+**Things you owe**
+- **Bo** — revised pricing sheet (Tue); intro to the Cedar Works finance lead; cap table to counsel (Wed); wire instructions to counsel
+- **Mira** — board deck draft (Fri); call the Acme COO "today, before five"; escalation contact sheet
+- **Aria** — planning template + last quarter's scorecard (EOD Fri)
+- **Rio** — vendor comparison matrix (Thu)
+- **Quinn** — offer template; data room checklist
+- **Dustin** — roadmap doc before the Thursday walkthrough
+- **Lyra** — follow up with the Northstar exec sponsor
+
+**Things owed to you**
+- **Bo** — Acme usage report (Fri)
+- **Mira** — Q2 revenue numbers (Thu); incident postmortem (Thu)
+- **Quinn** — panel interviews scheduled; financial model w/ May actuals (Wed)
+- **Aria** — kickoff agenda (Mon); data-role JD posted; scoring rubric draft
+- **Dustin** — server inventory list (Wed)
+- **Bowie** — cutover runbook (Fri); all-hands questions doc
+
+The soft ones are deliberately excluded — "I might get the case study drafted, no promises," "someday we should redo onboarding." Those aren't commitments and shouldn't be walked into a room as if they were.
+
+## What I need from you
+
+1. **Which meeting?** Name the person or company and I'll build the full brief off it.
+2. **Is the calendar connector pointed at the right account?** Four-month-old events returned as "today" is the thing to fix first — it'll break your morning briefing and auto-prep the same way.
+3. **Want me to prep from the May 4 transcript baseline anyway?** I can do that honestly, labeled as a 115-day-old starting point rather than current state — genuinely useful for a re-engagement call, misleading for anything else.
+
+I'd rather hand you this than a polished four-page brief that reads authoritative and is built on a calendar that can't see the future and a mail search that ignores what you ask it.
