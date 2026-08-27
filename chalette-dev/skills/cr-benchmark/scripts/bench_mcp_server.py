@@ -142,7 +142,7 @@ def main() -> int:
         sys.stdout.flush()
 
     for line in sys.stdin:
-        line = line.strip()
+        line = line.strip().lstrip("﻿")
         if not line:
             continue
         try:
