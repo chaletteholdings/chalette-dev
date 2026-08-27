@@ -1,0 +1,12 @@
+{
+  "set_version": "1.0",
+  "_comment": "The six benchmark tasks. Identical natural-language prompts for both arms; the bare arm simply has no plugin to route them. Frozen before any run; changing a prompt invalidates cross-run comparison.",
+  "tasks": {
+    "t1_transcripts": "Process the recent meeting transcripts and pull out every commitment that was made - who owes what to whom, and by when. Use the meeting transcript connector to get the transcripts.",
+    "t2_inbox": "Triage my inbox: what needs a reply from me, what can wait, and what is noise. Use the email connector.",
+    "t3_brief": "Morning brief: what do I need to know today? Check my calendar and email.",
+    "t4_prep": "Prep me for my upcoming meeting - who am I meeting, what is open with them, and what should I walk in knowing?",
+    "t5_entities": "A few quick questions about my world: What is currently open with Quinn? Who is Mira and what do we have going on together? And do we know anyone named Skyler?",
+    "t6_wrap": "Wrap the week for me: what happened, what is still open, and what slipped?"
+  }
+}

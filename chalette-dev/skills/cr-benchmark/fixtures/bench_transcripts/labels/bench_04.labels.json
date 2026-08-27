@@ -1,0 +1,80 @@
+{
+  "transcript_id": "bench_04",
+  "set_version": "1.0",
+  "title": "Hiring slate review",
+  "meeting_date": "2026-05-04",
+  "attendees": [
+    "Sam Sample",
+    "Quinn Sample",
+    "Aria Sample"
+  ],
+  "primary_user": "Sam Sample",
+  "planted": [
+    {
+      "label_id": "bench_04_c1",
+      "expected_route": "book",
+      "keyphrase": "panel interviews",
+      "gist": "schedule the panel interviews for both candidates this week",
+      "owner_name": "Quinn Sample",
+      "counterparty_name": "Sam Sample",
+      "due_hint": "this week"
+    },
+    {
+      "label_id": "bench_04_c2",
+      "expected_route": "book",
+      "keyphrase": "offer template",
+      "gist": "send Quinn the offer template tonight",
+      "owner_name": "Sam Sample",
+      "counterparty_name": "Quinn Sample",
+      "due_hint": "tonight"
+    },
+    {
+      "label_id": "bench_04_c3",
+      "expected_route": "review",
+      "keyphrase": "stab at a draft",
+      "gist": "Aria drafts the panel scoring rubric",
+      "owner_name": "Aria Sample",
+      "counterparty_name": "Quinn Sample",
+      "why": "hedged self-assignment (I guess I can), consequential"
+    },
+    {
+      "label_id": "bench_04_c4",
+      "expected_route": "reject",
+      "keyphrase": "comp bands",
+      "why": "vague group intent, deferred, no owner"
+    },
+    {
+      "label_id": "bench_04_c5",
+      "expected_route": "reject",
+      "keyphrase": "referral bonus",
+      "why": "unowned team wish, someday"
+    },
+    {
+      "label_id": "bench_04_c6",
+      "expected_route": "reject",
+      "keyphrase": "pinged the recruiter",
+      "why": "past tense, already done"
+    },
+    {
+      "label_id": "bench_04_c7",
+      "expected_route": "book",
+      "keyphrase": "job description for the data role",
+      "gist": "post the job description for the data role tomorrow morning",
+      "owner_name": "Aria Sample",
+      "counterparty_name": "Sam Sample",
+      "due_hint": "tomorrow"
+    }
+  ],
+  "entity_mentions": [
+    {
+      "label_id": "bench_04_e1",
+      "surface": "Quinn",
+      "expected": "Quinn Sample"
+    },
+    {
+      "label_id": "bench_04_e2",
+      "surface": "Aria",
+      "expected": "Aria Sample"
+    }
+  ]
+}

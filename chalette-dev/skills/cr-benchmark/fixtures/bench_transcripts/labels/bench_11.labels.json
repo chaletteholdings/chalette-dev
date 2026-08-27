@@ -1,0 +1,63 @@
+{
+  "transcript_id": "bench_11",
+  "set_version": "1.0",
+  "title": "Calendar and scheduling chatter",
+  "meeting_date": "2026-05-04",
+  "attendees": [
+    "Sam Sample",
+    "Dustin Sample"
+  ],
+  "primary_user": "Sam Sample",
+  "planted": [
+    {
+      "label_id": "bench_11_c1",
+      "expected_route": "book",
+      "keyphrase": "Thursday slot",
+      "gist": "book 30 minutes Thursday afternoon for the roadmap walkthrough",
+      "owner_name": "Dustin Sample",
+      "counterparty_name": "Sam Sample",
+      "due_hint": "Thursday",
+      "kind": "scheduling"
+    },
+    {
+      "label_id": "bench_11_c2",
+      "expected_route": "reject",
+      "keyphrase": "team lunch",
+      "why": "vague scheduling intent (sometime soon)"
+    },
+    {
+      "label_id": "bench_11_c3",
+      "expected_route": "reject",
+      "keyphrase": "visit the Bluebird Group office",
+      "why": "one-day intent, no commitment"
+    },
+    {
+      "label_id": "bench_11_c4",
+      "expected_route": "reject",
+      "keyphrase": "printer thing",
+      "why": "past, already resolved"
+    },
+    {
+      "label_id": "bench_11_c5",
+      "expected_route": "book",
+      "keyphrase": "roadmap doc",
+      "gist": "send Dustin the roadmap doc before the Thursday walkthrough",
+      "owner_name": "Sam Sample",
+      "counterparty_name": "Dustin Sample",
+      "due_hint": "Thursday"
+    },
+    {
+      "label_id": "bench_11_c6",
+      "expected_route": "reject",
+      "keyphrase": "conference room screen",
+      "why": "one-of-these-days group gripe, no owner"
+    }
+  ],
+  "entity_mentions": [
+    {
+      "label_id": "bench_11_e1",
+      "surface": "Bluebird Group",
+      "expected_org": "Bluebird Group"
+    }
+  ]
+}

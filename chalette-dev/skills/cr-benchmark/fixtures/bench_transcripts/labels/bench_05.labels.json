@@ -1,0 +1,66 @@
+{
+  "transcript_id": "bench_05",
+  "set_version": "1.0",
+  "title": "Data room walkthrough",
+  "meeting_date": "2026-05-04",
+  "attendees": [
+    "Sam Sample",
+    "Bo Sample"
+  ],
+  "primary_user": "Sam Sample",
+  "planted": [
+    {
+      "label_id": "bench_05_c1",
+      "expected_route": "reject",
+      "keyphrase": "diligence folder export",
+      "why": "retracted in the same exchange (J2 shape) -- counterparty withdrew the need"
+    },
+    {
+      "label_id": "bench_05_c2",
+      "expected_route": "book",
+      "keyphrase": "updated cap table",
+      "gist": "send the updated cap table to counsel by Wednesday",
+      "owner_name": "Sam Sample",
+      "counterparty_name": "Bo Sample",
+      "due_hint": "Wednesday"
+    },
+    {
+      "label_id": "bench_05_c3",
+      "expected_route": "reject",
+      "keyphrase": "worth a coffee",
+      "why": "vague someday intent, no deliverable"
+    },
+    {
+      "label_id": "bench_05_c4",
+      "expected_route": "book",
+      "keyphrase": "wire instructions",
+      "gist": "send the wire instructions to counsel today",
+      "owner_name": "Sam Sample",
+      "counterparty_name": "Bo Sample",
+      "due_hint": "today"
+    },
+    {
+      "label_id": "bench_05_c5",
+      "expected_route": "review",
+      "keyphrase": "investor FAQ",
+      "gist": "Bo pulls together an investor FAQ if inbound keeps up",
+      "owner_name": "Bo Sample",
+      "counterparty_name": "Sam Sample",
+      "why": "hedged conditional (could probably / we'll see)"
+    },
+    {
+      "label_id": "bench_05_c6",
+      "expected_route": "reject",
+      "keyphrase": "rename the June folder",
+      "why": "live action completed on the call (J1 shape)"
+    }
+  ],
+  "entity_mentions": [
+    {
+      "label_id": "bench_05_e1",
+      "surface": "Skyler Stone",
+      "expected": "UNKNOWN_PERSON",
+      "note": "roster-legal name absent from entities.json; correct handling is an unknown-person outcome (proposal/annotation), never a silent bind to an existing person"
+    }
+  ]
+}

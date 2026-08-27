@@ -1,0 +1,80 @@
+{
+  "transcript_id": "bench_07",
+  "set_version": "1.0",
+  "title": "Ops standup",
+  "meeting_date": "2026-05-04",
+  "attendees": [
+    "Sam Sample",
+    "Dustin Sample",
+    "Bowie Sample"
+  ],
+  "primary_user": "Sam Sample",
+  "planted": [
+    {
+      "label_id": "bench_07_c1",
+      "expected_route": "book",
+      "keyphrase": "server inventory list",
+      "gist": "finish the server inventory list by Wednesday",
+      "owner_name": "Dustin Sample",
+      "counterparty_name": "Sam Sample",
+      "due_hint": "Wednesday"
+    },
+    {
+      "label_id": "bench_07_c2",
+      "expected_route": "book",
+      "keyphrase": "cutover runbook",
+      "gist": "write the cutover runbook by Friday",
+      "owner_name": "Bowie Sample",
+      "counterparty_name": "Sam Sample",
+      "due_hint": "Friday"
+    },
+    {
+      "label_id": "bench_07_c3",
+      "expected_route": "reject",
+      "keyphrase": "comms drafted at some point",
+      "why": "'we' with no named individual -- fails the owned test, and flagged so on the call"
+    },
+    {
+      "label_id": "bench_07_c4",
+      "expected_route": "reject",
+      "keyphrase": "revisit the backup vendor",
+      "why": "vague group intent, eventually"
+    },
+    {
+      "label_id": "bench_07_c5",
+      "expected_route": "observed",
+      "keyphrase": "sign the SOW",
+      "gist": "Mira to sign the datacenter vendor SOW by Thursday",
+      "owner_name": "Mira Sample",
+      "counterparty_name": null,
+      "why": "third-party promise to a vendor, relayed"
+    },
+    {
+      "label_id": "bench_07_c6",
+      "expected_route": "book",
+      "keyphrase": "maintenance window request",
+      "gist": "approve the maintenance window request this afternoon",
+      "owner_name": "Sam Sample",
+      "counterparty_name": "Dustin Sample",
+      "due_hint": "this afternoon"
+    },
+    {
+      "label_id": "bench_07_c7",
+      "expected_route": "reject",
+      "keyphrase": "zero-downtime",
+      "why": "wishful, someday"
+    }
+  ],
+  "entity_mentions": [
+    {
+      "label_id": "bench_07_e1",
+      "surface": "Dustin",
+      "expected": "Dustin Sample"
+    },
+    {
+      "label_id": "bench_07_e2",
+      "surface": "Bowie",
+      "expected": "Bowie Sample"
+    }
+  ]
+}

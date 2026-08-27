@@ -1,0 +1,14 @@
+Sam Sample: ok let's run the pipeline, top of the list is the Acme Co renewal
+Bo Sample: they asked for updated pricing before they'll sign anything
+Sam Sample: right, I'll send the revised pricing sheet to you by Tuesday so you can walk them through it
+Bo Sample: good, they go quiet fast when we sit on things
+Sam Sample: also you mentioned Cedar Works has a new finance lead
+Bo Sample: yes, can you introduce me to the Cedar Works finance lead this week? I want them in the loop before the proposal lands
+Sam Sample: sure, will do, I'll make the intro over email
+Bo Sample: we should probably rethink the whole onboarding flow at some point too
+Sam Sample: yeah, someday, let's circle back on that
+Bo Sample: and honestly a cleaner dashboard would be nice
+Bo Sample: one thing I owe you: I'll send you the Acme usage report by Friday so you have it for the renewal call
+Sam Sample: good. and I might be able to get the customer case study drafted before the renewal too, no promises
+Bo Sample: even a rough one helps
+Sam Sample: noted, ok that's the list

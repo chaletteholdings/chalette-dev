@@ -1,0 +1,76 @@
+{
+  "transcript_id": "bench_08",
+  "set_version": "1.0",
+  "title": "Customer escalation",
+  "meeting_date": "2026-05-04",
+  "attendees": [
+    "Sam Sample",
+    "Mira Sample"
+  ],
+  "primary_user": "Sam Sample",
+  "planted": [
+    {
+      "label_id": "bench_08_c1",
+      "expected_route": "book",
+      "keyphrase": "chief operating officer today",
+      "gist": "call the Acme Co COO today before five",
+      "owner_name": "Sam Sample",
+      "counterparty_name": "Mira Sample",
+      "due_hint": "today"
+    },
+    {
+      "label_id": "bench_08_c2",
+      "expected_route": "book",
+      "keyphrase": "incident postmortem",
+      "gist": "write the incident postmortem by Thursday and send it to Acme Co",
+      "owner_name": "Mira Sample",
+      "counterparty_name": "Sam Sample",
+      "due_hint": "Thursday"
+    },
+    {
+      "label_id": "bench_08_c3",
+      "expected_route": "observed",
+      "keyphrase": "service credit",
+      "gist": "Rio to process the Acme Co service credit this week",
+      "owner_name": "Rio Sample",
+      "counterparty_name": null,
+      "why": "third-party promise relayed secondhand"
+    },
+    {
+      "label_id": "bench_08_c4",
+      "expected_route": "book",
+      "keyphrase": "escalation contact sheet",
+      "gist": "send Mira the escalation contact sheet tonight",
+      "owner_name": "Sam Sample",
+      "counterparty_name": "Mira Sample",
+      "due_hint": "tonight"
+    },
+    {
+      "label_id": "bench_08_c5",
+      "expected_route": "review",
+      "keyphrase": "exec summary",
+      "gist": "get an exec summary in front of the Acme Co CEO this week",
+      "owner_name": "Sam Sample",
+      "counterparty_name": "Mira Sample",
+      "why": "hedged (try / travel permitting) but consequential"
+    },
+    {
+      "label_id": "bench_08_c6",
+      "expected_route": "reject",
+      "keyphrase": "SLA tiers",
+      "why": "vague at-some-point group intent"
+    }
+  ],
+  "entity_mentions": [
+    {
+      "label_id": "bench_08_e1",
+      "surface": "mira.sample7@example.com",
+      "expected": "Mira Sample"
+    },
+    {
+      "label_id": "bench_08_e2",
+      "surface": "Acme Co",
+      "expected_org": "Acme Co"
+    }
+  ]
+}

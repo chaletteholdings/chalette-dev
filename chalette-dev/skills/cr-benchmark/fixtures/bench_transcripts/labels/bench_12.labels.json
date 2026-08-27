@@ -1,0 +1,80 @@
+{
+  "transcript_id": "bench_12",
+  "set_version": "1.0",
+  "title": "All-hands recap",
+  "meeting_date": "2026-05-04",
+  "attendees": [
+    "Sam Sample",
+    "Lyra Sample",
+    "Bowie Sample"
+  ],
+  "primary_user": "Sam Sample",
+  "planted": [
+    {
+      "label_id": "bench_12_c1",
+      "expected_route": "observed",
+      "keyphrase": "OKR tracker",
+      "gist": "Mira to publish the OKR tracker to the team by Monday",
+      "owner_name": "Mira Sample",
+      "counterparty_name": null,
+      "why": "third-party commitment to the team, relayed"
+    },
+    {
+      "label_id": "bench_12_c2",
+      "expected_route": "observed",
+      "keyphrase": "escalation training",
+      "gist": "Quinn to deliver the escalation training session next week",
+      "owner_name": "Quinn Sample",
+      "counterparty_name": null,
+      "why": "third-party commitment to support leads, relayed"
+    },
+    {
+      "label_id": "bench_12_c3",
+      "expected_route": "book",
+      "keyphrase": "async QA video",
+      "gist": "record the async QA video this week",
+      "owner_name": "Sam Sample",
+      "counterparty_name": "Lyra Sample",
+      "due_hint": "this week"
+    },
+    {
+      "label_id": "bench_12_c4",
+      "expected_route": "reject",
+      "keyphrase": "better snacks",
+      "why": "explicitly declared not tracked on the call"
+    },
+    {
+      "label_id": "bench_12_c5",
+      "expected_route": "reject",
+      "keyphrase": "four-day week pilot",
+      "why": "unowned suggestion, eventually"
+    },
+    {
+      "label_id": "bench_12_c6",
+      "expected_route": "book",
+      "keyphrase": "questions doc",
+      "gist": "compile the all-hands open questions doc by tomorrow",
+      "owner_name": "Bowie Sample",
+      "counterparty_name": "Sam Sample",
+      "due_hint": "tomorrow"
+    },
+    {
+      "label_id": "bench_12_c7",
+      "expected_route": "reject",
+      "keyphrase": "spring offsite",
+      "why": "conditional on hitting the number (hypothetical)"
+    }
+  ],
+  "entity_mentions": [
+    {
+      "label_id": "bench_12_e1",
+      "surface": "Lyra",
+      "expected": "Lyra Sample"
+    },
+    {
+      "label_id": "bench_12_e2",
+      "surface": "Quinn",
+      "expected": "Quinn Sample"
+    }
+  ]
+}

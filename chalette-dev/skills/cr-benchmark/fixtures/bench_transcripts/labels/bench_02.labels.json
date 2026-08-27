@@ -1,0 +1,83 @@
+{
+  "transcript_id": "bench_02",
+  "set_version": "1.0",
+  "title": "Board prep",
+  "meeting_date": "2026-05-04",
+  "attendees": [
+    "Sam Sample",
+    "Mira Sample"
+  ],
+  "primary_user": "Sam Sample",
+  "planted": [
+    {
+      "label_id": "bench_02_c1",
+      "expected_route": "book",
+      "keyphrase": "Q2 revenue numbers",
+      "gist": "pull the Q2 revenue numbers together by Thursday",
+      "owner_name": "Mira Sample",
+      "counterparty_name": "Sam Sample",
+      "due_hint": "Thursday"
+    },
+    {
+      "label_id": "bench_02_c2",
+      "expected_route": "book",
+      "keyphrase": "draft the board deck",
+      "gist": "draft the board deck by Friday",
+      "owner_name": "Sam Sample",
+      "counterparty_name": "Mira Sample",
+      "due_hint": "Friday"
+    },
+    {
+      "label_id": "bench_02_c3",
+      "expected_route": "review",
+      "keyphrase": "pre-read memo",
+      "gist": "get the pre-read memo out, aiming Wednesday",
+      "owner_name": "Sam Sample",
+      "counterparty_name": "Mira Sample",
+      "why": "hedged (should be able to / try for) but consequential"
+    },
+    {
+      "label_id": "bench_02_c4",
+      "expected_route": "reject",
+      "keyphrase": "customer-logo slide",
+      "why": "hypothetical, no owner"
+    },
+    {
+      "label_id": "bench_02_c5",
+      "expected_route": "reject",
+      "keyphrase": "crisper story on churn",
+      "why": "wishful, no deliverable"
+    },
+    {
+      "label_id": "bench_02_c6",
+      "expected_route": "book",
+      "keyphrase": "board dinner",
+      "gist": "book the board dinner for Wednesday night",
+      "owner_name": "Mira Sample",
+      "counterparty_name": "Sam Sample",
+      "due_hint": "Wednesday",
+      "kind": "scheduling"
+    },
+    {
+      "label_id": "bench_02_c7",
+      "expected_route": "observed",
+      "keyphrase": "equity grants file",
+      "gist": "Quinn to send the auditors the equity grants file by Tuesday",
+      "owner_name": "Quinn Sample",
+      "counterparty_name": null,
+      "why": "third-party commitment to the auditors, relayed"
+    }
+  ],
+  "entity_mentions": [
+    {
+      "label_id": "bench_02_e1",
+      "surface": "Quinn",
+      "expected": "Quinn Sample"
+    },
+    {
+      "label_id": "bench_02_e2",
+      "surface": "Mira",
+      "expected": "Mira Sample"
+    }
+  ]
+}

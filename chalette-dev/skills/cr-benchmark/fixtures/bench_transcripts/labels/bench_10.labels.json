@@ -1,0 +1,79 @@
+{
+  "transcript_id": "bench_10",
+  "set_version": "1.0",
+  "title": "Fundraise check-in",
+  "meeting_date": "2026-05-04",
+  "attendees": [
+    "Sam Sample",
+    "Bo Sample",
+    "Quinn Sample"
+  ],
+  "primary_user": "Sam Sample",
+  "planted": [
+    {
+      "label_id": "bench_10_c1",
+      "expected_route": "book",
+      "keyphrase": "data room checklist",
+      "gist": "send Bo and Quinn the data room checklist tomorrow",
+      "owner_name": "Sam Sample",
+      "counterparty_name": "Bo Sample",
+      "due_hint": "tomorrow"
+    },
+    {
+      "label_id": "bench_10_c2",
+      "expected_route": "book",
+      "keyphrase": "May actuals",
+      "gist": "update the financial model with May actuals by Wednesday",
+      "owner_name": "Quinn Sample",
+      "counterparty_name": "Sam Sample",
+      "due_hint": "Wednesday"
+    },
+    {
+      "label_id": "bench_10_c3",
+      "expected_route": "observed",
+      "keyphrase": "legal review of the SAFE",
+      "gist": "Rio to finish the SAFE docs legal review before the partner meeting",
+      "owner_name": "Rio Sample",
+      "counterparty_name": "Bo Sample",
+      "why": "third-party promise relayed by Bo"
+    },
+    {
+      "label_id": "bench_10_c4",
+      "expected_route": "reject",
+      "keyphrase": "narrative workshop",
+      "why": "someday musing"
+    },
+    {
+      "label_id": "bench_10_c5",
+      "expected_route": "book",
+      "keyphrase": "partner meeting prep call",
+      "gist": "schedule the partner meeting prep call for Monday morning",
+      "owner_name": "Bo Sample",
+      "counterparty_name": "Sam Sample",
+      "due_hint": "Monday",
+      "kind": "scheduling"
+    },
+    {
+      "label_id": "bench_10_c6",
+      "expected_route": "review",
+      "keyphrase": "cohort analysis",
+      "gist": "Quinn gets the cohort analysis in before the partner meeting",
+      "owner_name": "Quinn Sample",
+      "counterparty_name": "Bo Sample",
+      "why": "hedged (might / depends on the data pull)"
+    },
+    {
+      "label_id": "bench_10_c7",
+      "expected_route": "reject",
+      "keyphrase": "refreshed the pitch deck",
+      "why": "past tense, already done"
+    }
+  ],
+  "entity_mentions": [
+    {
+      "label_id": "bench_10_e1",
+      "surface": "Rio",
+      "expected": "Rio Sample"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "transcript_id": "bench_06",
+  "set_version": "1.0",
+  "title": "Partner renewal sync",
+  "meeting_date": "2026-05-04",
+  "attendees": [
+    "Sam Sample",
+    "Lyra Sample"
+  ],
+  "primary_user": "Sam Sample",
+  "planted": [
+    {
+      "label_id": "bench_06_c1",
+      "expected_route": "observed",
+      "keyphrase": "renewal terms on Monday",
+      "gist": "Aria to send Northstar the renewal terms on Monday",
+      "owner_name": "Aria Sample",
+      "counterparty_name": null,
+      "why": "third-party to external org"
+    },
+    {
+      "label_id": "bench_06_c2",
+      "expected_route": "observed",
+      "keyphrase": "corrected data feed",
+      "gist": "Bowie to get Northstar the corrected data feed by Friday",
+      "owner_name": "Bowie Sample",
+      "counterparty_name": null,
+      "why": "third-party to external org"
+    },
+    {
+      "label_id": "bench_06_c3",
+      "expected_route": "book",
+      "keyphrase": "exec sponsor next week",
+      "gist": "follow up with the Northstar Partners exec sponsor",
+      "owner_name": "Sam Sample",
+      "counterparty_name": "Lyra Sample",
+      "due_hint": "next week"
+    },
+    {
+      "label_id": "bench_06_c4",
+      "expected_route": "reject",
+      "keyphrase": "bundle the Category Company pilot",
+      "why": "hypothetical (theoretically / someday)"
+    },
+    {
+      "label_id": "bench_06_c5",
+      "expected_route": "book",
+      "keyphrase": "partner health dashboard",
+      "gist": "send Sam the partner health dashboard link tonight",
+      "owner_name": "Lyra Sample",
+      "counterparty_name": "Sam Sample",
+      "due_hint": "tonight"
+    },
+    {
+      "label_id": "bench_06_c6",
+      "expected_route": "reject",
+      "keyphrase": "automate all this partner reporting",
+      "why": "one-day musing, no owner"
+    }
+  ],
+  "entity_mentions": [
+    {
+      "label_id": "bench_06_e1",
+      "surface": "Northstar",
+      "expected_org": "Northstar Partners"
+    },
+    {
+      "label_id": "bench_06_e2",
+      "surface": "Aria",
+      "expected": "Aria Sample"
+    }
+  ]
+}

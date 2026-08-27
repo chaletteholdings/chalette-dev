@@ -1,0 +1,68 @@
+{
+  "transcript_id": "bench_09",
+  "set_version": "1.0",
+  "title": "Quarterly planning kickoff",
+  "meeting_date": "2026-05-04",
+  "attendees": [
+    "Sam Sample",
+    "Aria Sample"
+  ],
+  "primary_user": "Sam Sample",
+  "planted": [
+    {
+      "label_id": "bench_09_c1",
+      "expected_route": "book",
+      "keyphrase": "planning template",
+      "gist": "send Aria the planning template and scorecard by Friday EOD",
+      "owner_name": "Sam Sample",
+      "counterparty_name": "Aria Sample",
+      "due_hint": "Friday"
+    },
+    {
+      "label_id": "bench_09_c2",
+      "expected_route": "review",
+      "keyphrase": "department pre-reads",
+      "gist": "Aria collects department pre-reads before kickoff",
+      "owner_name": "Aria Sample",
+      "counterparty_name": "Sam Sample",
+      "why": "hedged (might try), consequential if it happens"
+    },
+    {
+      "label_id": "bench_09_c3",
+      "expected_route": "reject",
+      "keyphrase": "fit in one week",
+      "why": "wishful"
+    },
+    {
+      "label_id": "bench_09_c4",
+      "expected_route": "reject",
+      "keyphrase": "chief of staff",
+      "why": "hypothetical (if we ever)"
+    },
+    {
+      "label_id": "bench_09_c5",
+      "expected_route": "book",
+      "keyphrase": "kickoff agenda",
+      "gist": "circulate the kickoff agenda by Monday",
+      "owner_name": "Aria Sample",
+      "counterparty_name": "Sam Sample",
+      "due_hint": "Monday"
+    },
+    {
+      "label_id": "bench_09_c6",
+      "expected_route": "observed",
+      "keyphrase": "budget template",
+      "gist": "Bo to close out the budget template with finance by Friday",
+      "owner_name": "Bo Sample",
+      "counterparty_name": null,
+      "why": "third-party commitment to finance, relayed"
+    }
+  ],
+  "entity_mentions": [
+    {
+      "label_id": "bench_09_e1",
+      "surface": "Aria",
+      "expected": "Aria Sample"
+    }
+  ]
+}

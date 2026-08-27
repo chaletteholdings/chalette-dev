@@ -1,0 +1,131 @@
+{
+  "set_version": "1.0",
+  "generated_by": "_generate_bench_transcripts.py (deterministic; do not hand-edit)",
+  "meeting_date": "2026-05-04",
+  "transcript_count": 12,
+  "route_counts": {
+    "book": 30,
+    "observed": 11,
+    "reject": 30,
+    "review": 7
+  },
+  "entity_mention_count": 21,
+  "known_unknowns": [
+    "Skyler Stone",
+    "Rio Stone"
+  ],
+  "transcripts": [
+    {
+      "id": "bench_01",
+      "title": "Weekly pipeline sync",
+      "attendees": [
+        "Sam Sample",
+        "Bo Sample"
+      ],
+      "planted": 6
+    },
+    {
+      "id": "bench_02",
+      "title": "Board prep",
+      "attendees": [
+        "Sam Sample",
+        "Mira Sample"
+      ],
+      "planted": 7
+    },
+    {
+      "id": "bench_03",
+      "title": "Vendor contract call",
+      "attendees": [
+        "Sam Sample",
+        "Rio Sample"
+      ],
+      "planted": 7
+    },
+    {
+      "id": "bench_04",
+      "title": "Hiring slate review",
+      "attendees": [
+        "Sam Sample",
+        "Quinn Sample",
+        "Aria Sample"
+      ],
+      "planted": 7
+    },
+    {
+      "id": "bench_05",
+      "title": "Data room walkthrough",
+      "attendees": [
+        "Sam Sample",
+        "Bo Sample"
+      ],
+      "planted": 6
+    },
+    {
+      "id": "bench_06",
+      "title": "Partner renewal sync",
+      "attendees": [
+        "Sam Sample",
+        "Lyra Sample"
+      ],
+      "planted": 6
+    },
+    {
+      "id": "bench_07",
+      "title": "Ops standup",
+      "attendees": [
+        "Sam Sample",
+        "Dustin Sample",
+        "Bowie Sample"
+      ],
+      "planted": 7
+    },
+    {
+      "id": "bench_08",
+      "title": "Customer escalation",
+      "attendees": [
+        "Sam Sample",
+        "Mira Sample"
+      ],
+      "planted": 6
+    },
+    {
+      "id": "bench_09",
+      "title": "Quarterly planning kickoff",
+      "attendees": [
+        "Sam Sample",
+        "Aria Sample"
+      ],
+      "planted": 6
+    },
+    {
+      "id": "bench_10",
+      "title": "Fundraise check-in",
+      "attendees": [
+        "Sam Sample",
+        "Bo Sample",
+        "Quinn Sample"
+      ],
+      "planted": 7
+    },
+    {
+      "id": "bench_11",
+      "title": "Calendar and scheduling chatter",
+      "attendees": [
+        "Sam Sample",
+        "Dustin Sample"
+      ],
+      "planted": 6
+    },
+    {
+      "id": "bench_12",
+      "title": "All-hands recap",
+      "attendees": [
+        "Sam Sample",
+        "Lyra Sample",
+        "Bowie Sample"
+      ],
+      "planted": 7
+    }
+  ]
+}

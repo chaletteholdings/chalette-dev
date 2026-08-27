@@ -1,0 +1,12 @@
+Mira Sample: the Acme Co outage hit their month-end close, their COO is upset
+Sam Sample: I'll call the Acme Co chief operating officer today, before five, this can't sit
+Mira Sample: I'll write the incident postmortem by Thursday and send it to their team, they asked for it in writing
+Sam Sample: good. anything on the credit?
+Mira Sample: Rio told their account manager he'd process the service credit this week
+Sam Sample: fine, keep me posted. you can reach me through mira.sample7@example.com threads if I'm slow on the main channel, just re-ping
+Mira Sample: ha, that's my address. I'll re-ping
+Sam Sample: two more from me. I'll send you the escalation contact sheet tonight so you're not guessing who to wake up
+Mira Sample: please
+Sam Sample: and I'll try to get an exec summary in front of their CEO this week, travel permitting
+Mira Sample: we should probably revisit the SLA tiers at some point after this settles
+Sam Sample: at some point. go

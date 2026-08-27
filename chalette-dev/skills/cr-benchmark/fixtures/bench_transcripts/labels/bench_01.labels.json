@@ -1,0 +1,73 @@
+{
+  "transcript_id": "bench_01",
+  "set_version": "1.0",
+  "title": "Weekly pipeline sync",
+  "meeting_date": "2026-05-04",
+  "attendees": [
+    "Sam Sample",
+    "Bo Sample"
+  ],
+  "primary_user": "Sam Sample",
+  "planted": [
+    {
+      "label_id": "bench_01_c1",
+      "expected_route": "book",
+      "keyphrase": "revised pricing sheet",
+      "gist": "send the revised pricing sheet to Bo by Tuesday",
+      "owner_name": "Sam Sample",
+      "counterparty_name": "Bo Sample",
+      "due_hint": "Tuesday"
+    },
+    {
+      "label_id": "bench_01_c2",
+      "expected_route": "book",
+      "keyphrase": "Cedar Works finance lead",
+      "gist": "introduce Bo to the Cedar Works finance lead",
+      "owner_name": "Sam Sample",
+      "counterparty_name": "Bo Sample",
+      "due_hint": "this week"
+    },
+    {
+      "label_id": "bench_01_c3",
+      "expected_route": "book",
+      "keyphrase": "Acme usage report",
+      "gist": "send Sam the Acme usage report by Friday",
+      "owner_name": "Bo Sample",
+      "counterparty_name": "Sam Sample",
+      "due_hint": "Friday"
+    },
+    {
+      "label_id": "bench_01_c4",
+      "expected_route": "review",
+      "keyphrase": "customer case study",
+      "gist": "draft the customer case study before the renewal",
+      "owner_name": "Sam Sample",
+      "counterparty_name": "Bo Sample",
+      "why": "hedged (might be able to / no promises) but consequential"
+    },
+    {
+      "label_id": "bench_01_c5",
+      "expected_route": "reject",
+      "keyphrase": "rethink the whole onboarding flow",
+      "why": "vague group intent, no owner, no deliverable"
+    },
+    {
+      "label_id": "bench_01_c6",
+      "expected_route": "reject",
+      "keyphrase": "cleaner dashboard would be nice",
+      "why": "wishful, no owner"
+    }
+  ],
+  "entity_mentions": [
+    {
+      "label_id": "bench_01_e1",
+      "surface": "Bo",
+      "expected": "Bo Sample"
+    },
+    {
+      "label_id": "bench_01_e2",
+      "surface": "Cedar Works",
+      "expected_org": "Cedar Works"
+    }
+  ]
+}

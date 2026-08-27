@@ -1,0 +1,84 @@
+{
+  "transcript_id": "bench_03",
+  "set_version": "1.0",
+  "title": "Vendor contract call",
+  "meeting_date": "2026-05-04",
+  "attendees": [
+    "Sam Sample",
+    "Rio Sample"
+  ],
+  "primary_user": "Sam Sample",
+  "planted": [
+    {
+      "label_id": "bench_03_c1",
+      "expected_route": "observed",
+      "keyphrase": "signed services contract",
+      "gist": "Dustin to send the signed services contract to Lyra",
+      "owner_name": "Dustin Sample",
+      "counterparty_name": "Lyra Sample",
+      "why": "third-party to third-party; workspace owner not a party"
+    },
+    {
+      "label_id": "bench_03_c2",
+      "expected_route": "observed",
+      "keyphrase": "security questionnaire",
+      "gist": "Bowie owes Lyra the security questionnaire by end of week",
+      "owner_name": "Bowie Sample",
+      "counterparty_name": "Lyra Sample",
+      "why": "third-party to third-party"
+    },
+    {
+      "label_id": "bench_03_c3",
+      "expected_route": "book",
+      "keyphrase": "vendor comparison matrix",
+      "gist": "get the vendor comparison matrix to Rio by Thursday",
+      "owner_name": "Sam Sample",
+      "counterparty_name": "Rio Sample",
+      "due_hint": "Thursday"
+    },
+    {
+      "label_id": "bench_03_c4",
+      "expected_route": "reject",
+      "keyphrase": "sent the W-9",
+      "why": "past tense, already done"
+    },
+    {
+      "label_id": "bench_03_c5",
+      "expected_route": "reject",
+      "keyphrase": "click the invite button",
+      "why": "live action completed on the call (J1 shape)"
+    },
+    {
+      "label_id": "bench_03_c6",
+      "expected_route": "book",
+      "keyphrase": "cancel the old vendor account",
+      "gist": "cancel the old vendor account before month end",
+      "owner_name": "Rio Sample",
+      "counterparty_name": "Sam Sample",
+      "due_hint": "month end"
+    },
+    {
+      "label_id": "bench_03_c7",
+      "expected_route": "reject",
+      "keyphrase": "consolidate the remaining vendors",
+      "why": "deferred next-year intent, no commitment"
+    }
+  ],
+  "entity_mentions": [
+    {
+      "label_id": "bench_03_e1",
+      "surface": "Dustin",
+      "expected": "Dustin Sample"
+    },
+    {
+      "label_id": "bench_03_e2",
+      "surface": "Lyra",
+      "expected": "Lyra Sample"
+    },
+    {
+      "label_id": "bench_03_e3",
+      "surface": "Bowie",
+      "expected": "Bowie Sample"
+    }
+  ]
+}

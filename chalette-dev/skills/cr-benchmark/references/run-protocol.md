@@ -1,0 +1,89 @@
+# BENCH1 run protocol
+
+Follow in order. Every step is idempotent; a failed run is re-run, never
+patched. `<cr1>` = the operator profile's `cr1_clone` (M: `~/repos/cr1-canonical`).
+
+## 0. Preconditions (each session)
+
+```bash
+cd <chalette-dev>/chalette-dev/skills/cr-benchmark/scripts
+python ../../synthetic-workspace-runtime-test/fixtures/_generate_fixtures.py --cr1 <cr1> --check
+python _generate_bench_transcripts.py --check
+git -C <cr1> status --short          # MUST be empty; this lane never writes cr1
+```
+
+Windows: `set PYTHONUTF8=1` first. The `claude` CLI must be on PATH or at
+`~/.local/bin/claude.exe`; runs use the operator's existing subscription auth
+(never an API key, never `--bare`).
+
+## 1. Runs
+
+One invocation per arm; each task inside is its own fresh-workspace run:
+
+```bash
+python bench_runner.py --arm A --fixture clean_workspace --task all --model opus
+python bench_runner.py --arm B --fixture clean_workspace --task all --model opus
+```
+
+What the runner guarantees per run:
+
+- fresh temp copy of the fixture; nothing persists between runs
+- bench transcripts injected into the granola connector fixture (both arms)
+- Arm B's CLAUDE.md swapped to the neutral stub (same identity, no CR rules)
+- mock connectors attached with `--strict-mcp-config` (nothing else loads)
+- Arm A loads the plugin via `--plugin-dir <cr1>/command-room`; Arm B loads
+  no plugin (verify `claude plugin list` prints none installed)
+- artifacts + `run_meta.json` under `runs/<run_id>/`; a row appended to
+  `runs/RUNLOG.jsonl`
+
+Sanity-check the first run of each arm before letting the rest proceed:
+open `chat.txt`, confirm the model id in `run_meta.json` is the pinned Opus
+id, and for Arm A confirm `events_diff.jsonl` is non-empty on t1.
+
+## 2. Scoring
+
+```bash
+python bench_scorer.py --runs-dir ../runs --cr1 <cr1>
+```
+
+Writes `scorecard.json` per run and `runs/scoreboard.{json,md}`. Read the
+scoreboard; investigate any ERROR/TIMEOUT row and any
+`receipt_cross_check.agree: false` before quoting numbers.
+
+## 3. Pilot gate (hard stop)
+
+The pilot is 12 runs (2 arms x 6 tasks, clean_workspace). After scoring:
+
+1. Hand-verify the pilot: for each t1 run, spot-check 10 planted items'
+   evidence lines in the scorecard against the raw chat/events.
+2. Report to M: scoreboard + measured tokens-per-run at Opus.
+3. **Stop.** M schedules the full battery (adds mature_workspace; 24 runs
+   total) against the shared weekly usage pool. Do not start the battery,
+   ablation arms, or codex grading without that scheduling ruling.
+
+## 4. Official grading (phase 5, after M's codex setup)
+
+Prereqs (M runs these once): `npm i -g @openai/codex`, `codex login`,
+`claude plugin marketplace add openai/codex-plugin-cc` (exactly that repo —
+look-alike forks exist), install the codex plugin, `/codex:setup`.
+
+Then, per graded run set:
+
+```bash
+git add runs/ && git commit -m "bench: <set> artifacts + scorecards"
+/codex:adversarial-review --scope branch verify the BENCH1 scorecards against the raw run artifacts in skills/cr-benchmark/runs/ - recompute the counts, hunt for scoring bias and for evidence lines that do not support their assigned outcome
+```
+
+Store the codex verdict JSON at `runs/<set>_codex_verdict.json`, set
+`codex_verdict` on the affected RUNLOG rows (append correction rows — the
+log is append-only, never rewritten), and only then mark numbers official.
+A needs-attention verdict blocks publication of the affected numbers until
+resolved and re-reviewed.
+
+## 5. Battery + v2 ablations
+
+Battery = pilot protocol plus `--fixture mature_workspace`, both arms.
+v2 ablation arms (CR minus entity-resolve / capture-gate / routing) are
+specified in the instructions doc; they reuse this protocol with a modified
+`--plugin-dir` payload and are NOT built until M green-lights them with the
+measured per-run cost from the battery.

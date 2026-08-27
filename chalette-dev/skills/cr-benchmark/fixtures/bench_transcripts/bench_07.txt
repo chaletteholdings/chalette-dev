@@ -1,0 +1,12 @@
+Dustin Sample: migration status: I'll have the server inventory list finished by Wednesday, that unblocks the cutover plan
+Sam Sample: good. Bowie, the runbook?
+Bowie Sample: I'll write the cutover runbook by Friday and walk the team through it Monday
+Sam Sample: ok. who owns the customer comms?
+Dustin Sample: we'll get the comms drafted at some point before cutover
+Sam Sample: that's not an owner. park it for now
+Bowie Sample: we should probably also revisit the backup vendor eventually
+Sam Sample: eventually. status on the maintenance window?
+Dustin Sample: waiting on you. Mira also promised the datacenter vendor she'd sign the SOW by Thursday, so hardware is covered
+Sam Sample: then I'll approve the maintenance window request this afternoon so nothing slips
+Bowie Sample: zero-downtime would be great someday
+Sam Sample: someday. standup done
