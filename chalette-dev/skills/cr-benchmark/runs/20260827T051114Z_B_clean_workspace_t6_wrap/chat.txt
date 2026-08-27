@@ -1,0 +1,26 @@
+I dug into this and I have to be straight with you, Sam: **I can't honestly wrap *this* week, because none of your sources have any data for it.** Today is Aug 26, but every source I can reach stops in **late May** — roughly three months ago.
+
+Here's what I found across all four sources:
+
+| Source | What I queried | Newest data returned |
+|---|---|---|
+| `events.jsonl` (workspace log) | full file | **2026-05-30** |
+| Granola (meeting notes) | recent meetings | **2026-05-04** |
+| Calendar | `next_7_days` | **2026-05-07** |
+| Gmail | `newer_than:7d` | **2026-05-14** |
+
+The tell is that even the *live* integrations disagree with the calendar. I asked Gmail for the last 7 days and it handed back messages from May 1–14; the calendar's "next 7 days" returned May 1–7. That's not just a stale local file — the connected sources themselves are serving May-dated data, which points to a sync or clock problem on the integrations rather than a genuinely quiet week.
+
+So rather than dress up three-month-old (and frankly placeholder-looking — "Follow up on item 42", "Decision 43: chose option A") records as "your week," here's the honest picture:
+
+**What the freshest real signal actually shows (week of May 25–30, the last logged activity):**
+- **What happened:** the log's final entries (May 30) were a cleanup pass — six commitments closed out as `done` (cmt 2, 7, 12, 17, 22, 27), applied via `apply-choices`.
+- **Still open:** dozens of "follow up" commitments logged after that batch (owned mostly by Bowie and Rio) were never marked resolved — but I'd treat that as stale, not live.
+- **What slipped:** not answerable — there's simply no record of the intervening ~12 weeks to compare against.
+
+**What I'd suggest:**
+1. Let's figure out why the feeds are stuck in May — that's the real issue. Is the workspace-manager job that appends to `events.jsonl` still running? When did it last write?
+2. If you tell me the integrations *should* be current, I can re-pull and we compare timestamps.
+3. If you actually want a wrap of the **last logged week (May 25–30)** for the record, say the word and I'll write that up in full — I just won't label it "this week."
+
+Want me to start by digging into why the log stopped on May 30?

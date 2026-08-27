@@ -1,0 +1,1884 @@
+[
+  {
+    "run_id": "20260827T045425Z_A_clean_workspace_t1_transcripts",
+    "arm": "A",
+    "fixture": "clean_workspace",
+    "task": "t1_transcripts",
+    "model_id": "claude-opus-4-8",
+    "wall_ms": 662062,
+    "tokens": {
+      "input": 12795,
+      "output": 51914,
+      "cache_read": 2588313,
+      "cache_creation": 163855
+    },
+    "is_error": false,
+    "timed_out": false,
+    "extraction": {
+      "rows": [
+        {
+          "label_id": "bench_01_c1",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 208, \"type\": \"commitment\"} send the revised pricing sheet to Bo  I'll send the revised pricing sheet to you by Tuesday so you can walk them through it "
+        },
+        {
+          "label_id": "bench_01_c2",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 209, \"type\": \"commitment\"} introduce Bo to the Cedar Works finance lead  can you introduce me to the Cedar Works finance lead this week? I want them in the loop before the proposal lands "
+        },
+        {
+          "label_id": "bench_01_c3",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 210, \"type\": \"commitment\"} send Sam the Acme usage report  I'll send you the Acme usage report by Friday so you have it for the renewal call "
+        },
+        {
+          "label_id": "bench_01_c4",
+          "expected": "review",
+          "assigned": "chat_capture",
+          "evidence": "- **Explicitly hedged to non-commitments:** the customer case study (\"no promises\"), the investor FAQ (\"we'll see\"), department pre-reads (\"if the leads cooperate\"), the cohort analysis (\"depends on t"
+        },
+        {
+          "label_id": "bench_01_c5",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_01_c6",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_02_c1",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 213, \"type\": \"commitment\"} pull together the Q2 revenue numbers  I'll pull the Q2 revenue numbers together by Thursday, finance already has the raw export "
+        },
+        {
+          "label_id": "bench_02_c2",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 214, \"type\": \"commitment\"} draft the board deck  I'm going to draft the board deck by Friday so Quinn can sanity-check the hiring slide before it goes out "
+        },
+        {
+          "label_id": "bench_02_c3",
+          "expected": "review",
+          "assigned": "review",
+          "evidence": "{\"seq\": 215, \"type\": \"commitment\"} send out the board pre-read memo  I should be able to get the pre-read memo out ahead of the deck, I'll try for Wednesday "
+        },
+        {
+          "label_id": "bench_02_c4",
+          "expected": "reject",
+          "assigned": "mentioned_only",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_02_c5",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_02_c6",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 216, \"type\": \"commitment\"} book the board dinner for Wednesday night  I'll book the board dinner for Wednesday night, the usual place "
+        },
+        {
+          "label_id": "bench_02_c7",
+          "expected": "observed",
+          "assigned": "review",
+          "evidence": "{\"seq\": 217, \"type\": \"commitment\"} send the auditors the equity grants file  Quinn told the auditors she'd send them the equity grants file by Tuesday "
+        },
+        {
+          "label_id": "bench_03_c1",
+          "expected": "observed",
+          "assigned": "book",
+          "evidence": "{\"seq\": 220, \"type\": \"commitment\"} send Lyra the signed services contract  Dustin is going to send the signed services contract over to Lyra tomorrow so her team can countersign "
+        },
+        {
+          "label_id": "bench_03_c2",
+          "expected": "observed",
+          "assigned": "book",
+          "evidence": "{\"seq\": 221, \"type\": \"commitment\"} send Lyra the security questionnaire  Bowie owes Lyra the security questionnaire, he told her end of week "
+        },
+        {
+          "label_id": "bench_03_c3",
+          "expected": "book",
+          "assigned": "review",
+          "evidence": "{\"seq\": 223, \"type\": \"commitment\"} send Rio the vendor comparison matrix  I'll get the vendor comparison matrix to you by Thursday so we can pick before the renewal date "
+        },
+        {
+          "label_id": "bench_03_c4",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_03_c5",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_03_c6",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 222, \"type\": \"commitment\"} cancel the old vendor account  I'll cancel the old vendor account before month end so we stop paying twice "
+        },
+        {
+          "label_id": "bench_03_c7",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_04_c1",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 226, \"type\": \"commitment\"} schedule the panel interviews for both candidates  I'll schedule the panel interviews for both candidates this week, calendars permitting "
+        },
+        {
+          "label_id": "bench_04_c2",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 227, \"type\": \"commitment\"} send Quinn the offer template  I'll send you the offer template tonight so it's ready if Thursday goes well "
+        },
+        {
+          "label_id": "bench_04_c3",
+          "expected": "review",
+          "assigned": "observed",
+          "evidence": "{\"seq\": 229, \"type\": \"commitment_observed\"} draft the panel scoring rubric  someone should own the rubric... I guess I can take a stab at a draft "
+        },
+        {
+          "label_id": "bench_04_c4",
+          "expected": "reject",
+          "assigned": "mentioned_only",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_04_c5",
+          "expected": "reject",
+          "assigned": "mentioned_only",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_04_c6",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_04_c7",
+          "expected": "book",
+          "assigned": "review",
+          "evidence": "{\"seq\": 228, \"type\": \"commitment\"} post the job description for the data role  I'll post the job description for the data role tomorrow morning "
+        },
+        {
+          "label_id": "bench_05_c1",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_05_c2",
+          "expected": "book",
+          "assigned": "review",
+          "evidence": "{\"seq\": 232, \"type\": \"commitment\"} send the updated cap table to counsel  can you send the updated cap table to counsel by Wednesday? they're blocked on it "
+        },
+        {
+          "label_id": "bench_05_c3",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_05_c4",
+          "expected": "book",
+          "assigned": "review",
+          "evidence": "{\"seq\": 233, \"type\": \"commitment\"} send the wire instructions to counsel  I'll send the wire instructions to counsel today so closing isn't blocked on us "
+        },
+        {
+          "label_id": "bench_05_c5",
+          "expected": "review",
+          "assigned": "chat_capture",
+          "evidence": "- **Explicitly hedged to non-commitments:** the customer case study (\"no promises\"), the investor FAQ (\"we'll see\"), department pre-reads (\"if the leads cooperate\"), the cohort analysis (\"depends on t"
+        },
+        {
+          "label_id": "bench_05_c6",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_06_c1",
+          "expected": "observed",
+          "assigned": "review",
+          "evidence": "{\"seq\": 236, \"type\": \"commitment\"} send Northstar the renewal terms  Aria is going to send Northstar the renewal terms on Monday, she confirmed this morning "
+        },
+        {
+          "label_id": "bench_06_c2",
+          "expected": "observed",
+          "assigned": "review",
+          "evidence": "{\"seq\": 237, \"type\": \"commitment\"} send Northstar the corrected data feed  Bowie told the Northstar team he'd get them the corrected data feed by Friday "
+        },
+        {
+          "label_id": "bench_06_c3",
+          "expected": "book",
+          "assigned": "review",
+          "evidence": "{\"seq\": 238, \"type\": \"commitment\"} follow up with the Northstar exec sponsor  I'll follow up with the Northstar Partners exec sponsor next week to make sure the renewal lands "
+        },
+        {
+          "label_id": "bench_06_c4",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_06_c5",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 239, \"type\": \"commitment\"} send Sam the partner health dashboard link  I'll send you the partner health dashboard link tonight so you can watch the feed fix land "
+        },
+        {
+          "label_id": "bench_06_c6",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_07_c1",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 242, \"type\": \"commitment\"} finish the server inventory list  I'll have the server inventory list finished by Wednesday, that unblocks the cutover plan "
+        },
+        {
+          "label_id": "bench_07_c2",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 243, \"type\": \"commitment\"} write the cutover runbook  I'll write the cutover runbook by Friday and walk the team through it Monday "
+        },
+        {
+          "label_id": "bench_07_c3",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_07_c4",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_07_c5",
+          "expected": "observed",
+          "assigned": "review",
+          "evidence": "{\"seq\": 245, \"type\": \"commitment\"} sign the datacenter SOW  Mira also promised the datacenter vendor she'd sign the SOW by Thursday, so hardware is covered "
+        },
+        {
+          "label_id": "bench_07_c6",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 246, \"type\": \"commitment\"} approve the maintenance window request  I'll approve the maintenance window request this afternoon so nothing slips "
+        },
+        {
+          "label_id": "bench_07_c7",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_08_c1",
+          "expected": "book",
+          "assigned": "review",
+          "evidence": "{\"seq\": 249, \"type\": \"commitment\"} call the Acme Co COO  I'll call the Acme Co chief operating officer today, before five, this can't sit "
+        },
+        {
+          "label_id": "bench_08_c2",
+          "expected": "book",
+          "assigned": "review",
+          "evidence": "{\"seq\": 250, \"type\": \"commitment\"} write the incident postmortem and send it to Acme  I'll write the incident postmortem by Thursday and send it to their team, they asked for it in writing "
+        },
+        {
+          "label_id": "bench_08_c3",
+          "expected": "observed",
+          "assigned": "review",
+          "evidence": "{\"seq\": 251, \"type\": \"commitment\"} process the service credit  Rio told their account manager he'd process the service credit this week "
+        },
+        {
+          "label_id": "bench_08_c4",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 252, \"type\": \"commitment\"} send Mira the escalation contact sheet  I'll send you the escalation contact sheet tonight so you're not guessing who to wake up "
+        },
+        {
+          "label_id": "bench_08_c5",
+          "expected": "review",
+          "assigned": "review",
+          "evidence": "{\"seq\": 253, \"type\": \"commitment\"} get an exec summary in front of the Acme CEO  I'll try to get an exec summary in front of their CEO this week, travel permitting "
+        },
+        {
+          "label_id": "bench_08_c6",
+          "expected": "reject",
+          "assigned": "mentioned_only",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_09_c1",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 256, \"type\": \"commitment\"} send Aria the planning template and last quarter's scorecard  I'll send you the planning template and last quarter's scorecard by end of day Friday "
+        },
+        {
+          "label_id": "bench_09_c2",
+          "expected": "review",
+          "assigned": "chat_capture",
+          "evidence": "- **Explicitly hedged to non-commitments:** the customer case study (\"no promises\"), the investor FAQ (\"we'll see\"), department pre-reads (\"if the leads cooperate\"), the cohort analysis (\"depends on t"
+        },
+        {
+          "label_id": "bench_09_c3",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_09_c4",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_09_c5",
+          "expected": "book",
+          "assigned": "review",
+          "evidence": "{\"seq\": 257, \"type\": \"commitment\"} circulate the kickoff agenda  I'll circulate the kickoff agenda by Monday so nobody claims surprise "
+        },
+        {
+          "label_id": "bench_09_c6",
+          "expected": "observed",
+          "assigned": "review",
+          "evidence": "{\"seq\": 258, \"type\": \"commitment\"} close out the budget template  Bo told finance he'd close out the budget template by Friday, so the numbers side is handled "
+        },
+        {
+          "label_id": "bench_10_c1",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 261, \"type\": \"commitment\"} send the data room checklist to Bo and Quinn  I'll send you both the data room checklist tomorrow so we populate it once, properly "
+        },
+        {
+          "label_id": "bench_10_c2",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 262, \"type\": \"commitment\"} update the financial model with May actuals  I'll update the financial model with the May actuals by Wednesday, the old version is embarrassing "
+        },
+        {
+          "label_id": "bench_10_c3",
+          "expected": "observed",
+          "assigned": "book",
+          "evidence": "{\"seq\": 263, \"type\": \"commitment\"} finish the legal review of the SAFE docs  Rio said he'll finish the legal review of the SAFE docs before the partner meeting "
+        },
+        {
+          "label_id": "bench_10_c4",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_10_c5",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 264, \"type\": \"commitment\"} schedule the partner meeting prep call  I'll schedule the partner meeting prep call for Monday morning, thirty minutes "
+        },
+        {
+          "label_id": "bench_10_c6",
+          "expected": "review",
+          "assigned": "chat_capture",
+          "evidence": "- **Explicitly hedged to non-commitments:** the customer case study (\"no promises\"), the investor FAQ (\"we'll see\"), department pre-reads (\"if the leads cooperate\"), the cohort analysis (\"depends on t"
+        },
+        {
+          "label_id": "bench_10_c7",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_11_c1",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 267, \"type\": \"commitment\"} book the Thursday roadmap walkthrough slot  sure, I'll book the Thursday slot when we hang up "
+        },
+        {
+          "label_id": "bench_11_c2",
+          "expected": "reject",
+          "assigned": "mentioned_only",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_11_c3",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_11_c4",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_11_c5",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 268, \"type\": \"commitment\"} send Dustin the roadmap doc before the walkthrough  I'll send you the roadmap doc before the Thursday walkthrough so you're not reading it cold "
+        },
+        {
+          "label_id": "bench_11_c6",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_12_c1",
+          "expected": "observed",
+          "assigned": "review",
+          "evidence": "{\"seq\": 271, \"type\": \"commitment\"} publish the OKR tracker to the whole team  Mira committed to publishing the OKR tracker to the whole team by Monday "
+        },
+        {
+          "label_id": "bench_12_c2",
+          "expected": "observed",
+          "assigned": "review",
+          "evidence": "{\"seq\": 272, \"type\": \"commitment\"} deliver the escalation training session  Quinn told the support leads she'd deliver the escalation training session next week "
+        },
+        {
+          "label_id": "bench_12_c3",
+          "expected": "book",
+          "assigned": "review",
+          "evidence": "{\"seq\": 273, \"type\": \"commitment\"} record the async QA video  I'll record the async QA video for the questions we didn't get to, this week "
+        },
+        {
+          "label_id": "bench_12_c4",
+          "expected": "reject",
+          "assigned": "mentioned_only",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_12_c5",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_12_c6",
+          "expected": "book",
+          "assigned": "book",
+          "evidence": "{\"seq\": 274, \"type\": \"commitment\"} compile the open questions doc from the all-hands  yes, I'll have the questions doc out by tomorrow "
+        },
+        {
+          "label_id": "bench_12_c7",
+          "expected": "reject",
+          "assigned": "mentioned_only",
+          "evidence": ""
+        }
+      ],
+      "counts": {
+        "book_expected": 30,
+        "book_captured": 30,
+        "book_exact": 21,
+        "review_expected": 7,
+        "review_captured": 6,
+        "review_exact": 2,
+        "observed_expected": 11,
+        "observed_exact": 0,
+        "observed_as_open": 11,
+        "observed_captured_any": 11,
+        "reject_expected": 30,
+        "reject_false_captures": 0,
+        "owner_lane_recall": 0.973,
+        "owner_lane_precision_vs_planted": 1.0,
+        "unplanted_captures": 0
+      },
+      "unplanted": []
+    },
+    "receipt_cross_check": {
+      "receipts": {
+        "n_book": 43,
+        "n_review": 1,
+        "n_observed": 1,
+        "n_skipped": 0,
+        "n_floor_gated": 1,
+        "n_deduped": 0,
+        "n_fusion_inert": 0
+      },
+      "n_receipts": 12,
+      "scorer_booked_plus_review": 23,
+      "receipt_booked_plus_review": 44,
+      "agree": false
+    },
+    "entities": {
+      "rows": [
+        {
+          "label_id": "bench_01_e1",
+          "surface": "Bo",
+          "expected": "Bo Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_01_e2",
+          "surface": "Cedar Works",
+          "expected": "Cedar Works",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_02_e1",
+          "surface": "Quinn",
+          "expected": "Quinn Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_02_e2",
+          "surface": "Mira",
+          "expected": "Mira Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_03_e1",
+          "surface": "Dustin",
+          "expected": "Dustin Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_03_e2",
+          "surface": "Lyra",
+          "expected": "Lyra Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_03_e3",
+          "surface": "Bowie",
+          "expected": "Bowie Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_04_e1",
+          "surface": "Quinn",
+          "expected": "Quinn Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_04_e2",
+          "surface": "Aria",
+          "expected": "Aria Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_05_e1",
+          "surface": "Skyler Stone",
+          "expected": "UNKNOWN_PERSON",
+          "verdict": "missed",
+          "wrong_bind": null
+        },
+        {
+          "label_id": "bench_06_e1",
+          "surface": "Northstar",
+          "expected": "Northstar Partners",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_06_e2",
+          "surface": "Aria",
+          "expected": "Aria Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_07_e1",
+          "surface": "Dustin",
+          "expected": "Dustin Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_07_e2",
+          "surface": "Bowie",
+          "expected": "Bowie Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_08_e1",
+          "surface": "mira.sample7@example.com",
+          "expected": "Mira Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_08_e2",
+          "surface": "Acme Co",
+          "expected": "Acme Co",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_09_e1",
+          "surface": "Aria",
+          "expected": "Aria Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_10_e1",
+          "surface": "Rio",
+          "expected": "Rio Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_11_e1",
+          "surface": "Bluebird Group",
+          "expected": "Bluebird Group",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_12_e1",
+          "surface": "Lyra",
+          "expected": "Lyra Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_12_e2",
+          "surface": "Quinn",
+          "expected": "Quinn Sample",
+          "verdict": "partial_surface_only"
+        }
+      ],
+      "counts": {
+        "partial_surface_only": 15,
+        "right": 3,
+        "missed": 3
+      }
+    },
+    "hallucination": {
+      "invented_person_names": {},
+      "count": 0
+    },
+    "leaks": {
+      "hits": {
+        "substrate_path_hq": {
+          "count": 1,
+          "samples": [
+            "_hq/.system"
+          ]
+        }
+      },
+      "count": 1
+    }
+  },
+  {
+    "run_id": "20260827T050627Z_B_clean_workspace_t1_transcripts",
+    "arm": "B",
+    "fixture": "clean_workspace",
+    "task": "t1_transcripts",
+    "model_id": "claude-opus-4-8",
+    "wall_ms": 122905,
+    "tokens": {
+      "input": 3409,
+      "output": 9856,
+      "cache_read": 134371,
+      "cache_creation": 16647
+    },
+    "is_error": false,
+    "timed_out": false,
+    "extraction": {
+      "rows": [
+        {
+          "label_id": "bench_01_c1",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Sam** | Bo | Send revised Acme pricing sheet | Tue (May 5) | Weekly pipeline sync |"
+        },
+        {
+          "label_id": "bench_01_c2",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Sam** | Bo | Intro Bo to Cedar Works finance lead (email) | This week | Weekly pipeline sync |"
+        },
+        {
+          "label_id": "bench_01_c3",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Bo** | Sam | Send Acme usage report | Fri (May 8) | Weekly pipeline sync |"
+        },
+        {
+          "label_id": "bench_01_c4",
+          "expected": "review",
+          "assigned": "chat_capture",
+          "evidence": "- **Sam** → customer case study before the Acme renewal — *\"no promises\"* (Weekly pipeline sync)"
+        },
+        {
+          "label_id": "bench_01_c5",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_01_c6",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_02_c1",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Mira** | — | Pull together Q2 revenue numbers | Thu (May 7) | Board prep |"
+        },
+        {
+          "label_id": "bench_02_c2",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Sam** | — | Draft board deck (for Quinn to check hiring slide) | Fri (May 8) | Board prep |"
+        },
+        {
+          "label_id": "bench_02_c3",
+          "expected": "review",
+          "assigned": "chat_capture",
+          "evidence": "| **Sam** | — | Pre-read memo out ahead of the deck | Targeting Wed (May 6)* | Board prep |"
+        },
+        {
+          "label_id": "bench_02_c4",
+          "expected": "reject",
+          "assigned": "mentioned_only",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_02_c5",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_02_c6",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Mira** | — | Book board dinner (usual place) | Wed night (May 6) | Board prep |"
+        },
+        {
+          "label_id": "bench_02_c7",
+          "expected": "observed",
+          "assigned": "chat_capture",
+          "evidence": "| **Quinn** | Auditors | Send equity grants file | Tue (May 5) | Board prep |"
+        },
+        {
+          "label_id": "bench_03_c1",
+          "expected": "observed",
+          "assigned": "chat_capture",
+          "evidence": "| **Dustin** | Lyra | Send signed services contract (for countersign) | Tomorrow (May 5) | Vendor contract call |"
+        },
+        {
+          "label_id": "bench_03_c2",
+          "expected": "observed",
+          "assigned": "chat_capture",
+          "evidence": "| **Bowie** | Lyra | Send security questionnaire | End of week (May 8) | Vendor contract call |"
+        },
+        {
+          "label_id": "bench_03_c3",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Sam** | Rio | Send vendor comparison matrix | Thu (May 7) | Vendor contract call |"
+        },
+        {
+          "label_id": "bench_03_c4",
+          "expected": "reject",
+          "assigned": "mentioned_only",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_03_c5",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_03_c6",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Rio** | — | Cancel old vendor account (stop double-paying) | Before month end (May 31) | Vendor contract call |"
+        },
+        {
+          "label_id": "bench_03_c7",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_04_c1",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Quinn** | — | Schedule panel interviews for both candidates | This week (calendars permitting) | Hiring slate review |"
+        },
+        {
+          "label_id": "bench_04_c2",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Sam** | Quinn | Send offer template | Tonight (May 4) | Hiring slate review |"
+        },
+        {
+          "label_id": "bench_04_c3",
+          "expected": "review",
+          "assigned": "chat_capture",
+          "evidence": "- **Aria** → draft scoring rubric for the panel — *\"I guess I can take a stab\"* (Hiring slate review)"
+        },
+        {
+          "label_id": "bench_04_c4",
+          "expected": "reject",
+          "assigned": "mentioned_only",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_04_c5",
+          "expected": "reject",
+          "assigned": "mentioned_only",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_04_c6",
+          "expected": "reject",
+          "assigned": "mentioned_only",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_04_c7",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Aria** | — | Post job description for data role | Tomorrow AM (May 5) | Hiring slate review |"
+        },
+        {
+          "label_id": "bench_05_c1",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_05_c2",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Sam** | Counsel | Send updated cap table | Wed (May 6) | Data room walkthrough |"
+        },
+        {
+          "label_id": "bench_05_c3",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_05_c4",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Sam** | Counsel | Send wire instructions (so closing isn't blocked) | Today (May 4) | Data room walkthrough |"
+        },
+        {
+          "label_id": "bench_05_c5",
+          "expected": "review",
+          "assigned": "chat_capture",
+          "evidence": "- **Bo** → investor FAQ if inbound keeps up — *\"we'll see\"* (Data room walkthrough)"
+        },
+        {
+          "label_id": "bench_05_c6",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_06_c1",
+          "expected": "observed",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_06_c2",
+          "expected": "observed",
+          "assigned": "chat_capture",
+          "evidence": "| **Bowie** | Northstar team | Deliver corrected data feed | Fri (May 8) | Partner renewal sync |"
+        },
+        {
+          "label_id": "bench_06_c3",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Sam** | — | Follow up with Northstar exec sponsor | Next week | Partner renewal sync |"
+        },
+        {
+          "label_id": "bench_06_c4",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_06_c5",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Lyra** | Sam | Send partner health dashboard link | Tonight (May 4) | Partner renewal sync |"
+        },
+        {
+          "label_id": "bench_06_c6",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_07_c1",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Dustin** | — | Finish server inventory list (unblocks cutover) | Wed (May 6) | Ops standup |"
+        },
+        {
+          "label_id": "bench_07_c2",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Bowie** | — | Write cutover runbook | Fri (May 8) | Ops standup |"
+        },
+        {
+          "label_id": "bench_07_c3",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_07_c4",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_07_c5",
+          "expected": "observed",
+          "assigned": "chat_capture",
+          "evidence": "| **Mira** | Datacenter vendor | Sign the SOW | Thu (May 7) | Ops standup |"
+        },
+        {
+          "label_id": "bench_07_c6",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Sam** | — | Approve maintenance window request | This afternoon (May 4) | Ops standup |"
+        },
+        {
+          "label_id": "bench_07_c7",
+          "expected": "reject",
+          "assigned": "mentioned_only",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_08_c1",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Sam** | Acme Co COO | Call the COO re: the outage | Today, before 5pm (May 4) | Customer escalation |"
+        },
+        {
+          "label_id": "bench_08_c2",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Mira** | Acme Co team | Write & send incident postmortem | Thu (May 7) | Customer escalation |"
+        },
+        {
+          "label_id": "bench_08_c3",
+          "expected": "observed",
+          "assigned": "chat_capture",
+          "evidence": "| **Rio** | Acme account mgr | Process the service credit | This week | Customer escalation |"
+        },
+        {
+          "label_id": "bench_08_c4",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Sam** | Mira | Send escalation contact sheet | Tonight (May 4) | Customer escalation |"
+        },
+        {
+          "label_id": "bench_08_c5",
+          "expected": "review",
+          "assigned": "chat_capture",
+          "evidence": "- **Sam** → exec summary in front of Acme's CEO this week — *\"travel permitting\"* (Customer escalation)"
+        },
+        {
+          "label_id": "bench_08_c6",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_09_c1",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Sam** | Aria | Send planning template + last qtr's scorecard | EOD Fri (May 8) | Quarterly planning kickoff |"
+        },
+        {
+          "label_id": "bench_09_c2",
+          "expected": "review",
+          "assigned": "chat_capture",
+          "evidence": "- **Aria** → collect department pre-reads before kickoff — *\"I might try… no promises\"* (Quarterly planning kickoff)"
+        },
+        {
+          "label_id": "bench_09_c3",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_09_c4",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_09_c5",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Aria** | — | Circulate kickoff agenda | Mon (May 11) | Quarterly planning kickoff |"
+        },
+        {
+          "label_id": "bench_09_c6",
+          "expected": "observed",
+          "assigned": "chat_capture",
+          "evidence": "| **Bo** | Finance | Close out the budget template | Fri (May 8) | Quarterly planning kickoff |"
+        },
+        {
+          "label_id": "bench_10_c1",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Sam** | Bo | Send data room checklist | Tomorrow (May 5) | Fundraise check-in |"
+        },
+        {
+          "label_id": "bench_10_c2",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Quinn** | — | Update financial model with May actuals | Wed (May 6) | Fundraise check-in |"
+        },
+        {
+          "label_id": "bench_10_c3",
+          "expected": "observed",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_10_c4",
+          "expected": "reject",
+          "assigned": "mentioned_only",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_10_c5",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Bo** | — | Schedule partner-meeting prep call (30 min) | Mon AM (May 11) | Fundraise check-in |"
+        },
+        {
+          "label_id": "bench_10_c6",
+          "expected": "review",
+          "assigned": "chat_capture",
+          "evidence": "- **Quinn** → cohort analysis before the partner meeting — *\"depends on the data pull\"* (Fundraise check-in)"
+        },
+        {
+          "label_id": "bench_10_c7",
+          "expected": "reject",
+          "assigned": "mentioned_only",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_11_c1",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Dustin** | Sam | Book Thu-afternoon roadmap walkthrough slot | (books today; event Thu May 7) | Calendar chatter |"
+        },
+        {
+          "label_id": "bench_11_c2",
+          "expected": "reject",
+          "assigned": "mentioned_only",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_11_c3",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_11_c4",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_11_c5",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Sam** | Dustin | Send roadmap doc | Before Thu walkthrough (May 7) | Calendar chatter |"
+        },
+        {
+          "label_id": "bench_11_c6",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_12_c1",
+          "expected": "observed",
+          "assigned": "chat_capture",
+          "evidence": "| **Mira** | Whole team | Publish OKR tracker | Mon (May 11) | All-hands recap |"
+        },
+        {
+          "label_id": "bench_12_c2",
+          "expected": "observed",
+          "assigned": "chat_capture",
+          "evidence": "| **Quinn** | Support leads | Deliver escalation training session | Next week | All-hands recap |"
+        },
+        {
+          "label_id": "bench_12_c3",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Sam** | Team | Record async QA video for unanswered Qs | This week | All-hands recap |"
+        },
+        {
+          "label_id": "bench_12_c4",
+          "expected": "reject",
+          "assigned": "mentioned_only",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_12_c5",
+          "expected": "reject",
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_12_c6",
+          "expected": "book",
+          "assigned": "chat_capture",
+          "evidence": "| **Bowie** | Sam | Compile all-hands open-questions doc | Tomorrow (May 5) | All-hands recap |"
+        },
+        {
+          "label_id": "bench_12_c7",
+          "expected": "reject",
+          "assigned": "mentioned_only",
+          "evidence": ""
+        }
+      ],
+      "counts": {
+        "book_expected": 30,
+        "book_captured": 30,
+        "book_exact": 0,
+        "review_expected": 7,
+        "review_captured": 7,
+        "review_exact": 0,
+        "observed_expected": 11,
+        "observed_exact": 0,
+        "observed_as_open": 0,
+        "observed_captured_any": 9,
+        "reject_expected": 30,
+        "reject_false_captures": 0,
+        "owner_lane_recall": 1.0,
+        "owner_lane_precision_vs_planted": 1.0,
+        "unplanted_captures": 0
+      },
+      "unplanted": []
+    },
+    "entities": {
+      "rows": [
+        {
+          "label_id": "bench_01_e1",
+          "surface": "Bo",
+          "expected": "Bo Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_01_e2",
+          "surface": "Cedar Works",
+          "expected": "Cedar Works",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_02_e1",
+          "surface": "Quinn",
+          "expected": "Quinn Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_02_e2",
+          "surface": "Mira",
+          "expected": "Mira Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_03_e1",
+          "surface": "Dustin",
+          "expected": "Dustin Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_03_e2",
+          "surface": "Lyra",
+          "expected": "Lyra Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_03_e3",
+          "surface": "Bowie",
+          "expected": "Bowie Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_04_e1",
+          "surface": "Quinn",
+          "expected": "Quinn Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_04_e2",
+          "surface": "Aria",
+          "expected": "Aria Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_05_e1",
+          "surface": "Skyler Stone",
+          "expected": "UNKNOWN_PERSON",
+          "verdict": "right",
+          "wrong_bind": null
+        },
+        {
+          "label_id": "bench_06_e1",
+          "surface": "Northstar",
+          "expected": "Northstar Partners",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_06_e2",
+          "surface": "Aria",
+          "expected": "Aria Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_07_e1",
+          "surface": "Dustin",
+          "expected": "Dustin Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_07_e2",
+          "surface": "Bowie",
+          "expected": "Bowie Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_08_e1",
+          "surface": "mira.sample7@example.com",
+          "expected": "Mira Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_08_e2",
+          "surface": "Acme Co",
+          "expected": "Acme Co",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_09_e1",
+          "surface": "Aria",
+          "expected": "Aria Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_10_e1",
+          "surface": "Rio",
+          "expected": "Rio Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_11_e1",
+          "surface": "Bluebird Group",
+          "expected": "Bluebird Group",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_12_e1",
+          "surface": "Lyra",
+          "expected": "Lyra Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_12_e2",
+          "surface": "Quinn",
+          "expected": "Quinn Sample",
+          "verdict": "partial_surface_only"
+        }
+      ],
+      "counts": {
+        "partial_surface_only": 16,
+        "right": 3,
+        "missed": 2
+      }
+    },
+    "hallucination": {
+      "invented_person_names": {},
+      "count": 0
+    },
+    "leaks": {
+      "hits": {
+        "substrate_path_events": {
+          "count": 1,
+          "samples": [
+            "events.jsonl"
+          ]
+        }
+      },
+      "count": 1
+    }
+  },
+  {
+    "run_id": "20260827T050852Z_A_clean_workspace_t2_inbox",
+    "arm": "A",
+    "fixture": "clean_workspace",
+    "task": "t2_inbox",
+    "model_id": "claude-opus-4-8",
+    "wall_ms": 95890,
+    "tokens": {
+      "input": 11965,
+      "output": 5831,
+      "cache_read": 265198,
+      "cache_creation": 89277
+    },
+    "is_error": false,
+    "timed_out": false,
+    "hallucination": {
+      "invented_person_names": {},
+      "count": 0
+    },
+    "leaks": {
+      "hits": {},
+      "count": 0
+    }
+  },
+  {
+    "run_id": "20260827T050854Z_B_clean_workspace_t2_inbox",
+    "arm": "B",
+    "fixture": "clean_workspace",
+    "task": "t2_inbox",
+    "model_id": "claude-opus-4-8",
+    "wall_ms": 23000,
+    "tokens": {
+      "input": 3276,
+      "output": 1162,
+      "cache_read": 72051,
+      "cache_creation": 10712
+    },
+    "is_error": false,
+    "timed_out": false,
+    "hallucination": {
+      "invented_person_names": {},
+      "count": 0
+    },
+    "leaks": {
+      "hits": {},
+      "count": 0
+    }
+  },
+  {
+    "run_id": "20260827T050917Z_B_clean_workspace_t3_brief",
+    "arm": "B",
+    "fixture": "clean_workspace",
+    "task": "t3_brief",
+    "model_id": "claude-opus-4-8",
+    "wall_ms": 22671,
+    "tokens": {
+      "input": 3276,
+      "output": 1174,
+      "cache_read": 75998,
+      "cache_creation": 15155
+    },
+    "is_error": false,
+    "timed_out": false,
+    "hallucination": {
+      "invented_person_names": {},
+      "count": 0
+    },
+    "leaks": {
+      "hits": {},
+      "count": 0
+    }
+  },
+  {
+    "run_id": "20260827T050940Z_B_clean_workspace_t4_prep",
+    "arm": "B",
+    "fixture": "clean_workspace",
+    "task": "t4_prep",
+    "model_id": "claude-opus-4-8",
+    "wall_ms": 55421,
+    "tokens": {
+      "input": 3409,
+      "output": 3169,
+      "cache_read": 173853,
+      "cache_creation": 47697
+    },
+    "is_error": false,
+    "timed_out": false,
+    "hallucination": {
+      "invented_person_names": {},
+      "count": 0
+    },
+    "leaks": {
+      "hits": {},
+      "count": 0
+    }
+  },
+  {
+    "run_id": "20260827T051028Z_A_clean_workspace_t3_brief",
+    "arm": "A",
+    "fixture": "clean_workspace",
+    "task": "t3_brief",
+    "model_id": "claude-opus-4-8",
+    "wall_ms": 167468,
+    "tokens": {
+      "input": 12120,
+      "output": 10691,
+      "cache_read": 912464,
+      "cache_creation": 123711
+    },
+    "is_error": false,
+    "timed_out": false,
+    "hallucination": {
+      "invented_person_names": {},
+      "count": 0
+    },
+    "leaks": {
+      "hits": {},
+      "count": 0
+    }
+  },
+  {
+    "run_id": "20260827T051036Z_B_clean_workspace_t5_entities",
+    "arm": "B",
+    "fixture": "clean_workspace",
+    "task": "t5_entities",
+    "model_id": "claude-opus-4-8",
+    "wall_ms": 38484,
+    "tokens": {
+      "input": 3278,
+      "output": 2272,
+      "cache_read": 134136,
+      "cache_creation": 42080
+    },
+    "is_error": false,
+    "timed_out": false,
+    "entities": {
+      "rows": [
+        {
+          "label_id": "bench_01_e1",
+          "surface": "Bo",
+          "expected": "Bo Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_01_e2",
+          "surface": "Cedar Works",
+          "expected": "Cedar Works",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_02_e1",
+          "surface": "Quinn",
+          "expected": "Quinn Sample",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_02_e2",
+          "surface": "Mira",
+          "expected": "Mira Sample",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_03_e1",
+          "surface": "Dustin",
+          "expected": "Dustin Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_03_e2",
+          "surface": "Lyra",
+          "expected": "Lyra Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_03_e3",
+          "surface": "Bowie",
+          "expected": "Bowie Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_04_e1",
+          "surface": "Quinn",
+          "expected": "Quinn Sample",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_04_e2",
+          "surface": "Aria",
+          "expected": "Aria Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_05_e1",
+          "surface": "Skyler Stone",
+          "expected": "UNKNOWN_PERSON",
+          "verdict": "right",
+          "wrong_bind": null
+        },
+        {
+          "label_id": "bench_06_e1",
+          "surface": "Northstar",
+          "expected": "Northstar Partners",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_06_e2",
+          "surface": "Aria",
+          "expected": "Aria Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_07_e1",
+          "surface": "Dustin",
+          "expected": "Dustin Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_07_e2",
+          "surface": "Bowie",
+          "expected": "Bowie Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_08_e1",
+          "surface": "mira.sample7@example.com",
+          "expected": "Mira Sample",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_08_e2",
+          "surface": "Acme Co",
+          "expected": "Acme Co",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_09_e1",
+          "surface": "Aria",
+          "expected": "Aria Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_10_e1",
+          "surface": "Rio",
+          "expected": "Rio Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_11_e1",
+          "surface": "Bluebird Group",
+          "expected": "Bluebird Group",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_12_e1",
+          "surface": "Lyra",
+          "expected": "Lyra Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_12_e2",
+          "surface": "Quinn",
+          "expected": "Quinn Sample",
+          "verdict": "right"
+        }
+      ],
+      "counts": {
+        "partial_surface_only": 7,
+        "right": 9,
+        "missed": 5
+      }
+    },
+    "hallucination": {
+      "invented_person_names": {},
+      "count": 0
+    },
+    "leaks": {
+      "hits": {
+        "substrate_path_events": {
+          "count": 1,
+          "samples": [
+            "events.jsonl"
+          ]
+        },
+        "substrate_path_entities": {
+          "count": 1,
+          "samples": [
+            "entities.json"
+          ]
+        }
+      },
+      "count": 2
+    }
+  },
+  {
+    "run_id": "20260827T051114Z_B_clean_workspace_t6_wrap",
+    "arm": "B",
+    "fixture": "clean_workspace",
+    "task": "t6_wrap",
+    "model_id": "claude-opus-4-8",
+    "wall_ms": 63594,
+    "tokens": {
+      "input": 3409,
+      "output": 3355,
+      "cache_read": 189606,
+      "cache_creation": 88930
+    },
+    "is_error": false,
+    "timed_out": false,
+    "hallucination": {
+      "invented_person_names": {},
+      "count": 0
+    },
+    "leaks": {
+      "hits": {
+        "substrate_path_events": {
+          "count": 2,
+          "samples": [
+            "events.jsonl",
+            "events.jsonl"
+          ]
+        }
+      },
+      "count": 2
+    }
+  },
+  {
+    "run_id": "20260827T051316Z_A_clean_workspace_t4_prep",
+    "arm": "A",
+    "fixture": "clean_workspace",
+    "task": "t4_prep",
+    "model_id": "claude-opus-4-8",
+    "wall_ms": 375842,
+    "tokens": {
+      "input": 12392,
+      "output": 25416,
+      "cache_read": 1475997,
+      "cache_creation": 120273
+    },
+    "is_error": false,
+    "timed_out": false,
+    "hallucination": {
+      "invented_person_names": {},
+      "count": 0
+    },
+    "leaks": {
+      "hits": {},
+      "count": 0
+    }
+  },
+  {
+    "run_id": "20260827T051933Z_A_clean_workspace_t5_entities",
+    "arm": "A",
+    "fixture": "clean_workspace",
+    "task": "t5_entities",
+    "model_id": "claude-opus-4-8",
+    "wall_ms": 76312,
+    "tokens": {
+      "input": 12108,
+      "output": 4164,
+      "cache_read": 277428,
+      "cache_creation": 53853
+    },
+    "is_error": false,
+    "timed_out": false,
+    "entities": {
+      "rows": [
+        {
+          "label_id": "bench_01_e1",
+          "surface": "Bo",
+          "expected": "Bo Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_01_e2",
+          "surface": "Cedar Works",
+          "expected": "Cedar Works",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_02_e1",
+          "surface": "Quinn",
+          "expected": "Quinn Sample",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_02_e2",
+          "surface": "Mira",
+          "expected": "Mira Sample",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_03_e1",
+          "surface": "Dustin",
+          "expected": "Dustin Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_03_e2",
+          "surface": "Lyra",
+          "expected": "Lyra Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_03_e3",
+          "surface": "Bowie",
+          "expected": "Bowie Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_04_e1",
+          "surface": "Quinn",
+          "expected": "Quinn Sample",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_04_e2",
+          "surface": "Aria",
+          "expected": "Aria Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_05_e1",
+          "surface": "Skyler Stone",
+          "expected": "UNKNOWN_PERSON",
+          "verdict": "right",
+          "wrong_bind": null
+        },
+        {
+          "label_id": "bench_06_e1",
+          "surface": "Northstar",
+          "expected": "Northstar Partners",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_06_e2",
+          "surface": "Aria",
+          "expected": "Aria Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_07_e1",
+          "surface": "Dustin",
+          "expected": "Dustin Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_07_e2",
+          "surface": "Bowie",
+          "expected": "Bowie Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_08_e1",
+          "surface": "mira.sample7@example.com",
+          "expected": "Mira Sample",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_08_e2",
+          "surface": "Acme Co",
+          "expected": "Acme Co",
+          "verdict": "right"
+        },
+        {
+          "label_id": "bench_09_e1",
+          "surface": "Aria",
+          "expected": "Aria Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_10_e1",
+          "surface": "Rio",
+          "expected": "Rio Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_11_e1",
+          "surface": "Bluebird Group",
+          "expected": "Bluebird Group",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_12_e1",
+          "surface": "Lyra",
+          "expected": "Lyra Sample",
+          "verdict": "partial_surface_only"
+        },
+        {
+          "label_id": "bench_12_e2",
+          "surface": "Quinn",
+          "expected": "Quinn Sample",
+          "verdict": "right"
+        }
+      ],
+      "counts": {
+        "partial_surface_only": 9,
+        "right": 9,
+        "missed": 3
+      }
+    },
+    "hallucination": {
+      "invented_person_names": {},
+      "count": 0
+    },
+    "leaks": {
+      "hits": {
+        "internal_id": {
+          "count": 1,
+          "samples": [
+            "org_001"
+          ]
+        },
+        "substrate_path_entities": {
+          "count": 1,
+          "samples": [
+            "entities.json"
+          ]
+        }
+      },
+      "count": 2
+    }
+  },
+  {
+    "run_id": "20260827T052051Z_A_clean_workspace_t6_wrap",
+    "arm": "A",
+    "fixture": "clean_workspace",
+    "task": "t6_wrap",
+    "model_id": "claude-opus-4-8",
+    "wall_ms": 282280,
+    "tokens": {
+      "input": 12126,
+      "output": 19232,
+      "cache_read": 1102545,
+      "cache_creation": 70184
+    },
+    "is_error": false,
+    "timed_out": false,
+    "hallucination": {
+      "invented_person_names": {},
+      "count": 0
+    },
+    "leaks": {
+      "hits": {
+        "marketing_leverage": {
+          "count": 1,
+          "samples": [
+            "leverage"
+          ]
+        }
+      },
+      "count": 1
+    }
+  }
+]

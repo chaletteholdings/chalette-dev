@@ -73,7 +73,14 @@ COMMITMENT_LINE = re.compile(
     r"draft|process|sign|get)\b|\bby\s+(?:monday|tuesday|wednesday|thursday|"
     r"friday|saturday|sunday|tomorrow|tonight|today|this week|next week|"
     r"month end|end of week|end of day)\b|\baction item\b|\bcommitment\b|"
-    r"\bfollow[- ]?up\b|\btask\b|\bdue\b|\[ \])", re.IGNORECASE)
+    r"\bfollow[- ]?up\b|\btask\b|\bdue\b|\[ \]|"
+    # hedge markers: a review-lane item surfaced with its own hedge language
+    # is a capture. Deliberately NOT here: "aspirational"/"hedged"/"someday" --
+    # those words mark dismissal roundups ("Someday/aspirational: X, Y, Z"),
+    # and counting them made correct rejections score as false captures in
+    # the pilot. Per-owner hedged rows are covered by the arrow-bullet shape.
+    r"\bmight\b|\bcould\b|\btentative\b|\bno promises\b|\bpending\b)",
+    re.IGNORECASE)
 
 NAME_BIGRAM = re.compile(r"\b([A-Z][a-z]+) ([A-Z][a-z]+)\b")
 
@@ -108,10 +115,16 @@ def load_leak_patterns(cr1: Path | None) -> dict[str, str]:
             try:
                 import docx_leak_scanner  # type: ignore
                 live = getattr(docx_leak_scanner, "_FORBIDDEN_PATTERNS", None)
-                if live:
-                    for name, pat in (live.items() if isinstance(live, dict) else
-                                      ((f"live_{i}", p) for i, p in enumerate(live))):
-                        pats[str(name)] = pat if isinstance(pat, str) else pat.pattern
+                if isinstance(live, dict):
+                    items = list(live.items())
+                elif live:
+                    # list of (name, pattern) tuples, or bare patterns
+                    items = [tuple(x) if isinstance(x, (tuple, list)) and len(x) == 2
+                             else (f"live_{i}", x) for i, x in enumerate(live)]
+                else:
+                    items = []
+                for name, pat in items:
+                    pats[str(name)] = pat if isinstance(pat, str) else getattr(pat, "pattern", str(pat))
             except Exception as exc:
                 print(f"note: live leak-pattern import failed ({exc}); using embedded catalog")
     return pats
@@ -183,27 +196,54 @@ def event_text(ev: dict) -> str:
     return " ".join(str(data.get(k, "")) for k in ("title", "text", "evidence", "gist"))
 
 
+COMMITMENT_TABLE_HEADER = re.compile(
+    r"^\s*\|.*\b(commitments?|owed|owes|owner|due|action|task|deliverable)\b",
+    re.IGNORECASE)
+
+
 def find_chat_capture(chat: str, keyphrase: str) -> str | None:
-    """Return the commitment-shaped output line containing the keyphrase, if any."""
+    """Return the commitment-shaped output line containing the keyphrase, if any.
+
+    Two shapes count: a prose line matching COMMITMENT_LINE, or a row of a
+    commitment-shaped markdown table (models often render captures as tables;
+    the first pilot showed a pure-table output scoring 0 recall without this).
+    """
     kp = keyphrase.lower()
+    has_commitment_table = any(COMMITMENT_TABLE_HEADER.search(ln)
+                               for ln in chat.splitlines())
     for line in chat.splitlines():
-        if kp in line.lower() and COMMITMENT_LINE.search(line):
+        if kp not in line.lower():
+            continue
+        if COMMITMENT_LINE.search(line):
+            return line.strip()
+        if has_commitment_table and line.lstrip().startswith("|"):
+            return line.strip()
+        # Arrow-bullet capture row: "- **Owner** → deliverable — "quote""
+        stripped = line.lstrip()
+        if stripped.startswith(("-", "*", "•")) and ("→" in line or "->" in line):
             return line.strip()
     return None
 
 
-def assign_route(run: dict, keyphrase: str) -> tuple[str, str]:
-    """(assigned_route, evidence). Events channel wins when present."""
-    kp = keyphrase.lower()
+def assign_route(run: dict, keyphrase: str, alts: list[str] | None = None) -> tuple[str, str]:
+    """(assigned_route, evidence). Events channel wins when present.
+
+    `alts` are paraphrase aliases (label-defined) matched the same way as the
+    primary keyphrase — model output compresses wording ("COO" for "chief
+    operating officer", hyphenation, dropped articles); the primary keyphrase
+    remains the transcript anchor and the uniqueness-validated key."""
+    phrases = [keyphrase.lower()] + [a.lower() for a in (alts or [])]
     for ev in run["events"]:
         r = event_route(ev)
-        if r and kp in event_text(ev).lower():
+        if r and any(p in event_text(ev).lower() for p in phrases):
             return r, json.dumps({k: ev.get(k) for k in ("seq", "type")}) + " " + event_text(ev)[:160]
-    line = find_chat_capture(run["chat"] + "\n" + run["artifact_text"], keyphrase)
-    if line:
-        return "chat_capture", line[:200]
-    full = (run["chat"] + "\n" + run["artifact_text"]).lower()
-    if kp in full:
+    chat_all = run["chat"] + "\n" + run["artifact_text"]
+    for p in phrases:
+        line = find_chat_capture(chat_all, p)
+        if line:
+            return "chat_capture", line[:200]
+    full = chat_all.lower()
+    if any(p in full for p in phrases):
         return "mentioned_only", ""
     return "absent", ""
 
@@ -212,7 +252,7 @@ def score_extraction(run: dict, labels: list[dict]) -> dict:
     rows = []
     for lab in labels:
         for item in lab["planted"]:
-            assigned, evidence = assign_route(run, item["keyphrase"])
+            assigned, evidence = assign_route(run, item["keyphrase"], item.get("alts"))
             rows.append({
                 "label_id": item["label_id"],
                 "expected": item["expected_route"],
@@ -247,7 +287,8 @@ def score_extraction(run: dict, labels: list[dict]) -> dict:
         round(pos_captured / denom, 4) if denom else None)
 
     # Unplanted captures: capture rows matching no planted keyphrase.
-    all_kps = [i["keyphrase"].lower() for lab in labels for i in lab["planted"]]
+    all_kps = [p.lower() for lab in labels for i in lab["planted"]
+               for p in [i["keyphrase"]] + i.get("alts", [])]
     unplanted = []
     for ev in run["events"]:
         r = event_route(ev)
@@ -257,7 +298,8 @@ def score_extraction(run: dict, labels: list[dict]) -> dict:
     return {"rows": rows, "counts": counts, "unplanted": unplanted}
 
 
-def score_entities(run: dict, labels: list[dict], roster_names: set[str]) -> dict:
+def score_entities(run: dict, labels: list[dict], roster_names: set[str],
+                   strict_unknown: bool = True) -> dict:
     full = run["chat"] + "\n" + run["artifact_text"]
     full_l = full.lower()
     events_text = " ".join(json.dumps(ev, ensure_ascii=False) for ev in run["events"]).lower()
@@ -266,19 +308,26 @@ def score_entities(run: dict, labels: list[dict], roster_names: set[str]) -> dic
         for m in lab["entity_mentions"]:
             surface = m["surface"]
             if m.get("expected") == "UNKNOWN_PERSON":
+                # strict_unknown applies only where the arm processed the
+                # transcript that introduced the unknown (t1). Elsewhere,
+                # answering from the roster (e.g. "Skyler Sample" to "do we
+                # know a Skyler?") is correct, not a wrong bind.
                 wrong_bind = None
-                first = surface.split()[0]
-                for name in roster_names:
-                    if name.split()[0] == first and name != surface and name.lower() in full_l:
-                        # e.g. output asserts "Skyler Sample" for Skyler Stone
-                        if surface.lower() not in full_l:
-                            wrong_bind = name
-                if surface.lower() not in full_l and wrong_bind is None:
-                    verdict = "missed"
+                if strict_unknown:
+                    first = surface.split()[0]
+                    for name in roster_names:
+                        if name.split()[0] == first and name != surface and name.lower() in full_l:
+                            # e.g. output asserts "Skyler Sample" for Skyler Stone
+                            if surface.lower() not in full_l:
+                                wrong_bind = name
+                if surface.lower() in full_l:
+                    verdict = "right"
                 elif wrong_bind:
                     verdict = "wrong"
+                elif not strict_unknown and surface.split()[0].lower() in full_l:
+                    verdict = "right"  # roster answer to a first-name question
                 else:
-                    verdict = "right"
+                    verdict = "missed"
                 rows.append({"label_id": m["label_id"], "surface": surface,
                              "expected": "UNKNOWN_PERSON", "verdict": verdict,
                              "wrong_bind": wrong_bind})
@@ -369,7 +418,8 @@ def score_run(run_dir: Path, labels: list[dict], patterns: dict[str, str]) -> di
         if cross is not None:
             card["receipt_cross_check"] = cross
     if meta["task"] in ("t1_transcripts", "t5_entities"):
-        card["entities"] = score_entities(run, labels, roster_names)
+        card["entities"] = score_entities(run, labels, roster_names,
+                                          strict_unknown=(meta["task"] == "t1_transcripts"))
     card["hallucination"] = score_hallucination(run, roster_names, roster_orgs)
     card["leaks"] = score_leaks(run, patterns)
     (run_dir / "scorecard.json").write_text(
@@ -390,7 +440,8 @@ def scoreboard_md(cards: list[dict]) -> str:
         ext = c.get("extraction", {}).get("counts")
         if ext:
             notes.append(f"recall={ext['owner_lane_recall']} prec={ext['owner_lane_precision_vs_planted']} "
-                         f"falseCap={ext['reject_false_captures']} obs={ext['observed_exact']}/{ext['observed_expected']}")
+                         f"falseCap={ext['reject_false_captures']} obs={ext['observed_exact']}/{ext['observed_expected']} "
+                         f"unplanted={ext['unplanted_captures']}")
         ent = c.get("entities", {}).get("counts")
         if ent:
             notes.append(f"ent={ent}")

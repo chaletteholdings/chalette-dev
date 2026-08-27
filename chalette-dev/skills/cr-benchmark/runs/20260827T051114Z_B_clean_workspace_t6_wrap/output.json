@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 61883,
+  "duration_api_ms": 60940,
+  "ttft_ms": 4922,
+  "ttft_stream_ms": 2635,
+  "time_to_request_ms": 37,
+  "num_turns": 9,
+  "result": "I dug into this and I have to be straight with you, Sam: **I can't honestly wrap *this* week, because none of your sources have any data for it.** Today is Aug 26, but every source I can reach stops in **late May** — roughly three months ago.\n\nHere's what I found across all four sources:\n\n| Source | What I queried | Newest data returned |\n|---|---|---|\n| `events.jsonl` (workspace log) | full file | **2026-05-30** |\n| Granola (meeting notes) | recent meetings | **2026-05-04** |\n| Calendar | `next_7_days` | **2026-05-07** |\n| Gmail | `newer_than:7d` | **2026-05-14** |\n\nThe tell is that even the *live* integrations disagree with the calendar. I asked Gmail for the last 7 days and it handed back messages from May 1–14; the calendar's \"next 7 days\" returned May 1–7. That's not just a stale local file — the connected sources themselves are serving May-dated data, which points to a sync or clock problem on the integrations rather than a genuinely quiet week.\n\nSo rather than dress up three-month-old (and frankly placeholder-looking — \"Follow up on item 42\", \"Decision 43: chose option A\") records as \"your week,\" here's the honest picture:\n\n**What the freshest real signal actually shows (week of May 25–30, the last logged activity):**\n- **What happened:** the log's final entries (May 30) were a cleanup pass — six commitments closed out as `done` (cmt 2, 7, 12, 17, 22, 27), applied via `apply-choices`.\n- **Still open:** dozens of \"follow up\" commitments logged after that batch (owned mostly by Bowie and Rio) were never marked resolved — but I'd treat that as stale, not live.\n- **What slipped:** not answerable — there's simply no record of the intervening ~12 weeks to compare against.\n\n**What I'd suggest:**\n1. Let's figure out why the feeds are stuck in May — that's the real issue. Is the workspace-manager job that appends to `events.jsonl` still running? When did it last write?\n2. If you tell me the integrations *should* be current, I can re-pull and we compare timestamps.\n3. If you actually want a wrap of the **last logged week (May 25–30)** for the record, say the word and I'll write that up in full — I just won't label it \"this week.\"\n\nWant me to start by digging into why the log stopped on May 30?",
+  "stop_reason": "end_turn",
+  "session_id": "8a8516f4-c6d1-48bb-a116-859a759524d6",
+  "total_cost_usd": 1.085629,
+  "usage": {
+    "input_tokens": 3409,
+    "cache_creation_input_tokens": 88930,
+    "cache_read_input_tokens": 189606,
+    "output_tokens": 3355,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 88930,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 131,
+        "output_tokens": 1534,
+        "cache_read_input_tokens": 65073,
+        "cache_creation_input_tokens": 4061,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 4061
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 536,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000606,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-4-8": {
+      "inputTokens": 3409,
+      "outputTokens": 3355,
+      "cacheReadInputTokens": 189606,
+      "cacheCreationInputTokens": 88930,
+      "webSearchRequests": 0,
+      "costUSD": 1.085023,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "2bbb70fb-be25-4d3a-a392-d8f3473e082b"
+}

@@ -1,0 +1,27 @@
+Here's your wrap. One honesty note up top: **there's no activity in the last 7 days** — the freshest block in your workspace is a run of 12 meetings (the raise / board / hiring / ops / customer-fire cycle). This recap synthesizes *that*, since a literal "this week" would be empty.
+
+## What happened
+Twelve 30-min sessions, heaviest on **Series A Raise** (data-room walkthrough, fundraise check-in, cap table to counsel) and **Board Cadence** (deck, pre-read memo, board dinner). Two customer fires ran alongside — an **Acme Co** outage escalation and the **Northstar Partners** renewal — plus a hiring-slate review and an ops/migration standup.
+
+**Decisions you made (3):**
+- **No rebrand ahead of the raise** — you shut down the recurring "redo the brand first" push in the fundraise check-in.
+- **Historicals come from the shared-drive export**, not the diligence-folder instance — Bo flagged the instance was unnecessary, saving a step.
+- **Parked the cutover customer-comms** — no owner stepped up in the ops standup, so you benched it deliberately rather than let it float.
+
+## What's still open
+**You owe ~16.** The closing-critical two: **cap table → counsel (Wed)** and **wire instructions → counsel (today)**. Then the Acme-renewal pair (**revised pricing sheet → Bo, Tue**; **intro to the Cedar Works finance lead**), the board **deck (Fri)** and **pre-read memo (Wed)**, **vendor matrix → Rio (Thu)**, **planning template → Aria (Fri)**, plus same-day items (offer template, escalation contact sheet, call the Acme COO, approve the maintenance window).
+
+**In motion — ~24 owed to you.** Nearest-term and highest-leverage: **Bo's Acme usage report (Fri)** for the renewal call, **Mira's Q2 numbers (Thu)**, **Aria's Northstar renewal terms (Mon, confirmed)**, **Dustin's server inventory (Wed)** that unblocks the cutover, and **Quinn's financial model with May actuals (Wed)**.
+
+## What slipped
+- **Dragging / at risk:** the **vendor services contract** — you flagged it as having "dragged," now hinging on Dustin sending it to Lyra tomorrow. And the **cutover customer-comms** sits ownerless — it'll bite at cutover if nobody claims it.
+- **Parked to "someday"** (deferred, not dropped): onboarding-flow rework + cleaner dashboard, automating partner reporting, the Category Company pilot into the Northstar paper, revisiting SLA tiers post-Acme, comp bands / referral bonus, and the board-story polish (customer-logo slide, crisper churn narrative).
+- **New face:** **Skyler Stone** — Bo flagged them as "a sharp operator, worth a coffee." Not in your roster (distinct from Skyler Sample at Cedar Works).
+
+**What now —** three worth a tap: (1) confirm the cap table + wire instructions actually reached counsel — they're your only closing blockers; (2) chase the Acme renewal inputs before the call; (3) give the cutover comms an owner.
+
+*Source: Granola transcripts (12 meetings) — your most recent captured block; no email/calendar activity in the trailing 7 days.*
+
+*First time recapping your week. I set 2 defaults: **I lead with the themes, not the numbers** · **I split what you owe into work for others vs your own projects**. Say "tune my weekly recap" to change either, or just tell me ("lead with the numbers" / "external work only").*
+
+## → **[Weekly Recap — 2026-08-26](computer://C:\Users\matth\AppData\Local\Temp\bench_A_ddvnuds3\workspace\_hq\meetings\Weekly_Recap_2026-08-26.docx)**

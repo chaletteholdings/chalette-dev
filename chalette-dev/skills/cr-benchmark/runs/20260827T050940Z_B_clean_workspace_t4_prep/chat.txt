@@ -1,0 +1,25 @@
+I dug into your calendar, entities, aliases, and the full activity log before answering — and I need to flag a data problem rather than hand you a confident-but-invented briefing.
+
+## The blunt version: I can't reliably prep you, because the data doesn't support it
+
+**There's no genuinely upcoming meeting to prep for.** Today is Aug 26, 2026, but every event the calendar returns is from **May 1–3** (3+ months ago). The "today" and "next-7-days" windows even return overlapping May events — so the calendar feed is stale or misconfigured, not showing anything actually ahead of you.
+
+**Even if I picked one, there's nothing substantive to brief on.** The underlying records are placeholder/templated, not real working data:
+
+- **People** are all "Sample" — Aria Sample, Bo Sample, etc. — each the sole attendee of a generically-titled "Sync 1"…"Sync 10."
+- **Orgs/projects** are generic (Acme Co, Northstar Partners; "Series A Raise," "Board Cadence," "Hiring Slate") with empty stakeholders and no success criteria.
+- **The 206-event log is a synthetic loop**: every commitment is literally "Follow up on item N," every decision is "Chose option A for item N / rationale: Lower risk." There's no real content behind any of it.
+
+So anything I told you about "what's open with them" or "what to walk in knowing" would be me making it up. That's the one thing a pre-meeting brief can't afford.
+
+## What I *can* say factually
+
+- The only real "open items" signal: on May 30, six commitments were marked **done** (cmt #2, 7, 12, 17, 22, 27). Nothing in the log shows *open/unresolved* commitments tied to a specific upcoming person.
+- Recurring counterparties by volume in the log: **Bo** and **Quinn** (meetings), **Bowie** (follow-ups), **Rio** (follow-ups).
+
+## To actually prep you, I need one of these
+
+1. **Who / when is the meeting?** Tell me the person or the real date/time and I'll pull everything tied to them — emails, past transcripts (I have Gmail + Granola access), and open commitments.
+2. **Is the calendar supposed to be current?** If it's showing May when it should show late August, the feed likely needs reconnecting — worth fixing before you rely on it for any meeting prep.
+
+Point me at the real meeting and I'll build you a proper walk-in brief.

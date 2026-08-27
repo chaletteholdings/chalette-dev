@@ -31,6 +31,9 @@
       "label_id": "bench_06_c3",
       "expected_route": "book",
       "keyphrase": "exec sponsor next week",
+      "alts": [
+        "exec sponsor"
+      ],
       "gist": "follow up with the Northstar Partners exec sponsor",
       "owner_name": "Sam Sample",
       "counterparty_name": "Lyra Sample",

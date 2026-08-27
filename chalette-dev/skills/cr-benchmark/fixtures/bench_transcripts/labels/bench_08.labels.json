@@ -13,6 +13,10 @@
       "label_id": "bench_08_c1",
       "expected_route": "book",
       "keyphrase": "chief operating officer today",
+      "alts": [
+        "COO",
+        "chief operating officer"
+      ],
       "gist": "call the Acme Co COO today before five",
       "owner_name": "Sam Sample",
       "counterparty_name": "Mira Sample",

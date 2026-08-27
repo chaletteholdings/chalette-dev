@@ -13,6 +13,9 @@
       "label_id": "bench_01_c1",
       "expected_route": "book",
       "keyphrase": "revised pricing sheet",
+      "alts": [
+        "pricing sheet"
+      ],
       "gist": "send the revised pricing sheet to Bo by Tuesday",
       "owner_name": "Sam Sample",
       "counterparty_name": "Bo Sample",

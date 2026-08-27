@@ -1,0 +1,12 @@
+{
+  "created": [
+    "_hq/.system/widgets/meeting-commitments_2026-08-27T05-04-23-518302Z.html",
+    "_hq/data/.source_refs.idx",
+    "_hq/data/.writer.lock",
+    "_hq/data/.writer.lock.info",
+    "_hq/data/events.jsonl.seqhw"
+  ],
+  "modified": [
+    "_hq/data/events.jsonl"
+  ]
+}

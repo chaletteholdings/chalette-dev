@@ -1,0 +1,19 @@
+Pulled straight from your workspace data layer (`entities.json` + the event log). Here's what's there:
+
+## Quinn — Quinn Sample, Northstar Partners
+What's open is a **standing sync cadence, not a task**. Quinn shows up only as a recurring 30-min meeting attendee, rotating across all three active projects — **Series A Raise, Board Cadence, and Hiring Slate**. Most recent was **May 29 on Board Cadence**.
+
+There are **no open commitments, decisions, or emails** tied to Quinn in the log — every tracked to-do is owned by Bowie or Rio, not Quinn. So the honest read: nothing actionable is waiting on either of you; it's just the ongoing meeting rhythm.
+
+## Mira — Mira Sample, Acme Co
+Yes, she's in your roster — **Acme Co, the same shop as Aria** (org_001). But **you have nothing going on together**: Mira has zero footprint in the event log — no meetings, emails, commitments, or decisions. She's a known contact with no active thread.
+
+## Skyler — Skyler Sample, Cedar Works
+**Yes, definitely.** Skyler is at **Cedar Works** (alongside Lyra) and is actually your **most frequent email correspondent** — a steady run of short-direct email drafts, the latest on **May 29**. That's the whole relationship on record: recurring outbound email, no meetings or commitments.
+
+---
+One flag worth naming: this workspace is running on the **synthetic fixture roster** (placeholder "Sample" contacts), and the event log is a repeating generated pattern — so treat these as structural reads, not live business signal.
+
+A couple of things I could do from here:
+1. **Mira's a cold contact** — want me to draft a re-open note to her (via email-writer), or leave her parked?
+2. Quinn's on all three projects but owns nothing — want me to **check whether that's right**, or is Quinn meant to be carrying an action on the Series A raise?

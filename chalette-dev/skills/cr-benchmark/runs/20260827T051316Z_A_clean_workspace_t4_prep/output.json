@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 371625,
+  "duration_api_ms": 355407,
+  "ttft_ms": 2889,
+  "ttft_stream_ms": 1357,
+  "time_to_request_ms": 231,
+  "num_turns": 29,
+  "result": "Done. One honest caveat up front, then your brief.\n\n**On \"upcoming meeting\":** your calendar has no future-dated meeting — it holds only stale May stubs (10 identical \"Sync N\" events), and the email threads for all your contacts came back as placeholder text with no real content. The genuinely live workstream, with a *next* meeting actually being scheduled inside it, is your **Series A raise** — Bo's transcript ends with him booking a \"partner-meeting prep call Monday morning, 30 min.\" So that's what I prepped. If you meant a different meeting, name it and I'll rebuild.\n\n## Who you're meeting\n**Bo Sample** and **Quinn Sample** (both Northstar Partners) — your Series A partner-meeting prep. **Rio Sample** (Category Company) isn't on the call but sits on the critical path: he owns the SAFE legal review.\n\n## What's open with them\n- **You owe:** cap table to counsel (Wed — they're *blocked* on it), wire instructions to counsel (same-day commit), and the data-room checklist to Bo & Quinn so the room gets populated once.\n- **They owe you:** Quinn — refreshed financial model with May actuals (Wed) + equity grants file to auditors (Tue); Bo — the Acme usage report (Fri); Rio — SAFE legal review before the partner meeting.\n- **Already done / cleared:** pitch deck is current (Bo refreshed it), historicals resolved via the shared-drive export, June diligence folder renamed.\n\n## What to walk in knowing\n1. **Legal is your soft spot.** Rio's SAFE review is critical-path but you only have it *second-hand through Bo* — get a direct confirmation, don't accept a relay.\n2. **Confirm closing isn't gated on your side** — the cap table and wire instructions were your commits; verify counsel actually has both.\n3. **Two decisions to land:** is the cohort analysis a must-have for the partner deck or directional-only, and does the narrative/brand workshop stay parked until after close (you already killed the rebrand — Quinn keeps floating it).\n4. **Watch Quinn's load** — model refresh, equity grants file, and the board hiring slide all hit her in the same few days.\n\nFull sourced brief — relationship context, both-directions owed table, talking points and questions prefixed per attendee, and risks — is here:\n\n## → **[Call Prep — Series A Raise — Partner Meeting Prep (Bo & Quinn)](computer://C:\\Users\\matth\\AppData\\Local\\Temp\\bench_A_5n82k4o0\\workspace\\_hq\\meetings\\Call_Prep_series-a-partner-meeting-prep-bo-quinn-d8666cc4_2026-08-26.docx)**\n\n*Sources: Granola transcripts (fundraise check-in, data-room walkthrough, weekly pipeline sync, board prep) · Calendar · workspace people records. Email returned placeholder threads only — no usable mail signal.*\n\nTwo quick ones: do you want me to draft the cap-table + wire-instructions nudge to counsel (through your email voice), and should I treat the cohort analysis as required for the partner deck so I can flag it to Quinn?",
+  "stop_reason": "end_turn",
+  "session_id": "98fc3fb3-5f8a-4986-ab32-1e04c789ac1a",
+  "total_cost_usd": 2.6386964999999996,
+  "usage": {
+    "input_tokens": 12392,
+    "cache_creation_input_tokens": 120273,
+    "cache_read_input_tokens": 1475997,
+    "output_tokens": 25416,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 120273,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1420,
+        "cache_read_input_tokens": 103542,
+        "cache_creation_input_tokens": 566,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 566
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 543,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006079999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-4-8": {
+      "inputTokens": 12392,
+      "outputTokens": 25416,
+      "cacheReadInputTokens": 1475997,
+      "cacheCreationInputTokens": 120273,
+      "webSearchRequests": 0,
+      "costUSD": 2.6380884999999994,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "728fa285-7483-4326-b0d6-39205fe22fd5"
+}

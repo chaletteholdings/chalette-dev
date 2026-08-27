@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 21140,
+  "duration_api_ms": 21790,
+  "ttft_ms": 2955,
+  "ttft_stream_ms": 1172,
+  "time_to_request_ms": 38,
+  "num_turns": 5,
+  "result": "Sam — I pulled your calendar and inbox, but I have to be straight with you: **the data coming back doesn't look real**, so I can't give you a trustworthy brief off it. Here's what I mean:\n\n**Calendar** — the \"today\" query returned five events titled \"Sync 1\"–\"Sync 5\", but they're dated **May 1–5, 2026**, not today (Aug 26). Attendees are the generic `*.sampleN@example.com` addresses. Nothing is actually scheduled for today in what came back.\n\n**Email** — 20 threads, all subjects \"Re: item 1\"–\"Re: item 20\", snippets literally reading *\"Synthetic thread body N.\"*, timestamps in **May 2026**. My query asked for `newer_than:2d` but the results ignored it. Nothing genuinely recent or substantive.\n\nEverything ties back to the placeholder entities in your workspace (Acme Co, Northstar, the Sample people) rather than live activity.\n\n**So the honest read: there's nothing actionable to brief you on** — the connected calendar/email appear to be returning seed/test data, not your real accounts.\n\nA couple of ways forward:\n- If these tools *should* be hitting your live Google account, the connection is likely misconfigured or pointed at a sandbox — worth checking the integration.\n- If you expected placeholder data and just want me to work with it, say so and I'll summarize it as-is.\n- Or tell me what you're actually trying to stay on top of today (the Series A raise, board cadence, hiring slate are the active initiatives on file) and I'll dig into whichever tool holds the real thread.\n\nWhich is it?",
+  "stop_reason": "end_turn",
+  "session_id": "a0da53bf-43ad-4499-aa41-7d07d73b9c0f",
+  "total_cost_usd": 0.235877,
+  "usage": {
+    "input_tokens": 3276,
+    "cache_creation_input_tokens": 15155,
+    "cache_read_input_tokens": 75998,
+    "output_tokens": 1174,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 15155,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 741,
+        "cache_read_input_tokens": 32105,
+        "cache_creation_input_tokens": 2464,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2464
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 533,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000598,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-4-8": {
+      "inputTokens": 3276,
+      "outputTokens": 1174,
+      "cacheReadInputTokens": 75998,
+      "cacheCreationInputTokens": 15155,
+      "webSearchRequests": 0,
+      "costUSD": 0.23527899999999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "2b6dfbcd-54cb-4656-adfc-243bdb0981cc"
+}

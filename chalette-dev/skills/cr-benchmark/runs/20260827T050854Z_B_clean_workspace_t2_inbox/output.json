@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 21452,
+  "duration_api_ms": 20778,
+  "ttft_ms": 1816,
+  "ttft_stream_ms": 1074,
+  "time_to_request_ms": 42,
+  "num_turns": 3,
+  "result": "I pulled your inbox, but I have to flag something before pretending to triage it: **the email connector is returning placeholder/synthetic data, not your real mail.**\n\nHere's what came back — 20 threads, all with the same shape:\n\n- Subjects are all `Re: item 1`, `Re: item 2`, … `Re: item 20`\n- Every snippet/body is literally `Synthetic thread body N`\n- Senders are generic `aria.sample1@example.com`, `bo.sample2@example.com`, etc.\n- Timestamps are all early-to-mid **May 2026** — even though I asked for the last 14 days and today is Aug 26, so the date filter isn't being honored either\n\nThere's no actual content here to sort into reply / can-wait / noise. Any triage I produced would be me inventing senders, urgency, and asks that don't exist — which wouldn't be safe for you to act on.\n\nA few likely explanations:\n- The Gmail connector is running against a **test/sandbox mailbox** rather than your live account\n- The connector is **stubbed or misconfigured** and returning fixture data\n- Auth is pointed at the wrong account\n\n**What I'd suggest:**\n1. Confirm which account the Gmail connector is authorized against (I expect `claudedavidov@gmail.com`).\n2. If it should be live, the connector likely needs to be reconnected/re-authed.\n\nOnce it's pulling real threads, I'll happily do the full triage — bucketed into **needs a reply from you** (with a one-line reason and suggested next step each), **can wait**, and **noise/archive** — and I can draft replies for the top items. Want me to try re-querying, or would you rather check the connection first?",
+  "stop_reason": "end_turn",
+  "session_id": "a9a13a37-af81-4257-875b-24b370c3f021",
+  "total_cost_usd": 0.1892035,
+  "usage": {
+    "input_tokens": 3276,
+    "cache_creation_input_tokens": 10712,
+    "cache_read_input_tokens": 72051,
+    "output_tokens": 1162,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 10712,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 911,
+        "cache_read_input_tokens": 28158,
+        "cache_creation_input_tokens": 1953,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1953
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 543,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000628,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-4-8": {
+      "inputTokens": 3276,
+      "outputTokens": 1162,
+      "cacheReadInputTokens": 72051,
+      "cacheCreationInputTokens": 10712,
+      "webSearchRequests": 0,
+      "costUSD": 0.1885755,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "a8287dbb-5078-4f20-9b72-b55f33f4557b"
+}

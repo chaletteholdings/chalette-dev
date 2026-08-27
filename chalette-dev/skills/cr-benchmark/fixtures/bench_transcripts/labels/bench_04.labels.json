@@ -32,6 +32,10 @@
       "label_id": "bench_04_c3",
       "expected_route": "review",
       "keyphrase": "stab at a draft",
+      "alts": [
+        "scoring rubric",
+        "rubric"
+      ],
       "gist": "Aria drafts the panel scoring rubric",
       "owner_name": "Aria Sample",
       "counterparty_name": "Quinn Sample",
@@ -59,6 +63,9 @@
       "label_id": "bench_04_c7",
       "expected_route": "book",
       "keyphrase": "job description for the data role",
+      "alts": [
+        "job description"
+      ],
       "gist": "post the job description for the data role tomorrow morning",
       "owner_name": "Aria Sample",
       "counterparty_name": "Sam Sample",

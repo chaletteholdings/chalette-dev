@@ -1,0 +1,12 @@
+{
+  "created": [
+    "_hq/data/.writer.lock",
+    "_hq/data/.writer.lock.info",
+    "_hq/data/events.jsonl.seqhw",
+    "_hq/data/skill_config/weekly-recap.json",
+    "_hq/meetings/Weekly_Recap_2026-08-26.docx"
+  ],
+  "modified": [
+    "_hq/data/events.jsonl"
+  ]
+}

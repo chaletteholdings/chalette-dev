@@ -17,7 +17,13 @@ keyphrase, case-insensitively. No semantic matching, no model judgment.
 | Channel | Rule |
 |---|---|
 | events (Arm A) | `commitment` → book; `commitment` with `pending_review` (or `commitment_review_proposed`) → review; `commitment_observed` (or `tier: "observed"`) → observed |
-| chat/files (both arms) | keyphrase inside a commitment-shaped line (the fixed `COMMITMENT_LINE` regex: will/owes/to-verb/by-date/action-item/task/due shapes) → `chat_capture` |
+| chat/files (both arms) | keyphrase inside a commitment-shaped line, where "commitment-shaped" is one of three fixed shapes: (1) the `COMMITMENT_LINE` regex (will/owes/to-verb/by-date/action-item/task/due, plus hedge markers might/could/tentative/pending/no-promises for review-lane items; "aspirational"/"hedged"/"someday" are deliberately excluded — they mark dismissal roundups, and counting them scored correct rejections as false captures in the pilot); (2) a row of a commitment-shaped markdown table (header matches commitment/owed/owner/due/action/task); (3) an arrow-bullet row (`- **Owner** → deliverable`). Shapes 2–3 and the hedge markers were added at pilot calibration after real output used them; all three are arm-symmetric and frozen for the battery → `chat_capture` |
+
+Labels may carry `alts`: paraphrase aliases for output matching only ("COO"
+for "chief operating officer", hyphenation, dropped articles). The primary
+keyphrase remains the transcript anchor and the uniqueness-validated key.
+Alts were added at pilot calibration (both arms re-scored identically) and
+are frozen for the battery.
 | neither | `mentioned_only` (keyphrase present, not as a capture) or `absent` |
 
 The events channel wins when both fire. `mentioned_only` is NOT a capture —
@@ -57,7 +63,11 @@ Per labeled mention:
 - For the UNKNOWN_PERSON label (a roster-legal name absent from
   entities.json): **right** = the name is surfaced as new/unknown; **wrong** =
   output binds it to an existing person (e.g. asserts the Sample surname for
-  a Stone unknown); **missed** = never mentioned.
+  a Stone unknown); **missed** = never mentioned. The wrong-bind rule applies
+  ONLY on t1 (where the arm processed the transcript that introduced the
+  unknown). On t5, answering a first-name question from the roster is
+  correct, not a wrong bind — calibrated after the pilot penalized both arms
+  for the right answer.
 
 ## 3. Hallucinated rows (all tasks)
 

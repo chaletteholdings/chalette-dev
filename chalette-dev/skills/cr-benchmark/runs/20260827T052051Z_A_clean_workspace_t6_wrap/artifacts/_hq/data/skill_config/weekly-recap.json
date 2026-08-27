@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "configured_at": "2026-08-27T05:23:34.434103+00:00",
+  "skill_name": "weekly-recap",
+  "config": {
+    "lens": "theme_led",
+    "internal_backlog": "split"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "run_id": "20260827T045425Z_A_clean_workspace_t1_transcripts",
+  "ts": "2026-08-27T04:54:25Z",
+  "arm": "A",
+  "fixture": "clean_workspace",
+  "task": "t1_transcripts",
+  "model_requested": "opus",
+  "model_id": "claude-opus-4-8",
+  "harness_commit": "6cc1bd1",
+  "cr1_commit": "5d563098",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_ms": 662062,
+  "duration_api_ms": 653535,
+  "num_turns": 44,
+  "total_cost_usd": 4.2951595,
+  "tokens": {
+    "input": 12795,
+    "output": 51914,
+    "cache_read": 2588313,
+    "cache_creation": 163855
+  },
+  "is_error": false,
+  "events_appended": 69,
+  "files_created": 5,
+  "model_id_note": "corrected from claude-haiku-4-5-20251001: runner grabbed first modelUsage key; opus did 51914/51929 output tokens (see output.json modelUsage)"
+}

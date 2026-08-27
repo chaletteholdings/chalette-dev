@@ -156,6 +156,25 @@ def test_receipt_cross_check_flags_disagreement(tmp_path):
     assert cc["agree"] is True
 
 
+def test_table_row_counts_as_chat_capture(tmp_path):
+    """Pilot regression: a bare arm that renders captures as a markdown table
+    must get chat_capture credit, not mentioned_only."""
+    sc = _load_scorer()
+    chat = (
+        "Here are the commitments:\n\n"
+        "| Owed by | To | Commitment | Due |\n"
+        "|---|---|---|---|\n"
+        "| Sam | Bo | Send the revised pricing sheet | Tuesday |\n"
+        "| Sam | Mira | Share the board deck | Friday |\n"
+    )
+    run_dir = _mk_run(tmp_path, chat=chat, events=[])
+    card = sc.score_run(run_dir, MINI_LABELS, sc.EMBEDDED_LEAK_PATTERNS)
+    rows = {r["label_id"]: r for r in card["extraction"]["rows"]}
+    assert rows["mini_01_c1"]["assigned"] == "chat_capture"
+    assert rows["mini_01_c2"]["assigned"] == "chat_capture"
+    assert card["extraction"]["counts"]["book_captured"] == 2
+
+
 def test_clean_run_scores_clean(tmp_path):
     sc = _load_scorer()
     chat = "Nothing actionable came out of the meetings. All quiet."

@@ -1,0 +1,21 @@
+I pulled your inbox, but I have to flag something before pretending to triage it: **the email connector is returning placeholder/synthetic data, not your real mail.**
+
+Here's what came back — 20 threads, all with the same shape:
+
+- Subjects are all `Re: item 1`, `Re: item 2`, … `Re: item 20`
+- Every snippet/body is literally `Synthetic thread body N`
+- Senders are generic `aria.sample1@example.com`, `bo.sample2@example.com`, etc.
+- Timestamps are all early-to-mid **May 2026** — even though I asked for the last 14 days and today is Aug 26, so the date filter isn't being honored either
+
+There's no actual content here to sort into reply / can-wait / noise. Any triage I produced would be me inventing senders, urgency, and asks that don't exist — which wouldn't be safe for you to act on.
+
+A few likely explanations:
+- The Gmail connector is running against a **test/sandbox mailbox** rather than your live account
+- The connector is **stubbed or misconfigured** and returning fixture data
+- Auth is pointed at the wrong account
+
+**What I'd suggest:**
+1. Confirm which account the Gmail connector is authorized against (I expect `claudedavidov@gmail.com`).
+2. If it should be live, the connector likely needs to be reconnected/re-authed.
+
+Once it's pulling real threads, I'll happily do the full triage — bucketed into **needs a reply from you** (with a one-line reason and suggested next step each), **can wait**, and **noise/archive** — and I can draft replies for the top items. Want me to try re-querying, or would you rather check the connection first?

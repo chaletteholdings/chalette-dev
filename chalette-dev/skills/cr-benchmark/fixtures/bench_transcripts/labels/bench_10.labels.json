@@ -47,6 +47,9 @@
       "label_id": "bench_10_c5",
       "expected_route": "book",
       "keyphrase": "partner meeting prep call",
+      "alts": [
+        "prep call"
+      ],
       "gist": "schedule the partner meeting prep call for Monday morning",
       "owner_name": "Bo Sample",
       "counterparty_name": "Sam Sample",

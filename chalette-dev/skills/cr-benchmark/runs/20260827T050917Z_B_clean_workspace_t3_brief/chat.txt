@@ -1,0 +1,16 @@
+Sam — I pulled your calendar and inbox, but I have to be straight with you: **the data coming back doesn't look real**, so I can't give you a trustworthy brief off it. Here's what I mean:
+
+**Calendar** — the "today" query returned five events titled "Sync 1"–"Sync 5", but they're dated **May 1–5, 2026**, not today (Aug 26). Attendees are the generic `*.sampleN@example.com` addresses. Nothing is actually scheduled for today in what came back.
+
+**Email** — 20 threads, all subjects "Re: item 1"–"Re: item 20", snippets literally reading *"Synthetic thread body N."*, timestamps in **May 2026**. My query asked for `newer_than:2d` but the results ignored it. Nothing genuinely recent or substantive.
+
+Everything ties back to the placeholder entities in your workspace (Acme Co, Northstar, the Sample people) rather than live activity.
+
+**So the honest read: there's nothing actionable to brief you on** — the connected calendar/email appear to be returning seed/test data, not your real accounts.
+
+A couple of ways forward:
+- If these tools *should* be hitting your live Google account, the connection is likely misconfigured or pointed at a sandbox — worth checking the integration.
+- If you expected placeholder data and just want me to work with it, say so and I'll summarize it as-is.
+- Or tell me what you're actually trying to stay on top of today (the Series A raise, board cadence, hiring slate are the active initiatives on file) and I'll dig into whichever tool holds the real thread.
+
+Which is it?

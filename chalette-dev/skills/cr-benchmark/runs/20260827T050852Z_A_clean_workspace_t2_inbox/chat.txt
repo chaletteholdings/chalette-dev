@@ -1,0 +1,28 @@
+I used the Gmail connector (`is:unread in:inbox`). Here's the honest read — including a limitation you should know about up front.
+
+## What the connector actually returned
+
+**20 unread threads**, all from people already on your roster (Aria, Bo, Bowie, Dustin, Lyra, Mira, Quinn, Rio, Skyler — plus two from your own address, sam.sample9). Every thread is a reply (`Re: item N`), and all are dated **May 1–14, 2026** — meaning as of today (Aug 26) they're **~3½ months stale**.
+
+**The catch:** on this workspace every thread body comes back as identical placeholder text (`"Synthetic thread body N"`), the subjects are generic (`"Re: item N"`), and the connector here is **search-only** — there's no thread-fetch or draft tool wired up. So I can't do the part of triage that matters most: read the latest message in each thread to see who owes the reply, or draft anything. Classifying these by "urgency" or "topic" would mean inventing content that isn't there, and I won't do that. This is the synthetic fixture roster, so that tracks.
+
+So here's what I can honestly say, sorted the only way the data supports — by **who** and **recency**:
+
+### Needs a reply from you — *can't confirm from content*
+I can't legitimately put anything here. "Needs a reply" requires reading the newest message to see whether the ball is in your court, and the connector won't return real message content or thread direction. Two of the 20 are from **your own address** (sam.sample9@ — threads 9 and 19), which usually means self-notes or you were the last to write.
+
+### Can wait
+Realistically **all 18 non-self threads** fall here by default: they're from known contacts but they've sat unread for 3+ months with no visible deadline or ask. If any were genuinely time-sensitive, that window has long passed — worth a quick "still relevant?" sweep rather than a scramble.
+
+### Noise
+**None that I can flag as true noise.** Every sender is a known contact in your roster — no newsletters, marketing, or bulk senders in the unread set. Per your own rules I don't drop known people into Discard on a stale-but-quiet basis.
+
+---
+
+**Bottom line:** 20 unread, all from known people, all ~3½ months old, no bulk/noise, nothing I can confirm as reply-owed without real thread content — and no draft tool here to queue replies.
+
+To make this a real triage rather than a sender roll-call, I'd need either the thread-fetch/draft tools connected or actual message bodies. Want me to:
+1. **List all 20 grouped by contact** (e.g. Aria has 2, Dustin has 2…) so you can eyeball which relationships to reopen, or
+2. **Draft a short "circling back — still live?" reply** to a specific contact you name, once there's a real thread to reply to?
+
+Two things worth confirming: is this the placeholder fixture you expect to see empty content on, or should the mail connector be returning real threads? And are any of these May threads tied to the **Series A / Board / Hiring** projects you'd want me to chase?

@@ -52,6 +52,9 @@
       "label_id": "bench_03_c6",
       "expected_route": "book",
       "keyphrase": "cancel the old vendor account",
+      "alts": [
+        "vendor account"
+      ],
       "gist": "cancel the old vendor account before month end",
       "owner_name": "Rio Sample",
       "counterparty_name": "Sam Sample",

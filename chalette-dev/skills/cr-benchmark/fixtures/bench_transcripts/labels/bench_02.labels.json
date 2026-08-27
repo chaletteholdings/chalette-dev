@@ -22,6 +22,9 @@
       "label_id": "bench_02_c2",
       "expected_route": "book",
       "keyphrase": "draft the board deck",
+      "alts": [
+        "board deck"
+      ],
       "gist": "draft the board deck by Friday",
       "owner_name": "Sam Sample",
       "counterparty_name": "Mira Sample",

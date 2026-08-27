@@ -1,0 +1,14 @@
+Here's what your files show on all three:
+
+## Quinn — Quinn Sample (Northstar Partners)
+Quinn is a recurring meeting contact, not an open action item. Across the activity log, Quinn appears only in your standing 30-minute **"Sync" meetings**, rotating across all three of your initiatives — Series A Raise, Board Cadence, and Hiring Slate. Most recent was **Sync 196 on 2026-05-29** (Board Cadence).
+
+There are **no open commitments, to-dos, or pending decisions assigned to Quinn** anywhere in the log — every tracked to-do belongs to Bowie or Rio. So "currently open with Quinn" is really just the ongoing sync cadence; nothing actionable is outstanding.
+
+## Mira — Mira Sample (Acme Co)
+Mira is in your directory — at **Acme Co**, same org as Aria — but candidly, **there is no logged activity with her at all**. No meetings, emails, commitments, or decisions reference Mira anywhere in the events log. So either the relationship is new/unlogged, or nothing has happened yet on record. If you were expecting shared work here, it hasn't been captured.
+
+## Skyler — yes, Skyler Sample (Cedar Works)
+You know Skyler well. Skyler is the person you **draft emails to most** — a long, steady run of short-and-direct "Re: item N" email drafts, the most recent on **2026-05-29**. That's the entire nature of the relationship in the log: an email correspondent, no meetings or shared projects recorded.
+
+One honest caveat: this is all drawn from your local `entities.json` and `events.jsonl`, which look like structured/synthetic activity records. If there's real context (actual meeting content, what these syncs and emails are *about*), it isn't in these files — I can dig into your calendar, Gmail, or meeting transcripts if you want the substance behind any of these.

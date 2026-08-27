@@ -1,0 +1,76 @@
+The commitments widget rendered and validated cleanly (64 KB of HTML, no pagination over-budget) and is persisted to `_hq/.system/widgets/`. The trailing error is just a stray heredoc marker — the render itself succeeded.
+
+One honest caveat before the results: the interactive widget surface (`show_widget`) isn't connected in this session — only the calendar, gmail, and granola connectors are. So I can't post the one-tap card inline; per your rules I'm relaying as text and telling you so explicitly. The commitments themselves are fully captured to your workspace.
+
+---
+
+## Commitments from your 12 recent meetings
+
+**Source:** Granola meeting-transcript connector (all 12 transcripts, dated **2026-05-04**). Processed and captured to your workspace: **43 commitments booked**, 1 held as "discussed but not firmly accepted," 12 meeting records + receipts written. Heads-up — every due date below is in early May, so **all 43 are now overdue** (today is 2026-08-26).
+
+### 🟦 You (Sam) owe — 17
+
+| What | To whom | By when |
+|---|---|---|
+| Send the revised pricing sheet | Bo | Tue May 5 |
+| Introduce Bo to the Cedar Works finance lead | Bo | This week (~May 8) |
+| Draft the board deck (for Quinn to sanity-check) | Board / Quinn | Fri May 8 |
+| Send out the board pre-read memo | Board | Wed May 6 *(tentative — "I'll try for Wednesday")* |
+| Get the vendor comparison matrix over | Rio | Thu May 7 |
+| Send the offer template | Quinn | Tonight (May 4) |
+| Send the updated cap table to counsel | Counsel | Wed May 6 |
+| Send the wire instructions to counsel | Counsel | Today (May 4) |
+| Follow up with the Northstar exec sponsor | Northstar sponsor | Next week (~May 15) |
+| Approve the maintenance-window request | (internal) | This afternoon (May 4) |
+| Call the Acme Co COO | Acme COO | Today, before 5pm |
+| Send the escalation contact sheet | Mira | Tonight (May 4) |
+| Get an exec summary in front of Acme's CEO | Acme CEO | This week *(tentative — "travel permitting")* |
+| Send the planning template + last quarter's scorecard | Aria | EOD Fri May 8 |
+| Send the data-room checklist | Bo & Quinn | Tomorrow (May 5) |
+| Send the roadmap doc ahead of the walkthrough | Dustin | Before Thu (~May 6) |
+| Record the async QA video | The team | This week (~May 8) |
+
+### 🟩 Others owe — 26
+
+| Owner | What | To whom | By when |
+|---|---|---|---|
+| **Bo** | Send the Acme usage report | Sam | Fri May 8 |
+| **Bo** | Close out the budget template | Finance | Fri May 8 |
+| **Bo** | Schedule the partner-meeting prep call (30 min) | — | Mon May 11 |
+| **Mira** | Pull together the Q2 revenue numbers | Sam | Thu May 7 |
+| **Mira** | Book the board dinner | — | Wed May 6 |
+| **Mira** | Sign the datacenter SOW | Datacenter vendor | Thu May 7 |
+| **Mira** | Write the incident postmortem + send it | Acme team | Thu May 7 |
+| **Mira** | Publish the OKR tracker | Whole team | Mon May 11 |
+| **Quinn** | Send the equity grants file | The auditors | Tue May 5 |
+| **Quinn** | Schedule panel interviews for both candidates | — | This week (~May 8) |
+| **Quinn** | Update the financial model with May actuals | Sam | Wed May 6 |
+| **Quinn** | Deliver the escalation training session | Support leads | Next week (~May 15) |
+| **Aria** | Post the job description for the data role | The team | Tomorrow (May 5) |
+| **Aria** | Send the renewal terms | Northstar | Mon May 11 |
+| **Aria** | Circulate the kickoff agenda | The team | Mon May 11 |
+| **Rio** | Cancel the old vendor account | (internal) | Before month-end (May 31) |
+| **Rio** | Process the service credit | Acme account manager | This week (~May 8) |
+| **Rio** | Finish the legal review of the SAFE docs | Sam | Before the partner meeting |
+| **Bowie** | Send the security questionnaire | Lyra | End of week (May 8) |
+| **Bowie** | Get the corrected data feed over | Northstar | Fri May 8 |
+| **Bowie** | Write the cutover runbook | (team) | Fri May 8 |
+| **Bowie** | Walk the team through the runbook | The team | Mon May 11 |
+| **Bowie** | Compile the open-questions doc from the all-hands | Sam | Tomorrow (May 5) |
+| **Dustin** | Send the signed services contract | Lyra | Tomorrow (May 5) |
+| **Dustin** | Finish the server inventory list | Sam | Wed May 6 |
+| **Dustin** | Book the Thursday roadmap-walkthrough slot | Sam | For Thu May 7 |
+| **Lyra** | Send the partner-health dashboard link | Sam | Tonight (May 4) |
+
+### ⚠️ Two things to know
+- **Vendor comparison matrix (you → Rio):** the capture floor over-flagged this as "handled on the call" (there was a lot of "that's done" chatter around it in the vendor call) and parked it for your confirmation. It's a real future deliverable — I've kept it in your list above.
+- **Panel scoring rubric (Aria):** logged as *discussed, not firmly accepted* — she only said "I guess I can take a stab at a draft," with no date and no clear commitment. It's on file but not counted as an open commitment. Say the word if you want it promoted to a real one.
+
+### What I deliberately left out (not commitments)
+- **Someday/aspirational:** onboarding-flow rethink, cleaner dashboard, customer-logo slide, churn story, comp bands, referral bonus, vendor consolidation, SLA tiers, four-day-week pilot, spring offsite, team lunch, office visit, etc.
+- **Already done before/on the call:** Rio's W-9, Aria's recruiter ping, Bo's refreshed pitch deck, the printer fix; and the live-on-call actions (clicking the vendor-portal invite, renaming the June diligence folder).
+- **Superseded on the call:** your diligence-folder export — Bo said the shared-drive export already covers the historicals.
+- **Explicitly hedged to non-commitments:** the customer case study ("no promises"), the investor FAQ ("we'll see"), department pre-reads ("if the leads cooperate"), the cohort analysis ("depends on the data pull").
+- **Rejected outright:** redoing the brand before the raise, the unowned customer-comms draft ("that's not an owner — park it"), better snacks ("noted, not tracked").
+
+Want me to draft chase notes for the ones **owed to you** that are most overdue (Bo's usage report, the Q2 numbers from Mira, Dustin's inventory list), or promote Aria's rubric into a tracked commitment?

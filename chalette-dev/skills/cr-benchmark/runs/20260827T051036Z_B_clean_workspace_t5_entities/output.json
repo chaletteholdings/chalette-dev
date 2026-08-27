@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 36989,
+  "duration_api_ms": 35772,
+  "ttft_ms": 1653,
+  "ttft_stream_ms": 1178,
+  "time_to_request_ms": 50,
+  "num_turns": 6,
+  "result": "Here's what your files show on all three:\n\n## Quinn — Quinn Sample (Northstar Partners)\nQuinn is a recurring meeting contact, not an open action item. Across the activity log, Quinn appears only in your standing 30-minute **\"Sync\" meetings**, rotating across all three of your initiatives — Series A Raise, Board Cadence, and Hiring Slate. Most recent was **Sync 196 on 2026-05-29** (Board Cadence).\n\nThere are **no open commitments, to-dos, or pending decisions assigned to Quinn** anywhere in the log — every tracked to-do belongs to Bowie or Rio. So \"currently open with Quinn\" is really just the ongoing sync cadence; nothing actionable is outstanding.\n\n## Mira — Mira Sample (Acme Co)\nMira is in your directory — at **Acme Co**, same org as Aria — but candidly, **there is no logged activity with her at all**. No meetings, emails, commitments, or decisions reference Mira anywhere in the events log. So either the relationship is new/unlogged, or nothing has happened yet on record. If you were expecting shared work here, it hasn't been captured.\n\n## Skyler — yes, Skyler Sample (Cedar Works)\nYou know Skyler well. Skyler is the person you **draft emails to most** — a long, steady run of short-and-direct \"Re: item N\" email drafts, the most recent on **2026-05-29**. That's the entire nature of the relationship in the log: an email correspondent, no meetings or shared projects recorded.\n\nOne honest caveat: this is all drawn from your local `entities.json` and `events.jsonl`, which look like structured/synthetic activity records. If there's real context (actual meeting content, what these syncs and emails are *about*), it isn't in these files — I can dig into your calendar, Gmail, or meeting transcripts if you want the substance behind any of these.",
+  "stop_reason": "end_turn",
+  "session_id": "f9c7b498-ed99-4c87-9ef5-0bdb3c4b02ca",
+  "total_cost_usd": 0.561683,
+  "usage": {
+    "input_tokens": 3278,
+    "cache_creation_input_tokens": 42080,
+    "cache_read_input_tokens": 134136,
+    "output_tokens": 2272,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 42080,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1363,
+        "cache_read_input_tokens": 56101,
+        "cache_creation_input_tokens": 7879,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 7879
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 555,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000625,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-4-8": {
+      "inputTokens": 3278,
+      "outputTokens": 2272,
+      "cacheReadInputTokens": 134136,
+      "cacheCreationInputTokens": 42080,
+      "webSearchRequests": 0,
+      "costUSD": 0.5610580000000001,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "600315eb-7c8d-4029-ad1e-d3728ddd7c76"
+}

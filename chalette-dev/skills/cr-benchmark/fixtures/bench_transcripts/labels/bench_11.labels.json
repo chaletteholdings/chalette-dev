@@ -13,6 +13,9 @@
       "label_id": "bench_11_c1",
       "expected_route": "book",
       "keyphrase": "Thursday slot",
+      "alts": [
+        "roadmap walkthrough"
+      ],
       "gist": "book 30 minutes Thursday afternoon for the roadmap walkthrough",
       "owner_name": "Dustin Sample",
       "counterparty_name": "Sam Sample",

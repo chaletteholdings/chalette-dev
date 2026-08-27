@@ -1,0 +1,67 @@
+I've pulled all 12 transcripts (all from meetings dated **2026-05-04**). Here's every commitment I could extract, separating firm commitments from hedged/aspirational ones. Dates are resolved relative to the meeting day (Mon, May 4, 2026): tomorrow/Tue = May 5, Wed = May 6, Thu = May 7, Fri = May 8, "next Monday" = May 11.
+
+## Firm commitments
+
+| Owed by | To | Commitment | Due | Meeting |
+|---|---|---|---|---|
+| **Sam** | Acme Co COO | Call the COO re: the outage | Today, before 5pm (May 4) | Customer escalation |
+| **Sam** | Counsel | Send wire instructions (so closing isn't blocked) | Today (May 4) | Data room walkthrough |
+| **Sam** | Mira | Send escalation contact sheet | Tonight (May 4) | Customer escalation |
+| **Sam** | Quinn | Send offer template | Tonight (May 4) | Hiring slate review |
+| **Sam** | — | Approve maintenance window request | This afternoon (May 4) | Ops standup |
+| **Lyra** | Sam | Send partner health dashboard link | Tonight (May 4) | Partner renewal sync |
+| **Sam** | Bo | Send revised Acme pricing sheet | Tue (May 5) | Weekly pipeline sync |
+| **Sam** | Bo | Send data room checklist | Tomorrow (May 5) | Fundraise check-in |
+| **Quinn** | Auditors | Send equity grants file | Tue (May 5) | Board prep |
+| **Dustin** | Lyra | Send signed services contract (for countersign) | Tomorrow (May 5) | Vendor contract call |
+| **Aria** | — | Post job description for data role | Tomorrow AM (May 5) | Hiring slate review |
+| **Bowie** | Sam | Compile all-hands open-questions doc | Tomorrow (May 5) | All-hands recap |
+| **Sam** | Counsel | Send updated cap table | Wed (May 6) | Data room walkthrough |
+| **Mira** | — | Book board dinner (usual place) | Wed night (May 6) | Board prep |
+| **Dustin** | — | Finish server inventory list (unblocks cutover) | Wed (May 6) | Ops standup |
+| **Quinn** | — | Update financial model with May actuals | Wed (May 6) | Fundraise check-in |
+| **Mira** | — | Pull together Q2 revenue numbers | Thu (May 7) | Board prep |
+| **Sam** | Rio | Send vendor comparison matrix | Thu (May 7) | Vendor contract call |
+| **Mira** | Datacenter vendor | Sign the SOW | Thu (May 7) | Ops standup |
+| **Mira** | Acme Co team | Write & send incident postmortem | Thu (May 7) | Customer escalation |
+| **Dustin** | Sam | Book Thu-afternoon roadmap walkthrough slot | (books today; event Thu May 7) | Calendar chatter |
+| **Bo** | Sam | Send Acme usage report | Fri (May 8) | Weekly pipeline sync |
+| **Sam** | — | Draft board deck (for Quinn to check hiring slide) | Fri (May 8) | Board prep |
+| **Bowie** | Lyra | Send security questionnaire | End of week (May 8) | Vendor contract call |
+| **Bowie** | Northstar team | Deliver corrected data feed | Fri (May 8) | Partner renewal sync |
+| **Bowie** | — | Write cutover runbook | Fri (May 8) | Ops standup |
+| **Sam** | Aria | Send planning template + last qtr's scorecard | EOD Fri (May 8) | Quarterly planning kickoff |
+| **Bo** | Finance | Close out the budget template | Fri (May 8) | Quarterly planning kickoff |
+| **Sam** | Bo | Intro Bo to Cedar Works finance lead (email) | This week | Weekly pipeline sync |
+| **Quinn** | — | Schedule panel interviews for both candidates | This week (calendars permitting) | Hiring slate review |
+| **Rio** | Acme account mgr | Process the service credit | This week | Customer escalation |
+| **Sam** | Team | Record async QA video for unanswered Qs | This week | All-hands recap |
+| **Aria** | Northstar | Send renewal terms | Mon (May 11) | Partner renewal sync |
+| **Bowie** | Team | Walk team through cutover runbook | Mon (May 11) | Ops standup |
+| **Aria** | — | Circulate kickoff agenda | Mon (May 11) | Quarterly planning kickoff |
+| **Bo** | — | Schedule partner-meeting prep call (30 min) | Mon AM (May 11) | Fundraise check-in |
+| **Mira** | Whole team | Publish OKR tracker | Mon (May 11) | All-hands recap |
+| **Quinn** | Support leads | Deliver escalation training session | Next week | All-hands recap |
+| **Sam** | — | Follow up with Northstar exec sponsor | Next week | Partner renewal sync |
+| **Sam** | Dustin | Send roadmap doc | Before Thu walkthrough (May 7) | Calendar chatter |
+| **Rio** | — | Finish legal review of SAFE docs | Before partner meeting | Fundraise check-in |
+| **Rio** | — | Cancel old vendor account (stop double-paying) | Before month end (May 31) | Vendor contract call |
+| **Sam** | — | Pre-read memo out ahead of the deck | Targeting Wed (May 6)* | Board prep |
+
+\* Sam softened this one ("I should be able to… I'll try for Wednesday") — a target, not a hard commitment.
+
+## Tentative / conditional (hedged — not firm)
+
+- **Sam** → customer case study before the Acme renewal — *"no promises"* (Weekly pipeline sync)
+- **Sam** → exec summary in front of Acme's CEO this week — *"travel permitting"* (Customer escalation)
+- **Aria** → draft scoring rubric for the panel — *"I guess I can take a stab"* (Hiring slate review)
+- **Aria** → collect department pre-reads before kickoff — *"I might try… no promises"* (Quarterly planning kickoff)
+- **Quinn** → cohort analysis before the partner meeting — *"depends on the data pull"* (Fundraise check-in)
+- **Bo** → investor FAQ if inbound keeps up — *"we'll see"* (Data room walkthrough)
+
+## Not included (and why)
+
+- **Already done** (stated as complete): Rio sent the W-9; Aria pinged the recruiter; Bo renamed the June diligence folder; Rio clicked the portal invite; Bo refreshed the pitch deck; the printer fix. Also, Sam's offer to run the diligence-folder export was **withdrawn** — Bo said the shared-drive export already covers the historicals.
+- **"Someday" pile / no owner / no date** (explicitly parked): onboarding redesign, cleaner dashboard, customer-logo slide, churn story, comp bands, referral bonus, coffee with Skyler Stone, automating partner reporting, Category Company bundle, cutover customer comms (parked — no owner), backup-vendor revisit, zero-downtime, SLA-tier revisit, narrative workshop, team lunch, Bluebird office visit, conference-room screen, four-day-week pilot, better snacks, spring offsite, chief-of-staff hire, vendor consolidation.
+
+One note: these transcripts are all dated **May 4, 2026**, so as of today (Aug 26) every deadline above is well in the past — useful as a record of what was committed, but likely stale for follow-up. Want me to log any of these to your `events.jsonl`, or focus just on your (Sam's) own open items?

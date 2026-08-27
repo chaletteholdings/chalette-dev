@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 94324,
+  "duration_api_ms": 93088,
+  "ttft_ms": 2366,
+  "ttft_stream_ms": 1067,
+  "time_to_request_ms": 42,
+  "num_turns": 10,
+  "result": "I used the Gmail connector (`is:unread in:inbox`). Here's the honest read — including a limitation you should know about up front.\n\n## What the connector actually returned\n\n**20 unread threads**, all from people already on your roster (Aria, Bo, Bowie, Dustin, Lyra, Mira, Quinn, Rio, Skyler — plus two from your own address, sam.sample9). Every thread is a reply (`Re: item N`), and all are dated **May 1–14, 2026** — meaning as of today (Aug 26) they're **~3½ months stale**.\n\n**The catch:** on this workspace every thread body comes back as identical placeholder text (`\"Synthetic thread body N\"`), the subjects are generic (`\"Re: item N\"`), and the connector here is **search-only** — there's no thread-fetch or draft tool wired up. So I can't do the part of triage that matters most: read the latest message in each thread to see who owes the reply, or draft anything. Classifying these by \"urgency\" or \"topic\" would mean inventing content that isn't there, and I won't do that. This is the synthetic fixture roster, so that tracks.\n\nSo here's what I can honestly say, sorted the only way the data supports — by **who** and **recency**:\n\n### Needs a reply from you — *can't confirm from content*\nI can't legitimately put anything here. \"Needs a reply\" requires reading the newest message to see whether the ball is in your court, and the connector won't return real message content or thread direction. Two of the 20 are from **your own address** (sam.sample9@ — threads 9 and 19), which usually means self-notes or you were the last to write.\n\n### Can wait\nRealistically **all 18 non-self threads** fall here by default: they're from known contacts but they've sat unread for 3+ months with no visible deadline or ask. If any were genuinely time-sensitive, that window has long passed — worth a quick \"still relevant?\" sweep rather than a scramble.\n\n### Noise\n**None that I can flag as true noise.** Every sender is a known contact in your roster — no newsletters, marketing, or bulk senders in the unread set. Per your own rules I don't drop known people into Discard on a stale-but-quiet basis.\n\n---\n\n**Bottom line:** 20 unread, all from known people, all ~3½ months old, no bulk/noise, nothing I can confirm as reply-owed without real thread content — and no draft tool here to queue replies.\n\nTo make this a real triage rather than a sender roll-call, I'd need either the thread-fetch/draft tools connected or actual message bodies. Want me to:\n1. **List all 20 grouped by contact** (e.g. Aria has 2, Dustin has 2…) so you can eyeball which relationships to reopen, or\n2. **Draft a short \"circling back — still live?\" reply** to a specific contact you name, once there's a real thread to reply to?\n\nTwo things worth confirming: is this the placeholder fixture you expect to see empty content on, or should the mail connector be returning real threads? And are any of these May threads tied to the **Series A / Board / Hiring** projects you'd want me to chase?",
+  "stop_reason": "end_turn",
+  "session_id": "3e6e7b73-1f43-4f34-a61a-31d03a0cd51c",
+  "total_cost_usd": 1.2315919999999998,
+  "usage": {
+    "input_tokens": 11965,
+    "cache_creation_input_tokens": 89277,
+    "cache_read_input_tokens": 265198,
+    "output_tokens": 5831,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 89277,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1331,
+        "cache_read_input_tokens": 72496,
+        "cache_creation_input_tokens": 3100,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3100
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 543,
+      "outputTokens": 16,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000623,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-4-8": {
+      "inputTokens": 11965,
+      "outputTokens": 5831,
+      "cacheReadInputTokens": 265198,
+      "cacheCreationInputTokens": 89277,
+      "webSearchRequests": 0,
+      "costUSD": 1.2309689999999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "f7b23d1a-e416-4d13-b0e6-92532acd6558"
+}

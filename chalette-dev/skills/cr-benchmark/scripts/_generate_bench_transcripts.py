@@ -79,7 +79,7 @@ TRANSCRIPTS = [
             ("Sam", "noted, ok that's the list"),
         ],
         "planted": [
-            {"route": "book", "keyphrase": "revised pricing sheet",
+            {"route": "book", "keyphrase": "revised pricing sheet", "alts": ["pricing sheet"],
              "gist": "send the revised pricing sheet to Bo by Tuesday",
              "owner": "Sam", "counterparty": "Bo", "due_hint": "Tuesday"},
             {"route": "book", "keyphrase": "Cedar Works finance lead",
@@ -123,7 +123,7 @@ TRANSCRIPTS = [
             {"route": "book", "keyphrase": "Q2 revenue numbers",
              "gist": "pull the Q2 revenue numbers together by Thursday",
              "owner": "Mira", "counterparty": "Sam", "due_hint": "Thursday"},
-            {"route": "book", "keyphrase": "draft the board deck",
+            {"route": "book", "keyphrase": "draft the board deck", "alts": ["board deck"],
              "gist": "draft the board deck by Friday",
              "owner": "Sam", "counterparty": "Mira", "due_hint": "Friday"},
             {"route": "review", "keyphrase": "pre-read memo",
@@ -181,7 +181,7 @@ TRANSCRIPTS = [
              "why": "past tense, already done"},
             {"route": "reject", "keyphrase": "click the invite button",
              "why": "live action completed on the call (J1 shape)"},
-            {"route": "book", "keyphrase": "cancel the old vendor account",
+            {"route": "book", "keyphrase": "cancel the old vendor account", "alts": ["vendor account"],
              "gist": "cancel the old vendor account before month end",
              "owner": "Rio", "counterparty": "Sam", "due_hint": "month end"},
             {"route": "reject", "keyphrase": "consolidate the remaining vendors",
@@ -218,7 +218,7 @@ TRANSCRIPTS = [
             {"route": "book", "keyphrase": "offer template",
              "gist": "send Quinn the offer template tonight",
              "owner": "Sam", "counterparty": "Quinn", "due_hint": "tonight"},
-            {"route": "review", "keyphrase": "stab at a draft",
+            {"route": "review", "keyphrase": "stab at a draft", "alts": ["scoring rubric", "rubric"],
              "gist": "Aria drafts the panel scoring rubric",
              "owner": "Aria", "counterparty": "Quinn",
              "why": "hedged self-assignment (I guess I can), consequential"},
@@ -228,7 +228,7 @@ TRANSCRIPTS = [
              "why": "unowned team wish, someday"},
             {"route": "reject", "keyphrase": "pinged the recruiter",
              "why": "past tense, already done"},
-            {"route": "book", "keyphrase": "job description for the data role",
+            {"route": "book", "keyphrase": "job description for the data role", "alts": ["job description"],
              "gist": "post the job description for the data role tomorrow morning",
              "owner": "Aria", "counterparty": "Sam", "due_hint": "tomorrow"},
         ],
@@ -300,7 +300,7 @@ TRANSCRIPTS = [
              "gist": "Bowie to get Northstar the corrected data feed by Friday",
              "owner": "Bowie", "counterparty": None,
              "why": "third-party to external org"},
-            {"route": "book", "keyphrase": "exec sponsor next week",
+            {"route": "book", "keyphrase": "exec sponsor next week", "alts": ["exec sponsor"],
              "gist": "follow up with the Northstar Partners exec sponsor",
              "owner": "Sam", "counterparty": "Lyra", "due_hint": "next week"},
             {"route": "reject", "keyphrase": "bundle the Category Company pilot",
@@ -379,7 +379,7 @@ TRANSCRIPTS = [
             ("Sam", "at some point. go"),
         ],
         "planted": [
-            {"route": "book", "keyphrase": "chief operating officer today",
+            {"route": "book", "keyphrase": "chief operating officer today", "alts": ["COO", "chief operating officer"],
              "gist": "call the Acme Co COO today before five",
              "owner": "Sam", "counterparty": "Mira", "due_hint": "today"},
             {"route": "book", "keyphrase": "incident postmortem",
@@ -475,7 +475,7 @@ TRANSCRIPTS = [
              "why": "third-party promise relayed by Bo"},
             {"route": "reject", "keyphrase": "narrative workshop",
              "why": "someday musing"},
-            {"route": "book", "keyphrase": "partner meeting prep call",
+            {"route": "book", "keyphrase": "partner meeting prep call", "alts": ["prep call"],
              "gist": "schedule the partner meeting prep call for Monday morning",
              "owner": "Bo", "counterparty": "Sam", "due_hint": "Monday",
              "kind": "scheduling"},
@@ -507,7 +507,7 @@ TRANSCRIPTS = [
             ("Sam", "one of these days. now we're done"),
         ],
         "planted": [
-            {"route": "book", "keyphrase": "Thursday slot",
+            {"route": "book", "keyphrase": "Thursday slot", "alts": ["roadmap walkthrough"],
              "gist": "book 30 minutes Thursday afternoon for the roadmap walkthrough",
              "owner": "Dustin", "counterparty": "Sam", "due_hint": "Thursday",
              "kind": "scheduling"},
@@ -608,6 +608,11 @@ def build_labels(t: dict, roster: dict, text: str) -> dict:
             "expected_route": item["route"],
             "keyphrase": item["keyphrase"],
         }
+        if item.get("alts"):
+            # Paraphrase aliases for OUTPUT matching only (models compress
+            # wording); the primary keyphrase stays the transcript anchor and
+            # the uniqueness-validated key. Added at pilot calibration.
+            row["alts"] = item["alts"]
         if item["route"] != "reject":
             row["gist"] = item["gist"]
             row["owner_name"] = full_name(roster, item["owner"]) if item.get("owner") else None
