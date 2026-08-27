@@ -7,6 +7,8 @@ Sam Sample: that's not an owner. park it for now
 Bowie Sample: we should probably also revisit the backup vendor eventually
 Sam Sample: eventually. status on the maintenance window?
 Dustin Sample: waiting on you. Mira also promised the datacenter vendor she'd sign the SOW by Thursday, so hardware is covered
+Bowie Sample: and I still owe the network vendor an updated contact list from our last call — no deadline on it, just owed
+Sam Sample: noted, that's between you and them
 Sam Sample: then I'll approve the maintenance window request this afternoon so nothing slips
 Bowie Sample: zero-downtime would be great someday
 Sam Sample: someday. standup done

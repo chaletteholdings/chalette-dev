@@ -256,6 +256,7 @@ def score_extraction(run: dict, labels: list[dict]) -> dict:
             rows.append({
                 "label_id": item["label_id"],
                 "expected": item["expected_route"],
+                "rail_shadowed": bool(item.get("rail_shadowed")),
                 "assigned": assigned,
                 "evidence": evidence,
             })
@@ -272,7 +273,25 @@ def score_extraction(run: dict, labels: list[dict]) -> dict:
         "review_expected": sum(1 for r in rows if r["expected"] == "review"),
         "review_captured": n("review", captured),
         "review_exact": n("review", {"review"}),
+        # Observed accounting splits on the SHIPPED caution-rail precedence
+        # (capture_gate.classify_capture:870, pinned by run_w4c_capture_gate_test):
+        # a dated third-party item CANNOT reach the observed tier, so for
+        # rail_shadowed labels the shipped-correct outcome is the open lane.
+        # Only un-dated third-party items test the observed tier itself.
         "observed_expected": sum(1 for r in rows if r["expected"] == "observed"),
+        "observed_undated_expected": sum(
+            1 for r in rows if r["expected"] == "observed" and not r["rail_shadowed"]),
+        "observed_undated_exact": sum(
+            1 for r in rows if r["expected"] == "observed" and not r["rail_shadowed"]
+            and r["assigned"] == "observed"),
+        "observed_shadowed_expected": sum(
+            1 for r in rows if r["expected"] == "observed" and r["rail_shadowed"]),
+        "observed_shadowed_open_ok": sum(
+            1 for r in rows if r["expected"] == "observed" and r["rail_shadowed"]
+            and r["assigned"] in ("book", "review", "chat_capture")),
+        "observed_shadowed_as_observed": sum(
+            1 for r in rows if r["expected"] == "observed" and r["rail_shadowed"]
+            and r["assigned"] == "observed"),
         "observed_exact": n("observed", {"observed"}),
         "observed_as_open": n("observed", {"book", "review"}),
         "observed_captured_any": n("observed", captured | {"observed"}),
@@ -439,8 +458,12 @@ def scoreboard_md(cards: list[dict]) -> str:
             notes.append("TIMEOUT")
         ext = c.get("extraction", {}).get("counts")
         if ext:
+            obs_note = (f"obs={ext['observed_undated_exact']}/{ext['observed_undated_expected']} "
+                        f"rail={ext['observed_shadowed_open_ok']}/{ext['observed_shadowed_expected']}"
+                        if "observed_undated_expected" in ext else
+                        f"obs={ext['observed_exact']}/{ext['observed_expected']}")
             notes.append(f"recall={ext['owner_lane_recall']} prec={ext['owner_lane_precision_vs_planted']} "
-                         f"falseCap={ext['reject_false_captures']} obs={ext['observed_exact']}/{ext['observed_expected']} "
+                         f"falseCap={ext['reject_false_captures']} {obs_note} "
                          f"unplanted={ext['unplanted_captures']}")
         ent = c.get("entities", {}).get("counts")
         if ent:

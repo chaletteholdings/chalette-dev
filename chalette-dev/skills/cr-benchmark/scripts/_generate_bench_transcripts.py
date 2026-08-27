@@ -39,7 +39,7 @@ DEFAULT_FIXTURES = (SKILL_ROOT.parent / "synthetic-workspace-runtime-test" / "fi
                     / "clean_workspace")
 OUT_DIR = SKILL_ROOT / "fixtures" / "bench_transcripts"
 
-SET_VERSION = "1.0"
+SET_VERSION = "1.1"  # 1.1: rail_shadowed marking + un-dated third-party items (BENCH1 observed-tier investigation, 2026-08-27)
 BASE_DATE = "2026-05-04"  # the Monday after the fixture BASE_DATE 2026-05-01
 
 # Known-unknowns: approved-roster names deliberately absent from entities.json.
@@ -161,7 +161,9 @@ TRANSCRIPTS = [
             ("Sam", "great. now pull up the vendor portal and click the invite button real quick so I can see the flow"),
             ("Rio", "done, I'm in"),
             ("Sam", "nice. last thing on cleanup, anything on the old account?"),
-            ("Rio", "I'll cancel the old vendor account before month end so we stop paying twice"),
+            ("Rio", "one more from that thread: Dustin owes Lyra an intro to the Cedar Works ops lead, they agreed on the vendor call, no date on it"),
+            ("Sam", "fine, their thread"),
+            ("Rio", "and I'll cancel the old vendor account before month end so we stop paying twice"),
             ("Sam", "good. we might want to consolidate the remaining vendors next year, but that's a later conversation"),
             ("Rio", "much later. that's all I needed"),
         ],
@@ -184,6 +186,10 @@ TRANSCRIPTS = [
             {"route": "book", "keyphrase": "cancel the old vendor account", "alts": ["vendor account"],
              "gist": "cancel the old vendor account before month end",
              "owner": "Rio", "counterparty": "Sam", "due_hint": "month end"},
+            {"route": "observed", "keyphrase": "Cedar Works ops lead",
+             "gist": "Dustin owes Lyra an intro to the Cedar Works ops lead (no date)",
+             "owner": "Dustin", "counterparty": "Lyra",
+             "why": "third-party to third-party, UN-dated — reaches the observed tier under shipped precedence"},
             {"route": "reject", "keyphrase": "consolidate the remaining vendors",
              "why": "deferred next-year intent, no commitment"},
         ],
@@ -287,7 +293,9 @@ TRANSCRIPTS = [
             ("Sam", "fine. I'll follow up with the Northstar Partners exec sponsor next week to make sure the renewal lands"),
             ("Lyra", "worth it, they're our biggest partner"),
             ("Sam", "anything else? we could theoretically bundle the Category Company pilot into the same paper someday"),
-            ("Lyra", "theoretically. not this quarter. before I forget, I'll send you the partner health dashboard link tonight so you can watch the feed fix land"),
+            ("Lyra", "theoretically. not this quarter. also Aria told the Northstar team she'd walk them through the reporting portal — she's committed, they just haven't picked a day"),
+            ("Sam", "good, that's hers to run"),
+            ("Lyra", "before I forget, I'll send you the partner health dashboard link tonight so you can watch the feed fix land"),
             ("Sam", "perfect. one day we should automate all this partner reporting"),
             ("Lyra", "one day"),
         ],
@@ -308,6 +316,10 @@ TRANSCRIPTS = [
             {"route": "book", "keyphrase": "partner health dashboard",
              "gist": "send Sam the partner health dashboard link tonight",
              "owner": "Lyra", "counterparty": "Sam", "due_hint": "tonight"},
+            {"route": "observed", "keyphrase": "reporting portal",
+             "gist": "Aria to walk the Northstar team through the reporting portal (no date picked)",
+             "owner": "Aria", "counterparty": None,
+             "why": "third-party to external, UN-dated — observed-tier reachable"},
             {"route": "reject", "keyphrase": "automate all this partner reporting",
              "why": "one-day musing, no owner"},
         ],
@@ -330,6 +342,8 @@ TRANSCRIPTS = [
             ("Bowie", "we should probably also revisit the backup vendor eventually"),
             ("Sam", "eventually. status on the maintenance window?"),
             ("Dustin", "waiting on you. Mira also promised the datacenter vendor she'd sign the SOW by Thursday, so hardware is covered"),
+            ("Bowie", "and I still owe the network vendor an updated contact list from our last call — no deadline on it, just owed"),
+            ("Sam", "noted, that's between you and them"),
             ("Sam", "then I'll approve the maintenance window request this afternoon so nothing slips"),
             ("Bowie", "zero-downtime would be great someday"),
             ("Sam", "someday. standup done"),
@@ -349,6 +363,10 @@ TRANSCRIPTS = [
              "gist": "Mira to sign the datacenter vendor SOW by Thursday",
              "owner": "Mira", "counterparty": None,
              "why": "third-party promise to a vendor, relayed"},
+            {"route": "observed", "keyphrase": "network vendor",
+             "gist": "Bowie owes the network vendor an updated contact list (no deadline)",
+             "owner": "Bowie", "counterparty": None,
+             "why": "third-party to external, UN-dated — observed-tier reachable"},
             {"route": "book", "keyphrase": "maintenance window request",
              "gist": "approve the maintenance window request this afternoon",
              "owner": "Sam", "counterparty": "Dustin", "due_hint": "this afternoon"},
@@ -537,6 +555,8 @@ TRANSCRIPTS = [
             ("Bowie", "and Quinn told the support leads she'd deliver the escalation training session next week"),
             ("Sam", "ok. my one item: I'll record the async QA video for the questions we didn't get to, this week"),
             ("Lyra", "people will appreciate that"),
+            ("Bowie", "one more follow-up on record: Quinn promised the interns a proper tools walkthrough, no session picked yet"),
+            ("Sam", "hers to schedule"),
             ("Bowie", "there was also the perennial ask for better snacks"),
             ("Sam", "the snack question survives every reorg. noted, not tracked"),
             ("Lyra", "and someone suggested we should explore a four-day week pilot eventually"),
@@ -554,6 +574,10 @@ TRANSCRIPTS = [
              "gist": "Quinn to deliver the escalation training session next week",
              "owner": "Quinn", "counterparty": None,
              "why": "third-party commitment to support leads, relayed"},
+            {"route": "observed", "keyphrase": "tools walkthrough",
+             "gist": "Quinn to give the interns a tools walkthrough (no session picked)",
+             "owner": "Quinn", "counterparty": None,
+             "why": "third-party to the interns, UN-dated — observed-tier reachable"},
             {"route": "book", "keyphrase": "async QA video",
              "gist": "record the async QA video this week",
              "owner": "Sam", "counterparty": "Lyra", "due_hint": "this week"},
@@ -613,6 +637,14 @@ def build_labels(t: dict, roster: dict, text: str) -> dict:
             # wording); the primary keyphrase stays the transcript anchor and
             # the uniqueness-validated key. Added at pilot calibration.
             row["alts"] = item["alts"]
+        if item["route"] == "observed" and item.get("due_hint"):
+            # SHIPPED precedence (capture_gate.classify_capture:870, pinned by
+            # run_w4c_capture_gate_test): the asymmetric caution rail opens ANY
+            # dated/money item before the party test runs, so a dated
+            # third-party item cannot reach the observed tier by construction.
+            # Correct shipped routing for these is the open lane; the scorer
+            # counts them separately so the design tension stays measurable.
+            row["rail_shadowed"] = True
         if item["route"] != "reject":
             row["gist"] = item["gist"]
             row["owner_name"] = full_name(roster, item["owner"]) if item.get("owner") else None

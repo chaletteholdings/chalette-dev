@@ -37,10 +37,22 @@ a distractor discussed and dismissed in prose counts as correctly rejected.
 - **Owner-lane precision (vs planted)** = owner-lane captures /
   (owner-lane captures + reject items captured in any form).
 - **Route exactness (Arm A capability metrics)**: `book_exact`,
-  `review_exact`, `observed_exact`, `observed_as_open` (an observed item
-  wrongly opened as an owner commitment). The observed tier is a distinct
-  outcome: correctly-observed is neither a capture nor a miss. Arm B has no
-  observed tier; its observed-row cells read N/A, never zero.
+  `review_exact`, plus the observed split below. The observed tier is a
+  distinct outcome: correctly-observed is neither a capture nor a miss. Arm B
+  has no observed tier; its observed-row cells read N/A, never zero.
+- **Observed split (label set v1.1, after the 2026-08-27 investigation)**:
+  shipped precedence is caution rail > party test
+  (`capture_gate.classify_capture:870`, pinned by
+  `run_w4c_capture_gate_test`'s `test_caution_rail_beats_every_mode`) — a
+  dated or money-bearing third-party item opens BEFORE party-ness is
+  consulted, so it cannot reach the observed tier by construction. Labels
+  mark those `rail_shadowed`; for them the shipped-correct outcome is the
+  open lane (`observed_shadowed_open_ok`), and `observed_shadowed_as_observed`
+  firing would mean the rail did NOT engage. Only un-dated third-party items
+  (`observed_undated_*`) test the observed tier itself. The pilot's 0/11
+  "observed misses" were all rail-shadowed items routing exactly as shipped —
+  a scoring-design artifact, not a product defect; the W4c-doctrine-vs-rail
+  tension is a product design question tracked outside this rig.
 - **False captures** = reject items assigned any capture form.
 - **Unplanted captures** = capture rows (events channel) matching no planted
   keyphrase. Reported as a count with the row text; these overlap with the

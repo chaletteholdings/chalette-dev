@@ -15,8 +15,11 @@ two arms only, model pinned to Opus, no other-harness arm ever.
    Client data never enters this lane, in any form.
 2. **cr1 is read-only.** The plugin under test loads via `--plugin-dir` from
    the operator profile's `cr1_clone`. `git status` there must stay clean.
-3. **Model pinned: Opus, both arms, every run.** The exact model id each run
-   reports is logged; runs on different model ids are never aggregated.
+3. **Model pinned: `claude-opus-5`, both arms, every run** (M ruling
+   2026-08-27 — the model CR clients run in production). The exact model id
+   each run reports is logged; runs on different model ids are never
+   aggregated. The 2026-08-27 pilot ran at claude-opus-4-8 and is
+   calibration-only, never official.
 4. **Labels are frozen.** No label edit after a run without re-running every
    affected arm.
 5. **A number is official only after codex adversarial review** of the
@@ -44,8 +47,8 @@ Read `references/run-protocol.md` and follow it exactly. Short form:
 ```bash
 cd skills/cr-benchmark/scripts
 python _generate_bench_transcripts.py --check          # labels still valid
-python bench_runner.py --arm A --fixture clean_workspace --task all --model opus
-python bench_runner.py --arm B --fixture clean_workspace --task all --model opus
+python bench_runner.py --arm A --fixture clean_workspace --task all --model claude-opus-5
+python bench_runner.py --arm B --fixture clean_workspace --task all --model claude-opus-5
 python bench_scorer.py --runs-dir ../runs --cr1 <cr1_clone>
 ```
 

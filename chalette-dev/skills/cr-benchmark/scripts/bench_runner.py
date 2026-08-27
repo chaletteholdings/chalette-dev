@@ -49,7 +49,8 @@ BENCH_TRANSCRIPTS = SKILL_ROOT / "fixtures" / "bench_transcripts"
 DEFAULT_RUNS = SKILL_ROOT / "runs"
 DEFAULT_CR1 = Path.home() / "repos" / "cr1-canonical"
 
-MODEL_ALIASES = {"opus": "opus"}  # pass through; log the id the run reports
+MODEL_ALIASES = {}  # pass through; log the id the run reports
+PINNED_MODEL = "claude-opus-5"  # M ruling 2026-08-27: official runs at Opus 5.0
 RUN_TIMEOUT_SEC = 20 * 60
 ARTIFACT_COPY_CAP = 200 * 1024  # bytes
 
@@ -285,7 +286,7 @@ def main() -> int:
     ap.add_argument("--fixture", default="clean_workspace")
     ap.add_argument("--task", default="all",
                     help="'all' or comma-separated task keys from tasks.json")
-    ap.add_argument("--model", default="opus")
+    ap.add_argument("--model", default=PINNED_MODEL)
     ap.add_argument("--runs-dir", default=str(DEFAULT_RUNS))
     ap.add_argument("--cr1", default=str(DEFAULT_CR1))
     ap.add_argument("--claude", default=None)

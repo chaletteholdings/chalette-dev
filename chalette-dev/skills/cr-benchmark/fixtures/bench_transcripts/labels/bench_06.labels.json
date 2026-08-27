@@ -1,6 +1,6 @@
 {
   "transcript_id": "bench_06",
-  "set_version": "1.0",
+  "set_version": "1.1",
   "title": "Partner renewal sync",
   "meeting_date": "2026-05-04",
   "attendees": [
@@ -56,6 +56,15 @@
     },
     {
       "label_id": "bench_06_c6",
+      "expected_route": "observed",
+      "keyphrase": "reporting portal",
+      "gist": "Aria to walk the Northstar team through the reporting portal (no date picked)",
+      "owner_name": "Aria Sample",
+      "counterparty_name": null,
+      "why": "third-party to external, UN-dated — observed-tier reachable"
+    },
+    {
+      "label_id": "bench_06_c7",
       "expected_route": "reject",
       "keyphrase": "automate all this partner reporting",
       "why": "one-day musing, no owner"

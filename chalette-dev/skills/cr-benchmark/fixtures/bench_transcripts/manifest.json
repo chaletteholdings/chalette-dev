@@ -1,11 +1,11 @@
 {
-  "set_version": "1.0",
+  "set_version": "1.1",
   "generated_by": "_generate_bench_transcripts.py (deterministic; do not hand-edit)",
   "meeting_date": "2026-05-04",
   "transcript_count": 12,
   "route_counts": {
     "book": 30,
-    "observed": 11,
+    "observed": 15,
     "reject": 30,
     "review": 7
   },
@@ -40,7 +40,7 @@
         "Sam Sample",
         "Rio Sample"
       ],
-      "planted": 7
+      "planted": 8
     },
     {
       "id": "bench_04",
@@ -68,7 +68,7 @@
         "Sam Sample",
         "Lyra Sample"
       ],
-      "planted": 6
+      "planted": 7
     },
     {
       "id": "bench_07",
@@ -78,7 +78,7 @@
         "Dustin Sample",
         "Bowie Sample"
       ],
-      "planted": 7
+      "planted": 8
     },
     {
       "id": "bench_08",
@@ -125,7 +125,7 @@
         "Lyra Sample",
         "Bowie Sample"
       ],
-      "planted": 7
+      "planted": 8
     }
   ]
 }

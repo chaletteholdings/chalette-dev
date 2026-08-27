@@ -1,6 +1,6 @@
 {
   "transcript_id": "bench_07",
-  "set_version": "1.0",
+  "set_version": "1.1",
   "title": "Ops standup",
   "meeting_date": "2026-05-04",
   "attendees": [
@@ -51,6 +51,15 @@
     },
     {
       "label_id": "bench_07_c6",
+      "expected_route": "observed",
+      "keyphrase": "network vendor",
+      "gist": "Bowie owes the network vendor an updated contact list (no deadline)",
+      "owner_name": "Bowie Sample",
+      "counterparty_name": null,
+      "why": "third-party to external, UN-dated — observed-tier reachable"
+    },
+    {
+      "label_id": "bench_07_c7",
       "expected_route": "book",
       "keyphrase": "maintenance window request",
       "gist": "approve the maintenance window request this afternoon",
@@ -59,7 +68,7 @@
       "due_hint": "this afternoon"
     },
     {
-      "label_id": "bench_07_c7",
+      "label_id": "bench_07_c8",
       "expected_route": "reject",
       "keyphrase": "zero-downtime",
       "why": "wishful, someday"

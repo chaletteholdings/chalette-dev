@@ -21,9 +21,14 @@ Windows: `set PYTHONUTF8=1` first. The `claude` CLI must be on PATH or at
 One invocation per arm; each task inside is its own fresh-workspace run:
 
 ```bash
-python bench_runner.py --arm A --fixture clean_workspace --task all --model opus
-python bench_runner.py --arm B --fixture clean_workspace --task all --model opus
+python bench_runner.py --arm A --fixture clean_workspace --task all --model claude-opus-5
+python bench_runner.py --arm B --fixture clean_workspace --task all --model claude-opus-5
 ```
+
+**Model pin (M ruling 2026-08-27): official runs are `claude-opus-5`** — the
+model CR clients run in production. The 2026-08-27 pilot ran at
+claude-opus-4-8 and stands as scorer calibration only; no pilot number is
+official, and the delta is noted in RUNLOG.
 
 What the runner guarantees per run:
 

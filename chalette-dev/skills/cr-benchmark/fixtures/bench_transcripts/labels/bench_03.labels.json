@@ -1,6 +1,6 @@
 {
   "transcript_id": "bench_03",
-  "set_version": "1.0",
+  "set_version": "1.1",
   "title": "Vendor contract call",
   "meeting_date": "2026-05-04",
   "attendees": [
@@ -62,6 +62,15 @@
     },
     {
       "label_id": "bench_03_c7",
+      "expected_route": "observed",
+      "keyphrase": "Cedar Works ops lead",
+      "gist": "Dustin owes Lyra an intro to the Cedar Works ops lead (no date)",
+      "owner_name": "Dustin Sample",
+      "counterparty_name": "Lyra Sample",
+      "why": "third-party to third-party, UN-dated — reaches the observed tier under shipped precedence"
+    },
+    {
+      "label_id": "bench_03_c8",
       "expected_route": "reject",
       "keyphrase": "consolidate the remaining vendors",
       "why": "deferred next-year intent, no commitment"
