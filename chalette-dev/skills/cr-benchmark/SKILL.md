@@ -52,10 +52,11 @@ python bench_runner.py --arm B --fixture clean_workspace --task all --model clau
 python bench_scorer.py --runs-dir ../runs --cr1 <cr1_clone>
 ```
 
-Pilot = 12 runs on clean_workspace. **Hard stop after the pilot**: measured
-tokens-per-run goes to M, who schedules the full battery (adds
-mature_workspace, 24 runs total) against the shared weekly usage pool. Codex
-grading starts at phase 5, after M's codex CLI setup.
+Pilot = 12 runs on clean_workspace (DONE 2026-08-27 at claude-opus-4-8;
+calibration-only, never official). **Battery: ruled GO by M for 2026-08-28**
+— 2 arms x 6 tasks x {clean, mature} at `claude-opus-5` with `--follow-up`
+(t1's confirm turn, ruled in 2026-08-27). Codex grading starts at phase 5,
+after M's codex CLI setup.
 
 ## Routing
 
