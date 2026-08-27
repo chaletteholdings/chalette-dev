@@ -90,11 +90,23 @@ The pilot is 12 runs (2 arms x 6 tasks, clean_workspace). After scoring:
    total) against the shared weekly usage pool. Do not start the battery,
    ablation arms, or codex grading without that scheduling ruling.
 
-## 4. Official grading (phase 5, after M's codex setup)
+## 4. Integrity + external audit (phase 5, reworked by M ruling 2026-08-27)
 
-Prereqs (M runs these once): `npm i -g @openai/codex`, `codex login`,
-`claude plugin marketplace add openai/codex-plugin-cc` (exactly that repo —
-look-alike forks exist), install the codex plugin, `/codex:setup`.
+**Codex is DORMANT — M holds that spend until results prove out.** The v1
+integrity basis is reproducibility (everything committed, every cell
+recomputable) plus the standing human-verification invitation in the
+methodology doc §7 (Andrés's engineer or any outside reviewer audits the
+committed scorecards against the raw artifacts; confirmed findings block the
+affected numbers until resolved).
+
+The codex hooks below are the DESIGNED HARDENING STEP — kept documented and
+runnable so enabling them later is one decision, not a rebuild. Do NOT run
+them without M's explicit go.
+
+Prereqs if ever enabled (M runs these once): `npm i -g @openai/codex`,
+`codex login`, `claude plugin marketplace add openai/codex-plugin-cc`
+(exactly that repo — look-alike forks exist), install the codex plugin,
+`/codex:setup`.
 
 Then, per graded run set:
 

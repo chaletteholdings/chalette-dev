@@ -22,9 +22,15 @@ two arms only, model pinned to Opus, no other-harness arm ever.
    calibration-only, never official.
 4. **Labels are frozen.** No label edit after a run without re-running every
    affected arm.
-5. **A number is official only after codex adversarial review** of the
-   committed scorecards (`/codex:adversarial-review`, `openai/codex-plugin-cc`).
-   Until then results are working numbers, clearly marked.
+5. **Integrity basis (M ruling 2026-08-27): reproducibility, not authority.**
+   Methodology, deterministic generators, frozen labels, scoring code, and
+   every raw run artifact are committed together — every scorecard cell is
+   recomputable from the artifacts, and the v1 external audit is the standing
+   verification invitation in the methodology doc §7 (Andrés's engineer or
+   any outside reviewer). The codex adversarial-review hooks
+   (`/codex:adversarial-review`, `openai/codex-plugin-cc`) stay in the
+   harness DORMANT as the designed hardening step — enabling them is M's
+   explicit decision, never a default.
 
 ## Layout
 
