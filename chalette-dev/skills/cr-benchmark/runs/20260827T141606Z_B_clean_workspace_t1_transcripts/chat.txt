@@ -1,0 +1,90 @@
+All 12 transcripts pulled. One thing to flag before the list:
+
+⚠️ **These aren't recent.** Every meeting is dated **2026-05-04** (a Monday). Today is **2026-08-27** — so these are ~16 weeks old and every deadline below is long past. I've resolved relative dates ("Tuesday", "this week") against the meeting date. If you expected transcripts from the last week or two, the connector isn't returning them and it's worth checking.
+
+---
+
+## Sam's commitments (15)
+
+| What | To whom | Due |
+|---|---|---|
+| Call the Acme Co COO | Acme Co | Mon 5/4, before 5pm |
+| Send wire instructions | Counsel | Mon 5/4 |
+| Approve maintenance window request | Dustin / ops | Mon 5/4 afternoon |
+| Send offer template | Quinn | Mon 5/4 night |
+| Send escalation contact sheet | Mira | Mon 5/4 night |
+| Send data room checklist | Bo + Quinn | Tue 5/5 |
+| Send revised pricing sheet | Bo (for Acme renewal) | Tue 5/5 |
+| Send updated cap table | Counsel | Wed 5/6 |
+| Send vendor comparison matrix | Rio | Thu 5/7 |
+| Send roadmap doc | Dustin | Before Thu 5/7 walkthrough |
+| Draft board deck | Mira / Quinn to review | Fri 5/8 |
+| Send planning template + last qtr scorecard | Aria | Fri 5/8 EOD |
+| Intro Bo to the Cedar Works finance lead (email) | Bo | Week of 5/4 |
+| Record async Q&A video | Whole team | Week of 5/4 |
+| Follow up with Northstar Partners exec sponsor | Northstar | Week of 5/11 |
+
+## Others' commitments made in the room (16)
+
+| Owner | What | To whom | Due |
+|---|---|---|---|
+| Lyra | Partner health dashboard link | Sam | Mon 5/4 night |
+| Dustin | Book 30min Thu PM roadmap slot | Sam | Immediately after call |
+| Aria | Post data-role job description | — | Tue 5/5 AM |
+| Bowie | All-hands open-questions doc | Sam | Tue 5/5 |
+| Mira | Book board dinner (usual place) | — | For Wed 5/6 night |
+| Dustin | Server inventory list (unblocks cutover plan) | Sam / ops | Wed 5/6 |
+| Quinn | Update financial model w/ May actuals | Bo / Sam | Wed 5/6 |
+| Mira | Q2 revenue numbers | Sam | Thu 5/7 |
+| Mira | Incident postmortem, in writing | Acme Co team | Thu 5/7 |
+| Bo | Acme usage report | Sam | Fri 5/8 |
+| Bowie | Cutover runbook | Ops team | Fri 5/8 |
+| Quinn | Schedule panel interviews, both finalists | — | Week of 5/4 *(calendars permitting)* |
+| Bo | Schedule partner-meeting prep call, 30min | Sam / Quinn | For Mon 5/11 AM |
+| Aria | Circulate kickoff agenda | Dept leads | Mon 5/11 |
+| Bowie | Walk team through the runbook | Ops team | Mon 5/11 |
+| Rio | Cancel old vendor account (stop double-paying) | — | Before month end 5/31 |
+
+## Third-party commitments (reported secondhand, 15)
+
+Owed by people who weren't in the room to confirm — treat as unverified.
+
+- **Quinn → auditors:** equity grants file — Tue 5/5
+- **Dustin → Lyra:** signed services contract for countersign — Tue 5/5
+- **Aria → Northstar:** renewal terms — "Monday" *(ambiguous: 5/4 or 5/11)*
+- **Mira → team:** publish OKR tracker — Mon 5/11
+- **Mira → datacenter vendor:** sign the SOW — Thu 5/7
+- **Bo → finance:** close out budget template — Fri 5/8
+- **Bowie → Lyra:** security questionnaire — end of week 5/8
+- **Bowie → Northstar:** corrected data feed — Fri 5/8
+- **Rio → Acme account manager:** process service credit — week of 5/4
+- **Quinn → support leads:** escalation training session — week of 5/11
+- **Rio → Bo/Sam:** legal review of SAFE docs — before the partner meeting
+- **Dustin → Lyra:** intro to Cedar Works ops lead — *no date*
+- **Aria → Northstar:** reporting portal walkthrough — *committed, no day picked*
+- **Bowie → network vendor:** updated contact list — *no date*
+- **Quinn → interns:** tools walkthrough — *no session picked*
+
+## Hedged — stated but not promised (7)
+
+Not tracking these as owed; each was explicitly qualified.
+
+- **Sam:** customer case study before the Acme renewal — *"no promises"*
+- **Sam:** board pre-read memo, targeting Wed 5/6 — *"I'll try for"*
+- **Sam:** exec summary to Acme's CEO this week — *"travel permitting"*
+- **Aria:** scoring rubric draft — *"I guess I can take a stab"*, owner soft, **no deadline**
+- **Aria:** collect department pre-reads before kickoff — *"if the leads cooperate"*
+- **Bo:** investor FAQ — *"if the inbound keeps up"*
+- **Quinn:** cohort analysis before partner meeting — *"depends on the data pull"*
+
+## Already done (not owed)
+
+Rio sent the W-9 · Rio clicked through the vendor portal invite flow live · Aria pinged the recruiter (awaiting reply) · Bo renamed the June diligence folder live · Bo refreshed the pitch deck · printer fixed last month.
+
+---
+
+### Three things worth your attention
+
+1. **Customer comms for the cutover has no owner.** Dustin offered "we'll get the comms drafted at some point"; you correctly rejected it and parked it — but it was never picked back up. That's a real gap in front of a migration.
+2. **Sam's diligence-folder export was retracted, not completed.** You offered to run it; Bo said the shared drive export already covers the historicals. Dropped deliberately — don't let it resurface as an open item.
+3. **Two soft assignments to watch:** Quinn is expected to sanity-check the board deck's hiring slide, but she wasn't in that meeting and never agreed to it. And Aria's scoring rubric is the only owned-but-undated item that actually blocks something (Quinn's panel interviews the same week).

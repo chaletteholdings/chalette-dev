@@ -1,0 +1,33 @@
+I stopped before producing a triage. The email connector in this workspace isn't returning usable data, and classifying on what it gave me would have meant inventing the answer. Here's what I found.
+
+## The connector ignores the query
+
+I ran three differently-shaped searches. All three returned the **identical** 20 threads:
+
+| Query | Result |
+|---|---|
+| `is:unread in:inbox` | threads 001–020 |
+| `newer_than:3d` | threads 001–020 (identical) |
+| `from:dustin.sample4@example.com` | threads 001–020 (identical) |
+
+The third one is the proof: a sender-scoped search for Dustin returned threads from Aria, Bo, Bowie, Lyra, Mira, Quinn, Rio, Skyler and Sam. The query is echoed back in `query_used` but never applied. The backing fixture (`_hq/connectors/gmail_responses.json`) has exactly one canned key — `in:inbox newer_than:1d` — and serves it for everything.
+
+Three consequences:
+
+1. **I can't tell you what's unread.** The unread filter didn't run. These 20 may be your whole inbox, or an arbitrary slice.
+2. **There's no body to read.** Every snippet is a placeholder — "Synthetic thread body 1.", "Synthetic thread body 2." Triage classification requires reading the body; a subject line alone is explicitly not enough, and here the subjects are "Re: item 1" through "Re: item 20."
+3. **I can't check who owes the reply.** Determining that requires fetching the full thread and reading the newest message. Only a search tool is connected — no thread-fetch, no draft, no send. And since every query returns the same list, I can't corroborate a "no reply / stalled / waiting on them" claim with a second read either. Any "needs a reply from you" I wrote would be a guess about direction, which is the exact failure mode that inverts these calls.
+
+So the three buckets you asked for — reply / wait / noise — I have no grounds to fill. I wrote nothing to your workspace: no triage brief, no commitment records. Fabricated commitments are worse than none, since they'd surface later as real obligations.
+
+## What I can state factually
+
+20 threads, dated **2026-05-01 to 2026-05-14** — three and a half months stale as of today. Ten senders, two threads each, all already in your contacts: Aria, Bo, Bowie, Dustin, Lyra, Mira, Quinn, Rio, Skyler, and one from `sam.sample9@example.com`. The uniform round-robin pattern and the flat timestamps are themselves fixture signatures, not inbox behavior.
+
+Two side notes: `_hq/MASTER_TRACKER.md` and `_hq/PEOPLE.md` don't exist in this workspace (only `connectors/`, `data/`, `views/`), so VIP tiering had no source either. And no declared email backend is configured — `connector_config` returns `None`, so discovery fell back to fingerprinting and found only the search tool.
+
+## To get a real triage
+
+The gap is the connector, not the triage logic. It needs to (a) actually apply queries, (b) return real message bodies, and (c) expose a thread-fetch operation so direction can be determined.
+
+Want me to check whether the MCP server is misconfigured or pointed at the fixture file by mistake? That's the fastest thing to rule out — if it's meant to be live and is reading `gmail_responses.json`, that's a one-line fix.

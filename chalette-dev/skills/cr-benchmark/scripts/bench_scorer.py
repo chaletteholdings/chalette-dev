@@ -398,6 +398,45 @@ def score_leaks(run: dict, patterns: dict[str, str]) -> dict:
     return {"hits": hits, "count": sum(h["count"] for h in hits.values())}
 
 
+_SCHEMA_CACHE: dict = {}
+
+
+def score_event_validity(run: dict, cr1: Path | None) -> dict | None:
+    """Arm-symmetric: every event a run appended is validated against cr1's
+    canonical events.schema.json. Added at battery start after the confirm
+    turn revealed the bare arm hand-writing rows into events.jsonl — whether
+    appended rows are substrate-valid is the durable-capture claim, counted.
+    Skip-not-fail: no cr1 or no jsonschema -> None (metric absent, never 0)."""
+    if cr1 is None or not run["events"]:
+        return {"events": len(run["events"]), "invalid": 0, "errors": []} \
+            if cr1 is not None else None
+    try:
+        import jsonschema
+    except ImportError:
+        return None
+    key = str(cr1)
+    if key not in _SCHEMA_CACHE:
+        p = cr1 / "command-room" / "shared" / "data-schemas" / "events.schema.json"
+        try:
+            _SCHEMA_CACHE[key] = json.loads(p.read_text(encoding="utf-8"))
+        except OSError:
+            _SCHEMA_CACHE[key] = None
+    schema = _SCHEMA_CACHE[key]
+    if schema is None:
+        return None
+    validator = jsonschema.Draft7Validator(schema)
+    invalid = 0
+    errors = []
+    for ev in run["events"]:
+        errs = list(validator.iter_errors(ev))
+        if errs:
+            invalid += 1
+            if len(errors) < 5:
+                errors.append({"seq": ev.get("seq"), "type": ev.get("type"),
+                               "error": str(errs[0].message)[:120]})
+    return {"events": len(run["events"]), "invalid": invalid, "errors": errors}
+
+
 def cross_check_receipts(run: dict, counts: dict) -> dict | None:
     """Arm A only: compare scorer counts against CR's own capture receipts."""
     receipts = []
@@ -422,7 +461,8 @@ def cross_check_receipts(run: dict, counts: dict) -> dict | None:
 
 # ---------------------------------------------------------------------- main
 
-def score_run(run_dir: Path, labels: list[dict], patterns: dict[str, str]) -> dict:
+def score_run(run_dir: Path, labels: list[dict], patterns: dict[str, str],
+              cr1: Path | None = None) -> dict:
     run = read_run(run_dir)
     meta = run["meta"]
     roster_names, roster_orgs = load_roster(meta["fixture"])
@@ -443,6 +483,9 @@ def score_run(run_dir: Path, labels: list[dict], patterns: dict[str, str]) -> di
                                           strict_unknown=(meta["task"] == "t1_transcripts"))
     card["hallucination"] = score_hallucination(run, roster_names, roster_orgs)
     card["leaks"] = score_leaks(run, patterns)
+    validity = score_event_validity(run, cr1)
+    if validity is not None:
+        card["event_validity"] = validity
     (run_dir / "scorecard.json").write_text(
         json.dumps(card, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return card
@@ -470,6 +513,9 @@ def scoreboard_md(cards: list[dict]) -> str:
         ent = c.get("entities", {}).get("counts")
         if ent:
             notes.append(f"ent={ent}")
+        ev = c.get("event_validity")
+        if ev and ev["events"]:
+            notes.append(f"evValid={ev['events'] - ev['invalid']}/{ev['events']}")
         tok = (c.get("tokens") or {}).get("output")
         lines.append(f"| {c['run_id']} | {c['arm']} | {c['task']} | "
                      f"{(c.get('wall_ms') or 0) / 1000:.0f} | {tok} | "
@@ -496,7 +542,8 @@ def main() -> int:
             continue
         if args.only and run_dir.name != args.only:
             continue
-        cards.append(score_run(run_dir, labels, patterns))
+        cards.append(score_run(run_dir, labels, patterns,
+                               cr1=Path(args.cr1).expanduser().resolve() if args.cr1 else None))
         print(f"scored {run_dir.name}")
 
     if cards:

@@ -1,0 +1,29 @@
+Logged. 206 → 262 events, seqs unique and monotonic, file parses clean.
+
+**Written: 56 events** — 49 commitments + 7 set-aside, all stamped `source_skill: scan-for-commitments` and `origin: connector`, each anchored to its `granola:bench_NN` transcript. Re-running the scan won't duplicate them.
+
+Your open set now reads:
+
+| | |
+|---|---|
+| Total open | 65 (40 were already there) |
+| You owe | 9 |
+| Owed to you | 56 |
+| Overdue | 25 |
+| Awaiting your confirmation | 24 |
+
+## Three things you should know
+
+**1. The confirm queue holds 24 of the 49.** They're on file but stay out of the you-owe / owed-to-you buckets until you clear them — that's why "you owe" reads 9 and not the 19 I showed you. 15 are just unlinked counterparties (counsel, the auditors, the Acme COO); 9 are the real hedges.
+
+**2. The 7 set-aside items landed already expired.** The expiry window is 30 days and these are 115 days old, so they're searchable and will show up in call prep, but they can't be promoted into open items or corroborate anything. Given their age that's probably the right resting place — flagging it so it isn't a surprise later.
+
+**3. 32 of the 49 have no project binding, and the gate warned about it.** They're fully visible to the commitment readers — I verified all 49 load — but any surface that groups *by project* won't show them. Only four of your twelve meetings mapped to an existing project: Board prep → Board Cadence, Hiring slate → Hiring Slate, Data room + Fundraise → Series A Raise. The other eight (pipeline sync, vendor contract, partner renewal, ops standup, customer escalation, quarterly planning, calendar, all-hands) have no project to attach to, and I wasn't going to invent three or four new ones without asking.
+
+A backup of the pre-write file is in my scratchpad, so a rollback is clean if you want one.
+
+Worth deciding now:
+
+1. Do you want threads created for the uncovered areas — something like *Vendor Renewals*, *Platform Migration*, *Acme Escalation*, *Quarterly Planning*? That's what would make those 32 visible in project views.
+2. Want me to walk the 9 real judgment calls with you so they clear the confirm queue? It's a quick yes/no pass and it'd move your "you owe" number to something true.
+3. Should I scan mail from that May window next? With everything 16 weeks overdue, the inbox is the fastest way to find which of these actually shipped — and it'd close a chunk of the 25 overdue automatically.

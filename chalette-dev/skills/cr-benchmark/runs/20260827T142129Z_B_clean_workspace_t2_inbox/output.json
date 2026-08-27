@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 18868,
+  "duration_api_ms": 18045,
+  "ttft_ms": 1606,
+  "ttft_stream_ms": 859,
+  "time_to_request_ms": 37,
+  "num_turns": 4,
+  "result": "I can't triage this — the email connector is returning placeholder data, not your actual inbox.\n\n**What I ran:**\n- `in:inbox newer_than:14d` → 20 threads\n- `in:inbox is:unread` → the **same 20 threads**, byte-for-byte identical\n\n**Why it's clearly not real mail:**\n- Subjects are `Re: item 1` through `Re: item 20`; every body snippet is `Synthetic thread body N`\n- Senders are `aria.sample1@example.com` … `skyler.sample10@example.com` — the `example.com` reserved test domain, cycling through 10 names twice\n- Timestamps run 2026-05-01 → 2026-05-14, but today is 2026-08-27. A `newer_than:14d` query should have returned nothing from May\n- The two different queries returned identical results, so the connector isn't filtering at all — it's echoing a fixture\n\nNone of these names appear to correspond to anyone; I didn't bother cross-referencing `_hq/data/entities.json` because there's no real content to match against.\n\nIf I sorted these into \"reply / can wait / noise\" I'd be inventing the entire thing — the snippets contain zero information about what anyone wants from you.\n\n**To get this working:** the `gmail` MCP server looks like it's running in a mock/demo mode rather than authenticated against your account. Worth checking its config for a fixture flag or missing OAuth credentials. Want me to look at your MCP server config to see how it's set up?",
+  "stop_reason": "end_turn",
+  "session_id": "c64874d9-3fa0-4c45-ab37-662d3295e11b",
+  "total_cost_usd": 0.21817399999999998,
+  "usage": {
+    "input_tokens": 3215,
+    "cache_creation_input_tokens": 12615,
+    "cache_read_input_tokens": 101762,
+    "output_tokens": 978,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 12615,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 552,
+        "cache_read_input_tokens": 29915,
+        "cache_creation_input_tokens": 2125,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2125
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 543,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000618,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-5": {
+      "inputTokens": 3215,
+      "outputTokens": 978,
+      "cacheReadInputTokens": 101762,
+      "cacheCreationInputTokens": 12615,
+      "webSearchRequests": 0,
+      "costUSD": 0.21755599999999997,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "11fbc3ed-b7b6-43e7-b4ce-ce102192fed1"
+}

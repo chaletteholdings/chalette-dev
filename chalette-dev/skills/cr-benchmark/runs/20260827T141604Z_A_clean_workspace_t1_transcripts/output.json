@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 541470,
+  "duration_api_ms": 538515,
+  "ttft_ms": 6688,
+  "ttft_stream_ms": 4548,
+  "time_to_request_ms": 3605,
+  "num_turns": 45,
+  "result": "I read all 12 transcripts the connector had and ran them through the capture floor. **Nothing is written to your tracker yet** — this is the preview.\n\n**First, the thing that matters most: these aren't recent.** Every one of the 12 meetings is dated **2026-05-04** — about 16 weeks ago. There is nothing newer in the transcript connector. So all 43 dated commitments below are already past due, and some are certainly stale. Read this as a backfill of an old week, not a live to-do list.\n\n**49 commitments · 7 set aside.** Meetings only — I didn't touch mail, since you pointed me at the transcript connector.\n\n## You owe (19)\n\n| Due | To | What | Meeting |\n|---|---|---|---|\n| May 4 | Quinn | send the offer template | Hiring slate review |\n| May 4 | counsel | send the wire instructions so closing isn't blocked | Data room walkthrough |\n| May 4 | Dustin | approve the maintenance window request | Ops standup |\n| May 4 | Acme Co COO | call them about the outage (said \"before five\") | Customer escalation |\n| May 4 | Mira | send the escalation contact sheet | Customer escalation |\n| May 5 | Bo | send the revised Acme pricing sheet | Weekly pipeline sync |\n| May 5 | Bo + Quinn | send the data room checklist | Fundraise check-in |\n| May 6 | counsel | send the updated cap table | Data room walkthrough |\n| May 6 | Mira | get the board pre-read memo out ⚑ | Board prep |\n| May 7 | Rio | send the vendor comparison matrix ⚑ | Vendor contract call |\n| May 7 | Dustin | send the roadmap doc before the walkthrough | Calendar chatter |\n| May 8 | Bo | introduce him to the Cedar Works finance lead | Weekly pipeline sync |\n| May 8 | Quinn | draft the board deck for her to sanity-check | Board prep |\n| May 8 | Aria | send the planning template + last quarter's scorecard | Quarterly planning |\n| May 8 | the team | record the async QA video | All-hands recap |\n| May 15 | Northstar exec sponsor | follow up on the renewal | Partner renewal sync |\n| — | Bo | draft the Acme case study ⚑ | Weekly pipeline sync |\n| — | Acme Co CEO | get an exec summary in front of them ⚑ | Customer escalation |\n| ~~May 5~~ | Bo | run the diligence folder export ⚑ — **retracted in the room** (\"you don't need that instance\") | Data room walkthrough |\n\n## Owed to you (18)\n\n| Due | From | What |\n|---|---|---|\n| May 4 | Lyra | partner health dashboard link |\n| May 4 | Dustin | book 30 min Thursday for the roadmap walkthrough |\n| May 5 | Aria | post the data-role job description |\n| May 5 | Bowie | compile the all-hands open questions doc |\n| May 6 | Mira | book the board dinner |\n| May 6 | Dustin | finish the server inventory list (unblocks cutover) |\n| May 6 | Quinn | update the financial model with May actuals |\n| May 7 | Mira | pull together the Q2 revenue numbers |\n| May 8 | Bo | send the Acme usage report |\n| May 8 | Quinn | schedule the panel interviews for both finalists |\n| May 8 | Bowie | write the cutover runbook |\n| May 11 | Aria | circulate the planning kickoff agenda |\n| May 11 | Bo | schedule the partner-meeting prep call |\n| May 31 | Rio | cancel the old vendor account (stop double-paying) |\n| — | Bo | investor FAQ ⚑ |\n| — | Aria | collect department pre-reads ⚑ |\n| — | Rio | legal review of the SAFE docs ⚑ |\n| — | Quinn | cohort analysis before the partner meeting ⚑ |\n\n## Other people's, but dated (12)\n\nNot yours either direction — they surfaced because a date is attached, which the gate never suppresses: Quinn→auditors (equity grants, May 5) · Dustin→Lyra (signed contract, May 5) · Mira→datacenter vendor (SOW, May 7) · Mira→Acme team (incident postmortem, May 7) · Bowie→Lyra (security questionnaire, May 8) · Bowie→Northstar (corrected data feed, May 8) · Rio→Acme AM (service credit, May 8) · Bo→finance (budget template, May 8) · Aria→Northstar (renewal terms, May 11) · Bowie→ops team (runbook walkthrough, May 11) · Mira→whole team (OKR tracker, May 11) · Quinn→support leads (escalation training, May 15).\n\n## Set aside — 7, kept but silent\n\nAria's scoring-rubric \"stab at a draft\" (never accepted) · Dustin→Lyra Cedar Works intro (their thread, no date) · Bowie→network vendor contact list (retold from an earlier call) · Aria→Northstar portal walkthrough and Quinn→interns tools walkthrough (no day picked) · the two things done live in the room (Rio clicking the portal invite, Bo renaming the June folder).\n\n**Not extracted at all:** the \"someday\" pile — onboarding flow, cleaner dashboard, comp bands, referral bonus, SLA tiers, four-day week, snacks, offsite, backup vendor, vendor consolidation — plus four things already finished (Rio's W-9, Aria's recruiter ping, Bo's pitch-deck refresh, the printer), and the customer comms you explicitly parked as having no owner.\n\n## Two things to check before I write\n\n⚑ = flagged for confirmation, 24 of them. 15 are mechanical — the counterparty is free text (\"counsel\", \"the auditors\", \"the Acme Co team\") with no person record to link to. The other 9 are real judgment calls, mostly hedges: \"I'll try for Wednesday\", \"I might\", \"depends on the data pull\", \"no promises\".\n\n**One I think the filter got wrong:** *send Rio the vendor comparison matrix* was flagged \"already done during the call.\" It wasn't — you said \"I'll get the vendor comparison matrix to you by Thursday,\" and the \"so that's done\" a few lines later refers to Rio's W-9. I left the flag rather than override it, but I'd treat that as a live commitment.\n\nPreview saved to `_hq/scans/COMMITMENT_SCAN_PREVIEW_2026-08-27.md`.\n\nSay **add them** and I'll write all 49 plus the 7 set-aside items in one pass. Before I do:\n\n1. Given these are 16 weeks old — do you want them all, or only the ones still plausibly live? I can drop the 12 third-party ones and the fully stale scheduling items.\n2. Should I create person records for the recurring free-text counterparties — **counsel** and the **Acme Co COO/CEO** — so those stop landing unconfirmed on every future scan?\n3. Want me to run the same scan over mail next? Your inbox and sent mail from that window would likely show which of these actually landed.",
+  "stop_reason": "end_turn",
+  "session_id": "dbbc0502-83c3-4f64-a3ee-e2761aef72fd",
+  "total_cost_usd": 3.9505909999999993,
+  "usage": {
+    "input_tokens": 5114,
+    "cache_creation_input_tokens": 166176,
+    "cache_read_input_tokens": 2169016,
+    "output_tokens": 47125,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 166176,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 26,
+        "output_tokens": 2442,
+        "cache_read_input_tokens": 146900,
+        "cache_creation_input_tokens": 1386,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1386
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 553,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000628,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-5": {
+      "inputTokens": 5114,
+      "outputTokens": 47125,
+      "cacheReadInputTokens": 2169016,
+      "cacheCreationInputTokens": 166176,
+      "webSearchRequests": 0,
+      "costUSD": 3.9499629999999994,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "9cf5f5a1-a141-433b-a5af-88707c14f77f"
+}

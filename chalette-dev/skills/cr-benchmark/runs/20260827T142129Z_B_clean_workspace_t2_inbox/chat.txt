@@ -1,0 +1,17 @@
+I can't triage this — the email connector is returning placeholder data, not your actual inbox.
+
+**What I ran:**
+- `in:inbox newer_than:14d` → 20 threads
+- `in:inbox is:unread` → the **same 20 threads**, byte-for-byte identical
+
+**Why it's clearly not real mail:**
+- Subjects are `Re: item 1` through `Re: item 20`; every body snippet is `Synthetic thread body N`
+- Senders are `aria.sample1@example.com` … `skyler.sample10@example.com` — the `example.com` reserved test domain, cycling through 10 names twice
+- Timestamps run 2026-05-01 → 2026-05-14, but today is 2026-08-27. A `newer_than:14d` query should have returned nothing from May
+- The two different queries returned identical results, so the connector isn't filtering at all — it's echoing a fixture
+
+None of these names appear to correspond to anyone; I didn't bother cross-referencing `_hq/data/entities.json` because there's no real content to match against.
+
+If I sorted these into "reply / can wait / noise" I'd be inventing the entire thing — the snippets contain zero information about what anyone wants from you.
+
+**To get this working:** the `gmail` MCP server looks like it's running in a mock/demo mode rather than authenticated against your account. Worth checking its config for a fixture flag or missing OAuth credentials. Want me to look at your MCP server config to see how it's set up?

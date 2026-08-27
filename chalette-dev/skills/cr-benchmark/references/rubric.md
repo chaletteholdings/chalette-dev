@@ -99,6 +99,16 @@ the asymmetry is real and intended: Arm B has no internal vocabulary to leak,
 so its baseline is ~0; the metric exists to prove Arm A's scaffolding does
 not leak engineering vocabulary into user-facing output.
 
+## 4b. Event schema validity (all tasks, battery onward)
+
+Every event a run appends to `events.jsonl` is validated against cr1's
+canonical `events.schema.json`; the scorecard carries
+`event_validity: {events, invalid, errors[]}`. Arm-symmetric by code — added
+at battery start when the confirm turn revealed the bare arm hand-writing
+its own rows into the substrate: an appended row is only durable capture if
+the product's own readers can consume it. Skip-not-fail: without a cr1
+clone or jsonschema the metric is absent, never zero.
+
 ## 5. Cost (all tasks)
 
 Wall-clock ms and token counts copied verbatim from the headless run's usage

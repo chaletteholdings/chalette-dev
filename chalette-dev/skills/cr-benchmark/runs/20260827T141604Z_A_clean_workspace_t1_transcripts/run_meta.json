@@ -1,0 +1,27 @@
+{
+  "run_id": "20260827T141604Z_A_clean_workspace_t1_transcripts",
+  "ts": "2026-08-27T14:16:04Z",
+  "arm": "A",
+  "fixture": "clean_workspace",
+  "task": "t1_transcripts",
+  "model_requested": "claude-opus-5",
+  "model_id": "claude-opus-5",
+  "harness_commit": "4682eaf",
+  "cr1_commit": "c7de82f3",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_ms": 660562,
+  "duration_api_ms": 538515,
+  "num_turns": 57,
+  "total_cost_usd": 6.318972,
+  "tokens": {
+    "input": 5394,
+    "output": 54776,
+    "cache_read": 3744908,
+    "cache_creation": 304952
+  },
+  "is_error": false,
+  "follow_up_used": true,
+  "events_appended": 56,
+  "files_created": 5
+}

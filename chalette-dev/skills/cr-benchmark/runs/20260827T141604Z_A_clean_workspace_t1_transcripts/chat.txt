@@ -1,0 +1,76 @@
+I read all 12 transcripts the connector had and ran them through the capture floor. **Nothing is written to your tracker yet** — this is the preview.
+
+**First, the thing that matters most: these aren't recent.** Every one of the 12 meetings is dated **2026-05-04** — about 16 weeks ago. There is nothing newer in the transcript connector. So all 43 dated commitments below are already past due, and some are certainly stale. Read this as a backfill of an old week, not a live to-do list.
+
+**49 commitments · 7 set aside.** Meetings only — I didn't touch mail, since you pointed me at the transcript connector.
+
+## You owe (19)
+
+| Due | To | What | Meeting |
+|---|---|---|---|
+| May 4 | Quinn | send the offer template | Hiring slate review |
+| May 4 | counsel | send the wire instructions so closing isn't blocked | Data room walkthrough |
+| May 4 | Dustin | approve the maintenance window request | Ops standup |
+| May 4 | Acme Co COO | call them about the outage (said "before five") | Customer escalation |
+| May 4 | Mira | send the escalation contact sheet | Customer escalation |
+| May 5 | Bo | send the revised Acme pricing sheet | Weekly pipeline sync |
+| May 5 | Bo + Quinn | send the data room checklist | Fundraise check-in |
+| May 6 | counsel | send the updated cap table | Data room walkthrough |
+| May 6 | Mira | get the board pre-read memo out ⚑ | Board prep |
+| May 7 | Rio | send the vendor comparison matrix ⚑ | Vendor contract call |
+| May 7 | Dustin | send the roadmap doc before the walkthrough | Calendar chatter |
+| May 8 | Bo | introduce him to the Cedar Works finance lead | Weekly pipeline sync |
+| May 8 | Quinn | draft the board deck for her to sanity-check | Board prep |
+| May 8 | Aria | send the planning template + last quarter's scorecard | Quarterly planning |
+| May 8 | the team | record the async QA video | All-hands recap |
+| May 15 | Northstar exec sponsor | follow up on the renewal | Partner renewal sync |
+| — | Bo | draft the Acme case study ⚑ | Weekly pipeline sync |
+| — | Acme Co CEO | get an exec summary in front of them ⚑ | Customer escalation |
+| ~~May 5~~ | Bo | run the diligence folder export ⚑ — **retracted in the room** ("you don't need that instance") | Data room walkthrough |
+
+## Owed to you (18)
+
+| Due | From | What |
+|---|---|---|
+| May 4 | Lyra | partner health dashboard link |
+| May 4 | Dustin | book 30 min Thursday for the roadmap walkthrough |
+| May 5 | Aria | post the data-role job description |
+| May 5 | Bowie | compile the all-hands open questions doc |
+| May 6 | Mira | book the board dinner |
+| May 6 | Dustin | finish the server inventory list (unblocks cutover) |
+| May 6 | Quinn | update the financial model with May actuals |
+| May 7 | Mira | pull together the Q2 revenue numbers |
+| May 8 | Bo | send the Acme usage report |
+| May 8 | Quinn | schedule the panel interviews for both finalists |
+| May 8 | Bowie | write the cutover runbook |
+| May 11 | Aria | circulate the planning kickoff agenda |
+| May 11 | Bo | schedule the partner-meeting prep call |
+| May 31 | Rio | cancel the old vendor account (stop double-paying) |
+| — | Bo | investor FAQ ⚑ |
+| — | Aria | collect department pre-reads ⚑ |
+| — | Rio | legal review of the SAFE docs ⚑ |
+| — | Quinn | cohort analysis before the partner meeting ⚑ |
+
+## Other people's, but dated (12)
+
+Not yours either direction — they surfaced because a date is attached, which the gate never suppresses: Quinn→auditors (equity grants, May 5) · Dustin→Lyra (signed contract, May 5) · Mira→datacenter vendor (SOW, May 7) · Mira→Acme team (incident postmortem, May 7) · Bowie→Lyra (security questionnaire, May 8) · Bowie→Northstar (corrected data feed, May 8) · Rio→Acme AM (service credit, May 8) · Bo→finance (budget template, May 8) · Aria→Northstar (renewal terms, May 11) · Bowie→ops team (runbook walkthrough, May 11) · Mira→whole team (OKR tracker, May 11) · Quinn→support leads (escalation training, May 15).
+
+## Set aside — 7, kept but silent
+
+Aria's scoring-rubric "stab at a draft" (never accepted) · Dustin→Lyra Cedar Works intro (their thread, no date) · Bowie→network vendor contact list (retold from an earlier call) · Aria→Northstar portal walkthrough and Quinn→interns tools walkthrough (no day picked) · the two things done live in the room (Rio clicking the portal invite, Bo renaming the June folder).
+
+**Not extracted at all:** the "someday" pile — onboarding flow, cleaner dashboard, comp bands, referral bonus, SLA tiers, four-day week, snacks, offsite, backup vendor, vendor consolidation — plus four things already finished (Rio's W-9, Aria's recruiter ping, Bo's pitch-deck refresh, the printer), and the customer comms you explicitly parked as having no owner.
+
+## Two things to check before I write
+
+⚑ = flagged for confirmation, 24 of them. 15 are mechanical — the counterparty is free text ("counsel", "the auditors", "the Acme Co team") with no person record to link to. The other 9 are real judgment calls, mostly hedges: "I'll try for Wednesday", "I might", "depends on the data pull", "no promises".
+
+**One I think the filter got wrong:** *send Rio the vendor comparison matrix* was flagged "already done during the call." It wasn't — you said "I'll get the vendor comparison matrix to you by Thursday," and the "so that's done" a few lines later refers to Rio's W-9. I left the flag rather than override it, but I'd treat that as a live commitment.
+
+Preview saved to `_hq/scans/COMMITMENT_SCAN_PREVIEW_2026-08-27.md`.
+
+Say **add them** and I'll write all 49 plus the 7 set-aside items in one pass. Before I do:
+
+1. Given these are 16 weeks old — do you want them all, or only the ones still plausibly live? I can drop the 12 third-party ones and the fully stale scheduling items.
+2. Should I create person records for the recurring free-text counterparties — **counsel** and the **Acme Co COO/CEO** — so those stop landing unconfirmed on every future scan?
+3. Want me to run the same scan over mail next? Your inbox and sent mail from that window would likely show which of these actually landed.

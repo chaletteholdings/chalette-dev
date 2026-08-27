@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 33460,
+  "duration_api_ms": 31437,
+  "ttft_ms": 1704,
+  "ttft_stream_ms": 946,
+  "time_to_request_ms": 47,
+  "num_turns": 7,
+  "result": "I can't give you a real morning brief — every data source came back with placeholder fixture data, not your actual calendar and email. Here's what I found:\n\n## The tools are returning synthetic data\n\n**Calendar** — I asked for `today` (2026-08-27). It returned five events titled \"Sync 1\" through \"Sync 5\", dated May 1–5, 2026. The window parameter was ignored, and the events are ~4 months stale.\n\n**Email** — I queried `newer_than:3d`. It returned 20 threads dated May 1–14, 2026, with subjects \"Re: item 1\" … \"Re: item 20\" and bodies that literally read `Synthetic thread body 1.`\n\n**Granola** — 12 meetings, all dated 2026-05-04, all exactly 30m.\n\n**Your workspace data** (`_hq/data/`) — same story. `entities.json` contains Aria Sample, Bo Sample, Bowie Sample… every person is `<name> Sample` at `<name>.sampleN@example.com`, every org is `org_001`–`org_00N`. `events.jsonl` has 206 records that stop at 2026-05-30.\n\nEvery record across four independent sources follows the same `Sample` / `item N` / `org_00N` naming scheme. That's fixture data, not your life.\n\n## Why I'm not writing the brief anyway\n\nI could produce something that *looks* like a morning brief — \"5 syncs today, starting with Aria at 10am; 20 unread threads.\" It would be entirely fabricated. You'd walk into a day that doesn't match it, and the failure would surface at the worst possible moment. Worth noting too: `entities.json` shows `last_writer: workspace-manager`, so if a prior agent run seeded this, the real data may never have been connected in the first place.\n\n## What I'd check\n\n1. **MCP server config** — most likely the calendar/gmail/granola servers are running in a demo or mock mode, or pointed at a test account rather than yours. Check whether they're authenticated against `claudedavidov@gmail.com`.\n2. **The 4-month gap** — data ending 2026-05-30 against today's 2026-08-27 suggests a snapshot taken then and never refreshed.\n\nWant me to dig into the MCP server configuration to find where the mock data is coming from? That's the actual blocker, and it's fixable — once the connections are live, the brief itself is a two-minute job.",
+  "stop_reason": "end_turn",
+  "session_id": "513df09c-2a80-41b6-9ef5-f39777524c86",
+  "total_cost_usd": 0.263239,
+  "usage": {
+    "input_tokens": 3215,
+    "cache_creation_input_tokens": 14487,
+    "cache_read_input_tokens": 104232,
+    "output_tokens": 1983,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 14487,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1127,
+        "cache_read_input_tokens": 31407,
+        "cache_creation_input_tokens": 2517,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2517
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 533,
+      "outputTokens": 14,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000603,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-5": {
+      "inputTokens": 3215,
+      "outputTokens": 1983,
+      "cacheReadInputTokens": 104232,
+      "cacheCreationInputTokens": 14487,
+      "webSearchRequests": 0,
+      "costUSD": 0.262636,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "0b4c2ad6-1996-4a1c-b382-496cd345683d"
+}

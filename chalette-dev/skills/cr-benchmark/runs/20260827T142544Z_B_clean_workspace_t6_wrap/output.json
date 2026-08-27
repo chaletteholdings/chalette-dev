@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 127529,
+  "duration_api_ms": 121908,
+  "ttft_ms": 6035,
+  "ttft_stream_ms": 5271,
+  "time_to_request_ms": 4128,
+  "num_turns": 22,
+  "result": "I can't wrap this week — and that's the first thing you should know.\n\n## Every source stops in May\n\nToday is **Thursday 2026-08-27**. Here's the newest data each connected source returns:\n\n| Source | Newest record | Age |\n|---|---|---|\n| Granola meetings | 2026-05-04 | ~16 weeks |\n| `events.jsonl` | 2026-05-30 | ~13 weeks |\n| Calendar (`next_7_days`) | 2026-05-07 | returns *past* May dates |\n| Gmail (`newer_than:14d`) | 2026-05-14 | filter ignored |\n\nThe calendar returning May dates for a \"next 7 days\" query, and Gmail ignoring `newer_than:14d`, both point at the same thing: these connectors are serving a stale fixture, not your live accounts. **There is zero data for Aug 21–27**, so any \"week wrap\" I wrote for this week would be invented.\n\nTwo options: get the connectors re-authed and I'll do this properly, or I wrap the last week that *does* have real content. I did the second below so the trip isn't wasted.\n\n## What the real data actually is\n\nCaveat on shape: all 12 Granola meetings are stamped **2026-05-04** — a single day, not a week. And `events.jsonl` is *not* a record of these meetings. Its 206 rows are templated placeholders (`\"Follow up on item 2\"`, `\"Sync 1\"`, `\"Synthetic thread body 3\"`) with no overlap with anything said in the transcripts. So the commitment ledger is not tracking your actual commitments — see the data issues at the end.\n\nThe transcripts themselves are substantive. From those 12 meetings:\n\n### Yours — 15 firm commitments\n\n| Owed to | What | Said by |\n|---|---|---|\n| Acme COO | Call re: outage | today, before 5 |\n| Counsel | Wire instructions | today |\n| Mira | Escalation contact sheet | tonight |\n| Quinn | Offer template | tonight |\n| Bowie/Dustin | Approve maintenance window | this afternoon |\n| Bo + Quinn | Data room checklist | tomorrow |\n| Bo | Revised Acme pricing sheet | Tuesday |\n| Counsel | Updated cap table (they're blocked) | Wednesday |\n| Rio | Vendor comparison matrix | Thursday |\n| Dustin | Roadmap doc, pre-walkthrough | before Thursday |\n| — | Board deck draft | Friday |\n| Aria | Planning template + last Q scorecard | EOD Friday |\n| Bo | Intro to Cedar Works finance lead | this week |\n| Team | Async QA video | this week |\n| Northstar | Follow up with exec sponsor | next week |\n\nThree more you hedged and did **not** firmly commit: pre-read memo (\"I'll *try* for Wednesday\"), customer case study (\"no promises\"), exec summary to Acme's CEO (\"travel permitting\").\n\n### Waiting on others — 31 items\n\nHeaviest load: **Bowie** (5), **Quinn** (5), **Mira** (5), **Aria** (5 + 1 soft). The ones with external parties on the hook, where a slip costs you credibility rather than time:\n\n- **Quinn → auditors**: equity grants file, Tuesday\n- **Mira → datacenter vendor**: sign the SOW, Thursday\n- **Mira → Acme**: incident postmortem in writing, Thursday\n- **Bowie → Northstar**: corrected data feed, Friday\n- **Rio → Acme AM**: process service credit, this week\n- **Aria → Northstar**: renewal terms, Monday\n\nFour have **no date attached** and will quietly rot: Bowie's contact list to the network vendor, Dustin's intro for Lyra to the Cedar Works ops lead, Quinn's intern tools walkthrough, Aria's Northstar reporting-portal session.\n\n### What slipped\n\nI genuinely can't tell you. Nothing in the data records completion of any transcript commitment — the only six `commitment_resolved` rows point at synthetic ledger items, not these. Mechanically all 46 are ~16 weeks past due, but that's an artifact of the stale feed, not evidence anyone dropped anything.\n\n### Already closed — don't re-raise\n\nPitch deck (Bo, refreshed), W-9 (Rio, sent), recruiter ping (Aria, awaiting reply), printer (fixed last month), vendor portal invite + June folder rename (both done live in-meeting). Also: you **dropped the diligence folder export** correctly — Bo pointed out the shared drive export already covers the historicals.\n\nYou explicitly killed five things. They shouldn't reappear on any list: the pre-raise rebrand, cutover customer comms (\"that's not an owner, park it\"), comp bands (\"not this week\"), the Category Company pilot bundle (\"not this quarter\"), and snacks (\"noted, not tracked\"). Separately there are ~15 \"someday/eventually\" items — onboarding rethink, dashboard, SLA tiers, four-day week, chief of staff — that are wishes, not commitments.\n\n## Two data issues\n\n**1. You gave Mira the wrong address.** In the escalation meeting you said to reach you at `mira.sample7@example.com`; she caught it in the room (\"that's my address\"). It's wrong twice over — `entities.json` has her at `mira.sample6@` and `sample7@` is **Quinn's**. Worth a correction if that address went anywhere else.\n\n**2. The commitment ledger isn't capturing real work.** `events.jsonl` has 40 commitments, all placeholder text, none matching the 46 real commitments in the transcripts. Whatever writes that log is emitting scaffold rows. If you're relying on it for follow-through, it's giving you false coverage — that's likely the more expensive problem of the two.\n\nWant me to re-run this once the connectors are refreshed, or extract the 46 real commitments into a proper tracked list in the meantime?",
+  "stop_reason": "end_turn",
+  "session_id": "78e47c39-daa9-44c1-9006-9493ffe7717e",
+  "total_cost_usd": 0.6633954999999999,
+  "usage": {
+    "input_tokens": 3483,
+    "cache_creation_input_tokens": 25831,
+    "cache_read_input_tokens": 309969,
+    "output_tokens": 9283,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 25831,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 5111,
+        "cache_read_input_tokens": 47508,
+        "cache_creation_input_tokens": 0,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 0
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 536,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000611,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-5": {
+      "inputTokens": 3483,
+      "outputTokens": 9283,
+      "cacheReadInputTokens": 309969,
+      "cacheCreationInputTokens": 25831,
+      "webSearchRequests": 0,
+      "costUSD": 0.6627845,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "28a368b5-db8f-4501-809f-5ae7a06491b1"
+}

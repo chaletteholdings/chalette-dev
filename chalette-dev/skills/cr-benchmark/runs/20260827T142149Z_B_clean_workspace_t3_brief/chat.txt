@@ -1,0 +1,24 @@
+I can't give you a real morning brief — every data source came back with placeholder fixture data, not your actual calendar and email. Here's what I found:
+
+## The tools are returning synthetic data
+
+**Calendar** — I asked for `today` (2026-08-27). It returned five events titled "Sync 1" through "Sync 5", dated May 1–5, 2026. The window parameter was ignored, and the events are ~4 months stale.
+
+**Email** — I queried `newer_than:3d`. It returned 20 threads dated May 1–14, 2026, with subjects "Re: item 1" … "Re: item 20" and bodies that literally read `Synthetic thread body 1.`
+
+**Granola** — 12 meetings, all dated 2026-05-04, all exactly 30m.
+
+**Your workspace data** (`_hq/data/`) — same story. `entities.json` contains Aria Sample, Bo Sample, Bowie Sample… every person is `<name> Sample` at `<name>.sampleN@example.com`, every org is `org_001`–`org_00N`. `events.jsonl` has 206 records that stop at 2026-05-30.
+
+Every record across four independent sources follows the same `Sample` / `item N` / `org_00N` naming scheme. That's fixture data, not your life.
+
+## Why I'm not writing the brief anyway
+
+I could produce something that *looks* like a morning brief — "5 syncs today, starting with Aria at 10am; 20 unread threads." It would be entirely fabricated. You'd walk into a day that doesn't match it, and the failure would surface at the worst possible moment. Worth noting too: `entities.json` shows `last_writer: workspace-manager`, so if a prior agent run seeded this, the real data may never have been connected in the first place.
+
+## What I'd check
+
+1. **MCP server config** — most likely the calendar/gmail/granola servers are running in a demo or mock mode, or pointed at a test account rather than yours. Check whether they're authenticated against `claudedavidov@gmail.com`.
+2. **The 4-month gap** — data ending 2026-05-30 against today's 2026-08-27 suggests a snapshot taken then and never refreshed.
+
+Want me to dig into the MCP server configuration to find where the mock data is coming from? That's the actual blocker, and it's fixable — once the connections are live, the brief itself is a two-minute job.

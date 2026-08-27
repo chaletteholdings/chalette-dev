@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 151107,
+  "duration_api_ms": 146736,
+  "ttft_ms": 1896,
+  "ttft_stream_ms": 1067,
+  "time_to_request_ms": 38,
+  "num_turns": 17,
+  "result": "One caveat that shapes all three answers: **your workspace data stops at the end of May.** All 12 meeting transcripts are dated 2026-05-04, `events.jsonl` runs 05-01 → 05-30, and the calendar/gmail files are early May despite being labeled \"today\" and `newer_than:1d`. Today is 08-27, so nothing below is verified-current — it's what was open as of early May and never marked resolved. Every \"by Thursday\" in here expired about three months ago.\n\nAlso worth knowing: `events.jsonl` is nearly useless for this question. Its 40 commitment records all belong to just two people (Bowie and Rio) with placeholder text like \"Follow up on item 32.\" The real substance is in `_hq/connectors/granola_responses.json`. If I'd only read the structured log, I'd have told you nothing was open with Quinn.\n\n## Quinn\n\nSix things on her plate, none of them logged anywhere as resolved:\n\n| Item | Source | Note |\n|---|---|---|\n| Schedule panel interviews for both platform finalists | Hiring slate review | \"calendars permitting\" |\n| Update financial model with May actuals — by Wed | Fundraise check-in | \"the old version is embarrassing\" |\n| Send equity grants file to the auditors — by Tue | Board prep | second-hand via Mira |\n| Deliver escalation training session to support leads | All-hands recap | second-hand via Bowie |\n| Tools walkthrough for the interns | All-hands recap | promised, no session ever picked |\n| Cohort analysis before the partner meeting | Fundraise check-in | soft — \"might, depends on the data pull\" |\n\n**Three of those are yours, not hers:**\n- You owe her the **offer template** (said \"tonight,\" Hiring slate review)\n- You owe her the **data room checklist** (said \"tomorrow,\" shared with Bo)\n- You're drafting the **board deck by Friday** specifically so she can sanity-check the hiring slide — she's blocked on you there\n\nThe intern tools walkthrough is the one I'd actually chase. It had no date attached even in May, which is how things quietly die.\n\n## Mira\n\nMira Sample, `mira.sample6@example.com`. She shows up in exactly two 1:1s with you, and they're two separate threads:\n\n**Board / finance** (Board prep) — she owed you Q2 revenue numbers by Thursday and was booking the board dinner. You owed the pre-read memo (Wednesday) and the deck (Friday).\n\n**The Acme Co escalation** (Customer escalation) — their outage hit Acme's month-end close and their COO was upset. She owed an incident postmortem by Thursday, in writing, to Acme's team. You owed her an escalation contact sheet, a call to Acme's COO \"before five,\" and a soft \"exec summary to their CEO this week, travel permitting.\"\n\nPlus two second-hand items: sign the **datacenter vendor SOW** by Thursday (via Dustin) and publish the **OKR tracker** to the whole team by Monday (via Lyra).\n\nTwo flags on her:\n- `entities.json` tags her to **Acme Co** — that's wrong. In the transcript she's on your side of the table, reporting to you *about* Acme as a customer. The org assignments in that file look auto-seeded and I wouldn't trust them (Quinn is tagged Northstar Partners but behaves as an internal exec too).\n- In the escalation transcript you said \"you can reach me through `mira.sample7@example.com`\" and she replied \"that's my address.\" It isn't — `...sample7` is **Quinn's**. Hers is `...sample6`. If that wrong address got saved anywhere, mail meant for Mira goes to Quinn.\n\n## Skyler\n\nYes — but there are **two**, and you probably mean different ones depending on why you're asking:\n\n1. **Skyler Sample** — in your registry (`person_010`), Cedar Works, `skyler.sample10@example.com`. 20 drafted emails to them logged across May, plus calendar and inbox threads. But every one is placeholder content (\"Re: item 9,\" \"Synthetic thread body 10\"), so I can't tell you what any of it was actually about.\n2. **Skyler Stone** — not in your registry at all. Bo mentioned him once in the data room walkthrough: \"met a sharp operator last week, might be worth a coffee sometime.\" You said put it on the someday list. That's the entire record.\n\nWhich one did you have in mind? If it's Stone, that's a live-ish intro thread worth reviving. If it's Sample, I'd need a working data source to tell you anything useful.\n\nI saved notes on the staleness and the events.jsonl coverage gap so I don't re-derive this next time. Want me to pull the full open-items list across everyone — there are ~30 uncaptured commitments sitting in those transcripts?",
+  "stop_reason": "end_turn",
+  "session_id": "bd101bb8-05fd-43c9-82bf-c75e47e699c4",
+  "total_cost_usd": 0.98872,
+  "usage": {
+    "input_tokens": 3495,
+    "cache_creation_input_tokens": 39051,
+    "cache_read_input_tokens": 631290,
+    "output_tokens": 10577,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 39051,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 131,
+        "output_tokens": 1609,
+        "cache_read_input_tokens": 60611,
+        "cache_creation_input_tokens": 328,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 328
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 555,
+      "outputTokens": 22,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000665,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-5": {
+      "inputTokens": 3495,
+      "outputTokens": 10577,
+      "cacheReadInputTokens": 631290,
+      "cacheCreationInputTokens": 39051,
+      "webSearchRequests": 0,
+      "costUSD": 0.988055,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "6a5aa113-d6bb-43ac-bbe8-2206d8a17aa0"
+}

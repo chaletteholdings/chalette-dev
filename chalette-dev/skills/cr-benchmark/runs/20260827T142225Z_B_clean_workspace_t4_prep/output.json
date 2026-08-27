@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 44849,
+  "duration_api_ms": 43014,
+  "ttft_ms": 1743,
+  "ttft_stream_ms": 991,
+  "time_to_request_ms": 40,
+  "num_turns": 9,
+  "result": "I can't prep you for this one — there's no upcoming meeting in any of your data, and the sources look like seed data rather than your real accounts. Here's what I found.\n\n**Nothing is upcoming.** Today is 2026-08-27. Every event across every source is dated May 1–7, 2026 — roughly 16 weeks in the past. There is no future-dated meeting anywhere.\n\n**The connectors aren't returning live data:**\n\n- **Calendar** ignores its `window` parameter. `today` and `next_7_days` returned overlapping slices of the same fixed 10-event list (\"Sync 1\" … \"Sync 10\"), none dated today or later.\n- **Gmail** ignores its filter too. A `newer_than:30d` search returned threads from May, with bodies that read literally `\"Synthetic thread body 1.\"` and subjects `\"Re: item 1\"`.\n- **Granola** has 12 meetings, all stamped the same day (2026-05-04), with generic titles like \"Board prep\" and \"Vendor contract call.\"\n- **Local files** match: all 206 entries in `events.jsonl` are from 2026-05, and every person in `entities.json` is `<Name> Sample` at `example.com` — Aria, Bo, Bowie, Dustin, Lyra, Mira, Quinn, Rio, Skyler.\n\nThat last detail is the tell. The people in your workspace aren't real contacts, so even the \"open threads\" I could assemble — the commitments and decisions in the event log — would be placeholder text attached to placeholder names. I could have written you a confident-looking briefing from the Granola transcripts, but it would be fiction with your name on it, and you'd have walked into a real room holding it.\n\n**To actually get you prepped, one of these needs to happen:**\n\n1. **Reconnect the calendar and Gmail MCP servers to your live accounts** — the current ones appear to be fixtures, possibly left over from a demo or test setup.\n2. **Or just tell me who you're meeting and when**, and I'll pull whatever real context exists from your files and email once those are live.\n\nOne thing worth flagging separately: if `_hq/data/` is meant to be your real working history, it's currently seeded with sample data. Worth deciding whether to clear it before real entries start appending, so you don't end up with the two interleaved in an append-only log.",
+  "stop_reason": "end_turn",
+  "session_id": "1daacc88-29ae-4f8a-a91b-e93806873d28",
+  "total_cost_usd": 0.338719,
+  "usage": {
+    "input_tokens": 3348,
+    "cache_creation_input_tokens": 16518,
+    "cache_read_input_tokens": 167832,
+    "output_tokens": 2891,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 16518,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1154,
+        "cache_read_input_tokens": 33697,
+        "cache_creation_input_tokens": 2242,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2242
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 543,
+      "outputTokens": 13,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.0006079999999999999,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-5": {
+      "inputTokens": 3348,
+      "outputTokens": 2891,
+      "cacheReadInputTokens": 167832,
+      "cacheCreationInputTokens": 16518,
+      "webSearchRequests": 0,
+      "costUSD": 0.33811100000000005,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "6591fa1a-3f94-44a9-87d2-48db9388ca5b"
+}

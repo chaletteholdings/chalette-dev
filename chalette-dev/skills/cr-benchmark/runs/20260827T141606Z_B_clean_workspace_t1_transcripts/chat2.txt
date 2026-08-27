@@ -1,0 +1,21 @@
+Logged. **53 commitment events appended, seq 207–259.** The original 206 lines are byte-identical to the pre-write backup — this was a pure append.
+
+**What went in**
+- 31 firm commitments made in the room (`kind: "todo"`, confidence 0.95)
+- 14 reported secondhand — owner wasn't in the meeting (`reported_secondhand: true`, confidence 0.6)
+- 7 hedged (`kind: "tentative"`, confidence 0.6)
+- 1 firsthand-but-undated (Bowie's network vendor contact list)
+
+**Schema decisions you should know about**
+- The existing `commitment` shape is only `{kind, text, owner_id}` — no due date, no counterparty, i.e. it can't hold the thing you actually asked for. I added `due_date`, `due_precision`, `due_raw`, `counterparty`, `counterparty_person_ids/org_ids`, `status`, `reported_secondhand`, and `source.doc_id` as **extra keys inside `data`**. Additive, so existing readers keep working; I also folded the due date into `text` so anything that only renders `text` still shows it.
+- `ts` is set to **2026-05-04** (when the commitment was made), matching how existing events timestamp actual activity. This makes `ts` non-monotonic across the file — the last prior event is 2026-05-30. `seq` is still strictly increasing. Say the word if you'd rather they carry today's date.
+- No `id` field was invented: `commitment_resolved` records link via `commitment_id` = the commitment's `seq`, so these are already addressable as `cmt_000207`–`cmt_000259`.
+
+**I caught an error in my own first-pass answer.** I'd listed Bowie's network-vendor contact list as a third-party commitment, but Bowie *was* in the Ops standup and said it himself. My hand-typed secondhand flags over-matched and wrongly marked all three of his bench_07 items. I rewrote the flag to derive from the connector's attendee lists instead of my typing, and rebuilt the batch — secondhand went 17 → 14. Verified each of the 14 against the attendee roster.
+
+**Deliberately not logged** — tell me if you want any of these added:
+- The 6 already-done items (Rio's W-9, the pitch deck refresh, etc.). They're reports of completed work, not open obligations; logging them as `commitment` would show up as open. They'd need `commitment`+`commitment_resolved` pairs.
+- The ~15 "someday/eventually" items (rebrand, four-day week, snacks, comp bands). I classified these as non-commitments and logging them would dilute the open set.
+- **The cutover customer comms** — still has no owner. It isn't in the log because there's nobody to attach it to, and it's the one genuine gap in front of the migration.
+
+Backup at `scratchpad/events.jsonl.bak`, rebuild script at `scratchpad/log_commitments.py` (idempotent — it strips `seq > 206` and regenerates, so re-running won't duplicate).

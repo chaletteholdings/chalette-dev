@@ -1,0 +1,27 @@
+{
+  "run_id": "20260827T142129Z_B_clean_workspace_t2_inbox",
+  "ts": "2026-08-27T14:21:29Z",
+  "arm": "B",
+  "fixture": "clean_workspace",
+  "task": "t2_inbox",
+  "model_requested": "claude-opus-5",
+  "model_id": "claude-opus-5",
+  "harness_commit": "4682eaf",
+  "cr1_commit": "c7de82f3",
+  "exit_code": 0,
+  "timed_out": false,
+  "wall_ms": 20625,
+  "duration_api_ms": 18045,
+  "num_turns": 4,
+  "total_cost_usd": 0.21817399999999998,
+  "tokens": {
+    "input": 3215,
+    "output": 978,
+    "cache_read": 101762,
+    "cache_creation": 12615
+  },
+  "is_error": false,
+  "follow_up_used": false,
+  "events_appended": 0,
+  "files_created": 0
+}
