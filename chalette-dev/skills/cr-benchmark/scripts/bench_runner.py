@@ -141,6 +141,16 @@ def write_mcp_config(ws: Path, tmp: Path) -> Path:
     return p
 
 
+def _main_model(parsed: dict | None) -> str | None:
+    """The pinned model = the one that did the work. modelUsage can carry
+    trivial helper calls on other models (e.g. a 15-token haiku ping), so
+    take the entry with the most output tokens, and record the rest."""
+    mu = (parsed or {}).get("modelUsage") or {}
+    if not mu:
+        return (parsed or {}).get("model")
+    return max(mu, key=lambda k: (mu[k] or {}).get("outputTokens", 0))
+
+
 def inventory(ws: Path) -> dict[str, int]:
     inv = {}
     for f in ws.rglob("*"):
@@ -234,8 +244,7 @@ def one_run(*, arm: str, fixture: str, task_key: str, prompt: str, model: str,
     meta = {
         "run_id": run_id, "ts": started, "arm": arm, "fixture": fixture,
         "task": task_key, "model_requested": model,
-        "model_id": (parsed or {}).get("modelUsage") and next(iter(parsed["modelUsage"]), None)
-                    or (parsed or {}).get("model") or None,
+        "model_id": _main_model(parsed),
         "harness_commit": git_head(SKILL_ROOT.parent.parent.parent),
         "cr1_commit": git_head(cr1),
         "exit_code": rc, "timed_out": timed_out,
