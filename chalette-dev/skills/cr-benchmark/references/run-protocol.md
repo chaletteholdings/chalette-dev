@@ -30,6 +30,15 @@ model CR clients run in production. The 2026-08-27 pilot ran at
 claude-opus-4-8 and stands as scorer calibration only; no pilot number is
 official, and the delta is noted in RUNLOG.
 
+**t1 confirm turn (`--follow-up`, PENDING M's protocol sign-off):** at
+claude-opus-5 the t1 prompt routes to the preview-first scan flow, which by
+design writes nothing until the user confirms — verified in the 2026-08-27
+re-check (`runs_recheck/`): a full extraction preview to `_hq/scans/`, zero
+events. A single-shot t1 therefore measures the preview, not capture. With
+`--follow-up`, the runner resumes the same session with the identical
+confirmation ("Yes - log all of them.") on BOTH arms, sums usage, and keeps
+both raw outputs. Do not run the battery's t1 without a ruling on this flag.
+
 What the runner guarantees per run:
 
 - fresh temp copy of the fixture; nothing persists between runs

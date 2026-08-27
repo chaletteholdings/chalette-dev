@@ -150,6 +150,8 @@ def load_roster(fixture: str) -> tuple[set[str], set[str]]:
 def read_run(run_dir: Path) -> dict:
     meta = json.loads((run_dir / "run_meta.json").read_text(encoding="utf-8"))
     chat = (run_dir / "chat.txt").read_text(encoding="utf-8") if (run_dir / "chat.txt").exists() else ""
+    if (run_dir / "chat2.txt").exists():  # confirm-turn output scores with turn 1
+        chat += "\n" + (run_dir / "chat2.txt").read_text(encoding="utf-8")
     events = []
     ep = run_dir / "events_diff.jsonl"
     if ep.exists():

@@ -8,5 +8,9 @@
     "t4_prep": "Prep me for my upcoming meeting - who am I meeting, what is open with them, and what should I walk in knowing?",
     "t5_entities": "A few quick questions about my world: What is currently open with Quinn? Who is Mira and what do we have going on together? And do we know anyone named Skyler?",
     "t6_wrap": "Wrap the week for me: what happened, what is still open, and what slipped?"
+  },
+  "_comment_follow_ups": "Second confirm turn, resumed in the same session, both arms identically. Added at calibration (2026-08-27): at claude-opus-5 the t1 prompt routes to the preview-first scan flow, which by design writes nothing until the user confirms - a single-shot run therefore measures the preview, not capture. The follow-up is the user's confirmation. Requires M's protocol sign-off before official use.",
+  "follow_ups": {
+    "t1_transcripts": "Yes - log all of them."
   }
 }

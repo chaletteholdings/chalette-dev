@@ -1,0 +1,72 @@
+{
+  "type": "result",
+  "subtype": "success",
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 284631,
+  "duration_api_ms": 273391,
+  "ttft_ms": 1954,
+  "ttft_stream_ms": 1187,
+  "time_to_request_ms": 93,
+  "num_turns": 34,
+  "result": "Pulled all 12 transcripts from the meeting connector and ran the extraction. **Nothing has been written to your tracker yet** — this is the preview.\n\nOne thing up front: I can't relay this as a Command Room widget. There's no widget surface connected in this session, so `render_and_persist` has nothing to hand off to. This is text instead of your one-tap commitments page, and you don't get the ✓ done / push actions until you're on a surface that has it.\n\nSecond thing worth flagging: **all 12 transcripts are dated Mon 2026-05-04** — that's ~16 weeks ago. The connector calls them \"recent,\" but every due date below is long past. Treat this as a backfill, not a live list.\n\n**45 commitments cleared the bar. 4 more I set aside.**\n\n## You owe (17)\n\n| What | To | Due |\n|---|---|---|\n| Send the wire instructions to counsel | counsel | Mon May 4 |\n| Call the Acme Co COO about the outage | Acme COO | Mon May 4 |\n| Send Mira the escalation contact sheet | Mira | Mon May 4 |\n| Send Quinn the offer template | Quinn | Mon May 4 |\n| Approve the maintenance window request | Dustin | Mon May 4 |\n| Send the revised pricing sheet for the Acme renewal | Bo | Tue May 5 |\n| Send the data room checklist | Bo **and** Quinn | Tue May 5 |\n| Send the updated cap table to counsel | counsel | Wed May 6 |\n| Send out the board pre-read memo | Mira | Wed May 6 ⚠️ |\n| Get the vendor comparison matrix over | Rio | Thu May 7 |\n| Send the roadmap doc before the walkthrough | Dustin | Thu May 7 |\n| Draft the board deck (Quinn checks the hiring slide) | Quinn | Fri May 8 |\n| Introduce Bo to the Cedar Works finance lead | Bo | Fri May 8 |\n| Send the planning template + last quarter's scorecard | Aria | Fri May 8 |\n| Record the async Q&A video | the team | Fri May 8 |\n| Get an exec summary in front of the Acme CEO | Acme CEO | Fri May 8 ⚠️ |\n| Follow up with the Northstar exec sponsor | Northstar sponsor | wk of May 11 |\n\n## Owed to you (18)\n\n| Who | What | Due |\n|---|---|---|\n| Lyra | Partner health dashboard link | Mon May 4 |\n| Dustin | Book the Thursday roadmap slot | Mon May 4 |\n| Aria | Post the data-role job description | Tue May 5 |\n| Bowie | Compile the all-hands open questions doc | Tue May 5 |\n| Mira | Book the board dinner | Wed May 6 |\n| Dustin | Finish the server inventory list (unblocks cutover) | Wed May 6 |\n| Quinn | Update the financial model with May actuals | Wed May 6 |\n| Mira | Q2 revenue numbers for the board | Thu May 7 |\n| Mira | Incident postmortem → Acme team | Thu May 7 |\n| Bo | Acme usage report for the renewal call | Fri May 8 |\n| Quinn | Schedule both platform panel interviews | Fri May 8 |\n| Bowie | Write the cutover runbook | Fri May 8 |\n| Bowie | Walk the team through the runbook | Mon May 11 |\n| Aria | Circulate the planning kickoff agenda | Mon May 11 |\n| Bo | Schedule the partner-meeting prep call | Mon May 11 |\n| Rio | Cancel the old vendor account | end of May |\n| Rio | Legal review of the SAFE docs | before partner mtg — no date |\n| Aria | Draft the panel scoring rubric | no date ⚠️ |\n\n## Not yours, but dated — so I tracked them (10)\n\nQuinn → auditors: equity grants file (Tue May 5) · Dustin → Lyra: signed services contract (Tue May 5) · Mira → datacenter vendor: sign the SOW (Thu May 7) · Bowie → Lyra: security questionnaire (Fri May 8) · Bowie → Northstar: corrected data feed (Fri May 8) · Rio → Acme AM: process the service credit (Fri May 8) · Bo → finance: close out the budget template (Fri May 8) · Aria → Northstar: renewal terms (Mon May 11) · Mira → whole team: publish the OKR tracker (Mon May 11) · Quinn → support leads: escalation training (wk of May 11)\n\n## Set aside — other people's, no date (4)\n\nDustin → Lyra (Cedar Works ops intro) · Aria → Northstar (reporting portal walkthrough) · Bowie → network vendor (contact list) · Quinn → interns (tools walkthrough). Kept on file and searchable; they won't ask you for anything.\n\n## Three judgment calls you should look at\n\n⚠️ **Hedged, but I kept them** — the pre-read memo (\"I *should be able*… I'll *try* for Wednesday\"), the Acme CEO exec summary (\"I'll try… travel permitting\"), and Aria's rubric (\"I *guess* I can take a stab\"). Real deliverable, real waiting party, soft language. Say the word and I'll drop any of them.\n\n**Deliberately dropped:** the Acme case study (\"no promises\"), Aria's department pre-reads (\"no promises needed yet\"), Quinn's cohort analysis (\"depends on the data pull\"), and Bo's investor FAQ (\"we'll see\") — all explicitly disclaimed at the table. Plus the usual someday pile (onboarding flow, comp bands, SLA tiers, four-day week, snacks — which you said out loud not to track).\n\n**One retraction caught:** in the data room walkthrough you offered to run the diligence-folder export, and Bo immediately said you don't need it — the shared drive export already covers the historicals. Not tracked.\n\n**One data discrepancy, not acted on:** in the escalation call you gave `mira.sample7@example.com` as a fallback and Mira said \"that's my address.\" Her record says `mira.sample6@example.com`, and `…sample7@` belongs to Quinn. I didn't touch the alias file — that needs your call.\n\n---\n\nSay **\"add them\"** and I'll write all 45 to your tracker (plus the 4 set-aside). Preview is saved at `_hq/scans/COMMITMENT_SCAN_PREVIEW_2026-08-26_scan.md`.\n\nThree things I'd want your read on:\n\n1. Given these are 16 weeks old — do you want them added as-is (they'll all land overdue), or should I add only the ones you believe are still genuinely open?\n2. The 10 third-party items landed open because they carry dates, not because you're a party. Useful to you, or noise on your list?\n3. Is `mira.sample7@example.com` actually a second address of Mira's, or was that a slip in the room? I won't touch aliases until you say.",
+  "stop_reason": "end_turn",
+  "session_id": "e8b7fe78-f6a4-499b-a7b1-3bcbdb650e96",
+  "total_cost_usd": 2.5296280000000007,
+  "usage": {
+    "input_tokens": 4425,
+    "cache_creation_input_tokens": 130099,
+    "cache_read_input_tokens": 1167770,
+    "output_tokens": 24880,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 130099,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 131,
+        "output_tokens": 2474,
+        "cache_read_input_tokens": 101942,
+        "cache_creation_input_tokens": 2522,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2522
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "modelUsage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 553,
+      "outputTokens": 15,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.000628,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    },
+    "claude-opus-5": {
+      "inputTokens": 4425,
+      "outputTokens": 24880,
+      "cacheReadInputTokens": 1167770,
+      "cacheCreationInputTokens": 130099,
+      "webSearchRequests": 0,
+      "costUSD": 2.529000000000001,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000
+    }
+  },
+  "permission_denials": [],
+  "terminal_reason": "completed",
+  "fast_mode_state": "off",
+  "uuid": "4c266b6d-9196-483e-9457-50b241641cdc"
+}

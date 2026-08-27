@@ -161,7 +161,8 @@ def inventory(ws: Path) -> dict[str, int]:
 
 
 def one_run(*, arm: str, fixture: str, task_key: str, prompt: str, model: str,
-            claude: str, cr1: Path, runs_dir: Path, keep_workspace: bool) -> dict:
+            claude: str, cr1: Path, runs_dir: Path, keep_workspace: bool,
+            follow_up: str | None = None) -> dict:
     run_id = f"{run_stamp()}_{arm}_{fixture}_{task_key}"
     run_dir = runs_dir / run_id
     run_dir.mkdir(parents=True, exist_ok=False)
@@ -222,6 +223,40 @@ def one_run(*, arm: str, fixture: str, task_key: str, prompt: str, model: str,
             json.dumps(parsed, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         (run_dir / "chat.txt").write_text(str(parsed.get("result", "")), encoding="utf-8")
 
+    # Optional second confirm turn (protocol addition 2026-08-27): the
+    # preview-first draft posture means a single shot can measure the preview
+    # and never the capture. Resumed in the SAME session, both arms get the
+    # identical confirmation. Usage/wall are summed; both raw outputs kept.
+    parsed2 = None
+    if follow_up and parsed is not None and not timed_out:
+        sid = parsed.get("session_id")
+        if sid:
+            cmd2 = [claude, "-p", follow_up, "--resume", str(sid),
+                    "--output-format", "json",
+                    "--model", MODEL_ALIASES.get(model, model),
+                    "--mcp-config", str(mcp_cfg),
+                    "--strict-mcp-config",
+                    "--permission-mode", "bypassPermissions"]
+            if arm == "A":
+                cmd2 += ["--plugin-dir", str(cr1 / "command-room")]
+            t1 = time.monotonic()
+            try:
+                proc2 = subprocess.run(cmd2, cwd=str(ws), env=env, capture_output=True,
+                                       text=True, encoding="utf-8", errors="replace",
+                                       timeout=RUN_TIMEOUT_SEC)
+                try:
+                    parsed2 = json.loads(proc2.stdout)
+                except (json.JSONDecodeError, TypeError):
+                    (run_dir / "output2_raw.txt").write_text(proc2.stdout or "", encoding="utf-8")
+                (run_dir / "stderr2.txt").write_text(proc2.stderr or "", encoding="utf-8")
+            except subprocess.TimeoutExpired:
+                timed_out = True
+            wall_ms += int((time.monotonic() - t1) * 1000)
+            if parsed2 is not None:
+                (run_dir / "output2.json").write_text(
+                    json.dumps(parsed2, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+                (run_dir / "chat2.txt").write_text(str(parsed2.get("result", "")), encoding="utf-8")
+
     # Substrate delta.
     post_events = events_path.read_text(encoding="utf-8").splitlines() if events_path.exists() else []
     new_events = post_events[len(baseline_events):]
@@ -241,7 +276,13 @@ def one_run(*, arm: str, fixture: str, task_key: str, prompt: str, model: str,
             dst.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, dst)
 
-    usage = (parsed or {}).get("usage") or {}
+    usage = dict((parsed or {}).get("usage") or {})
+    if parsed2 is not None:
+        for k, v in ((parsed2.get("usage") or {}).items()):
+            if isinstance(v, (int, float)) and isinstance(usage.get(k), (int, float)):
+                usage[k] = usage[k] + v
+            elif k not in usage:
+                usage[k] = v
     meta = {
         "run_id": run_id, "ts": started, "arm": arm, "fixture": fixture,
         "task": task_key, "model_requested": model,
@@ -260,9 +301,15 @@ def one_run(*, arm: str, fixture: str, task_key: str, prompt: str, model: str,
             "cache_creation": usage.get("cache_creation_input_tokens"),
         },
         "is_error": (parsed or {}).get("is_error", rc != 0),
+        "follow_up_used": bool(follow_up and parsed2 is not None),
         "events_appended": len(new_events),
         "files_created": len(new_files),
     }
+    if parsed2 is not None:
+        meta["total_cost_usd"] = ((parsed or {}).get("total_cost_usd") or 0) + \
+                                 (parsed2.get("total_cost_usd") or 0)
+        meta["num_turns"] = ((parsed or {}).get("num_turns") or 0) + \
+                            (parsed2.get("num_turns") or 0)
     (run_dir / "run_meta.json").write_text(
         json.dumps(meta, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     with open(runs_dir / "RUNLOG.jsonl", "a", encoding="utf-8") as f:
@@ -291,9 +338,14 @@ def main() -> int:
     ap.add_argument("--cr1", default=str(DEFAULT_CR1))
     ap.add_argument("--claude", default=None)
     ap.add_argument("--keep-workspace", action="store_true")
+    ap.add_argument("--follow-up", action="store_true",
+                    help="run the task's confirm turn from tasks.json follow_ups "
+                         "(protocol addition 2026-08-27; requires M's sign-off for official runs)")
     args = ap.parse_args()
 
-    tasks = json.loads((HERE / "tasks.json").read_text(encoding="utf-8"))["tasks"]
+    tasks_doc = json.loads((HERE / "tasks.json").read_text(encoding="utf-8"))
+    tasks = tasks_doc["tasks"]
+    follow_ups = tasks_doc.get("follow_ups") or {}
     keys = list(tasks) if args.task == "all" else [k.strip() for k in args.task.split(",")]
     unknown = [k for k in keys if k not in tasks]
     if unknown:
@@ -317,7 +369,8 @@ def main() -> int:
     for k in keys:
         one_run(arm=args.arm, fixture=args.fixture, task_key=k, prompt=tasks[k],
                 model=args.model, claude=claude, cr1=cr1, runs_dir=runs_dir,
-                keep_workspace=args.keep_workspace)
+                keep_workspace=args.keep_workspace,
+                follow_up=follow_ups.get(k) if args.follow_up else None)
     return 0
 
 

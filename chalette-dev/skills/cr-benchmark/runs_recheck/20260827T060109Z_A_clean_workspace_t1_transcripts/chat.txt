@@ -1,0 +1,80 @@
+Pulled all 12 transcripts from the meeting connector and ran the extraction. **Nothing has been written to your tracker yet** — this is the preview.
+
+One thing up front: I can't relay this as a Command Room widget. There's no widget surface connected in this session, so `render_and_persist` has nothing to hand off to. This is text instead of your one-tap commitments page, and you don't get the ✓ done / push actions until you're on a surface that has it.
+
+Second thing worth flagging: **all 12 transcripts are dated Mon 2026-05-04** — that's ~16 weeks ago. The connector calls them "recent," but every due date below is long past. Treat this as a backfill, not a live list.
+
+**45 commitments cleared the bar. 4 more I set aside.**
+
+## You owe (17)
+
+| What | To | Due |
+|---|---|---|
+| Send the wire instructions to counsel | counsel | Mon May 4 |
+| Call the Acme Co COO about the outage | Acme COO | Mon May 4 |
+| Send Mira the escalation contact sheet | Mira | Mon May 4 |
+| Send Quinn the offer template | Quinn | Mon May 4 |
+| Approve the maintenance window request | Dustin | Mon May 4 |
+| Send the revised pricing sheet for the Acme renewal | Bo | Tue May 5 |
+| Send the data room checklist | Bo **and** Quinn | Tue May 5 |
+| Send the updated cap table to counsel | counsel | Wed May 6 |
+| Send out the board pre-read memo | Mira | Wed May 6 ⚠️ |
+| Get the vendor comparison matrix over | Rio | Thu May 7 |
+| Send the roadmap doc before the walkthrough | Dustin | Thu May 7 |
+| Draft the board deck (Quinn checks the hiring slide) | Quinn | Fri May 8 |
+| Introduce Bo to the Cedar Works finance lead | Bo | Fri May 8 |
+| Send the planning template + last quarter's scorecard | Aria | Fri May 8 |
+| Record the async Q&A video | the team | Fri May 8 |
+| Get an exec summary in front of the Acme CEO | Acme CEO | Fri May 8 ⚠️ |
+| Follow up with the Northstar exec sponsor | Northstar sponsor | wk of May 11 |
+
+## Owed to you (18)
+
+| Who | What | Due |
+|---|---|---|
+| Lyra | Partner health dashboard link | Mon May 4 |
+| Dustin | Book the Thursday roadmap slot | Mon May 4 |
+| Aria | Post the data-role job description | Tue May 5 |
+| Bowie | Compile the all-hands open questions doc | Tue May 5 |
+| Mira | Book the board dinner | Wed May 6 |
+| Dustin | Finish the server inventory list (unblocks cutover) | Wed May 6 |
+| Quinn | Update the financial model with May actuals | Wed May 6 |
+| Mira | Q2 revenue numbers for the board | Thu May 7 |
+| Mira | Incident postmortem → Acme team | Thu May 7 |
+| Bo | Acme usage report for the renewal call | Fri May 8 |
+| Quinn | Schedule both platform panel interviews | Fri May 8 |
+| Bowie | Write the cutover runbook | Fri May 8 |
+| Bowie | Walk the team through the runbook | Mon May 11 |
+| Aria | Circulate the planning kickoff agenda | Mon May 11 |
+| Bo | Schedule the partner-meeting prep call | Mon May 11 |
+| Rio | Cancel the old vendor account | end of May |
+| Rio | Legal review of the SAFE docs | before partner mtg — no date |
+| Aria | Draft the panel scoring rubric | no date ⚠️ |
+
+## Not yours, but dated — so I tracked them (10)
+
+Quinn → auditors: equity grants file (Tue May 5) · Dustin → Lyra: signed services contract (Tue May 5) · Mira → datacenter vendor: sign the SOW (Thu May 7) · Bowie → Lyra: security questionnaire (Fri May 8) · Bowie → Northstar: corrected data feed (Fri May 8) · Rio → Acme AM: process the service credit (Fri May 8) · Bo → finance: close out the budget template (Fri May 8) · Aria → Northstar: renewal terms (Mon May 11) · Mira → whole team: publish the OKR tracker (Mon May 11) · Quinn → support leads: escalation training (wk of May 11)
+
+## Set aside — other people's, no date (4)
+
+Dustin → Lyra (Cedar Works ops intro) · Aria → Northstar (reporting portal walkthrough) · Bowie → network vendor (contact list) · Quinn → interns (tools walkthrough). Kept on file and searchable; they won't ask you for anything.
+
+## Three judgment calls you should look at
+
+⚠️ **Hedged, but I kept them** — the pre-read memo ("I *should be able*… I'll *try* for Wednesday"), the Acme CEO exec summary ("I'll try… travel permitting"), and Aria's rubric ("I *guess* I can take a stab"). Real deliverable, real waiting party, soft language. Say the word and I'll drop any of them.
+
+**Deliberately dropped:** the Acme case study ("no promises"), Aria's department pre-reads ("no promises needed yet"), Quinn's cohort analysis ("depends on the data pull"), and Bo's investor FAQ ("we'll see") — all explicitly disclaimed at the table. Plus the usual someday pile (onboarding flow, comp bands, SLA tiers, four-day week, snacks — which you said out loud not to track).
+
+**One retraction caught:** in the data room walkthrough you offered to run the diligence-folder export, and Bo immediately said you don't need it — the shared drive export already covers the historicals. Not tracked.
+
+**One data discrepancy, not acted on:** in the escalation call you gave `mira.sample7@example.com` as a fallback and Mira said "that's my address." Her record says `mira.sample6@example.com`, and `…sample7@` belongs to Quinn. I didn't touch the alias file — that needs your call.
+
+---
+
+Say **"add them"** and I'll write all 45 to your tracker (plus the 4 set-aside). Preview is saved at `_hq/scans/COMMITMENT_SCAN_PREVIEW_2026-08-26_scan.md`.
+
+Three things I'd want your read on:
+
+1. Given these are 16 weeks old — do you want them added as-is (they'll all land overdue), or should I add only the ones you believe are still genuinely open?
+2. The 10 third-party items landed open because they carry dates, not because you're a party. Useful to you, or noise on your list?
+3. Is `mira.sample7@example.com` actually a second address of Mira's, or was that a slip in the room? I won't touch aliases until you say.
