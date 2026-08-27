@@ -7,7 +7,7 @@
           "title": "Sync 1",
           "start": "2026-05-01T10:00:00",
           "attendees": [
-            "adan.sample1@example.com"
+            "aria.sample1@example.com"
           ]
         },
         {
@@ -15,7 +15,7 @@
           "title": "Sync 2",
           "start": "2026-05-02T10:00:00",
           "attendees": [
-            "aria.sample2@example.com"
+            "bo.sample2@example.com"
           ]
         },
         {
@@ -23,7 +23,7 @@
           "title": "Sync 3",
           "start": "2026-05-03T10:00:00",
           "attendees": [
-            "bo.sample3@example.com"
+            "bowie.sample3@example.com"
           ]
         },
         {
@@ -31,7 +31,7 @@
           "title": "Sync 4",
           "start": "2026-05-04T10:00:00",
           "attendees": [
-            "bowie.sample4@example.com"
+            "dustin.sample4@example.com"
           ]
         },
         {
@@ -39,7 +39,7 @@
           "title": "Sync 5",
           "start": "2026-05-05T10:00:00",
           "attendees": [
-            "dustin.sample5@example.com"
+            "lyra.sample5@example.com"
           ]
         }
       ],
@@ -49,7 +49,7 @@
           "title": "Sync 1",
           "start": "2026-05-01T10:00:00",
           "attendees": [
-            "adan.sample1@example.com"
+            "aria.sample1@example.com"
           ]
         },
         {
@@ -57,7 +57,7 @@
           "title": "Sync 2",
           "start": "2026-05-02T10:00:00",
           "attendees": [
-            "aria.sample2@example.com"
+            "bo.sample2@example.com"
           ]
         },
         {
@@ -65,7 +65,7 @@
           "title": "Sync 3",
           "start": "2026-05-03T10:00:00",
           "attendees": [
-            "bo.sample3@example.com"
+            "bowie.sample3@example.com"
           ]
         },
         {
@@ -73,7 +73,7 @@
           "title": "Sync 4",
           "start": "2026-05-04T10:00:00",
           "attendees": [
-            "bowie.sample4@example.com"
+            "dustin.sample4@example.com"
           ]
         },
         {
@@ -81,7 +81,7 @@
           "title": "Sync 5",
           "start": "2026-05-05T10:00:00",
           "attendees": [
-            "dustin.sample5@example.com"
+            "lyra.sample5@example.com"
           ]
         },
         {
@@ -89,7 +89,7 @@
           "title": "Sync 6",
           "start": "2026-05-06T10:00:00",
           "attendees": [
-            "lyra.sample6@example.com"
+            "mira.sample6@example.com"
           ]
         },
         {
@@ -97,7 +97,7 @@
           "title": "Sync 7",
           "start": "2026-05-07T10:00:00",
           "attendees": [
-            "mira.sample7@example.com"
+            "quinn.sample7@example.com"
           ]
         },
         {
@@ -105,7 +105,7 @@
           "title": "Sync 8",
           "start": "2026-05-01T10:00:00",
           "attendees": [
-            "quinn.sample8@example.com"
+            "rio.sample8@example.com"
           ]
         },
         {
@@ -113,7 +113,7 @@
           "title": "Sync 9",
           "start": "2026-05-02T10:00:00",
           "attendees": [
-            "rio.sample9@example.com"
+            "sam.sample9@example.com"
           ]
         },
         {
@@ -121,7 +121,7 @@
           "title": "Sync 10",
           "start": "2026-05-03T10:00:00",
           "attendees": [
-            "sam.sample10@example.com"
+            "skyler.sample10@example.com"
           ]
         }
       ]

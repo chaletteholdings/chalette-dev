@@ -1,7 +1,7 @@
 {
   "name": "clean_workspace",
   "description": "Pristine baseline -- 10 people, 5 orgs, 3 projects, all canonical shapes. For verifying happy-path doesn't regress.",
-  "fixture_version": "1.0",
+  "fixture_version": "1.1",
   "compatible_plugin_versions": [
     "4.8.0"
   ],

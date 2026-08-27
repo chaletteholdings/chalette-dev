@@ -220,6 +220,25 @@ def alias(raw: str, canonical_id: str, conf: float = 1.0) -> dict:
     }
 
 
+def mark_primary(people: list[dict]) -> dict:
+    """A production client install always has a workspace owner; benchmark Arm A
+    (BENCH1, fixture v1.1) replicates a fanned-out install, and the capture
+    gate's party-only mode needs the owner identity to route commitments.
+    Prefers Sam so the degraded fixture keeps Sam Sample (not Sam Stone) as
+    the owner of the collision pair."""
+    primary = next((p for p in people if p["canonical_name"] == "Sam Sample"), None)
+    if primary is None:
+        primary = next((p for p in people if p["canonical_name"].split()[0] == "Sam"),
+                       people[0])
+    primary["is_primary_user"] = True
+    return {
+        "user_timezone": "America/Los_Angeles",
+        "brain_name": "Atlas",
+        "primary_user_id": primary["id"],
+        "first_name": primary["canonical_name"].split()[0],
+    }
+
+
 CLAUDE_MD = """# Command Room workspace
 
 Synthetic fixture workspace. Not a real customer workspace; every entity here is
@@ -237,6 +256,97 @@ generated placeholder data.
 - All writes go through `atomic_append_jsonl`.
 - Superseded files move to `_archive/`; nothing is deleted.
 """
+
+
+def client_claude_md(spec: dict) -> str:
+    """Render the client-layer CLAUDE.md a fanned-out install ships (BENCH1
+    amendment 2, 2026-08-26; source shape: cr1 references/claude-md-template.md).
+    Populated fixtures get the client layer; a fixture with no primary user
+    (fresh_install) keeps the pre-onboarding stub, which is faithful to Day-1.
+    The four IMPORTANT bullets carry the template's idempotency marker phrases
+    verbatim -- do not reword them here independently of the template."""
+    ents = spec["entities"]["entities"]
+    ws = spec["entities"].get("workspace") or {}
+    people = ents["people"]
+    primary = next((p for p in people if p.get("is_primary_user")), None)
+    if primary is None:
+        return CLAUDE_MD
+    orgs = {o["id"]: o["canonical_name"] for o in ents["orgs"]}
+    org = orgs.get(primary.get("org_id") or primary.get("primary_org_id") or "", "the company")
+    first = ws.get("first_name", primary["canonical_name"].split()[0])
+    others = [p for p in people if not p.get("is_primary_user")][:15]
+    projects = [p for p in ents["projects"] if p.get("status") == "active"][:12]
+
+    lines = [
+        f"# {first}'s Command Room",
+        "",
+        "## Me",
+        f"{primary['canonical_name']}, CEO at {org}. Synthetic fixture operator "
+        "(placeholder roster; not a real customer).",
+        "",
+        "## Quick Commands",
+        '- "let\'s work" → fast context load · "what\'s going on" → full briefing · '
+        '"go [project]" → jump into a project · "end session" → save everything',
+        "- Paste a meeting transcript → it gets processed automatically",
+        "",
+        "## Session Rules",
+        "- On first activation each session: read _hq/MASTER_TRACKER.md. When the answer "
+        "might be in the hot cache below, use it before reading files.",
+        '- "end session" always updates session notes for every project touched — never skip. '
+        "Ask 2-3 grounded questions per interaction — specific, not generic.",
+        "- IMPORTANT: Every email — a draft, a reply, a follow-up, or one that comes up "
+        "mid-task — goes through the **email-writer** skill, end to end; it carries my saved "
+        "voice, length, and review rules, and composing anywhere else loses all of them. "
+        "Never write email text directly with a mail connector tool.",
+        "- IMPORTANT: Every Command Room widget — commitments, staff meeting, any row-list "
+        "or action card — is produced by `widget_transport.render_and_persist` and its "
+        "returned `html` passed to show_widget **byte-exact**; never hand-compose, restyle, "
+        "or re-derive widget HTML — hand-built widgets skip the validators and have shipped "
+        "stale rows and broken wire formats.",
+        "- IMPORTANT: After a successful render, the show_widget call with `transport[\"html\"]` "
+        "is not optional — relay the render_and_persist page before any prose (summarizing as "
+        "text strips my one-tap actions); text-instead-of-widget only when the transport itself "
+        "failed or `pagination[\"over_budget\"]` is set, and then say so explicitly.",
+        '- IMPORTANT: Any research ask — "research [X]", "deep dive on [X]", "look into [X]", '
+        '"background on [person]" — runs through the **research** skill, never the generic '
+        "built-in deep-research skill; the built-in one can't see my workspace and its findings "
+        "evaporate. The reply names which source tier actually ran, in one line.",
+        "",
+        "## Preferences",
+        "- **Draft posture (queue-on-click):** Show the editable draft first — nothing touches "
+        "your mail drafts until you click Save draft or Send; on that click it is saved to your "
+        "mail Drafts (never auto-sent), with the draft record + voice snapshot written at the "
+        "same moment.",
+        "",
+        "## People",
+        "| Who | Full Name | Role / Context |",
+        "|-----|-----------|----------------|",
+    ]
+    for p in others:
+        nick = p["canonical_name"].split()[0]
+        porg = orgs.get(p.get("org_id") or p.get("primary_org_id") or "", "—")
+        lines.append(f"| **{nick}** | {p['canonical_name']} | {porg} |")
+    lines += [
+        "→ Full list: _hq/PEOPLE.md",
+        "",
+        "## Active Projects",
+        "| Project | Status | Next Action |",
+        "|---------|--------|-------------|",
+    ]
+    for pr in projects:
+        lines.append(f"| **{pr['display_name']}** | {pr['status']} | — |")
+    lines += [
+        "→ Details: _hq/MASTER_TRACKER.md",
+        "",
+        "## Workspace",
+        "- Tracker: _hq/MASTER_TRACKER.md · Context: _hq/BUSINESS_CONTEXT.md · "
+        "People: _hq/PEOPLE.md",
+        f"- Project notes: [Project Name]/SESSION_NOTES_{first.upper()}.md",
+        "- Email holds: structured sender-scope overrides on your accounts — ask to add or "
+        "remove a held sender/domain any time. Never stored in this file.",
+        "",
+    ]
+    return "\n".join(lines)
 
 SURFACE_SKILLS = [
     ("morning-briefing", "morning_brief"),
@@ -313,8 +423,7 @@ def build_clean(firsts: list[str], lasts: list[str], enum: set[str]) -> dict:
     aliases_orgs = [alias(ORG_NAMES[i].split()[0], f"org_{i + 1:03d}") for i in range(5)]
     return {
         "entities": entities_doc(people, orgs, projects, writer="workspace-manager",
-                                 workspace={"user_timezone": "America/Los_Angeles",
-                                            "brain_name": "Atlas"}),
+                                 workspace=mark_primary(people)),
         "events": events,
         "aliases": aliases_doc(aliases_people, aliases_orgs, []),
         "malformed": [],
@@ -381,8 +490,7 @@ def build_mature(firsts: list[str], lasts: list[str], enum: set[str]) -> dict:
     apr = [alias(PROJECT_NAMES[i % 15], f"project_{(i % 15) + 1:03d}") for i in range(50)]
     return {
         "entities": entities_doc(people, orgs, projects, writer="workspace-manager",
-                                 workspace={"user_timezone": "America/Los_Angeles",
-                                            "brain_name": "Atlas"}),
+                                 workspace=mark_primary(people)),
         "events": events,
         "aliases": aliases_doc(ap, ao, apr),
         "flat_aliases": True,
@@ -496,8 +604,7 @@ def build_degraded(firsts: list[str], lasts: list[str], enum: set[str]) -> dict:
                          f"project_{(len(apr) % 5) + 1:03d}", 0.7))
     return {
         "entities": entities_doc(people, orgs, projects, writer="workspace-manager",
-                                 workspace={"user_timezone": "America/Los_Angeles",
-                                            "brain_name": "Atlas"}),
+                                 workspace=mark_primary(people)),
         "events": events,
         "aliases": aliases_doc(ap, ao, apr),
         "malformed": [],
@@ -596,7 +703,7 @@ def write_fixture(name: str, spec: dict, out_root: Path, meta_updates: dict) -> 
             json.dumps(doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
     (data / "classifier_feedback.jsonl").write_text("", encoding="utf-8")
-    (root / "CLAUDE.md").write_text(CLAUDE_MD, encoding="utf-8")
+    (root / "CLAUDE.md").write_text(client_claude_md(spec), encoding="utf-8")
     write_connectors(root / "_hq" / "connectors", spec)
 
     meta = dict(meta_updates)
@@ -658,7 +765,7 @@ def write_connectors(cdir: Path, spec: dict) -> None:
 
 # ------------------------------------------------------------------ metadata
 
-FIXTURE_VERSION = "1.0"
+FIXTURE_VERSION = "1.1"  # 1.1 (BENCH1, 2026-08-26): client-layer CLAUDE.md + primary user; roster picks up PSCRUB3 (Adan retired)
 COMPATIBLE = ["4.8.0"]  # bumped from 3.13.8-3.14.0 per M, 2026-07-15
 
 

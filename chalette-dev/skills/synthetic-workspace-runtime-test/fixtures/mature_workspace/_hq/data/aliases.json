@@ -5,350 +5,350 @@
   "mappings": {
     "people": [
       {
-        "raw": "Adan Sample",
+        "raw": "Aria Sample",
         "canonical_id": "person_001",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Aria Stone",
+        "raw": "Bo Stone",
         "canonical_id": "person_002",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Bo Sample",
+        "raw": "Bowie Sample",
         "canonical_id": "person_003",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Bowie Stone",
+        "raw": "Dustin Stone",
         "canonical_id": "person_004",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Dustin Sample",
+        "raw": "Lyra Sample",
         "canonical_id": "person_005",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Lyra Stone",
+        "raw": "Mira Stone",
         "canonical_id": "person_006",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Mira Sample",
+        "raw": "Quinn Sample",
         "canonical_id": "person_007",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Quinn Stone",
+        "raw": "Rio Stone",
         "canonical_id": "person_008",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Rio Sample",
+        "raw": "Sam Sample",
         "canonical_id": "person_009",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Sam Stone",
+        "raw": "Skyler Stone",
         "canonical_id": "person_010",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Skyler Sample",
+        "raw": "Aria Sample",
         "canonical_id": "person_011",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Adan Stone",
+        "raw": "Bo Stone",
         "canonical_id": "person_012",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Aria Sample",
+        "raw": "Bowie Sample",
         "canonical_id": "person_013",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Bo Stone",
+        "raw": "Dustin Stone",
         "canonical_id": "person_014",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Bowie Sample",
+        "raw": "Lyra Sample",
         "canonical_id": "person_015",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Dustin Stone",
+        "raw": "Mira Stone",
         "canonical_id": "person_016",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Lyra Sample",
+        "raw": "Quinn Sample",
         "canonical_id": "person_017",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Mira Stone",
+        "raw": "Rio Stone",
         "canonical_id": "person_018",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Quinn Sample",
+        "raw": "Sam Sample",
         "canonical_id": "person_019",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Rio Stone",
+        "raw": "Skyler Stone",
         "canonical_id": "person_020",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Sam Sample",
+        "raw": "Aria Sample",
         "canonical_id": "person_021",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Skyler Stone",
+        "raw": "Bo Stone",
         "canonical_id": "person_022",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Adan Sample",
+        "raw": "Bowie Sample",
         "canonical_id": "person_023",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Aria Stone",
+        "raw": "Dustin Stone",
         "canonical_id": "person_024",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Bo Sample",
+        "raw": "Lyra Sample",
         "canonical_id": "person_025",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Bowie Stone",
+        "raw": "Mira Stone",
         "canonical_id": "person_026",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Dustin Sample",
+        "raw": "Quinn Sample",
         "canonical_id": "person_027",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Lyra Stone",
+        "raw": "Rio Stone",
         "canonical_id": "person_028",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Mira Sample",
+        "raw": "Sam Sample",
         "canonical_id": "person_029",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Quinn Stone",
+        "raw": "Skyler Stone",
         "canonical_id": "person_030",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Rio Sample",
+        "raw": "Aria Sample",
         "canonical_id": "person_031",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Sam Stone",
+        "raw": "Bo Stone",
         "canonical_id": "person_032",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Skyler Sample",
+        "raw": "Bowie Sample",
         "canonical_id": "person_033",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Adan Stone",
+        "raw": "Dustin Stone",
         "canonical_id": "person_034",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Aria Sample",
+        "raw": "Lyra Sample",
         "canonical_id": "person_035",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Bo Stone",
+        "raw": "Mira Stone",
         "canonical_id": "person_036",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Bowie Sample",
+        "raw": "Quinn Sample",
         "canonical_id": "person_037",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Dustin Stone",
+        "raw": "Rio Stone",
         "canonical_id": "person_038",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Lyra Sample",
+        "raw": "Sam Sample",
         "canonical_id": "person_039",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Mira Stone",
+        "raw": "Skyler Stone",
         "canonical_id": "person_040",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Quinn Sample",
+        "raw": "Aria Sample",
         "canonical_id": "person_041",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Rio Stone",
+        "raw": "Bo Stone",
         "canonical_id": "person_042",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Sam Sample",
+        "raw": "Bowie Sample",
         "canonical_id": "person_043",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Skyler Stone",
+        "raw": "Dustin Stone",
         "canonical_id": "person_044",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Adan Sample",
+        "raw": "Lyra Sample",
         "canonical_id": "person_045",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Aria Stone",
+        "raw": "Mira Stone",
         "canonical_id": "person_046",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Bo Sample",
+        "raw": "Quinn Sample",
         "canonical_id": "person_047",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Bowie Stone",
+        "raw": "Rio Stone",
         "canonical_id": "person_048",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Dustin Sample",
+        "raw": "Sam Sample",
         "canonical_id": "person_049",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
         "added_by": "workspace-manager"
       },
       {
-        "raw": "Lyra Stone",
+        "raw": "Skyler Stone",
         "canonical_id": "person_050",
         "confidence": 1.0,
         "added_ts": "2026-05-01T09:00:00",
@@ -1061,27 +1061,15 @@
     ]
   },
   "flat": {
-    "Mira Sample": "person_095",
-    "Quinn Stone": "person_096",
-    "Rio Sample": "person_097",
-    "Sam Stone": "person_098",
-    "Skyler Sample": "person_099",
-    "Adan Stone": "person_100",
-    "Aria Sample": "person_079",
-    "Bo Stone": "person_080",
-    "Bowie Sample": "person_081",
-    "Dustin Stone": "person_082",
-    "Lyra Sample": "person_083",
-    "Mira Stone": "person_084",
-    "Quinn Sample": "person_085",
-    "Rio Stone": "person_086",
-    "Sam Sample": "person_087",
-    "Skyler Stone": "person_088",
-    "Adan Sample": "person_089",
-    "Aria Stone": "person_090",
-    "Bo Sample": "person_091",
-    "Bowie Stone": "person_092",
-    "Dustin Sample": "person_093",
-    "Lyra Stone": "person_094"
+    "Aria Sample": "person_091",
+    "Bo Stone": "person_092",
+    "Bowie Sample": "person_093",
+    "Dustin Stone": "person_094",
+    "Lyra Sample": "person_095",
+    "Mira Stone": "person_096",
+    "Quinn Sample": "person_097",
+    "Rio Stone": "person_098",
+    "Sam Sample": "person_099",
+    "Skyler Stone": "person_100"
   }
 }

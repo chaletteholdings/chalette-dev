@@ -6,181 +6,182 @@
     "people": [
       {
         "id": "person_001",
-        "canonical_name": "Adan Sample",
+        "canonical_name": "Aria Sample",
         "first_seen": "2026-05-02T09:00:00",
         "status": "active",
         "aliases": [],
         "nicknames": [],
         "project_ids": [],
         "emails": [
-          "adan.sample1@example.com"
+          "aria.sample1@example.com"
         ],
         "phones": [],
         "affiliation_ids": [],
         "connections": [],
-        "email": "adan.sample1@example.com",
+        "email": "aria.sample1@example.com",
         "primary_org_id": "org_001",
         "org_id": "org_001"
       },
       {
         "id": "person_002",
-        "canonical_name": "Aria Sample",
+        "canonical_name": "Bo Sample",
         "first_seen": "2026-05-03T09:00:00",
         "status": "active",
         "aliases": [],
         "nicknames": [],
         "project_ids": [],
         "emails": [
-          "aria.sample2@example.com"
+          "bo.sample2@example.com"
         ],
         "phones": [],
         "affiliation_ids": [],
         "connections": [],
-        "email": "aria.sample2@example.com",
+        "email": "bo.sample2@example.com",
         "primary_org_id": "org_002",
         "org_id": "org_002"
       },
       {
         "id": "person_003",
-        "canonical_name": "Bo Sample",
+        "canonical_name": "Bowie Sample",
         "first_seen": "2026-05-04T09:00:00",
         "status": "active",
         "aliases": [],
         "nicknames": [],
         "project_ids": [],
         "emails": [
-          "bo.sample3@example.com"
+          "bowie.sample3@example.com"
         ],
         "phones": [],
         "affiliation_ids": [],
         "connections": [],
-        "email": "bo.sample3@example.com",
+        "email": "bowie.sample3@example.com",
         "primary_org_id": "org_003",
         "org_id": "org_003"
       },
       {
         "id": "person_004",
-        "canonical_name": "Bowie Sample",
+        "canonical_name": "Dustin Sample",
         "first_seen": "2026-05-05T09:00:00",
         "status": "active",
         "aliases": [],
         "nicknames": [],
         "project_ids": [],
         "emails": [
-          "bowie.sample4@example.com"
+          "dustin.sample4@example.com"
         ],
         "phones": [],
         "affiliation_ids": [],
         "connections": [],
-        "email": "bowie.sample4@example.com",
+        "email": "dustin.sample4@example.com",
         "primary_org_id": "org_004",
         "org_id": "org_004"
       },
       {
         "id": "person_005",
-        "canonical_name": "Dustin Sample",
+        "canonical_name": "Lyra Sample",
         "first_seen": "2026-05-06T09:00:00",
         "status": "active",
         "aliases": [],
         "nicknames": [],
         "project_ids": [],
         "emails": [
-          "dustin.sample5@example.com"
+          "lyra.sample5@example.com"
         ],
         "phones": [],
         "affiliation_ids": [],
         "connections": [],
-        "email": "dustin.sample5@example.com",
+        "email": "lyra.sample5@example.com",
         "primary_org_id": "org_005",
         "org_id": "org_005"
       },
       {
         "id": "person_006",
-        "canonical_name": "Lyra Sample",
+        "canonical_name": "Mira Sample",
         "first_seen": "2026-05-07T09:00:00",
         "status": "active",
         "aliases": [],
         "nicknames": [],
         "project_ids": [],
         "emails": [
-          "lyra.sample6@example.com"
+          "mira.sample6@example.com"
         ],
         "phones": [],
         "affiliation_ids": [],
         "connections": [],
-        "email": "lyra.sample6@example.com",
+        "email": "mira.sample6@example.com",
         "primary_org_id": "org_001",
         "org_id": "org_001"
       },
       {
         "id": "person_007",
-        "canonical_name": "Mira Sample",
+        "canonical_name": "Quinn Sample",
         "first_seen": "2026-05-08T09:00:00",
         "status": "active",
         "aliases": [],
         "nicknames": [],
         "project_ids": [],
         "emails": [
-          "mira.sample7@example.com"
+          "quinn.sample7@example.com"
         ],
         "phones": [],
         "affiliation_ids": [],
         "connections": [],
-        "email": "mira.sample7@example.com",
+        "email": "quinn.sample7@example.com",
         "primary_org_id": "org_002",
         "org_id": "org_002"
       },
       {
         "id": "person_008",
-        "canonical_name": "Quinn Sample",
+        "canonical_name": "Rio Sample",
         "first_seen": "2026-05-09T09:00:00",
         "status": "active",
         "aliases": [],
         "nicknames": [],
         "project_ids": [],
         "emails": [
-          "quinn.sample8@example.com"
+          "rio.sample8@example.com"
         ],
         "phones": [],
         "affiliation_ids": [],
         "connections": [],
-        "email": "quinn.sample8@example.com",
+        "email": "rio.sample8@example.com",
         "primary_org_id": "org_003",
         "org_id": "org_003"
       },
       {
         "id": "person_009",
-        "canonical_name": "Rio Sample",
+        "canonical_name": "Sam Sample",
         "first_seen": "2026-05-10T09:00:00",
         "status": "active",
         "aliases": [],
         "nicknames": [],
         "project_ids": [],
         "emails": [
-          "rio.sample9@example.com"
+          "sam.sample9@example.com"
         ],
         "phones": [],
         "affiliation_ids": [],
         "connections": [],
-        "email": "rio.sample9@example.com",
+        "email": "sam.sample9@example.com",
         "primary_org_id": "org_004",
-        "org_id": "org_004"
+        "org_id": "org_004",
+        "is_primary_user": true
       },
       {
         "id": "person_010",
-        "canonical_name": "Sam Sample",
+        "canonical_name": "Skyler Sample",
         "first_seen": "2026-05-11T09:00:00",
         "status": "active",
         "aliases": [],
         "nicknames": [],
         "project_ids": [],
         "emails": [
-          "sam.sample10@example.com"
+          "skyler.sample10@example.com"
         ],
         "phones": [],
         "affiliation_ids": [],
         "connections": [],
-        "email": "sam.sample10@example.com",
+        "email": "skyler.sample10@example.com",
         "primary_org_id": "org_005",
         "org_id": "org_005"
       }
@@ -286,6 +287,8 @@
   },
   "workspace": {
     "user_timezone": "America/Los_Angeles",
-    "brain_name": "Atlas"
+    "brain_name": "Atlas",
+    "primary_user_id": "person_009",
+    "first_name": "Sam"
   }
 }

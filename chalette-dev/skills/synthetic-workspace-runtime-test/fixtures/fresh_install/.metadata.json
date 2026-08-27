@@ -1,7 +1,7 @@
 {
   "name": "fresh_install",
   "description": "Day-1 customer fixture. Empty entities, single seed event, no aliases.json, no brain_name set (Bug #36 prompt test). For verifying first-fire / onboarding behavior + M1 widget rendering.",
-  "fixture_version": "1.0",
+  "fixture_version": "1.1",
   "compatible_plugin_versions": [
     "4.8.0"
   ],

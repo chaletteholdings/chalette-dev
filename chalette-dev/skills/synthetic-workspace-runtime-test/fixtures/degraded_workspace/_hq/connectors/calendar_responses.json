@@ -35,7 +35,7 @@
           "title": "Sync 5",
           "start": "2026-05-05T10:00:00",
           "attendees": [
-            "dustin.sample5@example.com"
+            "lyra.sample5@example.com"
           ]
         }
       ],
@@ -73,7 +73,7 @@
           "title": "Sync 5",
           "start": "2026-05-05T10:00:00",
           "attendees": [
-            "dustin.sample5@example.com"
+            "lyra.sample5@example.com"
           ]
         },
         {
@@ -81,7 +81,7 @@
           "title": "Sync 6",
           "start": "2026-05-06T10:00:00",
           "attendees": [
-            "lyra.stone6@example.com"
+            "mira.stone6@example.com"
           ]
         },
         {
@@ -89,7 +89,7 @@
           "title": "Sync 7",
           "start": "2026-05-07T10:00:00",
           "attendees": [
-            "mira.sample7@example.com"
+            "quinn.sample7@example.com"
           ]
         },
         {
@@ -97,7 +97,7 @@
           "title": "Sync 8",
           "start": "2026-05-01T10:00:00",
           "attendees": [
-            "quinn.stone8@example.com"
+            "rio.stone8@example.com"
           ]
         },
         {
@@ -105,7 +105,7 @@
           "title": "Sync 9",
           "start": "2026-05-02T10:00:00",
           "attendees": [
-            "rio.sample9@example.com"
+            "sam.sample9@example.com"
           ]
         },
         {
@@ -113,7 +113,7 @@
           "title": "Sync 10",
           "start": "2026-05-03T10:00:00",
           "attendees": [
-            "sam.stone10@example.com"
+            "skyler.stone10@example.com"
           ]
         },
         {
@@ -121,7 +121,7 @@
           "title": "Sync 11",
           "start": "2026-05-04T10:00:00",
           "attendees": [
-            "skyler.sample11@example.com"
+            "aria.sample11@example.com"
           ]
         },
         {
@@ -129,7 +129,7 @@
           "title": "Sync 12",
           "start": "2026-05-05T10:00:00",
           "attendees": [
-            "adan.stone12@example.com"
+            "bo.stone12@example.com"
           ]
         },
         {
@@ -137,7 +137,7 @@
           "title": "Sync 13",
           "start": "2026-05-06T10:00:00",
           "attendees": [
-            "aria.sample13@example.com"
+            "bowie.sample13@example.com"
           ]
         },
         {
@@ -145,7 +145,7 @@
           "title": "Sync 14",
           "start": "2026-05-07T10:00:00",
           "attendees": [
-            "bo.stone14@example.com"
+            "dustin.stone14@example.com"
           ]
         },
         {
@@ -153,7 +153,7 @@
           "title": "Sync 15",
           "start": "2026-05-01T10:00:00",
           "attendees": [
-            "bowie.sample15@example.com"
+            "lyra.sample15@example.com"
           ]
         }
       ]

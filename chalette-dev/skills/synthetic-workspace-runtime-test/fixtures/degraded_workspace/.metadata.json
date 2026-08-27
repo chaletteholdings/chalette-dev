@@ -1,7 +1,7 @@
 {
   "name": "degraded_workspace",
   "description": "Edge-case failure-mode fixture. 2 people sharing a first name with distinct full names (Bug #19). 2 people with no email (Bug #44 dead-chrome). Decision events with only title / only summary / only notes (Bug #22 fallback chain). 2 commitment_resolved events that are actually supersedes (Bug #24). Unsanctioned event types (Bug #43). show-my-list wrapper + source pair (I12 cascade).",
-  "fixture_version": "1.0",
+  "fixture_version": "1.1",
   "compatible_plugin_versions": [
     "4.8.0"
   ],

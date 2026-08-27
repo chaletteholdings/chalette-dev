@@ -1,7 +1,7 @@
 {
   "name": "mature_workspace",
   "description": "Realistic mature workspace -- 80 people, 20 orgs, 15 projects, 1500 events. 8 malformed events.jsonl lines at 100-107 (Sub-bug #14b shatter: 7 bare-key JSON strings + 1 truncated event). Mix of nano-epoch + human-counter seqs (Bug #41). Legacy person_added then canonical person_created (Bug #34). aliases.json carries BOTH nested and flat shapes. 4 orgs with no domains (Bug #1). For verifying substrate-hygiene migrations + defensive readers.",
-  "fixture_version": "1.0",
+  "fixture_version": "1.1",
   "compatible_plugin_versions": [
     "4.8.0"
   ],
