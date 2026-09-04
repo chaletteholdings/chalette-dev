@@ -14,6 +14,10 @@ Metrics per run:
   extraction   confusion of expected route (book/review/observed/reject)
                vs assigned route, from events (A) and commitment-shaped chat
                lines (both arms); plus unplanted captures
+  counterparty for every CAPTURED owner-lane item: does the capture name the
+               labeled counterparty (correct / wrong / unresolved), split by
+               party count (2p / 3p+) -- the ATTRIB1 D10 number, reported
+               per speaker variant (named / me_them / unlabelled)
   entities     right / wrong / missed per labeled mention
   hallucination  name-shaped bigrams in output that exist nowhere in the
                fixture roster, known-unknowns, or org list
@@ -139,12 +143,18 @@ def load_labels() -> list[dict]:
     return labs
 
 
-def load_roster(fixture: str) -> tuple[set[str], set[str]]:
+def load_roster(fixture: str) -> tuple[set[str], set[str], dict[str, str], str]:
+    """(person names, org names, person id -> canonical name, primary user name)."""
     ents = json.loads((FIXTURES_ROOT / fixture / "_hq" / "data" / "entities.json")
                       .read_text(encoding="utf-8"))
-    names = {p["canonical_name"] for p in ents["entities"]["people"]}
+    people = ents["entities"]["people"]
+    names = {p["canonical_name"] for p in people}
     orgs = {o["canonical_name"] for o in ents["entities"]["orgs"]}
-    return names, orgs
+    id_to_name = {p["id"]: p["canonical_name"] for p in people if p.get("id")}
+    primary_id = (ents.get("workspace") or {}).get("primary_user_id")
+    primary = id_to_name.get(primary_id) or next(
+        (p["canonical_name"] for p in people if p.get("is_primary_user")), "")
+    return names, orgs, id_to_name, primary
 
 
 def read_run(run_dir: Path) -> dict:
@@ -227,8 +237,11 @@ def find_chat_capture(chat: str, keyphrase: str) -> str | None:
     return None
 
 
-def assign_route(run: dict, keyphrase: str, alts: list[str] | None = None) -> tuple[str, str]:
-    """(assigned_route, evidence). Events channel wins when present.
+def assign_route(run: dict, keyphrase: str, alts: list[str] | None = None) -> tuple[str, str, object]:
+    """(assigned_route, evidence, match). Events channel wins when present.
+    `match` is the event dict or the capture line the route was read from
+    (None when nothing captured) -- the counterparty metric reads the SAME
+    object, so its verdict is about the row the recall credit came from.
 
     `alts` are paraphrase aliases (label-defined) matched the same way as the
     primary keyphrase — model output compresses wording ("COO" for "chief
@@ -238,23 +251,26 @@ def assign_route(run: dict, keyphrase: str, alts: list[str] | None = None) -> tu
     for ev in run["events"]:
         r = event_route(ev)
         if r and any(p in event_text(ev).lower() for p in phrases):
-            return r, json.dumps({k: ev.get(k) for k in ("seq", "type")}) + " " + event_text(ev)[:160]
+            return (r, json.dumps({k: ev.get(k) for k in ("seq", "type")}) + " " + event_text(ev)[:160],
+                    ev)
     chat_all = run["chat"] + "\n" + run["artifact_text"]
     for p in phrases:
         line = find_chat_capture(chat_all, p)
         if line:
-            return "chat_capture", line[:200]
+            return "chat_capture", line[:200], line
     full = chat_all.lower()
     if any(p in full for p in phrases):
-        return "mentioned_only", ""
-    return "absent", ""
+        return "mentioned_only", "", None
+    return "absent", "", None
 
 
 def score_extraction(run: dict, labels: list[dict]) -> dict:
     rows = []
+    matches: dict[str, object] = {}
     for lab in labels:
         for item in lab["planted"]:
-            assigned, evidence = assign_route(run, item["keyphrase"], item.get("alts"))
+            assigned, evidence, match = assign_route(run, item["keyphrase"], item.get("alts"))
+            matches[item["label_id"]] = match
             rows.append({
                 "label_id": item["label_id"],
                 "expected": item["expected_route"],
@@ -316,7 +332,124 @@ def score_extraction(run: dict, labels: list[dict]) -> dict:
         if r and not any(kp in event_text(ev).lower() for kp in all_kps):
             unplanted.append({"channel": "events", "route": r, "text": event_text(ev)[:160]})
     counts["unplanted_captures"] = len(unplanted)
-    return {"rows": rows, "counts": counts, "unplanted": unplanted}
+    return {"rows": rows, "counts": counts, "unplanted": unplanted, "_matches": matches}
+
+
+# ------------------------------------------------------------- counterparty
+
+CAPTURED_ROUTES = {"book", "review", "chat_capture"}
+PARTY_BUCKETS = ("2p", "3p+")
+SECOND_PERSON = re.compile(r"\b(?:you|your|me|myself)\b", re.IGNORECASE)
+
+
+def party_bucket(label: dict) -> str:
+    return "2p" if len(label.get("attendees") or []) <= 2 else "3p+"
+
+
+def _name_in(text: str, name: str) -> bool:
+    return re.search(r"\b" + re.escape(name) + r"\b", text, re.IGNORECASE) is not None
+
+
+def counterparty_verdict(match: object, item: dict, id_to_name: dict[str, str],
+                         roster_names: set[str], primary: str) -> dict:
+    """One captured owner-lane item -> {verdict, asserted, basis}.
+
+    verdict   correct     the capture names the labeled counterparty
+              wrong       it names a DIFFERENT person (a guess presented as fact)
+              unresolved  it names nobody (or says it does not know -- honest)
+    Events channel: `data.counterparty_id` resolved through the fixture
+    roster is the contract; a string `counterparty` field is the fallback for
+    hand-written rows. Chat channel: the counterparty's first name (or full
+    name) in the capture line; when the counterparty IS the user, second
+    person ("you"/"me") counts, because that is how a recap addresses them.
+    "Wrong" on the chat channel = a roster first name that is neither the
+    owner nor the counterparty appears in the line. Same rule, both arms,
+    every variant; the number that matters is the named -> me_them delta."""
+    cp = item["counterparty_name"]
+    cp_first = cp.split()[0]
+    owner = item.get("owner_name") or ""
+    owner_first = owner.split()[0] if owner else ""
+    first_names = {n.split()[0] for n in roster_names}
+    others = {f for f in first_names if f not in (cp_first, owner_first)}
+
+    if isinstance(match, dict):
+        data = match.get("data") or {}
+        basis = (data.get("attribution") or {}).get("counterparty_basis")
+        cid = data.get("counterparty_id")
+        asserted = id_to_name.get(cid) if cid else None
+        if asserted is None:
+            for k in ("counterparty", "counterparty_name", "to", "owed_to"):
+                v = data.get(k)
+                if isinstance(v, str) and v.strip():
+                    asserted = v.strip()
+                    break
+        if asserted is None:
+            return {"verdict": "unresolved", "asserted": None, "basis": basis}
+        # Same three-way rule as the chat channel: the labeled counterparty
+        # named -> correct (even beside another name); someone else named and
+        # the counterparty not -> wrong; a non-roster string ("counsel",
+        # "the Acme Co team") -> unresolved, never wrong.
+        if asserted == cp or _name_in(asserted, cp) or _name_in(asserted, cp_first):
+            return {"verdict": "correct", "asserted": asserted, "basis": basis}
+        if asserted in roster_names or any(_name_in(asserted, o) for o in others):
+            return {"verdict": "wrong", "asserted": asserted, "basis": basis}
+        return {"verdict": "unresolved", "asserted": asserted, "basis": basis}
+
+    line = str(match or "")
+    if _name_in(line, cp) or _name_in(line, cp_first):
+        return {"verdict": "correct", "asserted": cp_first, "basis": None}
+    if cp == primary and SECOND_PERSON.search(line):
+        return {"verdict": "correct", "asserted": "you", "basis": None}
+    named_others = sorted(o for o in others if _name_in(line, o))
+    if named_others:
+        return {"verdict": "wrong", "asserted": ", ".join(named_others), "basis": None}
+    return {"verdict": "unresolved", "asserted": None, "basis": None}
+
+
+def score_counterparty(run: dict, labels: list[dict], ext: dict, id_to_name: dict[str, str],
+                       roster_names: set[str], primary: str) -> dict:
+    """ATTRIB1 D10: counterparty-resolved rate over CAPTURED owner-lane items,
+    by party bucket. Only book/review labels carrying a counterparty_name
+    count (observed/reject rows have no counterparty contract). The
+    denominator is captured items, so the rate is about attribution, not
+    recall -- recall is reported beside it, never folded in."""
+    assigned = {r["label_id"]: r["assigned"] for r in ext["rows"]}
+    matches = ext.get("_matches") or {}
+    rows = []
+    for lab in labels:
+        bucket = party_bucket(lab)
+        for item in lab["planted"]:
+            if item["expected_route"] not in ("book", "review") or not item.get("counterparty_name"):
+                continue
+            lid = item["label_id"]
+            row = {"label_id": lid, "bucket": bucket, "expected_counterparty": item["counterparty_name"],
+                   "assigned": assigned.get(lid)}
+            if assigned.get(lid) in CAPTURED_ROUTES:
+                v = counterparty_verdict(matches.get(lid), item, id_to_name, roster_names, primary)
+                row.update(v)
+                row["channel"] = "events" if isinstance(matches.get(lid), dict) else "chat"
+            else:
+                row.update({"verdict": "not_captured", "asserted": None, "basis": None, "channel": None})
+            rows.append(row)
+
+    def bucket_counts(sel):
+        c = {"expected": len(sel),
+             "captured": sum(1 for r in sel if r["verdict"] != "not_captured"),
+             "correct": sum(1 for r in sel if r["verdict"] == "correct"),
+             "wrong": sum(1 for r in sel if r["verdict"] == "wrong"),
+             "unresolved": sum(1 for r in sel if r["verdict"] == "unresolved")}
+        c["rate_correct_of_captured"] = round(c["correct"] / c["captured"], 4) if c["captured"] else None
+        c["rate_wrong_of_captured"] = round(c["wrong"] / c["captured"], 4) if c["captured"] else None
+        c["rate_correct_of_expected"] = round(c["correct"] / c["expected"], 4) if c["expected"] else None
+        return c
+
+    counts = {b: bucket_counts([r for r in rows if r["bucket"] == b]) for b in PARTY_BUCKETS}
+    counts["all"] = bucket_counts(rows)
+    basis = {}
+    for r in rows:
+        if r.get("basis"):
+            basis[r["basis"]] = basis.get(r["basis"], 0) + 1
+    return {"rows": rows, "counts": counts, "counterparty_basis_counts": basis}
 
 
 def score_entities(run: dict, labels: list[dict], roster_names: set[str],
@@ -465,15 +598,18 @@ def score_run(run_dir: Path, labels: list[dict], patterns: dict[str, str],
               cr1: Path | None = None) -> dict:
     run = read_run(run_dir)
     meta = run["meta"]
-    roster_names, roster_orgs = load_roster(meta["fixture"])
+    roster_names, roster_orgs, id_to_name, primary = load_roster(meta["fixture"])
     card = {
         "run_id": meta["run_id"], "arm": meta["arm"], "fixture": meta["fixture"],
-        "task": meta["task"], "model_id": meta.get("model_id"),
+        "task": meta["task"], "speakers": meta.get("speakers") or "named",
+        "model_id": meta.get("model_id"),
         "wall_ms": meta.get("wall_ms"), "tokens": meta.get("tokens"),
         "is_error": meta.get("is_error"), "timed_out": meta.get("timed_out"),
     }
     if meta["task"] == "t1_transcripts":
         ext = score_extraction(run, labels)
+        card["counterparty"] = score_counterparty(run, labels, ext, id_to_name, roster_names, primary)
+        ext.pop("_matches", None)  # raw match objects; the rows carry the evidence
         card["extraction"] = ext
         cross = cross_check_receipts(run, ext["counts"])
         if cross is not None:
@@ -496,14 +632,60 @@ def score_run(run_dir: Path, labels: list[dict], patterns: dict[str, str],
             "N/A on this fixture pending per-fixture transcript binding; "
             "extraction, routing, leaks, event validity, and cost are valid")
     (run_dir / "scorecard.json").write_text(
-        json.dumps(card, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        json.dumps(card, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
     return card
+
+
+def _cp_cell(cp: dict | None, bucket: str) -> str:
+    if not cp:
+        return "-"
+    c = cp["counts"][bucket]
+    if not c["captured"]:
+        return f"0/0 (of {c['expected']})"
+    return f"{c['correct']}/{c['captured']} (wrong {c['wrong']}, of {c['expected']})"
+
+
+def speaker_variant_table(cards: list[dict]) -> list[str]:
+    """ATTRIB1 D10: the named / me_them (/ unlabelled) numbers side by side,
+    one row per t1 run. Counts only; no averaging across runs."""
+    t1 = [c for c in cards if c.get("extraction")]
+    if not t1:
+        return []
+    out = ["## Speaker variants (t1) -- ATTRIB1 D10", "",
+           "Counterparty cells read `correct/captured (wrong N, of expected)`: of the "
+           "owner-lane items this run captured, how many name the labeled counterparty; "
+           "`wrong` = a different person asserted. 2p = two-party calls (the marker "
+           "alone identifies the other party); 3p+ = three or more (it cannot). Read "
+           "`references/speaker-variants.md` before quoting.", "",
+           "| run | arm | speakers | fixture | recall | precision | falseCap | cp 2p | cp 3p+ | cp basis (events) | evValid | out tok |",
+           "|---|---|---|---|---|---|---|---|---|---|---|---|"]
+    order = {"named": 0, "me_them": 1, "unlabelled": 2}
+    for c in sorted(t1, key=lambda x: (x["arm"], order.get(x.get("speakers", "named"), 9), x["run_id"])):
+        if c.get("is_error") or c.get("timed_out"):
+            # no numbers from a run that never produced output; the row stays
+            # so the attempt is visible, the cells say why
+            why = "TIMEOUT" if c.get("timed_out") else "ERROR"
+            out.append(f"| {c['run_id']} | {c['arm']} | {c.get('speakers', 'named')} | {c['fixture']} | "
+                       f"{why} | {why} | - | - | - | - | - | - |")
+            continue
+        ext = c["extraction"]["counts"]
+        cp = c.get("counterparty")
+        basis = cp.get("counterparty_basis_counts") if cp else None
+        ev = c.get("event_validity")
+        ev_cell = f"{ev['events'] - ev['invalid']}/{ev['events']}" if ev and ev.get("events") else "-"
+        out.append(f"| {c['run_id']} | {c['arm']} | {c.get('speakers', 'named')} | {c['fixture']} | "
+                   f"{ext['owner_lane_recall']} | {ext['owner_lane_precision_vs_planted']} | "
+                   f"{ext['reject_false_captures']} | {_cp_cell(cp, '2p')} | {_cp_cell(cp, '3p+')} | "
+                   f"{json.dumps(basis) if basis else '-'} | {ev_cell} | "
+                   f"{(c.get('tokens') or {}).get('output')} |")
+    out.append("")
+    return out
 
 
 def scoreboard_md(cards: list[dict]) -> str:
     lines = ["# BENCH1 scoreboard", ""]
-    lines.append("| run | arm | task | wall s | out tok | leaks | halluc | notes |")
-    lines.append("|---|---|---|---|---|---|---|---|")
+    lines.append("| run | arm | spk | task | wall s | out tok | leaks | halluc | notes |")
+    lines.append("|---|---|---|---|---|---|---|---|---|")
     for c in sorted(cards, key=lambda x: x["run_id"]):
         notes = []
         if c.get("is_error"):
@@ -519,6 +701,9 @@ def scoreboard_md(cards: list[dict]) -> str:
             notes.append(f"recall={ext['owner_lane_recall']} prec={ext['owner_lane_precision_vs_planted']} "
                          f"falseCap={ext['reject_false_captures']} {obs_note} "
                          f"unplanted={ext['unplanted_captures']}")
+        cp = c.get("counterparty")
+        if cp:
+            notes.append(f"cp2p={_cp_cell(cp, '2p')} cp3p+={_cp_cell(cp, '3p+')}")
         ent = c.get("entities", {}).get("counts")
         if ent:
             notes.append(f"ent={ent}")
@@ -530,11 +715,12 @@ def scoreboard_md(cards: list[dict]) -> str:
         if c.get("metric_validity_note"):
             halluc += "*"
             notes.append("*name-keyed metrics N/A on this fixture (clean-roster-bound labels)")
-        lines.append(f"| {c['run_id']} | {c['arm']} | {c['task']} | "
+        lines.append(f"| {c['run_id']} | {c['arm']} | {c.get('speakers', 'named')} | {c['task']} | "
                      f"{(c.get('wall_ms') or 0) / 1000:.0f} | {tok} | "
                      f"{c['leaks']['count']} | {halluc} | "
                      f"{'; '.join(notes)} |")
     lines.append("")
+    lines += speaker_variant_table(cards)
     return "\n".join(lines)
 
 
@@ -561,8 +747,8 @@ def main() -> int:
 
     if cards:
         (runs_dir / "scoreboard.json").write_text(
-            json.dumps(cards, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-        (runs_dir / "scoreboard.md").write_text(scoreboard_md(cards), encoding="utf-8")
+            json.dumps(cards, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+        (runs_dir / "scoreboard.md").write_text(scoreboard_md(cards), encoding="utf-8", newline="\n")
         print(f"scoreboard: {runs_dir / 'scoreboard.md'}")
     else:
         print("no runs found to score")

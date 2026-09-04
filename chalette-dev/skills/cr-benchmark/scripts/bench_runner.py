@@ -14,9 +14,17 @@ nothing else leaks in), get the same injected bench transcript set, the same
 prompt, and the same pinned model. Each run gets a fresh temp workspace;
 nothing persists between runs.
 
+Speaker variant (ATTRIB1 D10, 2026-09-03): --speakers picks WHICH rendering
+of the same labeled transcript set is injected -- `named` (the base set,
+`Sam Sample: ...`), `me_them` (the real Granola shape: the user is `Me:`,
+every other voice is `Them:`, inline on one line) or `unlabelled` (no
+markers). Same labels, same prompts, same arms; only the transcript's speaker
+naming changes. The run id carries the variant when it is not `named`.
+
 Usage:
     python bench_runner.py --arm A --fixture clean_workspace --task all
     python bench_runner.py --arm B --fixture clean_workspace --task t1_transcripts
+    python bench_runner.py --arm A --task t1_transcripts --speakers me_them --follow-up
 
 Artifacts per run land in <runs-dir>/<run_id>/ :
     output.json      raw headless-run JSON (usage, model id, cost, duration)
@@ -25,7 +33,7 @@ Artifacts per run land in <runs-dir>/<run_id>/ :
     events_diff.jsonl  events appended to _hq/data/events.jsonl during the run
     new_files.json   inventory of files the run created/modified
     artifacts/       copies of small created files
-    run_meta.json    arm/fixture/task/model/commits/timing
+    run_meta.json    arm/fixture/task/speakers/model/commits/timing
 One line per run is appended to <runs-dir>/RUNLOG.jsonl (append-only).
 """
 
@@ -51,6 +59,10 @@ DEFAULT_CR1 = Path.home() / "repos" / "cr1-canonical"
 
 MODEL_ALIASES = {}  # pass through; log the id the run reports
 PINNED_MODEL = "claude-opus-5"  # M ruling 2026-08-27: official runs at Opus 5.0
+# A CLI result that means "no model call happened and none will until a human
+# acts". Spend discipline: the batch stops at the first one, never retries.
+AUTH_BLOCK_MARKERS = ("Failed to authenticate", "OAuth session expired", "not logged in",
+                      "Please run /login", "invalid api key", "credit balance")
 RUN_TIMEOUT_SEC = 20 * 60
 ARTIFACT_COPY_CAP = 200 * 1024  # bytes
 
@@ -94,9 +106,22 @@ def git_head(repo: Path) -> str:
         return "unknown"
 
 
-def inject_bench_transcripts(ws: Path) -> None:
-    """Replace the placeholder granola docs with the labeled bench set."""
-    manifest = json.loads((BENCH_TRANSCRIPTS / "manifest.json").read_text(encoding="utf-8"))
+SPEAKER_VARIANTS = ("named", "me_them", "unlabelled")
+
+
+def transcript_set_dir(speakers: str) -> Path:
+    """Where a speaker variant's rendering lives. `named` IS the base set;
+    the others sit beside it and share its labels/ (one frozen label set)."""
+    return BENCH_TRANSCRIPTS if speakers == "named" else BENCH_TRANSCRIPTS / speakers
+
+
+def inject_bench_transcripts(ws: Path, speakers: str = "named") -> dict:
+    """Replace the placeholder granola docs with the labeled bench set, in
+    the requested speaker rendering. The connector doc keeps the calendar's
+    attendee names in every variant -- under me_them the transcript no longer
+    names the parties, the calendar still does (the real shape)."""
+    src = transcript_set_dir(speakers)
+    manifest = json.loads((src / "manifest.json").read_text(encoding="utf-8"))
     docs = {}
     for row in manifest["transcripts"]:
         tid = row["id"]
@@ -105,11 +130,13 @@ def inject_bench_transcripts(ws: Path) -> None:
             "date": manifest["meeting_date"],
             "attendees": row["attendees"],
             "duration": "30m",
-            "transcript": (BENCH_TRANSCRIPTS / f"{tid}.txt").read_text(encoding="utf-8"),
+            "transcript": (src / f"{tid}.txt").read_text(encoding="utf-8"),
         }
     gpath = ws / "_hq" / "connectors" / "granola_responses.json"
     gpath.write_text(json.dumps({"granola_get_transcript": {"doc_ids": docs}},
-                                indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+                                indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+    return {"speakers": speakers, "set_version": manifest.get("set_version"),
+            "variants_version": manifest.get("variants_version")}
 
 
 def neutralize_claude_md(ws: Path) -> None:
@@ -118,13 +145,13 @@ def neutralize_claude_md(ws: Path) -> None:
     orgs = {o["id"]: o["canonical_name"] for o in ents["entities"]["orgs"]}
     primary = next((p for p in people if p.get("is_primary_user")), people[0] if people else None)
     if primary is None:
-        (ws / "CLAUDE.md").write_text("# Workspace\n", encoding="utf-8")
+        (ws / "CLAUDE.md").write_text("# Workspace\n", encoding="utf-8", newline="\n")
         return
     first = primary["canonical_name"].split()[0]
     org = orgs.get(primary.get("org_id") or primary.get("primary_org_id") or "", "the company")
     (ws / "CLAUDE.md").write_text(
         NEUTRAL_CLAUDE_MD.format(first=first, full_name=primary["canonical_name"], org=org),
-        encoding="utf-8")
+        encoding="utf-8", newline="\n")
 
 
 def write_mcp_config(ws: Path, tmp: Path) -> Path:
@@ -138,7 +165,7 @@ def write_mcp_config(ws: Path, tmp: Path) -> Path:
         } for name in ("gmail", "calendar", "granola")
     }}
     p = tmp / "bench_mcp.json"
-    p.write_text(json.dumps(cfg, indent=2) + "\n", encoding="utf-8")
+    p.write_text(json.dumps(cfg, indent=2) + "\n", encoding="utf-8", newline="\n")
     return p
 
 
@@ -162,8 +189,10 @@ def inventory(ws: Path) -> dict[str, int]:
 
 def one_run(*, arm: str, fixture: str, task_key: str, prompt: str, model: str,
             claude: str, cr1: Path, runs_dir: Path, keep_workspace: bool,
-            follow_up: str | None = None) -> dict:
+            follow_up: str | None = None, speakers: str = "named") -> dict:
     run_id = f"{run_stamp()}_{arm}_{fixture}_{task_key}"
+    if speakers != "named":
+        run_id += f"_{speakers}"
     run_dir = runs_dir / run_id
     run_dir.mkdir(parents=True, exist_ok=False)
 
@@ -175,7 +204,7 @@ def one_run(*, arm: str, fixture: str, task_key: str, prompt: str, model: str,
     if meta_file.exists():
         meta_file.unlink()
 
-    inject_bench_transcripts(ws)
+    transcript_set = inject_bench_transcripts(ws, speakers)
     if arm == "B":
         neutralize_claude_md(ws)
 
@@ -212,23 +241,23 @@ def one_run(*, arm: str, fixture: str, task_key: str, prompt: str, model: str,
         stderr = (exc.stderr or "") if isinstance(exc.stderr, str) else ""
     wall_ms = int((time.monotonic() - t0) * 1000)
 
-    (run_dir / "stderr.txt").write_text(stderr or "", encoding="utf-8")
+    (run_dir / "stderr.txt").write_text(stderr or "", encoding="utf-8", newline="\n")
     parsed = None
     try:
         parsed = json.loads(stdout)
     except (json.JSONDecodeError, TypeError):
-        (run_dir / "output_raw.txt").write_text(stdout or "", encoding="utf-8")
+        (run_dir / "output_raw.txt").write_text(stdout or "", encoding="utf-8", newline="\n")
     if parsed is not None:
         (run_dir / "output.json").write_text(
-            json.dumps(parsed, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-        (run_dir / "chat.txt").write_text(str(parsed.get("result", "")), encoding="utf-8")
+            json.dumps(parsed, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+        (run_dir / "chat.txt").write_text(str(parsed.get("result", "")), encoding="utf-8", newline="\n")
 
     # Optional second confirm turn (protocol addition 2026-08-27): the
     # preview-first draft posture means a single shot can measure the preview
     # and never the capture. Resumed in the SAME session, both arms get the
     # identical confirmation. Usage/wall are summed; both raw outputs kept.
     parsed2 = None
-    if follow_up and parsed is not None and not timed_out:
+    if follow_up and parsed is not None and not timed_out and not parsed.get("is_error"):
         sid = parsed.get("session_id")
         if sid:
             cmd2 = [claude, "-p", follow_up, "--resume", str(sid),
@@ -247,27 +276,27 @@ def one_run(*, arm: str, fixture: str, task_key: str, prompt: str, model: str,
                 try:
                     parsed2 = json.loads(proc2.stdout)
                 except (json.JSONDecodeError, TypeError):
-                    (run_dir / "output2_raw.txt").write_text(proc2.stdout or "", encoding="utf-8")
-                (run_dir / "stderr2.txt").write_text(proc2.stderr or "", encoding="utf-8")
+                    (run_dir / "output2_raw.txt").write_text(proc2.stdout or "", encoding="utf-8", newline="\n")
+                (run_dir / "stderr2.txt").write_text(proc2.stderr or "", encoding="utf-8", newline="\n")
             except subprocess.TimeoutExpired:
                 timed_out = True
             wall_ms += int((time.monotonic() - t1) * 1000)
             if parsed2 is not None:
                 (run_dir / "output2.json").write_text(
-                    json.dumps(parsed2, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-                (run_dir / "chat2.txt").write_text(str(parsed2.get("result", "")), encoding="utf-8")
+                    json.dumps(parsed2, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+                (run_dir / "chat2.txt").write_text(str(parsed2.get("result", "")), encoding="utf-8", newline="\n")
 
     # Substrate delta.
     post_events = events_path.read_text(encoding="utf-8").splitlines() if events_path.exists() else []
     new_events = post_events[len(baseline_events):]
     (run_dir / "events_diff.jsonl").write_text(
-        "\n".join(new_events) + ("\n" if new_events else ""), encoding="utf-8")
+        "\n".join(new_events) + ("\n" if new_events else ""), encoding="utf-8", newline="\n")
 
     post_inv = inventory(ws)
     new_files = sorted(set(post_inv) - set(baseline_inv))
     changed = sorted(f for f in post_inv if f in baseline_inv and post_inv[f] != baseline_inv[f])
     (run_dir / "new_files.json").write_text(json.dumps(
-        {"created": new_files, "modified": changed}, indent=2) + "\n", encoding="utf-8")
+        {"created": new_files, "modified": changed}, indent=2) + "\n", encoding="utf-8", newline="\n")
     art = run_dir / "artifacts"
     for rel in new_files:
         src = ws / rel
@@ -285,7 +314,8 @@ def one_run(*, arm: str, fixture: str, task_key: str, prompt: str, model: str,
                 usage[k] = v
     meta = {
         "run_id": run_id, "ts": started, "arm": arm, "fixture": fixture,
-        "task": task_key, "model_requested": model,
+        "task": task_key, "speakers": speakers, "transcript_set": transcript_set,
+        "model_requested": model,
         "model_id": _main_model(parsed),
         "harness_commit": git_head(SKILL_ROOT.parent.parent.parent),
         "cr1_commit": git_head(cr1),
@@ -305,14 +335,20 @@ def one_run(*, arm: str, fixture: str, task_key: str, prompt: str, model: str,
         "events_appended": len(new_events),
         "files_created": len(new_files),
     }
+    if meta["is_error"]:
+        # Why the row is an ERROR row, on the row itself (RUNLOG is the only
+        # place a reader looks); the CLI puts auth failures in `result`.
+        err = str((parsed or {}).get("result") or (stderr or "").strip()[-300:] or "")[:300]
+        meta["error"] = err
+        meta["auth_blocked"] = any(m.lower() in err.lower() for m in AUTH_BLOCK_MARKERS)
     if parsed2 is not None:
         meta["total_cost_usd"] = ((parsed or {}).get("total_cost_usd") or 0) + \
                                  (parsed2.get("total_cost_usd") or 0)
         meta["num_turns"] = ((parsed or {}).get("num_turns") or 0) + \
                             (parsed2.get("num_turns") or 0)
     (run_dir / "run_meta.json").write_text(
-        json.dumps(meta, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    with open(runs_dir / "RUNLOG.jsonl", "a", encoding="utf-8") as f:
+        json.dumps(meta, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+    with open(runs_dir / "RUNLOG.jsonl", "a", encoding="utf-8", newline="\n") as f:
         f.write(json.dumps(meta, ensure_ascii=False) + "\n")
 
     if keep_workspace:
@@ -341,6 +377,9 @@ def main() -> int:
     ap.add_argument("--follow-up", action="store_true",
                     help="run the task's confirm turn from tasks.json follow_ups "
                          "(protocol addition 2026-08-27; requires M's sign-off for official runs)")
+    ap.add_argument("--speakers", default="named", choices=SPEAKER_VARIANTS,
+                    help="transcript speaker rendering to inject (ATTRIB1 D10): named "
+                         "(default, the base set), me_them (real Granola shape), unlabelled")
     args = ap.parse_args()
 
     tasks_doc = json.loads((HERE / "tasks.json").read_text(encoding="utf-8"))
@@ -356,6 +395,9 @@ def main() -> int:
         raise SystemExit(f"FATAL: fixture {fixture_dir} not found")
     if not (BENCH_TRANSCRIPTS / "manifest.json").exists():
         raise SystemExit("FATAL: bench transcripts missing; run _generate_bench_transcripts.py")
+    if not (transcript_set_dir(args.speakers) / "manifest.json").exists():
+        raise SystemExit(f"FATAL: {args.speakers} transcript variant missing; run "
+                         f"_generate_bench_transcripts.py --speakers {args.speakers}")
 
     cr1 = Path(args.cr1).expanduser().resolve()
     if args.arm == "A" and not (cr1 / "command-room" / ".claude-plugin").exists():
@@ -365,12 +407,19 @@ def main() -> int:
     runs_dir = Path(args.runs_dir).resolve()
     runs_dir.mkdir(parents=True, exist_ok=True)
 
-    print(f"arm={args.arm} fixture={args.fixture} tasks={keys} model={args.model}")
+    print(f"arm={args.arm} fixture={args.fixture} tasks={keys} model={args.model} "
+          f"speakers={args.speakers}")
     for k in keys:
-        one_run(arm=args.arm, fixture=args.fixture, task_key=k, prompt=tasks[k],
-                model=args.model, claude=claude, cr1=cr1, runs_dir=runs_dir,
-                keep_workspace=args.keep_workspace,
-                follow_up=follow_ups.get(k) if args.follow_up else None)
+        meta = one_run(arm=args.arm, fixture=args.fixture, task_key=k, prompt=tasks[k],
+                       model=args.model, claude=claude, cr1=cr1, runs_dir=runs_dir,
+                       keep_workspace=args.keep_workspace,
+                       follow_up=follow_ups.get(k) if args.follow_up else None,
+                       speakers=args.speakers)
+        if meta.get("auth_blocked"):
+            print(f"FATAL: the claude CLI cannot authenticate ({meta['error'][:120]}); "
+                  f"stopping the batch -- log in (`claude /login`) and re-run. "
+                  f"The ERROR row stays in RUNLOG.jsonl.", file=sys.stderr)
+            return 2
     return 0
 
 
