@@ -357,6 +357,9 @@ def counterparty_verdict(match: object, item: dict, id_to_name: dict[str, str],
     verdict   correct     the capture names the labeled counterparty
               wrong       it names a DIFFERENT person (a guess presented as fact)
               unresolved  it names nobody (or says it does not know -- honest)
+              unknown_id  events only: a `counterparty_id` the fixture roster
+                          does not hold (an entity the run minted) -- its own
+                          class, never folded into unresolved (review F3)
     Events channel: `data.counterparty_id` resolved through the fixture
     roster is the contract; a string `counterparty` field is the fallback for
     hand-written rows. Chat channel: the counterparty's first name (or full
@@ -377,6 +380,9 @@ def counterparty_verdict(match: object, item: dict, id_to_name: dict[str, str],
         basis = (data.get("attribution") or {}).get("counterparty_basis")
         cid = data.get("counterparty_id")
         asserted = id_to_name.get(cid) if cid else None
+        if cid and asserted is None:
+            return {"verdict": "unknown_id", "asserted": str(cid),
+                    "basis": basis or "id_not_in_fixture_roster"}
         if asserted is None:
             for k in ("counterparty", "counterparty_name", "to", "owed_to"):
                 v = data.get(k)
@@ -437,7 +443,8 @@ def score_counterparty(run: dict, labels: list[dict], ext: dict, id_to_name: dic
              "captured": sum(1 for r in sel if r["verdict"] != "not_captured"),
              "correct": sum(1 for r in sel if r["verdict"] == "correct"),
              "wrong": sum(1 for r in sel if r["verdict"] == "wrong"),
-             "unresolved": sum(1 for r in sel if r["verdict"] == "unresolved")}
+             "unresolved": sum(1 for r in sel if r["verdict"] == "unresolved"),
+             "unknown_id": sum(1 for r in sel if r["verdict"] == "unknown_id")}
         c["rate_correct_of_captured"] = round(c["correct"] / c["captured"], 4) if c["captured"] else None
         c["rate_wrong_of_captured"] = round(c["wrong"] / c["captured"], 4) if c["captured"] else None
         c["rate_correct_of_expected"] = round(c["correct"] / c["expected"], 4) if c["expected"] else None
@@ -642,7 +649,8 @@ def _cp_cell(cp: dict | None, bucket: str) -> str:
     c = cp["counts"][bucket]
     if not c["captured"]:
         return f"0/0 (of {c['expected']})"
-    return f"{c['correct']}/{c['captured']} (wrong {c['wrong']}, of {c['expected']})"
+    extra = f", unknown_id {c['unknown_id']}" if c.get("unknown_id") else ""
+    return f"{c['correct']}/{c['captured']} (wrong {c['wrong']}{extra}, of {c['expected']})"
 
 
 def speaker_variant_table(cards: list[dict]) -> list[str]:
@@ -692,7 +700,9 @@ def scoreboard_md(cards: list[dict]) -> str:
             notes.append("ERROR")
         if c.get("timed_out"):
             notes.append("TIMEOUT")
-        ext = c.get("extraction", {}).get("counts")
+        # A run that produced no output has no numbers: status only (review F4).
+        failed = bool(c.get("is_error") or c.get("timed_out"))
+        ext = None if failed else c.get("extraction", {}).get("counts")
         if ext:
             obs_note = (f"obs={ext['observed_undated_exact']}/{ext['observed_undated_expected']} "
                         f"rail={ext['observed_shadowed_open_ok']}/{ext['observed_shadowed_expected']}"
@@ -701,10 +711,10 @@ def scoreboard_md(cards: list[dict]) -> str:
             notes.append(f"recall={ext['owner_lane_recall']} prec={ext['owner_lane_precision_vs_planted']} "
                          f"falseCap={ext['reject_false_captures']} {obs_note} "
                          f"unplanted={ext['unplanted_captures']}")
-        cp = c.get("counterparty")
+        cp = None if failed else c.get("counterparty")
         if cp:
             notes.append(f"cp2p={_cp_cell(cp, '2p')} cp3p+={_cp_cell(cp, '3p+')}")
-        ent = c.get("entities", {}).get("counts")
+        ent = None if failed else c.get("entities", {}).get("counts")
         if ent:
             notes.append(f"ent={ent}")
         ev = c.get("event_validity")

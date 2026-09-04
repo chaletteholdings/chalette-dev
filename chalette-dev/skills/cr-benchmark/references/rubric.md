@@ -75,6 +75,7 @@ or line the recall credit came from.
 | `correct` | `data.counterparty_id` resolves (fixture roster) to the labeled name; or a string `counterparty` field names them | the counterparty's first or full name is in the capture line; when the counterparty is the user, second person ("you"/"me") counts |
 | `wrong` | the id / string names a DIFFERENT roster person and not the labeled one | a roster first name that is neither owner nor counterparty is in the line, and the counterparty is not |
 | `unresolved` | no id and no roster name (null, "counsel", "the Acme Co team") | no roster name in the line |
+| `unknown_id` | a `counterparty_id` the pre-run fixture roster does not hold (an entity the run minted); reported as its own count, never folded into unresolved | — |
 
 Naming the right person beside another is `correct`. A non-roster string is
 `unresolved`, never `wrong`. Items not captured sit outside the denominator

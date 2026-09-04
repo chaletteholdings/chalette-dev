@@ -335,12 +335,23 @@ def one_run(*, arm: str, fixture: str, task_key: str, prompt: str, model: str,
         "events_appended": len(new_events),
         "files_created": len(new_files),
     }
+    def _auth_blocked(text: str) -> bool:
+        return any(m.lower() in text.lower() for m in AUTH_BLOCK_MARKERS)
+
     if meta["is_error"]:
         # Why the row is an ERROR row, on the row itself (RUNLOG is the only
         # place a reader looks); the CLI puts auth failures in `result`.
         err = str((parsed or {}).get("result") or (stderr or "").strip()[-300:] or "")[:300]
         meta["error"] = err
-        meta["auth_blocked"] = any(m.lower() in err.lower() for m in AUTH_BLOCK_MARKERS)
+        meta["auth_blocked"] = _auth_blocked(err)
+    if parsed2 is not None and parsed2.get("is_error"):
+        # The confirm turn failed: it did NOT happen, the row says why, and an
+        # auth failure here stops the batch exactly like one on turn 1
+        # (review F2 -- previously `follow_up_used: true`, exit 0).
+        err2 = str(parsed2.get("result") or "")[:300]
+        meta["follow_up_used"] = False
+        meta["follow_up_error"] = err2
+        meta["auth_blocked"] = bool(meta.get("auth_blocked")) or _auth_blocked(err2)
     if parsed2 is not None:
         meta["total_cost_usd"] = ((parsed or {}).get("total_cost_usd") or 0) + \
                                  (parsed2.get("total_cost_usd") or 0)
@@ -416,7 +427,8 @@ def main() -> int:
                        follow_up=follow_ups.get(k) if args.follow_up else None,
                        speakers=args.speakers)
         if meta.get("auth_blocked"):
-            print(f"FATAL: the claude CLI cannot authenticate ({meta['error'][:120]}); "
+            why = meta.get("error") or meta.get("follow_up_error") or ""
+            print(f"FATAL: the claude CLI cannot authenticate ({why[:120]}); "
                   f"stopping the batch -- log in (`claude /login`) and re-run. "
                   f"The ERROR row stays in RUNLOG.jsonl.", file=sys.stderr)
             return 2

@@ -236,6 +236,7 @@ def test_counterparty_verdicts_match_hand_score(tmp_path):
     assert "mini_2p_c6" not in rows and "mini_2p_c7" not in rows
     counts = card["counterparty"]["counts"]
     assert counts["2p"] == {"expected": 5, "captured": 5, "correct": 2, "wrong": 1, "unresolved": 2,
+                            "unknown_id": 0,
                             "rate_correct_of_captured": 0.4, "rate_wrong_of_captured": 0.2,
                             "rate_correct_of_expected": 0.4}
     assert counts["3p+"]["captured"] == 2 and counts["3p+"]["correct"] == 1 and counts["3p+"]["wrong"] == 1
@@ -276,6 +277,40 @@ def test_scoreboard_carries_the_speaker_variant_table(tmp_path):
     assert "| me_them |" in md
     assert "2/5 (wrong 1, of 5)" in md          # the 2p cell, counts only
     assert "cp2p=2/5 (wrong 1, of 5)" in md     # per-run notes carry it too
+
+
+def test_run_minted_counterparty_id_is_its_own_class(tmp_path):
+    """Review F3: an id the fixture roster does not hold is `unknown_id`,
+    visible on the row and in the counts -- never a silent `unresolved`."""
+    sc, run_dir = _mk_run(tmp_path)
+    events = [{"seq": 1, "type": "commitment", "data": {
+        "title": "send Bo the revised pricing sheet", "owner_id": "person_009",
+        "counterparty_id": "person_777", "counterparty": "Bo Sample"}}]
+    (run_dir / "events_diff.jsonl").write_text(json.dumps(events[0]) + "\n", encoding="utf-8")
+    (run_dir / "chat.txt").write_text("Logged.", encoding="utf-8")
+    card = sc.score_run(run_dir, CP_LABELS, sc.EMBEDDED_LEAK_PATTERNS)
+    row = {r["label_id"]: r for r in card["counterparty"]["rows"]}["mini_2p_c1"]
+    assert row["verdict"] == "unknown_id" and row["asserted"] == "person_777"
+    assert row["basis"] == "id_not_in_fixture_roster"
+    c = card["counterparty"]["counts"]["2p"]
+    assert c["unknown_id"] == 1 and c["unresolved"] == 0 and c["correct"] == 0
+    assert "unknown_id 1" in sc.scoreboard_md([card])
+
+
+def test_error_rows_carry_no_numbers_in_the_notes(tmp_path):
+    """Review F4: a run that produced no output shows its status, not zeros."""
+    sc, run_dir = _mk_run(tmp_path)
+    meta = json.loads((run_dir / "run_meta.json").read_text(encoding="utf-8"))
+    meta["is_error"] = True
+    (run_dir / "run_meta.json").write_text(json.dumps(meta), encoding="utf-8")
+    (run_dir / "events_diff.jsonl").write_text("", encoding="utf-8")
+    (run_dir / "chat.txt").write_text("Failed to authenticate", encoding="utf-8")
+    md = sc.scoreboard_md([sc.score_run(run_dir, CP_LABELS, sc.EMBEDDED_LEAK_PATTERNS)])
+    main_row = next(ln for ln in md.splitlines() if ln.startswith("| 2026") and "| A | me_them | t1" in ln)
+    assert main_row.rstrip().endswith("| ERROR |"), main_row
+    assert "recall=" not in main_row and "cp2p=" not in main_row and "ent=" not in main_row
+    variant_row = next(ln for ln in md.splitlines() if ln.startswith("| 2026") and "| clean_workspace |" in ln)
+    assert "| ERROR | ERROR |" in variant_row
 
 
 def test_legacy_run_meta_without_speakers_scores_as_named(tmp_path):
