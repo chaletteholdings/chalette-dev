@@ -35,16 +35,32 @@ two arms only, model pinned to Opus, no other-harness arm ever.
 ## Layout
 
 ```
-scripts/_generate_bench_transcripts.py   labeled transcript set (deterministic)
+scripts/_generate_bench_transcripts.py   labeled transcript set (deterministic; 3 speaker renderings)
 scripts/tasks.json                       the 6 frozen task prompts
 scripts/bench_mcp_server.py              mock gmail/calendar/granola MCP servers
-scripts/bench_runner.py                  one headless run per (arm x fixture x task)
+scripts/bench_runner.py                  one headless run per (arm x fixture x task [x speakers])
 scripts/bench_scorer.py                  deterministic scoring + scoreboard
-fixtures/bench_transcripts/              12 transcripts + labels/ + manifest.json
+fixtures/bench_transcripts/              12 transcripts (named) + labels/ + manifest.json
+fixtures/bench_transcripts/me_them/      the same 12 in the real Granola Me:/Them: shape
+fixtures/bench_transcripts/unlabelled/   the same 12 with no speaker markers (optional arm)
 runs/                                    run artifacts + RUNLOG.jsonl (append-only)
+runs_methem/                             the speaker-variant run set (BENCH-METHEM, 2026-09-04)
 references/rubric.md                     metric definitions + judgment rules
 references/run-protocol.md               step-by-step run + grading protocol
+references/speaker-variants.md           how to read the named / me_them numbers (ATTRIB1 D10)
 ```
+
+## Speaker variants (ATTRIB1 D10)
+
+The transcript set renders three ways from one label set: `named`
+(`Sam Sample: …`, the base set), `me_them` (the user is `Me:`, every other
+voice is `Them:`, inline on one line — the shape 76% of the operator's real
+transcripts have) and `unlabelled` (no markers). `bench_runner.py --speakers
+me_them` injects that rendering; the scorer adds a **counterparty-resolved
+rate** (correct / wrong / unresolved over captured owner-lane items, split
+2p / 3p+) and the scoreboard's *Speaker variants* table puts named and
+me_them side by side. Read `references/speaker-variants.md` before quoting
+either number.
 
 ## Running
 
@@ -56,6 +72,14 @@ python _generate_bench_transcripts.py --check          # labels still valid
 python bench_runner.py --arm A --fixture clean_workspace --task all --model claude-opus-5
 python bench_runner.py --arm B --fixture clean_workspace --task all --model claude-opus-5
 python bench_scorer.py --runs-dir ../runs --cr1 <cr1_clone>
+```
+
+Speaker-variant arm (one extra flag; same protocol otherwise):
+
+```bash
+python bench_runner.py --arm A --task t1_transcripts --speakers me_them --follow-up --runs-dir ../runs_methem
+python bench_runner.py --arm A --task t1_transcripts --speakers named   --follow-up --runs-dir ../runs_methem
+python bench_scorer.py --runs-dir ../runs_methem --cr1 <cr1_clone>
 ```
 
 Pilot = 12 runs on clean_workspace (DONE 2026-08-27 at claude-opus-4-8;

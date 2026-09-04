@@ -54,6 +54,29 @@ python bench_scorer.py --runs-dir ../runs --cr1 <cr1>
 (`--model` defaults to the pinned `claude-opus-5`; `--follow-up` only fires
 on tasks with a defined confirmation, i.e. t1.)
 
+**Speaker variants (ATTRIB1 D10, added 2026-09-04).** `--speakers named`
+(default) injects the base set; `--speakers me_them` injects the same 12
+transcripts in the real Granola shape (`Me:`/`Them:` inline, one line);
+`--speakers unlabelled` the marker-less rendering. The run id carries the
+variant when it is not `named`; `run_meta.json` carries `speakers` and the
+`transcript_set` versions. The D10 set is t1 only, clean_workspace, both
+arms, with `--follow-up`, into its own runs dir so the official battery's
+artifacts stay frozen:
+
+```bash
+python bench_runner.py --arm A --task t1_transcripts --speakers me_them --follow-up --runs-dir ../runs_methem
+python bench_runner.py --arm A --task t1_transcripts --speakers named   --follow-up --runs-dir ../runs_methem
+python bench_runner.py --arm B --task t1_transcripts --speakers me_them --follow-up --runs-dir ../runs_methem
+python bench_runner.py --arm B --task t1_transcripts --speakers named   --follow-up --runs-dir ../runs_methem
+python bench_scorer.py --runs-dir ../runs_methem --cr1 <cr1>
+```
+
+Read the scoreboard's *Speaker variants (t1)* table with
+`references/speaker-variants.md`. **Auth block:** the runner now stops a
+batch at the first run whose result is an authentication failure
+(`auth_blocked: true` on the RUNLOG row, exit 2) — log in with
+`claude /login` and re-run; never loop on it.
+
 What the runner guarantees per run:
 
 - fresh temp copy of the fixture; nothing persists between runs

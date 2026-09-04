@@ -63,6 +63,30 @@ against CR's own `capture_counts` receipts on `meeting_processed` events.
 Disagreement does not change the score — it flags the run for investigation
 in the scorecard (`receipt_cross_check.agree: false`).
 
+## 1c. Counterparty-resolved rate (task t1; ATTRIB1 D10, 2026-09-04)
+
+Per planted **book/review** item carrying a `counterparty_name` label, and
+only when the item was CAPTURED (assigned book / review / chat_capture): does
+the capture name that counterparty? The verdict is read from the SAME row
+or line the recall credit came from.
+
+| verdict | events channel | chat channel |
+|---|---|---|
+| `correct` | `data.counterparty_id` resolves (fixture roster) to the labeled name; or a string `counterparty` field names them | the counterparty's first or full name is in the capture line; when the counterparty is the user, second person ("you"/"me") counts |
+| `wrong` | the id / string names a DIFFERENT roster person and not the labeled one | a roster first name that is neither owner nor counterparty is in the line, and the counterparty is not |
+| `unresolved` | no id and no roster name (null, "counsel", "the Acme Co team") | no roster name in the line |
+
+Naming the right person beside another is `correct`. A non-roster string is
+`unresolved`, never `wrong`. Items not captured sit outside the denominator
+(`not_captured`), so the rate measures attribution, not recall.
+
+Reported per party bucket — `2p` (two attendees on the label) and `3p+` —
+as `correct/captured (wrong N, of expected)`, plus `rate_correct_of_captured`,
+`rate_wrong_of_captured`, `rate_correct_of_expected`. Arm A rows also tally
+`attribution.counterparty_basis` values (informational). Same rule on every
+arm and every speaker variant; the named → me_them delta is the D10 number.
+Reading guide: `references/speaker-variants.md`.
+
 ## 2. Entity resolution (tasks t1, t5)
 
 Per labeled mention:
@@ -108,6 +132,13 @@ at battery start when the confirm turn revealed the bare arm hand-writing
 its own rows into the substrate: an appended row is only durable capture if
 the product's own readers can consume it. Skip-not-fail: without a cr1
 clone or jsonschema the metric is absent, never zero.
+
+## 4c. Speaker variant (all tasks, 2026-09-04)
+
+Every scorecard carries `speakers` (`named` / `me_them` / `unlabelled`, from
+`run_meta.json`; legacy runs read as `named`). Runs on different speaker
+variants are never aggregated with each other — they are compared, side by
+side, in the scoreboard's *Speaker variants* table.
 
 ## 5. Cost (all tasks)
 
