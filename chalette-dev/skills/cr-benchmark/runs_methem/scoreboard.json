@@ -1,0 +1,1174 @@
+[
+  {
+    "run_id": "20260904T024738Z_A_clean_workspace_t1_transcripts_me_them",
+    "arm": "A",
+    "fixture": "clean_workspace",
+    "task": "t1_transcripts",
+    "speakers": "me_them",
+    "model_id": null,
+    "wall_ms": 4125,
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "cache_read": 0,
+      "cache_creation": 0
+    },
+    "is_error": true,
+    "timed_out": false,
+    "counterparty": {
+      "rows": [
+        {
+          "label_id": "bench_01_c1",
+          "bucket": "2p",
+          "expected_counterparty": "Bo Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_01_c2",
+          "bucket": "2p",
+          "expected_counterparty": "Bo Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_01_c3",
+          "bucket": "2p",
+          "expected_counterparty": "Sam Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_01_c4",
+          "bucket": "2p",
+          "expected_counterparty": "Bo Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_02_c1",
+          "bucket": "2p",
+          "expected_counterparty": "Sam Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_02_c2",
+          "bucket": "2p",
+          "expected_counterparty": "Mira Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_02_c3",
+          "bucket": "2p",
+          "expected_counterparty": "Mira Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_02_c6",
+          "bucket": "2p",
+          "expected_counterparty": "Sam Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_03_c3",
+          "bucket": "2p",
+          "expected_counterparty": "Rio Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_03_c6",
+          "bucket": "2p",
+          "expected_counterparty": "Sam Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_04_c1",
+          "bucket": "3p+",
+          "expected_counterparty": "Sam Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_04_c2",
+          "bucket": "3p+",
+          "expected_counterparty": "Quinn Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_04_c3",
+          "bucket": "3p+",
+          "expected_counterparty": "Quinn Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_04_c7",
+          "bucket": "3p+",
+          "expected_counterparty": "Sam Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_05_c2",
+          "bucket": "2p",
+          "expected_counterparty": "Bo Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_05_c4",
+          "bucket": "2p",
+          "expected_counterparty": "Bo Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_05_c5",
+          "bucket": "2p",
+          "expected_counterparty": "Sam Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_06_c3",
+          "bucket": "2p",
+          "expected_counterparty": "Lyra Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_06_c5",
+          "bucket": "2p",
+          "expected_counterparty": "Sam Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_07_c1",
+          "bucket": "3p+",
+          "expected_counterparty": "Sam Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_07_c2",
+          "bucket": "3p+",
+          "expected_counterparty": "Sam Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_07_c7",
+          "bucket": "3p+",
+          "expected_counterparty": "Dustin Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_08_c1",
+          "bucket": "2p",
+          "expected_counterparty": "Mira Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_08_c2",
+          "bucket": "2p",
+          "expected_counterparty": "Sam Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_08_c4",
+          "bucket": "2p",
+          "expected_counterparty": "Mira Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_08_c5",
+          "bucket": "2p",
+          "expected_counterparty": "Mira Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_09_c1",
+          "bucket": "2p",
+          "expected_counterparty": "Aria Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_09_c2",
+          "bucket": "2p",
+          "expected_counterparty": "Sam Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_09_c5",
+          "bucket": "2p",
+          "expected_counterparty": "Sam Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_10_c1",
+          "bucket": "3p+",
+          "expected_counterparty": "Bo Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_10_c2",
+          "bucket": "3p+",
+          "expected_counterparty": "Sam Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_10_c5",
+          "bucket": "3p+",
+          "expected_counterparty": "Sam Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_10_c6",
+          "bucket": "3p+",
+          "expected_counterparty": "Bo Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_11_c1",
+          "bucket": "2p",
+          "expected_counterparty": "Sam Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_11_c5",
+          "bucket": "2p",
+          "expected_counterparty": "Dustin Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_12_c4",
+          "bucket": "3p+",
+          "expected_counterparty": "Lyra Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        },
+        {
+          "label_id": "bench_12_c7",
+          "bucket": "3p+",
+          "expected_counterparty": "Sam Sample",
+          "assigned": "absent",
+          "verdict": "not_captured",
+          "asserted": null,
+          "basis": null,
+          "channel": null
+        }
+      ],
+      "counts": {
+        "2p": {
+          "expected": 24,
+          "captured": 0,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 0,
+          "rate_correct_of_captured": null,
+          "rate_wrong_of_captured": null,
+          "rate_correct_of_expected": 0.0
+        },
+        "3p+": {
+          "expected": 13,
+          "captured": 0,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 0,
+          "rate_correct_of_captured": null,
+          "rate_wrong_of_captured": null,
+          "rate_correct_of_expected": 0.0
+        },
+        "all": {
+          "expected": 37,
+          "captured": 0,
+          "correct": 0,
+          "wrong": 0,
+          "unresolved": 0,
+          "rate_correct_of_captured": null,
+          "rate_wrong_of_captured": null,
+          "rate_correct_of_expected": 0.0
+        }
+      },
+      "counterparty_basis_counts": {}
+    },
+    "extraction": {
+      "rows": [
+        {
+          "label_id": "bench_01_c1",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_01_c2",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_01_c3",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_01_c4",
+          "expected": "review",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_01_c5",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_01_c6",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_02_c1",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_02_c2",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_02_c3",
+          "expected": "review",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_02_c4",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_02_c5",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_02_c6",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_02_c7",
+          "expected": "observed",
+          "rail_shadowed": true,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_03_c1",
+          "expected": "observed",
+          "rail_shadowed": true,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_03_c2",
+          "expected": "observed",
+          "rail_shadowed": true,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_03_c3",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_03_c4",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_03_c5",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_03_c6",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_03_c7",
+          "expected": "observed",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_03_c8",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_04_c1",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_04_c2",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_04_c3",
+          "expected": "review",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_04_c4",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_04_c5",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_04_c6",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_04_c7",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_05_c1",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_05_c2",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_05_c3",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_05_c4",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_05_c5",
+          "expected": "review",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_05_c6",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_06_c1",
+          "expected": "observed",
+          "rail_shadowed": true,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_06_c2",
+          "expected": "observed",
+          "rail_shadowed": true,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_06_c3",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_06_c4",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_06_c5",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_06_c6",
+          "expected": "observed",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_06_c7",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_07_c1",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_07_c2",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_07_c3",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_07_c4",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_07_c5",
+          "expected": "observed",
+          "rail_shadowed": true,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_07_c6",
+          "expected": "observed",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_07_c7",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_07_c8",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_08_c1",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_08_c2",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_08_c3",
+          "expected": "observed",
+          "rail_shadowed": true,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_08_c4",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_08_c5",
+          "expected": "review",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_08_c6",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_09_c1",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_09_c2",
+          "expected": "review",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_09_c3",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_09_c4",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_09_c5",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_09_c6",
+          "expected": "observed",
+          "rail_shadowed": true,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_10_c1",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_10_c2",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_10_c3",
+          "expected": "observed",
+          "rail_shadowed": true,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_10_c4",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_10_c5",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_10_c6",
+          "expected": "review",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_10_c7",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_11_c1",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_11_c2",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_11_c3",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_11_c4",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_11_c5",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_11_c6",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_12_c1",
+          "expected": "observed",
+          "rail_shadowed": true,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_12_c2",
+          "expected": "observed",
+          "rail_shadowed": true,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_12_c3",
+          "expected": "observed",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_12_c4",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_12_c5",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_12_c6",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_12_c7",
+          "expected": "book",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        },
+        {
+          "label_id": "bench_12_c8",
+          "expected": "reject",
+          "rail_shadowed": false,
+          "assigned": "absent",
+          "evidence": ""
+        }
+      ],
+      "counts": {
+        "book_expected": 30,
+        "book_captured": 0,
+        "book_exact": 0,
+        "review_expected": 7,
+        "review_captured": 0,
+        "review_exact": 0,
+        "observed_expected": 15,
+        "observed_undated_expected": 4,
+        "observed_undated_exact": 0,
+        "observed_shadowed_expected": 11,
+        "observed_shadowed_open_ok": 0,
+        "observed_shadowed_as_observed": 0,
+        "observed_exact": 0,
+        "observed_as_open": 0,
+        "observed_captured_any": 0,
+        "reject_expected": 30,
+        "reject_false_captures": 0,
+        "owner_lane_recall": 0.0,
+        "owner_lane_precision_vs_planted": null,
+        "unplanted_captures": 0
+      },
+      "unplanted": []
+    },
+    "entities": {
+      "rows": [
+        {
+          "label_id": "bench_01_e1",
+          "surface": "Bo",
+          "expected": "Bo Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_01_e2",
+          "surface": "Cedar Works",
+          "expected": "Cedar Works",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_02_e1",
+          "surface": "Quinn",
+          "expected": "Quinn Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_02_e2",
+          "surface": "Mira",
+          "expected": "Mira Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_03_e1",
+          "surface": "Dustin",
+          "expected": "Dustin Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_03_e2",
+          "surface": "Lyra",
+          "expected": "Lyra Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_03_e3",
+          "surface": "Bowie",
+          "expected": "Bowie Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_04_e1",
+          "surface": "Quinn",
+          "expected": "Quinn Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_04_e2",
+          "surface": "Aria",
+          "expected": "Aria Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_05_e1",
+          "surface": "Skyler Stone",
+          "expected": "UNKNOWN_PERSON",
+          "verdict": "missed",
+          "wrong_bind": null
+        },
+        {
+          "label_id": "bench_06_e1",
+          "surface": "Northstar",
+          "expected": "Northstar Partners",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_06_e2",
+          "surface": "Aria",
+          "expected": "Aria Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_07_e1",
+          "surface": "Dustin",
+          "expected": "Dustin Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_07_e2",
+          "surface": "Bowie",
+          "expected": "Bowie Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_08_e1",
+          "surface": "mira.sample7@example.com",
+          "expected": "Mira Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_08_e2",
+          "surface": "Acme Co",
+          "expected": "Acme Co",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_09_e1",
+          "surface": "Aria",
+          "expected": "Aria Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_10_e1",
+          "surface": "Rio",
+          "expected": "Rio Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_11_e1",
+          "surface": "Bluebird Group",
+          "expected": "Bluebird Group",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_12_e1",
+          "surface": "Lyra",
+          "expected": "Lyra Sample",
+          "verdict": "missed"
+        },
+        {
+          "label_id": "bench_12_e2",
+          "surface": "Quinn",
+          "expected": "Quinn Sample",
+          "verdict": "missed"
+        }
+      ],
+      "counts": {
+        "missed": 21
+      }
+    },
+    "hallucination": {
+      "invented_person_names": {},
+      "count": 0
+    },
+    "leaks": {
+      "hits": {},
+      "count": 0
+    },
+    "event_validity": {
+      "events": 0,
+      "invalid": 0,
+      "errors": []
+    }
+  }
+]
