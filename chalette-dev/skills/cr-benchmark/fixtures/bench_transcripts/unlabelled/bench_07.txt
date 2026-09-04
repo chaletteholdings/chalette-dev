@@ -1,0 +1,14 @@
+migration status: I'll have the server inventory list finished by Wednesday, that unblocks the cutover plan
+good. Bowie, the runbook?
+I'll write the cutover runbook by Friday and walk the team through it Monday
+ok. who owns the customer comms?
+we'll get the comms drafted at some point before cutover
+that's not an owner. park it for now
+we should probably also revisit the backup vendor eventually
+eventually. status on the maintenance window?
+waiting on you. Mira also promised the datacenter vendor she'd sign the SOW by Thursday, so hardware is covered
+and I still owe the network vendor an updated contact list from our last call — no deadline on it, just owed
+noted, that's between you and them
+then I'll approve the maintenance window request this afternoon so nothing slips
+zero-downtime would be great someday
+someday. standup done

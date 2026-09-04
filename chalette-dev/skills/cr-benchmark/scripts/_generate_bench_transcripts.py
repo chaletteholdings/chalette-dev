@@ -19,8 +19,23 @@ surname; the Stone combinations are reserved as KNOWN-UNKNOWNS -- names that
 are roster-legal but absent from entities.json, used to test
 unknown-person handling. No other name bigrams are permitted.
 
+Speaker variants (ATTRIB1 D10, 2026-09-03) -- the SAME turns and the SAME
+frozen labels rendered three ways, so the only variable between arms is how
+the transcript names its speakers:
+  named       `Sam Sample: ...` one turn per line (the original set; the
+              world 13% of real transcripts live in)
+  me_them     `Me: ... Them: ... Me: ...` -- the user is `Me:`, EVERY other
+              speaker collapses to `Them:`, consecutive same-voice turns
+              merge, markers are inline on ONE line. This is the real
+              Granola shape (76% of the operator's transcripts).
+  unlabelled  turn text only, no markers (optional third arm)
+Variants land in fixtures/bench_transcripts/<variant>/ beside the base set;
+labels are NOT duplicated -- fixtures/bench_transcripts/labels/ is the one
+frozen label set and scores every variant.
+
 Usage:
     python _generate_bench_transcripts.py [--fixtures-root PATH] [--check]
+                                          [--speakers all|named|me_them|unlabelled]
 
 Deterministic: no wall clock, no randomness. Re-running is a no-op diff.
 """
@@ -41,6 +56,12 @@ OUT_DIR = SKILL_ROOT / "fixtures" / "bench_transcripts"
 
 SET_VERSION = "1.1"  # 1.1: rail_shadowed marking + un-dated third-party items (BENCH1 observed-tier investigation, 2026-08-27)
 BASE_DATE = "2026-05-04"  # the Monday after the fixture BASE_DATE 2026-05-01
+
+# Speaker variants (ATTRIB1 D10). `named` is the base set and writes to
+# OUT_DIR itself; the others write to OUT_DIR/<variant>/ and share its labels.
+SPEAKER_VARIANTS = ("named", "me_them", "unlabelled")
+VARIANTS_VERSION = "1.0"  # 1.0: me_them + unlabelled renderings added 2026-09-03
+PRIMARY_FIRST = "Sam"
 
 # Known-unknowns: approved-roster names deliberately absent from entities.json.
 KNOWN_UNKNOWNS = ["Skyler Stone", "Rio Stone"]
@@ -619,9 +640,38 @@ def full_name(roster: dict, first: str) -> str:
     return roster["people"][first]["canonical_name"]
 
 
-def render_transcript(t: dict, roster: dict) -> str:
-    lines = [f"{full_name(roster, spk)}: {text}" for spk, text in t["turns"]]
-    return "\n".join(lines) + "\n"
+def render_transcript(t: dict, roster: dict, speakers: str = "named") -> str:
+    """Render one transcript in the requested speaker variant.
+
+    named       one `Full Name: text` turn per line (the base set).
+    me_them     the real Granola shape: the user is `Me:`, every other voice
+                is `Them:`, consecutive same-voice turns merge into one, and
+                the markers sit inline on ONE line (the operator's replay
+                cache holds 71 single-line transcripts with whitespace-
+                anchored inline markers, which is exactly what cr1's
+                `meeting_capture.transcript_turns` parses).
+    unlabelled  turn text only, one per line, no marker of any kind.
+    """
+    if speakers == "named":
+        lines = [f"{full_name(roster, spk)}: {text}" for spk, text in t["turns"]]
+        return "\n".join(lines) + "\n"
+    if speakers == "unlabelled":
+        return "\n".join(text for _, text in t["turns"]) + "\n"
+    if speakers == "me_them":
+        merged: list[tuple[str, str]] = []
+        for spk, text in t["turns"]:
+            marker = "Me" if spk == PRIMARY_FIRST else "Them"
+            if merged and merged[-1][0] == marker:
+                merged[-1] = (marker, merged[-1][1] + " " + text)
+            else:
+                merged.append((marker, text))
+        return " ".join(f"{m}: {text}" for m, text in merged) + "\n"
+    raise SystemExit(f"FATAL: unknown speaker variant '{speakers}' "
+                     f"(known: {SPEAKER_VARIANTS})")
+
+
+def variant_dir(speakers: str) -> Path:
+    return OUT_DIR if speakers == "named" else OUT_DIR / speakers
 
 
 def build_labels(t: dict, roster: dict, text: str) -> dict:
@@ -684,8 +734,10 @@ def build_labels(t: dict, roster: dict, text: str) -> dict:
     }
 
 
-def validate(roster: dict, rendered: dict[str, str], labels: dict[str, dict]) -> list[str]:
+def validate(roster: dict, rendered: dict[str, str], labels: dict[str, dict],
+             speakers: str = "named") -> list[str]:
     errors: list[str] = []
+    tag = "" if speakers == "named" else f"[{speakers}] "
 
     # 1. Every keyphrase appears in exactly one transcript, its own.
     for tid, lab in labels.items():
@@ -693,12 +745,49 @@ def validate(roster: dict, rendered: dict[str, str], labels: dict[str, dict]) ->
             kp = item["keyphrase"].lower()
             hits = [t for t, txt in rendered.items() if kp in txt.lower()]
             if hits != [tid]:
-                errors.append(f"{item['label_id']}: keyphrase '{kp}' found in {hits}, "
+                errors.append(f"{tag}{item['label_id']}: keyphrase '{kp}' found in {hits}, "
                               f"expected exactly ['{tid}']")
         for m in lab["entity_mentions"]:
-            if m["surface"].lower() not in rendered[tid].lower():
-                errors.append(f"{m['label_id']}: mention surface '{m['surface']}' "
-                              f"not present in {tid}")
+            if m["surface"].lower() in rendered[tid].lower():
+                continue
+            # A speaker's own name leaves the TEXT under me_them/unlabelled
+            # but still reaches the model through the connector doc's
+            # attendee list (the calendar names the parties; the transcript
+            # does not) -- that is the whole point of the variant.
+            if speakers != "named" and any(
+                    a.split()[0].lower() == m["surface"].split()[0].lower()
+                    for a in lab["attendees"]):
+                continue
+            errors.append(f"{tag}{m['label_id']}: mention surface '{m['surface']}' "
+                          f"not present in {tid}")
+
+    # 1b. Variant shape: me_them carries ONLY Me/Them markers, on one line;
+    # unlabelled carries no marker at all. (Named speaker labels leaking into
+    # a collapsed transcript would silently hand the arm the answer.)
+    label_re = re.compile(r"(?:(?<=\s)|^)([A-Z][a-z]+(?: [A-Z][a-z]+)?):\s")
+    marker_re = re.compile(r"(?:(?<=\s)|^)(Me|Them): ")
+    for tid, txt in rendered.items():
+        if speakers == "me_them":
+            markers = {m.group(1) for m in marker_re.finditer(txt)}
+            # Look for NAMED labels with the Me/Them markers removed: a turn
+            # that ends "...by Friday" followed by " Them:" would otherwise
+            # read as a label "Friday Them" (cr1's own parser has the same
+            # left-to-right shape; that is a product observation, not a
+            # fixture defect -- the real Granola shape carries it too).
+            named = {m.group(1) for m in label_re.finditer(marker_re.sub("", txt))}
+            if named:
+                errors.append(f"{tag}{tid}: non-Me/Them speaker marker(s) {sorted(named)}")
+            if "Me" not in markers or "Them" not in markers:
+                errors.append(f"{tag}{tid}: me_them transcript must carry both Me: and Them:")
+            if txt.count("\n") != 1:
+                errors.append(f"{tag}{tid}: me_them transcript must be a single line")
+            if re.search(r"(?:Me|Them): (?:Me|Them): ", txt):
+                errors.append(f"{tag}{tid}: empty turn (consecutive markers)")
+        elif speakers == "unlabelled":
+            markers = {m.group(1) for m in label_re.finditer(txt)}
+            if markers:
+                errors.append(f"{tag}{tid}: unlabelled transcript carries marker(s) "
+                              f"{sorted(markers)}")
 
     # 2. Roster safety: every Capitalized-bigram name is roster or known-unknown.
     legal_names = {p["canonical_name"] for p in roster["people"].values()}
@@ -713,7 +802,9 @@ def validate(roster: dict, rendered: dict[str, str], labels: dict[str, dict]) ->
                 continue
             if m.group(1) in org_words or m.group(2) in org_words:
                 continue  # org fragments like "Cedar Works finance"
-            errors.append(f"{tid}: name-shaped bigram '{name}' is neither roster, "
+            if m.group(1) in ("Me", "Them") or m.group(2) in ("Me", "Them"):
+                continue  # inline marker beside a capitalised word ("Friday Them")
+            errors.append(f"{tag}{tid}: name-shaped bigram '{name}' is neither roster, "
                           f"known-unknown, nor org")
 
     # 3. Route bookkeeping matches the declared distribution.
@@ -732,13 +823,21 @@ def main() -> int:
     ap.add_argument("--fixtures-root", default=str(DEFAULT_FIXTURES),
                     help="path to the clean_workspace fixture")
     ap.add_argument("--check", action="store_true", help="validate only; write nothing")
+    ap.add_argument("--speakers", default="all",
+                    choices=("all",) + SPEAKER_VARIANTS,
+                    help="which speaker variant(s) to render (default: all)")
     args = ap.parse_args()
+    variants = SPEAKER_VARIANTS if args.speakers == "all" else (args.speakers,)
 
     roster = load_roster(Path(args.fixtures_root))
     rendered = {t["id"]: render_transcript(t, roster) for t in TRANSCRIPTS}
     labels = {t["id"]: build_labels(t, roster, rendered[t["id"]]) for t in TRANSCRIPTS}
+    rendered_by_variant = {v: {t["id"]: render_transcript(t, roster, v) for t in TRANSCRIPTS}
+                           for v in variants}
 
-    errors = validate(roster, rendered, labels)
+    errors = []
+    for v in variants:
+        errors += validate(roster, rendered_by_variant[v], labels, speakers=v)
     if errors:
         print("VALIDATION FAILED:")
         for e in errors:
@@ -754,36 +853,48 @@ def main() -> int:
     print(f"transcripts : {len(TRANSCRIPTS)}")
     print(f"routes      : {dict(sorted(counts.items()))}")
     print(f"mentions    : {n_mentions}")
+    print(f"speakers    : {list(variants)}")
 
     if args.check:
         print("--check: validation passed, nothing written.")
         return 0
 
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    (OUT_DIR / "labels").mkdir(exist_ok=True)
-    manifest = {
-        "set_version": SET_VERSION,
-        "generated_by": "_generate_bench_transcripts.py (deterministic; do not hand-edit)",
-        "meeting_date": BASE_DATE,
-        "transcript_count": len(TRANSCRIPTS),
-        "route_counts": dict(sorted(counts.items())),
-        "entity_mention_count": n_mentions,
-        "known_unknowns": KNOWN_UNKNOWNS,
-        "transcripts": [],
-    }
-    for t in TRANSCRIPTS:
-        tid = t["id"]
-        (OUT_DIR / f"{tid}.txt").write_text(rendered[tid], encoding="utf-8")
-        (OUT_DIR / "labels" / f"{tid}.labels.json").write_text(
-            json.dumps(labels[tid], indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-        manifest["transcripts"].append({
-            "id": tid, "title": t["title"],
-            "attendees": labels[tid]["attendees"],
-            "planted": len(labels[tid]["planted"]),
-        })
-    (OUT_DIR / "manifest.json").write_text(
-        json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(f"wrote {len(TRANSCRIPTS)} transcripts + labels to {OUT_DIR}")
+    for v in variants:
+        out = variant_dir(v)
+        out.mkdir(parents=True, exist_ok=True)
+        manifest = {
+            "set_version": SET_VERSION,
+            "generated_by": "_generate_bench_transcripts.py (deterministic; do not hand-edit)",
+            "meeting_date": BASE_DATE,
+            "transcript_count": len(TRANSCRIPTS),
+            "route_counts": dict(sorted(counts.items())),
+            "entity_mention_count": n_mentions,
+            "known_unknowns": KNOWN_UNKNOWNS,
+            "transcripts": [],
+        }
+        if v == "named":
+            (out / "labels").mkdir(exist_ok=True)
+        else:
+            manifest["speakers"] = v
+            manifest["variants_version"] = VARIANTS_VERSION
+            manifest["labels"] = ("../labels (shared, frozen; the same planted items and "
+                                  "keyphrases score every speaker variant)")
+        for t in TRANSCRIPTS:
+            tid = t["id"]
+            (out / f"{tid}.txt").write_text(rendered_by_variant[v][tid], encoding="utf-8", newline="\n")
+            if v == "named":
+                (out / "labels" / f"{tid}.labels.json").write_text(
+                    json.dumps(labels[tid], indent=2, ensure_ascii=False) + "\n",
+                    encoding="utf-8", newline="\n")
+            manifest["transcripts"].append({
+                "id": tid, "title": t["title"],
+                "attendees": labels[tid]["attendees"],
+                "planted": len(labels[tid]["planted"]),
+            })
+        (out / "manifest.json").write_text(
+            json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+        print(f"wrote {len(TRANSCRIPTS)} {v} transcripts"
+              f"{' + labels' if v == 'named' else ''} to {out}")
     return 0
 
 
