@@ -394,6 +394,7 @@
         "correct": 0,
         "wrong": 0,
         "unresolved": 0,
+        "unknown_id": 0,
         "rate_correct_of_captured": null,
         "rate_wrong_of_captured": null,
         "rate_correct_of_expected": 0.0
@@ -404,6 +405,7 @@
         "correct": 0,
         "wrong": 0,
         "unresolved": 0,
+        "unknown_id": 0,
         "rate_correct_of_captured": null,
         "rate_wrong_of_captured": null,
         "rate_correct_of_expected": 0.0
@@ -414,6 +416,7 @@
         "correct": 0,
         "wrong": 0,
         "unresolved": 0,
+        "unknown_id": 0,
         "rate_correct_of_captured": null,
         "rate_wrong_of_captured": null,
         "rate_correct_of_expected": 0.0

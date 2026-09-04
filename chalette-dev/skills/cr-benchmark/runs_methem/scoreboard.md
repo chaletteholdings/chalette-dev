@@ -2,7 +2,7 @@
 
 | run | arm | spk | task | wall s | out tok | leaks | halluc | notes |
 |---|---|---|---|---|---|---|---|---|
-| 20260904T024738Z_A_clean_workspace_t1_transcripts_me_them | A | me_them | t1_transcripts | 4 | 0 | 0 | 0 | ERROR; recall=0.0 prec=None falseCap=0 obs=0/4 rail=0/11 unplanted=0; cp2p=0/0 (of 24) cp3p+=0/0 (of 13); ent={'missed': 21} |
+| 20260904T024738Z_A_clean_workspace_t1_transcripts_me_them | A | me_them | t1_transcripts | 4 | 0 | 0 | 0 | ERROR |
 
 ## Speaker variants (t1) -- ATTRIB1 D10
 
