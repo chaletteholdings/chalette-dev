@@ -1,6 +1,6 @@
 ---
 name: "cr2-scrub"
-description: "Checks text, files or the whole cr2 repo for client names, personal information and money figures before anything goes to GitHub. Use on 'scrub this', 'scrub the repo', 'privacy check', and before any cr2 issue, comment, PR or commit."
+description: "Use before anything goes to the ChaletteHQ/cr2 GitHub repo, to check text, files or the whole repo for client names, personal information and money figures. Use on 'scrub this', 'scrub the repo', 'privacy check', and before any cr2 issue, comment, PR or commit."
 ---
 
 # cr2 scrub
@@ -54,7 +54,12 @@ Matthew's ruling (2026-10-04): **current files only. Git history is not rewritte
 - Files on `main`: one small branch and one PR per item (`fix/scrub-<few-words>`), no version bump ("needs version" for Louis). Run the tests with `CR2_RUNTIME=writer PYTHONUTF8=1 python 03_tests/run_all.py`.
 - Files on an open PR's branch: push one scrub commit to that branch and comment asking for a squash-merge, so the old commits never reach `main`.
 - Issue bodies and comments: edit in place (`gh api -X PATCH repos/ChaletteHQ/cr2/issues/N -F body=@file`, or `.../issues/comments/ID`) and add `_Redacted <date>: names replaced with placeholders._`. Never delete an issue.
+  - **An edit does not erase the old text.** GitHub keeps every earlier version of an issue body or comment under its "edited" marker, readable by anyone who can see the repo. There is no API or `gh` command to remove it. So after editing, list each redacted item with its link and tell the operator to remove the old version by hand: click **edited** on the comment, open the earlier version, then **Options → Delete revision from history**. Only the comment's author or someone with write access can do this; who edited it and when stays visible. Until that is done, the redaction is not finished.
 - Commit messages and old commits: report them, do not touch them.
 - A credential or token found anywhere: tell Matthew at once so he can rotate it. Fixing the text does not make the secret safe.
+
+**When history might be rewritten (Matthew's decision only, never done by this skill).** GitHub's own guidance:
+- A secret: revoke or rotate it first. Once it is dead, rewriting history is usually unnecessary.
+- Client information inside a commit: report it to Matthew with the commit and file. If he decides to remove it, the method is `git filter-repo --sensitive-data-removal --replace-text`, a force-push, then a request to GitHub Support to purge cached views and pull request references. Side effects: every later commit ID changes, closed pull request diffs can be lost, and any old clone (Louis's, Erick's) can bring the data back unless it is deleted and re-cloned.
 
 Before fixing, show Matthew the findings in one table (kind, where, what replaces it), then fix on his yes. Report: what was fixed, the PR links, and what was left and why.

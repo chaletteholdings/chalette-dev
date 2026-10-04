@@ -1,6 +1,6 @@
 ---
 name: "cr2-report"
-description: "Files a Command Room 2 bug or feature request for Louis on GitHub (ChaletteHQ/cr2) with chat log, version, built-in scrub, and a build brief with the core or labs route Matthew confirms; also scrubs text or the whole repo. Use on 'report this', 'file a bug', 'feature request', 'spec it', 'send it to build', 'scrub this', 'scrub the repo'."
+description: "Use when Matthew or Erick wants something that broke, or an idea, turned into a GitHub issue on ChaletteHQ/cr2 from the chat where it came up: 'report this', 'file a bug', 'log this for Louis', 'feature request', 'spec it', 'send it to build'. Does NOT fire on 'scrub this' or 'scrub the repo' (cr2-scrub), 'what needs me' or 'test #N' (cr2-test), or 'what's pending to build' (cr2-desk)."
 ---
 
 # cr2 report
@@ -23,7 +23,7 @@ These skills are shared by Matthew and Erick (the chalette-dev plugin). Read `op
 
 - **Bug:** something promised, or that used to work, does not. Label `bug`, plus a route (step 4b).
 - **Feature request:** Matthew wants new or different behaviour ("I want X", "spec it", "send it to build"). Label `enhancement`, plus a route (step 4b).
-- **Scrub only** ("scrub this", "scrub the repo", "privacy check"): skip to section S.
+- **Scrub only** ("scrub this", "scrub the repo", "privacy check"): that is cr2-scrub, not this skill.
 - One problem or one feature per issue. If the chat shows two, file two issues and link them.
 - Ask only if it truly could be either. Otherwise decide and say which in the confirmation line.
 
@@ -32,7 +32,15 @@ These skills are shared by Matthew and Erick (the chalette-dev plugin). Read `op
 - **The chat log:** this conversation is the evidence, so run the skill in the chat where the problem happened. If it happened in another chat, ask Matthew to say "report this" there, or to paste that chat's key turns here.
 - **Version:** read `version` from the installed plugin's `.claude-plugin/plugin.json`. Search for a `plugin.json` whose `"name"` is `cr2` (and `cr2-labs` if the problem is in a labs skill) under `~/.claude/plugins`, `/root/.claude/plugins` or `/mnt/skills/plugins`. Note the current `main` version too: `gh api repos/ChaletteHQ/cr2/contents/02_product/.claude-plugin/plugin.json -q .content | base64 -d`. If you can't find it, write "unknown".
 - **Where:** chat or scheduled task; desktop, web or phone; folder attached directly or through the connector; test folder or real folder (never its contents).
-- **Error text,** verbatim.
+- **Error text,** verbatim, plus the failing tool output if there was one (trimmed to the lines that matter).
+- **Last version that worked / first version that broke,** if the chat or the owner knows. Otherwise "unknown". This narrows the search to one release.
+- **Severity,** from two questions you can usually answer from the chat (ask only if you can't):
+  1. Is work blocked, or is an answer silently wrong (wrong client data, something lost or misfiled)?
+  2. Is there a workaround?
+  - **S1:** blocked or silently wrong, and no workaround. Data lost or misfiled is always S1.
+  - **S2:** broken, but there is a workaround.
+  - **S3:** annoying, slow or cosmetic.
+  Severity goes in the body. Priority is Louis's call.
 
 ## 3. Check for an existing issue
 
@@ -41,6 +49,12 @@ List open and recent issues and match by title and area: `gh api "repos/Chalette
 - If it was closed and is back, comment on it and say it came back on version X. Louis reopens.
 
 ## 4. Write it
+
+**Where every fact came from.** AI-written bug reports are known to invent steps and details. So every line in the body is one of three kinds, and says which when it isn't obvious:
+- **Owner said:** what the owner typed or told you.
+- **Claude saw:** a tool result, error, file or screenshot in this chat.
+- **Claude's guess:** anything inferred. Guesses go only under "Suspected cause" or "For whoever fixes it".
+Steps that nobody re-ran are written as "Owner's account, not reproduced."
 
 Title: `[Area] what fails, in plain words` for a bug, `[Area] what the owner can do` for a feature. Area is the skill or surface: `[Let's work]`, `[Maintenance]`, `[Morning Brief]`, `[Conversion]`, `[Email writer]`, `[Labs]` and so on.
 
@@ -52,9 +66,16 @@ Title: `[Area] what fails, in plain words` for a bug, `[Area] what the owner can
 **Actual:** (error text verbatim)
 **Steps to reproduce**
 1. ...
+**Severity:** S1 / S2 / S3 (blocked or silently wrong? workaround?)
 **Where:** plugin <version> (main is <version>) · chat or scheduled task · desktop, web or phone · folder attached or connector · test or real folder
+**Last worked:** <version or unknown> · **First broke:** <version or unknown>
 **Reproduced?** seen once by Matthew / seen N times / not yet reproduced
 **Acceptance check:** what will be true when this is fixed
+
+**For whoever fixes it**
+- **Trigger:** the exact prompt, and the folder state it ran on (test or real, attached or connector)
+- **Likely skill or area:** <name> (a guess)
+- **Suggested fix:** <one line> (a guess, not verified)
 
 <details>
 <summary>Chat log</summary>
@@ -67,7 +88,11 @@ Title: `[Area] what fails, in plain words` for a bug, `[Area] what the owner can
 
 **Screenshot:** <attached / not needed (not visual) / needed: Matthew to add>
 **Suspected cause (not verified):** only if there is a real clue; keep it apart from the facts
+
+_Drafted by Claude from chat; confirmed by <Matthew or Erick> on <date>; reproduced: yes / no._
 ```
+
+Keep the body short: about 40 lines outside the collapsed chat log. Studies of what helps fixers, human or AI, find that longer reports do worse; the trigger prompt and a suggested fix help most.
 
 Chat log rules (Louis's ask): one line per turn, high level. What was typed (verbatim), what Claude did, what it answered, errors verbatim. **No internal reasoning, no long tool output, no file contents.** About 5 to 20 lines. Trim the turns that don't matter.
 
@@ -80,6 +105,8 @@ Chat log rules (Louis's ask): one line per turn, high level. What was typed (ver
 **Priority:** now / next / later, and why
 **Not asking for:** limits, so the scope stays small
 **Related:** #N
+
+_Drafted by Claude from chat; confirmed by <Matthew or Erick> on <date>._
 
 ## Build brief
 - **Route:** core / labs (Matthew's call)
@@ -103,6 +130,10 @@ Louis agreed (2026-10-04) that Matthew decides what is core and may build either
 - Suggest **core** for a change in `02_product/`: a script, Maintenance, the cloud view, a contract, a scheduled task, or how an existing cr2 skill behaves or words its answer. A bug is usually core.
 - Suggest **labs** for an add-on that only reads the book through cr2's own commands or the cloud view, and writes nothing or only an intake drop for Maintenance to fold.
 - Put the suggestion in the confirmation line. Matthew's answer is the route; never file a route he has not confirmed.
+
+### 4c. Check the draft against the chat
+
+Before the scrub, read the draft line by line. Every step, error string, number and version must point to a chat-log turn (or a command you ran). Anything that can't is either removed or moved under "Suspected cause", marked as a guess. No citation, no fact.
 
 ## 5. Scrub (always, before anything is posted)
 

@@ -1,0 +1,28 @@
+{
+ "_comment": "Trigger checks in the skill-creator shape: should_trigger phrases must start this skill; should_not_trigger near misses must go elsewhere. Not yet run.",
+ "skill": "cr2-scrub",
+ "should_trigger": [
+  "scrub this",
+  "scrub the repo",
+  "privacy check",
+  "check this comment for client names before I post it",
+  "is there anything personal in this issue text",
+  "make sure no client data is in this PR description",
+  "run the privacy check on the repo",
+  "does this have any names or amounts in it",
+  "clean this text before it goes to GitHub",
+  "sweep the issues for client names"
+ ],
+ "should_not_trigger": [
+  "report this",
+  "file a bug",
+  "what needs me",
+  "test #12",
+  "what's pending to build",
+  "get #12 ready",
+  "clean up my inbox",
+  "who is the contact at this client",
+  "draft an email",
+  "end session"
+ ]
+}

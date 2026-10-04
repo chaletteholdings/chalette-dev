@@ -1,6 +1,6 @@
 ---
 name: "cr2-test"
-description: "Runs Matthew's supervised acceptance tests on Command Room 2 fixes: exactly what to type and what to look for, then posts the result to GitHub, closes on a pass, and posts a full bug report on a fail. Use on 'what needs me', 'what do I need to test', 'test #N', 'verify the fix', 'UAT'."
+description: "Use when Matthew or Erick wants to test a Command Room 2 fix that is waiting on them: 'what needs me', 'what do I need to test', 'test #N', 'verify the fix', 'UAT'. Gives a short script of what to type and what to look for, then records pass, flaky or fail on the GitHub issue. Does NOT fire on 'report this' (cr2-report) or 'what's pending to build' (cr2-desk)."
 ---
 
 # cr2 test
@@ -41,14 +41,25 @@ Test #N on <version> · about <n> minutes
 What was fixed: <one plain line>
 Setup: <new chat / attach TEST folder / nothing>
 
-Step 1. <do this>
-Type:
+Step 1. The original failure, 3 runs
+Given: <setup in plain words: a fresh chat, the test folder attached>
+When you type:
     <exact text, in a code block so it copies cleanly>
-Look for: <the specific line, file, count or behaviour>
-Pass if: <observable>
-Fail if: <observable>
+Then: <what the answer should do, in business words>
+Pass if: <X is there> and <Y is not>   (yes or no, never a score)
+Evidence: paste <the line> / screenshot <the widget>
+Do it 3 times, each in a new chat. Tell me how many of 3 passed.
 
-Step 2. ...
+Step 2. A nearby case Louis named
+...
+
+Step 3. Nothing else broke
+When you type: <a prompt from a related closed issue>
+Pass if: it still works as it did.
+
+Step 4. The wrong skill does not answer
+When you type: <a near-miss phrase that belongs to a different skill>
+Pass if: <that other skill answers, not this one>
 
 When done, tell me: "pass", or "fail" and paste the reply you got (or say "report this" in that test chat).
 ```
@@ -56,21 +67,30 @@ When done, tell me: "pass", or "fail" and paste the reply you got (or say "repor
 Rules for a good script:
 - Every step has an exact thing to type or click and an observable result. Never "check that it works".
 - Test the original failure first: the exact action from the issue's steps. Then one nearby case Louis named.
+- **Run the original failure 3 times, each in a fresh chat.** Command Room is an AI product, so one good run proves little. 3 of 3 is a pass, 1 or 2 of 3 is **partial (flaky)**, 0 of 3 is a fail. For a step that changes files, reset the test folder between runs, or run it once and say so in the result.
+- Every check is a yes/no about the answer ("the brief names three meetings and no client names"), never a score. Name the evidence for each.
+- Add one **regression** step (a related closed issue still works) and one **near-miss** step (a phrase that must go to a different skill). Fixes often break a neighbour.
+- For a risky fix (conversion, Maintenance, anything that moves or deletes files), you may add one optional 5-minute look-around: "Explore <surface> with the test folder to find anything wrong or missing." Anything found becomes a new issue through cr2-report, not part of this verdict.
 - Three to six steps. Over ten minutes, split it into two tests.
 - If a step needs proof, name it ("paste the line that starts `Saved.`", or "screenshot the widget" for anything visual).
 - Say what not to do when a wrong move would spoil the test ("don't say 'run maintenance' yet").
 
 ## 4. Record the result
 
+**Evidence before verdict.** Before posting a pass, quote what was seen (the pasted line, or the screenshot's name) against each pass criterion. No evidence for a criterion means that criterion is not passed.
+
 Scrub every result before posting with the **cr2-scrub** skill. Post with `gh api repos/ChaletteHQ/cr2/issues/N/comments -F body=@<scratch>/uat.md`.
 
 ### Pass
 
 ```
-**UAT pass** on <version> (`<commit>`)
+**UAT pass** on <version> (`<commit>`) · **3 of 3 runs**
 Where: <new chat / this chat> · <desktop/web/phone> · <test folder / real folder, no names>
+Model: <Opus / Sonnet / Haiku, as shown in the app> · Surface: <chat / Claude Code / scheduled task>
 Steps: 1. ... 2. ...
-Result: <what was seen against what was expected>
+Result: <for each pass criterion, what was seen>
+Regression check: <pass / not run> · Near-miss check: <pass / not run>
+Deviations from the script: <none / what was different>
 Evidence:
 <details><summary>Chat log</summary>
 
@@ -94,7 +114,7 @@ For anything visual, ask for a full-window screenshot (Windows: Win+Shift+S, win
 **Post this shape:**
 
 ```
-@GiggleSamurai **UAT fail** (or **UAT partial**) on <installed version> (`<main commit>`)
+@GiggleSamurai **UAT fail** (or **UAT partial (flaky)**) on <installed version> (`<main commit>`) · **<n> of 3 runs passed**
 
 **What happened:** one line
 **Impact:** who is affected and how badly
@@ -106,6 +126,7 @@ For anything visual, ask for a full-window screenshot (Windows: Win+Shift+S, win
 3. ...
 **Step results:** step 1 pass · step 2 fail · step 3 not run (blocked by 2)
 **Where:** cr2 <installed version> (main is <version>) · chat or scheduled task · desktop, web or phone · folder attached or connector · test or real folder
+**Model:** <as shown in the app> · **Deviations from the script:** <none / what>
 **Reproduced?** yes, by Matthew on <version>, <n> of <n> tries
 **Against your fix comment:** <which of the claimed changes held, which did not>
 **Acceptance check:** <restated, unchanged unless Matthew changed it>
@@ -129,7 +150,8 @@ Then leave the issue open and remove `needs UAT`: `gh api -X DELETE "repos/Chale
 
 ### Other outcomes
 
-- **Not tested** (blocked, wrong version, no time): say so in one line and post nothing. Silence never counts as a pass.
+- **Not tested, blocked by something specific** (wrong version, a broken prerequisite, no test folder): post one line, "Not tested: <reason>", and add the `blocked` label, so the issue shows why it is stuck.
+- **Not tested, no time:** say so in one line and post nothing. Silence never counts as a pass.
 - **A new, different problem** found while testing gets its own issue through **cr2-report**, linked here, not a paragraph in this comment.
 
 REST only (GraphQL is blocked). If `gh` can't reach the repo in a cloud session, attach it with the add_repo tool (`ChaletteHQ`, `cr2`) and retry once.

@@ -1,6 +1,6 @@
 ---
 name: cr2-desk
-description: "Matthew's build desk for Command Room 2: everything pending to build, explained in plain language from the client's side, and a guided briefing with questions when Matthew decides to build one. Use on 'what's pending to build', 'build desk', 'what's waiting to build', 'what should we build next', 'explain #N', 'get #N ready', 'let's build #N', 'decide #N'. Does NOT fire on 'what needs me' or 'test #N' (cr2-test), 'report this', 'file a bug' or 'spec it' (cr2-report), 'scrub this' (cr2-scrub), or 'build #N' in Claude Code (cr2-build)."
+description: "Use when Matthew or Erick wants to see what is pending to build on Command Room 2, explained from the client's side, or to get one item ready to build with a short guided set of questions. Use on 'what's pending to build', 'build desk', 'what's waiting to build', 'what should we build next', 'explain #N', 'get #N ready', 'let's build #N', 'decide #N'. Does NOT fire on 'what needs me' or 'test #N' (cr2-test), 'report this', 'file a bug' or 'spec it' (cr2-report), 'scrub this' (cr2-scrub), or 'build #N' in Claude Code (cr2-build)."
 ---
 
 # cr2-desk: the build desk
@@ -55,7 +55,7 @@ For each item, four short lines:
 
 - **Client problem:** what a client sees or suffers today, in their words. If the issue is internal (a developer tool, a process change), say "No client sees this directly" and say who does.
 - **After:** what they will see once it is done.
-- **Size and risk:** small (under a day), medium (a few days), large (more than a week, should be split). Then what could break. Size is always an estimate; say so.
+- **Size and risk:** small (under a day), medium (a few days), large (more than a week, should be split); size is always an estimate, say so. Then whether it can be undone: a **two-way door** (easy to undo, decide fast) or a **one-way door** (hard to undo: anything that moves, converts or deletes client files, or that clients see; decide slowly).
 - **Waiting on:** exactly what unblocks it, and who.
 
 ### Order and length
@@ -81,16 +81,29 @@ If Matthew only said "explain #N", stop here.
 
 ### Step 2: ask the questions only he can answer
 
-One question at a time. Each question comes with your recommended answer, so he can just say "yes". Skip any question the issue already answers clearly, and say you skipped it. At most six:
+One question at a time, always multiple choice, so he never has to write an answer from scratch:
+
+```
+Q2 of 6. What does done look like, from the client's side?
+Why it matters: this becomes the test he runs at the end.
+  A (recommended): <option>, because <one line>
+  B: <option>
+  C: <option>
+  Or say it in your own words.
+```
+
+He can answer "yes" (takes the recommendation), a letter, or his own words. Skip any question the issue already answers clearly, and say you skipped it. Stop early when he says "done" or nothing important is unclear. At most six:
 
 1. **Who is this for?** Every client, clients on a certain setup, or only Matthew's own folder.
 2. **What does done look like, from the client's side?** One or two sentences a client would recognise. This becomes the acceptance check. It must be something Matthew can see and test, not something only a developer can see.
 3. **What must not change?** Anything clients rely on that this must leave alone.
 4. **How will you test it?** A test folder or the real folder, and the first thing he will try. A test folder whenever it converts, moves, deletes or runs Maintenance.
 5. **Core or labs?** Recommend one, with one line on why. Core: changes how Command Room itself behaves. Labs: a new add-on beside it that only reads and files proposals.
-6. **Is it one thing?** If the work is more than about two days, or does two things, propose splitting it into separate issues and name them.
+6. **How much is this worth to you?** An afternoon, a few days, or two weeks. This is his appetite: a business call he can make, unlike an estimate, which is Louis's. If the work will not fit the appetite, or does two things, propose splitting it into separate issues and name them.
 
 If an answer creates a new choice, ask it as one extra question. Never more than eight in total.
+
+**Keep the answers as you go.** After each answer, add it to the draft brief (Q and the chosen answer). If he stops partway, offer to post what is answered so far on the issue as "Draft brief, not decided", so nothing is lost.
 
 ### Step 3: write it down
 
@@ -99,8 +112,13 @@ Show Matthew the build brief as it will be posted:
 ```
 Build brief (Matthew, YYYY-MM-DD)
 For: ...
-Done looks like: ...
+Today: what happens now (client side)
+After: what will happen instead
+Done looks like: ... (the acceptance check, testable on its own)
 Must not change: ...
+Out of scope: what this is deliberately not doing
+Appetite: an afternoon / a few days / two weeks
+Door: two-way (easy to undo) / one-way (hard to undo, because ...)
 Test: ... (test folder / real folder), first step: ...
 Route: core / labs
 Scope: one thing / split into #.. and #..
@@ -126,7 +144,8 @@ One line, depending on the route:
 These are standard practices for a non-technical owner working with one developer. The skill applies them quietly; Matthew does not need to recite them.
 
 - **The owner owns the problem; the developer owns the how.** Matthew decides who it is for, what done looks like, and priority. He does not decide code.
-- **Done is written before the build starts.** No acceptance check, no build.
+- **Done is written before the build starts.** No acceptance check, no build. The last check always tests the real workflow end to end, not a piece of it.
+- **Describe behaviour, not code.** No file paths or function names in a brief; code moves, behaviour doesn't.
 - **Small pieces.** One issue, one change, one pull request. Anything over about two days is split.
 - **Every change is reviewed by the developer** before it reaches clients (Louis reviews all).
 - **Shown, not told.** A fix is accepted when Matthew sees it work in his own test, not when a chat says it works.
