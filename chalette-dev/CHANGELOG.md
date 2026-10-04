@@ -3,6 +3,26 @@
 (Release history before v0.3.0 lives in `.claude-plugin/plugin.json`'s `description` field.
 This file starts at the CONSOL1 release.)
 
+## v0.6.0 (2026-10-04): the Command Room 2 dev skills
+
+Four skills added, so Matthew and Erick report, scrub, test and plan Command Room 2 work the same way. Skill count 15 -> 19. MINOR bump (new skills).
+
+- **cr2-report:** turns a chat into one GitHub issue on `ChaletteHQ/cr2` (bug or feature, chat log, version, build brief with a `core` or `labs` route). Its scrub section now points at cr2-scrub instead of carrying its own copy of the script.
+- **cr2-scrub:** checks text, files or the whole cr2 repo for client names, personal information and money figures. The script now ships as `skills/cr2-scrub/scripts/scrub_scan.py`. The real family surnames, contact first names and org-name words that were written inside the old script moved to a gitignored, per-machine `config/scrub.local.json`; nothing real is committed. Fixed on Windows: the name list is written as UTF-8, so the scan step can read it back.
+- **cr2-test:** Matthew's supervised acceptance tests: the queue, a step-by-step script, and the result posted in the repo's fixed shape.
+- **cr2-desk (new):** the build desk. "what's pending to build" sorts open issues into needs your decision, ready to build, waiting on Louis and waiting on your test, each explained from the client's side; "get #N ready" briefs, asks up to six questions and posts the build brief on a yes.
+- **Operator-aware:** each skill reads `operator` from `config/operator.json` + `operator.local.json`. Matthew (`m`) decides routes and closes issues; for anyone else those become proposals tagged for Matthew. An unreadable profile says `FATAL: operator profile unreadable` and asks.
+- `.gitignore`: `scrub.local.json`.
+- **Research pass folded in (same release, before merge).** Sources and the full list: four web research passes on bug reporting, scrubbing, owner testing, backlog practice and skill authoring.
+  - cr2-report: every fact tagged (owner said / Claude saw / Claude's guess), a check that every step and number points to a chat turn, last-worked and first-broke versions, severity S1 to S3 from two plain questions, a "for whoever fixes it" block (trigger prompt, likely area, suggested fix as a guess), a drafted-by footer, a short-body target.
+  - cr2-test: the original failure run 3 times (3 of 3 pass, 1 or 2 flaky, 0 fail), yes/no checks with named evidence, a regression step and a near-miss step, an optional look-around for risky fixes, evidence quoted before a pass, model, surface and deviations recorded, `blocked` label for a specific blocker.
+  - cr2-desk: multiple-choice questions with the recommendation first and why it matters, stop early, answers kept as they come, appetite instead of size, one-way and two-way doors, brief gains Today, After, Out of scope, Appetite and Door.
+  - cr2-scrub: edited GitHub comments keep the old text, so each redaction lists the revisions to delete by hand; when history may be rewritten (Matthew's decision) and how.
+  - All four: descriptions say when to fire; report no longer claims "scrub this". Each skill has `evals/triggers.json` with 10 phrases that should start it and 10 near misses (not yet run).
+- Not moved: cr2-build stays a project skill inside the cr2 repo (`.claude/skills/cr2-build`, cr2 PR #127), so it loads for anyone working in that repo.
+
+Verified: scrub terms from the new script are byte-identical to the old script's on Matthew's book (517 terms); the new skill files scan clean against them; a planted surname and amount are caught. Battery: 134 passed, 4 failed; the same 4 (`quick_validate` on four older skills) fail on `main` on Windows from a cp1252 decode and are unrelated.
+
 ## v0.5.1 (2026-07-29) — REFGAP1: cross-skill-interaction-test references recovered + dangling-reference guard
 
 Fix + fence. Skill count unchanged (**15**). PATCH bump per this repo's convention

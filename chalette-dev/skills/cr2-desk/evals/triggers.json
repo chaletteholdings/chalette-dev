@@ -1,0 +1,28 @@
+{
+ "_comment": "Trigger checks in the skill-creator shape: should_trigger phrases must start this skill; should_not_trigger near misses must go elsewhere. Not yet run.",
+ "skill": "cr2-desk",
+ "should_trigger": [
+  "what's pending to build",
+  "build desk",
+  "what's waiting to build",
+  "what should we build next",
+  "explain #88",
+  "get #88 ready",
+  "let's build #88",
+  "decide #88",
+  "what is waiting on my decision in the repo",
+  "show me the dev backlog in plain English"
+ ],
+ "should_not_trigger": [
+  "what needs me",
+  "test #88",
+  "report this",
+  "spec it",
+  "scrub this",
+  "build #88 (in Claude Code)",
+  "what's on my plate",
+  "what's going on",
+  "weekly insights",
+  "show me what's next"
+ ]
+}

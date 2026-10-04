@@ -4,7 +4,7 @@ The shared testing, verification, and skill-building toolkit for everyone who bu
 
 As of **CONSOL1 (2026-07-24)** this is the **single canonical home** of the shared toolkit — the skills below used to be duplicated into M's private `chalette` plugin; that copy is gone. Guard 1 (`scripts/check_toolkit_overlap.py`) fails the build if any of them ever reappears in `chalette`.
 
-**15 skills** (as of v0.5.0). Three have been retired: `compare-canonical-vs-freelance` (its niche — validating the v3.13.8 §3.6 canonical-vs-freelance widget ladder per skill — closed; the freelance fallback it diffed against no longer exists, and the synthetic invariants plus cr1's `widget_transport` validators cover the render path now), `run-command-room-tests` (folded into `cr-test`, which auto-discovers every suite instead of running a hardcoded five; its trigger phrases are aliases for `cr test --quick`), and `verify-cr-release` (the tier-5 paste-back orchestrator — retired per M's ruling: dogfood-before-promote plus BIG-TEST carry the attended layer, so the loop's state tracking and prompt ceremony went away. **What it owned was kept, not deleted:** its verification plan is now `cr-test/references/VERIFICATION_PLAN.md`, and its response classifier + findings-log format moved to `bug-regression-suite/references/`. `verify cr release` / `run verification suite` now alias `cr test --attended`).
+**19 skills** (as of v0.6.0). The four `cr2-*` skills (v0.6.0) are for Command Room 2 (`ChaletteHQ/cr2`); the rest test Command Room 1 (`cr1`). Three have been retired: `compare-canonical-vs-freelance` (its niche — validating the v3.13.8 §3.6 canonical-vs-freelance widget ladder per skill — closed; the freelance fallback it diffed against no longer exists, and the synthetic invariants plus cr1's `widget_transport` validators cover the render path now), `run-command-room-tests` (folded into `cr-test`, which auto-discovers every suite instead of running a hardcoded five; its trigger phrases are aliases for `cr test --quick`), and `verify-cr-release` (the tier-5 paste-back orchestrator — retired per M's ruling: dogfood-before-promote plus BIG-TEST carry the attended layer, so the loop's state tracking and prompt ceremony went away. **What it owned was kept, not deleted:** its verification plan is now `cr-test/references/VERIFICATION_PLAN.md`, and its response classifier + findings-log format moved to `bug-regression-suite/references/`. `verify cr release` / `run verification suite` now alias `cr test --attended`).
 
 ## Setup (Eric)
 
@@ -52,6 +52,12 @@ Build authority and ship authority are separate on purpose; being granted the fi
 | `skill-creator`, `skill-generator`, `regenerate-skill` | General skill scaffolding and eval tooling |
 | `voice-test` | Scores composer-skill output against the CR voice rules |
 | `preview-command-room-widget` | Renders CR widgets locally for visual checks |
+| `cr2-report` | Command Room 2: file a bug or feature on `ChaletteHQ/cr2` from the chat where it happened ("report this", "spec it") |
+| `cr2-scrub` | Command Room 2: keep client names, personal information and money figures out of the repo ("scrub this", "scrub the repo") |
+| `cr2-test` | Command Room 2: supervised acceptance tests on fixes, result posted to the issue ("what needs me", "test #N") |
+| `cr2-desk` | Command Room 2: everything pending to build, in plain language, and a guided build brief ("what's pending to build", "get #N ready") |
+
+**Command Room 2 skills, who decides:** Matthew decides the route (`core` or `labs`) and closes issues on a passing test. When Erick runs them, those become proposals tagged for Matthew. Building from an issue is `cr2-build`, a project skill inside the cr2 repo. **Scrub setup:** each operator may keep a private `chalette-dev/config/scrub.local.json` (gitignored) with family surnames to always flag and first names or words to ignore; see the top of `skills/cr2-scrub/scripts/scrub_scan.py`. Never commit it.
 
 ## Finding something broken
 
