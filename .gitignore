@@ -8,3 +8,7 @@ chalette-dev/config/operator.local.json
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# Scrub private lists (family surnames, contact first names): per-machine, never committed.
+scrub.local.json
+chalette-dev/config/scrub.local.json
