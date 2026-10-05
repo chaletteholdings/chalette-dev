@@ -36,7 +36,7 @@ PLUGIN_ROOT = os.path.join(REPO_ROOT, "chalette-dev")
 CONFIG_DIR = os.path.join(PLUGIN_ROOT, "config")
 OPERATOR_JSON = os.path.join(CONFIG_DIR, "operator.json")
 SKILLS_DIR = os.path.join(PLUGIN_ROOT, "skills")
-QUICK_VALIDATE = os.path.join(SKILLS_DIR, "skill-creator", "scripts", "quick_validate.py")
+QUICK_VALIDATE = os.path.join(REPO_ROOT, "scripts", "quick_validate.py")
 
 
 def _load_committed_operator():

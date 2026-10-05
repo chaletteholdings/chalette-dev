@@ -63,7 +63,7 @@ def test_skills_are_discoverable() -> None:
     """A guard that finds nothing passes vacuously — pin that it found skills."""
     files = _skill_files()
     assert files, f"no SKILL.md found under {SKILLS} — the guard is looking in the wrong place"
-    assert len(files) >= 10, f"only {len(files)} skills found; expected the full chalette-dev set"
+    assert len(files) >= 4, f"only {len(files)} skills found; expected the four cr2 skills"
 
 
 @pytest.mark.parametrize("skill_md", _skill_files(), ids=lambda p: p.parent.name)
