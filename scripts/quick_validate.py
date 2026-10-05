@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Quick validation script for skills - minimal version
+
+Vendored unchanged from Anthropic's skill-creator (Apache License 2.0) when the
+skill-creator skill moved to the chalette plugin on 2026-10-04.
 """
 
 import sys

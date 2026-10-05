@@ -7,7 +7,7 @@
     {
       "name": "chalette-dev",
       "source": "./chalette-dev",
-      "description": "Chalette Holdings internal dev & QA toolkit for Command Room — the shared testing, verification, and skill-building skills used by everyone who builds on the plugin. Extracted from the private chalette plugin 2026-07-13 so contractors/employees (Eric) run the same test battery M runs. Contains NO client data, NO business/sales skills, NO ship/promote tooling."
+      "description": "Chalette Command Room 2 dev skills shared by Matthew and Erick: report a bug or idea to the cr2 repo, scrub client data, run acceptance tests, and see what is pending to build. No client data."
     }
   ]
 }

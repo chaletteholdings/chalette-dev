@@ -1,64 +1,35 @@
-# chalette-dev — Command Room internal dev & QA toolkit
+# chalette-dev: Command Room 2 dev skills
 
-The shared testing, verification, and skill-building toolkit for everyone who builds on Command Room. Matthew (M) and Eric both install this; it is the single source of truth for how CR gets tested. Client repos, client data, and the release/promote pipeline are deliberately **not** in here.
+The skills Matthew and Erick share to report, scrub, test and plan work on Command Room 2 (`ChaletteHQ/cr2`). Install this plugin and both of you work the same way.
 
-As of **CONSOL1 (2026-07-24)** this is the **single canonical home** of the shared toolkit — the skills below used to be duplicated into M's private `chalette` plugin; that copy is gone. Guard 1 (`scripts/check_toolkit_overlap.py`) fails the build if any of them ever reappears in `chalette`.
+As of v0.7.0 (2026-10-04) this repo holds **only** the Command Room 2 dev skills. The Command Room 1 QA toolkit (cr-test, bug-regression-suite, cr-skill-builder and the rest) moved to Matthew's private `chalette` plugin.
 
-**19 skills** (as of v0.6.0). The four `cr2-*` skills (v0.6.0) are for Command Room 2 (`ChaletteHQ/cr2`); the rest test Command Room 1 (`cr1`). Three have been retired: `compare-canonical-vs-freelance` (its niche — validating the v3.13.8 §3.6 canonical-vs-freelance widget ladder per skill — closed; the freelance fallback it diffed against no longer exists, and the synthetic invariants plus cr1's `widget_transport` validators cover the render path now), `run-command-room-tests` (folded into `cr-test`, which auto-discovers every suite instead of running a hardcoded five; its trigger phrases are aliases for `cr test --quick`), and `verify-cr-release` (the tier-5 paste-back orchestrator — retired per M's ruling: dogfood-before-promote plus BIG-TEST carry the attended layer, so the loop's state tracking and prompt ceremony went away. **What it owned was kept, not deleted:** its verification plan is now `cr-test/references/VERIFICATION_PLAN.md`, and its response classifier + findings-log format moved to `bug-regression-suite/references/`. `verify cr release` / `run verification suite` now alias `cr test --attended`).
+## The four skills
 
-## Setup (Eric)
-
-1. Clone this repo: `git clone https://github.com/ChaletteHQ/chalette-dev ~/repos/chalette-dev`
-2. Clone the Command Room staging repo (read-only for you): `git clone https://github.com/ChaletteHQ/cr1 ~/repos/cr1`
-3. Edit `config/operator.json` on your machine if your paths differ. Leave `operator: "eric"` and the four authority keys (`allowed_targets`, `may_ship`, `may_promote`, `may_build_own_spec`) exactly as they ship — the skills read them to decide what you're allowed to target, and Guard 2 fails CI if any of them drifts. **There is nothing for you to create or turn on**; what you're granted is already in the file. See "What you can and can't do" below.
-   *(There is also an optional gitignored `config/operator.local.json` overlay, loaded on top of `operator.json` per-key. You don't need one — M keeps one for his real machine paths. If you ever add one, it must never be committed; Guard 2 asserts that.)*
-4. In Claude Code, install the plugin from your local clone (marketplace add → this repo path), so the `chalette-dev:*` skills are available in every session.
-5. The synthetic fixtures live in this repo at `chalette-dev/skills/synthetic-workspace-runtime-test/fixtures/` (four workspaces: clean / degraded / fresh_install / mature, built by `_generate_fixtures.py`). `synthetic-workspace-runtime-test` resolves to one of them by default; `config/operator.json` (`workspace_root: null`) points the QA skills at the `clean_workspace` fixture unless you say otherwise.
-
-**Three testing tracks** (see `CLAUDE.md`): (A) **dogfood your own Cowork workspace** as a real user — your own accounts, your own data, encouraged; (B) **controlled regression** with the QA skills against the synthetic fixtures above — these never target a real workspace; (C) **the structured plan**, `skills/cr-test/references/VERIFICATION_PLAN.md`, walked by hand against a **fresh, empty** test workspace (this is the plan Eric maintains, and the only track that reaches virgin onboarding, empty states, and the destructive probes). The rule "you never test against a real workspace" is about the *automated test tools*; it does not stop Track A. A + C together are `cr test --attended`; no skill drives them.
-
-## What you can and can't do
-
-The four authority keys in `config/operator.json`, in plain English. All four ship set correctly — **nothing to turn on**:
-
-| Key | Ships | What it means for you |
+| Skill | Say | What it does |
 |---|---|---|
-| `may_build_own_spec` | **`true`** | **You can write a spec and build from it in one pass.** No stopping to get the spec approved first — the pull request is where M reviews. (GATE1, v0.5.0.) |
-| `may_ship` | `false` | No version bumps, no CHANGELOG entries, no releases, no merging your own PR. |
-| `may_promote` | `false` | No fan-out to client repos. |
-| `allowed_targets` | `["synthetic"]` | The automated test skills run against the synthetic fixtures, never a real workspace. (Doesn't stop you dogfooding your own Command Room — that's Track A.) |
+| `cr2-report` | "report this", "file a bug", "spec it" | Turns the chat where something broke, or an idea, into one GitHub issue on cr2: facts tagged by source, severity, a "for whoever fixes it" block, a build brief for features. |
+| `cr2-scrub` | "scrub this", "scrub the repo" | Keeps client names, personal information and money figures out of the repo. Builds the name list fresh from your own book. |
+| `cr2-test` | "what needs me", "test #N" | Your acceptance test on a fix: a short script, the original failure run 3 times, the result posted to the issue. |
+| `cr2-desk` | "what's pending to build", "get #N ready" | Everything pending in plain language from the client's side, and a short multiple-choice briefing that becomes the build brief. |
 
-Build authority and ship authority are separate on purpose; being granted the first grants none of the second. And these keys are a working agreement, not a lock — what actually holds is your GitHub access: read-only on cr1, fork → PR, M merges.
+Building from an issue is `cr2-build`, a project skill inside the cr2 repo itself.
 
-## The rules of the road
+## Who decides
 
-- **You never test against a real workspace.** All skills here run against synthetic fixtures for any operator that isn't M. This is enforced in the skills and in `config/operator.json` (`allowed_targets: ["synthetic"]`).
-- **You never ship.** Releases, version bumps, and promotion to client repos are M's alone. The ship tooling is not in this plugin on purpose.
-- **All work goes through PRs.** You have read access to cr1: fork it, build on a branch in your fork, open a PR against cr1 `main`. M reviews, adjusts, merges. **The PR is the review point** — as of v0.5.0 that includes specs you wrote yourself and built from in one pass (`may_build_own_spec`), so there is no separate approve-the-spec step in front of the build. If a decision is genuinely architecture-shaping, send M a one-line heads-up and keep building unless he objects.
-- **The skills are English on purpose.** SKILL.md files are the product. Your lane is the rails around them — tests, validation, schema, CI, tooling. Don't rewrite prompt logic as code.
+Each skill reads `operator` from `chalette-dev/config/operator.json`, with a gitignored `config/operator.local.json` laid over it. The committed file is Erick's profile. Matthew's overlay says `"operator": "m"`.
 
-## What's in here
+- **Matthew** decides the route (`core` or `labs`) and closes an issue on a passing test.
+- **Erick** gets the same steps, with those decisions turned into proposals tagged for Matthew.
 
-| Skill | What it does |
-|---|---|
-| `cr-test` | The one-command entry point — sequences the whole test battery and gives a GREEN/HOLD/RED verdict. Also owns `references/VERIFICATION_PLAN.md`, the hand-walked attended plan (tier 5) |
-| `ship-readiness-gate` | Unattended post-push verification → PROMOTE/HOLD/BLOCKED verdict |
-| `synthetic-workspace-runtime-test` | Spins up the synthetic fixture workspace and fires the canonical surfaces against it |
-| `bug-regression-suite` | Fires every known-bug repro prompt; every new bug you find gets added here permanently |
-| `cross-skill-interaction-test` | Multi-skill sequences over time — substrate coherence |
-| `scale-stress-test`, `smoke-watch` | Scaffolds — performance at scale, post-release observation (not fully built) |
-| `cr-skill-builder` | Builds new CR skills with all contract gates enforced; also audits drafts |
-| `capture-for-code`, `triage-intake` | The intake pair — capture a bug/idea the moment you spot it → verify it against the repo and write a spec (operator-keyed queue via `intake_root`) |
-| `skill-creator`, `skill-generator`, `regenerate-skill` | General skill scaffolding and eval tooling |
-| `voice-test` | Scores composer-skill output against the CR voice rules |
-| `preview-command-room-widget` | Renders CR widgets locally for visual checks |
-| `cr2-report` | Command Room 2: file a bug or feature on `ChaletteHQ/cr2` from the chat where it happened ("report this", "spec it") |
-| `cr2-scrub` | Command Room 2: keep client names, personal information and money figures out of the repo ("scrub this", "scrub the repo") |
-| `cr2-test` | Command Room 2: supervised acceptance tests on fixes, result posted to the issue ("what needs me", "test #N") |
-| `cr2-desk` | Command Room 2: everything pending to build, in plain language, and a guided build brief ("what's pending to build", "get #N ready") |
+## Setup
 
-**Command Room 2 skills, who decides:** Matthew decides the route (`core` or `labs`) and closes issues on a passing test. When Erick runs them, those become proposals tagged for Matthew. Building from an issue is `cr2-build`, a project skill inside the cr2 repo. **Scrub setup:** each operator may keep a private `chalette-dev/config/scrub.local.json` (gitignored) with family surnames to always flag and first names or words to ignore; see the top of `skills/cr2-scrub/scripts/scrub_scan.py`. Never commit it.
+1. Clone: `git clone https://github.com/ChaletteHQ/chalette-dev ~/repos/chalette-dev`
+2. Install the plugin in the Claude app from this repo.
+3. Matthew only: add `chalette-dev/config/operator.local.json` with `{"operator": "m", "operator_name": "Matthew"}`.
+4. Optional, each person: `chalette-dev/config/scrub.local.json` with private lists for the scrub (format at the top of `skills/cr2-scrub/scripts/scrub_scan.py`). Never commit it.
+5. In your cr2 clone, the scrub guard runs before every commit: see `04_tools/hooks/README.md` there.
 
-## Finding something broken
+## Checks
 
-When a test run surfaces a bug: write it up as a findings entry (what fired, expected vs actual, repro prompt), commit it to your fork on a `findings/...` branch, and open a PR. Serious/blocking issues: flag M directly as well.
+`pytest tests/` (also on every push): operator fences, `quick_validate` on every skill (`scripts/quick_validate.py`, vendored from Anthropic's skill-creator, Apache 2.0), and the description budget. Each skill has `evals/triggers.json`: phrases that should start it and near misses that should not.

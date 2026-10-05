@@ -3,6 +3,15 @@
 (Release history before v0.3.0 lives in `.claude-plugin/plugin.json`'s `description` field.
 This file starts at the CONSOL1 release.)
 
+## v0.7.0 (2026-10-04): Command Room 2 only
+
+Matthew's ruling: chalette-dev keeps only the Command Room 2 dev skills; everything else moves to his private `chalette` plugin (its v0.12.0).
+
+- **Moved out (16 skills):** bug-regression-suite, capture-for-code, cr-skill-builder, cr-test, cross-skill-interaction-test, demo-prospect-workspace, preview-command-room-widget, regenerate-skill, scale-stress-test, ship-readiness-gate, skill-creator, skill-generator, smoke-watch, synthetic-workspace-runtime-test, triage-intake, voice-test. Erick no longer has them; Command Room 1 is legacy after 6 October 2026.
+- **Kept:** cr2-report, cr2-scrub, cr2-test, cr2-desk, and `config/operator.json` (Erick's profile; Matthew's overlay is local).
+- **Tests:** the demo, triage and reference-integrity tests moved with their skills. `quick_validate.py` is vendored at `scripts/` (from Anthropic's skill-creator, Apache 2.0) since skill-creator left. The overlap guard and its workflow job are retired. 32 passed, 4 skipped (preamble tests with no bash-preamble skill left to check).
+- **Docs:** README and CLAUDE.md rewritten for the four skills. The old Command Room 1 contributor guide and README went to chalette as `chalette/references/CR1_TOOLKIT_GUIDE.md`.
+
 ## v0.6.0 (2026-10-04): the Command Room 2 dev skills
 
 Four skills added, so Matthew and Erick report, scrub, test and plan Command Room 2 work the same way. Skill count 15 -> 19. MINOR bump (new skills).
