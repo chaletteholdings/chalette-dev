@@ -19,7 +19,7 @@ Building from an issue is `cr2-build`, a project skill inside the cr2 repo itsel
 
 Each skill reads `operator` from `chalette-dev/config/operator.json`, with a gitignored `config/operator.local.json` laid over it. The committed file is Erick's profile. Matthew's overlay says `"operator": "m"`.
 
-- **Matthew** decides the route (`core` or `labs`) and closes an issue on a passing test.
+- **Matthew** files everything as `core` by default and moves an item to `labs` himself; he tests on his preview (`ChaletteHQ/cr2-preview`) before Louis merges and closes an issue after the final check.
 - **Erick** gets the same steps, with those decisions turned into proposals tagged for Matthew.
 
 ## Setup

@@ -17,9 +17,18 @@ Two modes:
 
 These skills are shared by Matthew and Erick (the chalette-dev plugin). Read `operator` from this plugin's `config/operator.json`, with `config/operator.local.json` laid over it when present (Matthew keeps that overlay; it says `"operator": "m"`). If the profile cannot be read, never assume: say `FATAL: operator profile unreadable` in one line, then ask once, "Matthew or Erick?", and go on with the answer.
 
-- **Matthew (`m`):** everything below as written. He decides the route (`core` or `labs`), confirms what gets filed, and closes an issue on a passing test.
+- **Matthew (`m`):** everything below as written. Every item is `core` by default; he moves one to `labs` himself when he wants to (Matthew, 2026-10-04, #136), so he is never asked for a route. He confirms what gets filed, and closes an issue after his final check passes.
 - **Erick (anyone else):** the same steps, with Matthew's decisions turned into proposals. Suggest a route but file it with the label `question` and the line "Route proposed by Erick, Matthew to confirm." Never close an issue: post the test result and tag Matthew. Never post a build brief as decided; post it as "Proposed by Erick, Matthew to confirm."
 - Where the text says "Matthew" as the person you are talking to, talk to whoever is running it. Where it cites a ruling ("Matthew, 2026-10-04"), the ruling stands for both.
+
+## How to reply (every reply from this skill)
+
+Matthew is not technical and defers on most calls (#136). Any reply that holds recommendations or decisions has two labelled groups, in this order, and an empty group is left out:
+
+- **I'll handle (you can defer):** strong recommendations and mild calls that Claude makes and carries out.
+- **You decide:** only what Matthew should actually think about: a trade-off, a cost, something irreversible, or something only he knows.
+
+Nothing that needs him goes under the first group. End with one **Next:** line saying the single thing to do now.
 
 ## Step 1. Build the name list from the book (every run, never stored)
 

@@ -3,6 +3,16 @@
 (Release history before v0.3.0 lives in `.claude-plugin/plugin.json`'s `description` field.
 This file starts at the CONSOL1 release.)
 
+## v0.8.0 (2026-10-04): the preview flow, and cr2#136
+
+Matthew's rulings of 2026-10-04: he builds changes himself (core included) from Louis's latest `main`, tests them on his preview (`ChaletteHQ/cr2-preview`, Louis's `main` plus his open pull requests, cr2#144) before Louis merges, and does a short final check after the merge. Louis stays the only one who merges.
+
+- **cr2-test:** two kinds of test. A preview test checks the preview carries the pull request at its current commit and the installed version matches; a pass adds `preview pass`, keeps the issue open and tells Louis it is ready. A final check after the merge closes the issue. A fail on Matthew's own pull request goes back to "build #N". Every script ends with "Before you leave the test chat" and the log prompt, sent as a separate message (cr2#136).
+- **cr2-desk:** piles follow the flow: ready for your preview test, merged waiting on your final check, passed waiting on Louis, back with the builder, waiting on Louis, needs your decision, ready to build. A missing route is no longer a decision; the brief never asks core or labs.
+- **cr2-report:** routes default to `core` and are never asked; every issue goes on `ChaletteHQ/cr2`; the reply points to "get #N ready" and "build #N".
+- **All four:** "How to reply": **I'll handle (you can defer)** and **You decide**, then one **Next:** line.
+- **Unchanged:** every frontmatter description (no trigger changes), the scrub, Erick's proposal rules.
+
 ## v0.7.0 (2026-10-04): Command Room 2 only
 
 Matthew's ruling: chalette-dev keeps only the Command Room 2 dev skills; everything else moves to his private `chalette` plugin (its v0.12.0).

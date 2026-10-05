@@ -16,9 +16,18 @@ Repository: `ChaletteHQ/cr2`. Read it with whatever GitHub access this session h
 
 These skills are shared by Matthew and Erick (the chalette-dev plugin). Read `operator` from this plugin's `config/operator.json`, with `config/operator.local.json` laid over it when present (Matthew keeps that overlay; it says `"operator": "m"`). If the profile cannot be read, never assume: say `FATAL: operator profile unreadable` in one line, then ask once, "Matthew or Erick?", and go on with the answer.
 
-- **Matthew (`m`):** everything below as written. He decides the route (`core` or `labs`), confirms what gets filed, and closes an issue on a passing test.
+- **Matthew (`m`):** everything below as written. Every item is `core` by default; he moves one to `labs` himself when he wants to (Matthew, 2026-10-04, #136), so he is never asked for a route. He confirms what gets filed, and closes an issue after his final check passes.
 - **Erick (anyone else):** the same steps, with Matthew's decisions turned into proposals. Suggest a route but file it with the label `question` and the line "Route proposed by Erick, Matthew to confirm." Never close an issue: post the test result and tag Matthew. Never post a build brief as decided; post it as "Proposed by Erick, Matthew to confirm."
 - Where the text says "Matthew" as the person you are talking to, talk to whoever is running it. Where it cites a ruling ("Matthew, 2026-10-04"), the ruling stands for both.
+
+## How to reply (every reply from this skill)
+
+Matthew is not technical and defers on most calls (#136). Any reply that holds recommendations or decisions has two labelled groups, in this order, and an empty group is left out:
+
+- **I'll handle (you can defer):** strong recommendations and mild calls that Claude makes and carries out.
+- **You decide:** only what Matthew should actually think about: a trade-off, a cost, something irreversible, or something only he knows.
+
+Nothing that needs him goes under the first group. End with one **Next:** line saying the single thing to do now.
 
 ## How to talk to Matthew
 
@@ -40,14 +49,17 @@ Fires on "what's pending to build", "build desk", "what's waiting to build", "wh
 
 ### Sort into piles
 
-Each issue goes in exactly one pile, first match wins:
+The preview flow (#144): Matthew builds from Louis's latest `main`, tests on his preview before Louis merges, and does a short final check after the merge. The piles follow it. Each issue goes in exactly one pile, first match wins. Find an issue's pull request by `Refs #N` in open and merged pull requests.
 
-1. **Waiting on your test.** Label `needs UAT`, or Louis's last comment says "Please verify the fix". Do not explain these here; say "say *what needs me* to test them" (cr2-test owns this pile).
-2. **Waiting on Louis.** An open pull request linked to it is waiting for his review, or Louis was asked something and has not answered.
-3. **Needs your decision.** Any of: no `labs` or `core` route label on a feature; no acceptance check (what "done" looks like); the label `question`; the body or a recent comment asks Matthew to choose ("Matthew's call", "decision", "options"); or the issue has no labels at all (not sorted yet).
-4. **Ready to build.** Has a route label, a build brief and an acceptance check, and no open pull request.
+1. **Ready for your preview test.** An open pull request for it and the label `needs UAT`, or Louis's last comment says "Please verify the fix". Do not explain these here; say "say *what needs me* to test them" (cr2-test owns this pile).
+2. **Merged, waiting on your final check.** Its pull request is merged and the issue is still open. Also cr2-test's.
+3. **Passed, waiting on Louis to merge.** Label `preview pass` and the pull request still open. Nothing for Matthew to do; one line each.
+4. **Back with the builder.** The last test result on it is a fail or partial and the pull request is still open. Say who builds the fix: Matthew ("build #N" in Claude Code updates the same pull request) or Louis.
+5. **Waiting on Louis.** An open pull request waiting for his review with no test yet, or Louis was asked something and has not answered.
+6. **Needs your decision.** Any of: no acceptance check (what "done" looks like); the label `question`; the body or a recent comment asks Matthew to choose ("Matthew's call", "decision", "options"); or the issue has no labels at all (not sorted yet). A missing route is **not** a decision: everything is `core` unless Matthew moved it to labs (#136).
+7. **Ready to build.** Has a build brief and an acceptance check, and no open pull request.
 
-Rulings that shape the piles (from the 2026-10-04 meeting with Louis): Matthew decides what is `core` and what is `labs`. cr2-build can build either route. Louis reviews and merges every pull request. Matthew closes an issue only after his test passes.
+Rulings that shape the piles (2026-10-04): routes default to `core`; Matthew moves items to labs himself. cr2-build can build either route and always starts from Louis's latest `main`. Louis reviews and merges every pull request. Matthew closes an issue only after his final check passes.
 
 ### Explain each item
 
@@ -62,7 +74,7 @@ For each item, four short lines:
 
 - Within each pile, order by client harm: something that loses or misfiles client data first, then something a client sees broken, then something slow or confusing, then internal work.
 - Show at most 8 items in full across all piles. Count the rest in one line per pile ("and 6 more conversion bugs, all waiting on Louis").
-- Close with one line: the item you would pick first and why, then "say *get #N ready* to work on one".
+- Close with the reply groups (How to reply), then one **Next:** line: the item you would pick first and why, and "say *get #N ready* to work on one".
 
 ## Mode 2: get one ready
 
@@ -98,7 +110,7 @@ He can answer "yes" (takes the recommendation), a letter, or his own words. Skip
 2. **What does done look like, from the client's side?** One or two sentences a client would recognise. This becomes the acceptance check. It must be something Matthew can see and test, not something only a developer can see.
 3. **What must not change?** Anything clients rely on that this must leave alone.
 4. **How will you test it?** A test folder or the real folder, and the first thing he will try. A test folder whenever it converts, moves, deletes or runs Maintenance.
-5. **Core or labs?** Recommend one, with one line on why. Core: changes how Command Room itself behaves. Labs: a new add-on beside it that only reads and files proposals.
+5. **Core or labs?** Do not ask (#136). The route is `core` unless Matthew said labs for this item. Write "Route: core (default)" in the brief.
 6. **How much is this worth to you?** An afternoon, a few days, or two weeks. This is his appetite: a business call he can make, unlike an estimate, which is Louis's. If the work will not fit the appetite, or does two things, propose splitting it into separate issues and name them.
 
 If an answer creates a new choice, ask it as one extra question. Never more than eight in total.
@@ -129,15 +141,15 @@ On his yes:
 
 - Scrub it (no client names, people, companies, amounts, emails). If something was replaced, say so.
 - Post it as a comment on the issue.
-- Set the route label (`core` or `labs`) and remove `question` if it was there. Read the labels back to confirm they saved.
+- Set the route label (`core`, or `labs` if Matthew said so) and remove `question` if it was there. Read the labels back to confirm they saved.
 - If he chose a split, file the new issues through cr2-report's shape and link them.
 
 ### Step 4: hand off
 
 One line, depending on the route:
 
-- **labs or core, Matthew building:** "In Claude Code, open the cr2 repo and say *build #N*."
-- **Louis building:** "Louis has it. I'll show it under *Waiting on Louis* until his pull request is up."
+- **Matthew building:** "Next: in Claude Code, open the cr2 repo and say *build #N*. It starts from Louis's latest version and puts the result on your preview; then say *what needs me* to test it."
+- **Louis building:** "Next: nothing for you. Louis has it; it shows under *Waiting on Louis* until his pull request is up."
 
 ## The checklist behind every brief
 
@@ -164,7 +176,9 @@ These are standard practices for a non-technical owner working with one develope
 - **Issue:** one item on the to-do list in GitHub. A bug or a feature.
 - **Pull request:** a proposed change, waiting for Louis to review before it goes live.
 - **Merge:** Louis accepting the change into the product.
-- **Core:** Command Room itself. Changes here reach every client.
+- **Core:** Command Room itself. Changes here reach every client. Every item is core unless Matthew moves it to labs.
+- **Preview:** Matthew's own install of Command Room with his unmerged changes on top of Louis's latest version, for testing before Louis merges.
+- **Rebase:** moving a change onto Louis's newest version so it is not stale.
 - **Labs:** add-ons beside Command Room. They can read and propose, never change the book directly.
 - **Acceptance check:** the test that proves it is done, written from the client's side.
 - **UAT:** Matthew's own test after the change is merged.

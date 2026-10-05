@@ -15,9 +15,18 @@ It also owns **the scrub**: the check that keeps client names, personal details 
 
 These skills are shared by Matthew and Erick (the chalette-dev plugin). Read `operator` from this plugin's `config/operator.json`, with `config/operator.local.json` laid over it when present (Matthew keeps that overlay; it says `"operator": "m"`). If the profile cannot be read, never assume: say `FATAL: operator profile unreadable` in one line, then ask once, "Matthew or Erick?", and go on with the answer.
 
-- **Matthew (`m`):** everything below as written. He decides the route (`core` or `labs`), confirms what gets filed, and closes an issue on a passing test.
+- **Matthew (`m`):** everything below as written. Every item is `core` by default; he moves one to `labs` himself when he wants to (Matthew, 2026-10-04, #136), so he is never asked for a route. He confirms what gets filed, and closes an issue after his final check passes.
 - **Erick (anyone else):** the same steps, with Matthew's decisions turned into proposals. Suggest a route but file it with the label `question` and the line "Route proposed by Erick, Matthew to confirm." Never close an issue: post the test result and tag Matthew. Never post a build brief as decided; post it as "Proposed by Erick, Matthew to confirm."
 - Where the text says "Matthew" as the person you are talking to, talk to whoever is running it. Where it cites a ruling ("Matthew, 2026-10-04"), the ruling stands for both.
+
+## How to reply (every reply from this skill)
+
+Matthew is not technical and defers on most calls (#136). Any reply that holds recommendations or decisions has two labelled groups, in this order, and an empty group is left out:
+
+- **I'll handle (you can defer):** strong recommendations and mild calls that Claude makes and carries out.
+- **You decide:** only what Matthew should actually think about: a trade-off, a cost, something irreversible, or something only he knows.
+
+Nothing that needs him goes under the first group. End with one **Next:** line saying the single thing to do now.
 
 ## 1. Decide what it is
 
@@ -25,6 +34,7 @@ These skills are shared by Matthew and Erick (the chalette-dev plugin). Read `op
 - **Feature request:** Matthew wants new or different behaviour ("I want X", "spec it", "send it to build"). Label `enhancement`, plus a route (step 4b).
 - **Scrub only** ("scrub this", "scrub the repo", "privacy check"): that is cr2-scrub, not this skill.
 - One problem or one feature per issue. If the chat shows two, file two issues and link them.
+- **One place for everything:** every issue goes on `ChaletteHQ/cr2`, including issues about these dev skills. No other repo gets issues.
 - Ask only if it truly could be either. Otherwise decide and say which in the confirmation line.
 
 ## 2. Gather (without asking Matthew for what you can see)
@@ -109,7 +119,7 @@ Chat log rules (Louis's ask): one line per turn, high level. What was typed (ver
 _Drafted by Claude from chat; confirmed by <Matthew or Erick> on <date>._
 
 ## Build brief
-- **Route:** core / labs (Matthew's call)
+- **Route:** core (default) / labs only if Matthew said so for this item
 - **Skill:** new skill <name> / change to labs skill <name> / change to cr2 skill <name>
 - **Triggers:** the exact phrases that start it, and the near misses it must not catch
 - **Reads:** what it needs from the book or live sources (people, projects, plate, mail, calendar)
@@ -124,12 +134,11 @@ _Drafted by Claude from chat; confirmed by <Matthew or Erick> on <date>._
 
 Describe the outcome, not the code. Add a "Suggested approach" line only if Matthew gave one.
 
-### 4b. Route: suggest one, Matthew decides
+### 4b. Route: core by default
 
-Louis agreed (2026-10-04) that Matthew decides what is core and may build either route.
-- Suggest **core** for a change in `02_product/`: a script, Maintenance, the cloud view, a contract, a scheduled task, or how an existing cr2 skill behaves or words its answer. A bug is usually core.
-- Suggest **labs** for an add-on that only reads the book through cr2's own commands or the cloud view, and writes nothing or only an intake drop for Maintenance to fold.
-- Put the suggestion in the confirmation line. Matthew's answer is the route; never file a route he has not confirmed.
+Matthew's ruling (2026-10-04, #136): everything is filed `core` unless he has said labs for this item. He moves items to labs himself. Never ask him for a route. The confirmation line says "core (default)".
+- File `labs` only when Matthew said labs for this item in this chat.
+- For Erick, the route is still a proposal: add `question` and "Route proposed by Erick, Matthew to confirm."
 
 ### 4c. Check the draft against the chat
 
@@ -141,13 +150,13 @@ Run the scrub (cr2-scrub, section S below) on the title, body and chat log. Repl
 
 ## 6. Confirm, then file
 
-Show Matthew the title plus three lines (what it is, impact or outcome, labels and the suggested route) and ask "File it?". On yes:
+Show Matthew the title plus three lines (what it is, impact or outcome, labels with "core (default)") and ask "File it?". On yes:
 
 ```
 gh api repos/ChaletteHQ/cr2/issues -f title="<title>" -F body=@<scratch>/issue.md -f "labels[]=enhancement" -f "labels[]=core" -q .html_url
 ```
 
-Labels: `bug` or `enhancement`, plus the route Matthew confirmed, `core` or `labs`.
+Labels: `bug` or `enhancement`, plus `core` (or `labs` when Matthew said so).
 
 - Use REST only. GraphQL (`gh issue create`, `gh pr list`) is blocked in these sessions.
 - If `gh` can't reach the repo in a cloud session, attach it with the add_repo tool (`ChaletteHQ`, `cr2`) and retry once.
@@ -157,14 +166,16 @@ Labels: `bug` or `enhancement`, plus the route Matthew confirmed, `core` or `lab
 
 ## 7. Reply
 
-One line: `Filed #N: <title>` with the link, then: "To build it yourself, open the repo in Claude Code and say: build #N. Or leave it for Louis." Add the screenshot line if one is needed. No recap.
+One line: `Filed #N: <title>` with the link. Add the screenshot line if one is needed. No recap. Then:
+
+`Next: say "get #N ready" here to write its build brief. Then, to build it yourself, open the cr2 repo in Claude Code and say "build #N": it builds from Louis's latest version and puts the result on your preview to test. Or leave it for Louis.`
 
 ## Never
 
 - Never open a branch or pull request from this skill. Building happens in Claude Code with cr2-build, from the issue.
 - Never post before the scrub passes.
 - Never claim something was reproduced or tested when it was only reported.
-- Never file a route Matthew has not confirmed.
+- Never file `labs` unless Matthew said labs for this item.
 
 ## S. The scrub
 
