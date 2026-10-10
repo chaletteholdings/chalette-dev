@@ -13,7 +13,13 @@ It also owns **the scrub**: the check that keeps client names, personal details 
 
 ## Who is running this
 
-These skills are shared by Matthew and Erick (the chalette-dev plugin). Read `operator` from this plugin's `config/operator.json`, with `config/operator.local.json` laid over it when present (Matthew keeps that overlay; it says `"operator": "m"`). If the profile cannot be read, never assume: say `FATAL: operator profile unreadable` in one line, then ask once, "Matthew or Erick?", and go on with the answer.
+These skills are shared by Matthew and Erick (the chalette-dev plugin). Work out who is running them in this order and stop at the first answer:
+
+1. **The local profile.** `config/operator.local.json` in this plugin, when present: its `operator` wins (`"m"` is Matthew). Only Matthew keeps one, on his own computer.
+2. **The GitHub account.** Run `gh api user --jq .login`. `chaletteholdings` is Matthew; `erick559` is Erick; any other account is treated as Erick. Web and phone chats load a fresh copy of the plugin with no local profile, so this is how they know who is there.
+3. **The shared default.** `operator` in `config/operator.json` (Erick).
+
+Say who in one line in the first reply ("Running as Matthew, from the GitHub account."), so a wrong guess shows at once. If the person says otherwise, their word stands for the rest of the chat. If none of the three can be read, never assume: say `FATAL: operator profile unreadable` in one line, then ask once, "Matthew or Erick?", and go on with the answer.
 
 - **Matthew (`m`):** everything below as written. He decides the route (`core` or `labs`), confirms what gets filed, and closes an issue on a passing test.
 - **Erick (anyone else):** the same steps, with Matthew's decisions turned into proposals. Suggest a route but file it with the label `question` and the line "Route proposed by Erick, Matthew to confirm." Never close an issue: post the test result and tag Matthew. Never post a build brief as decided; post it as "Proposed by Erick, Matthew to confirm."

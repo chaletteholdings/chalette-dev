@@ -17,7 +17,7 @@ Building from an issue is `cr2-build`, a project skill inside the cr2 repo itsel
 
 ## Who decides
 
-Each skill reads `operator` from `chalette-dev/config/operator.json`, with a gitignored `config/operator.local.json` laid over it. The committed file is Erick's profile. Matthew's overlay says `"operator": "m"`.
+Each skill works out who is running it in this order: a gitignored `config/operator.local.json` when present (Matthew's says `"operator": "m"`), then the GitHub account the session posts as (`chaletteholdings` is Matthew, `erick559` is Erick, anyone else is treated as Erick), then the committed `chalette-dev/config/operator.json` (Erick's profile). The GitHub check is what lets web and phone chats, which never have the local file, know Matthew. The skill says who it took you for in its first reply.
 
 - **Matthew** decides the route (`core` or `labs`) and closes an issue on a passing test.
 - **Erick** gets the same steps, with those decisions turned into proposals tagged for Matthew.
@@ -26,7 +26,7 @@ Each skill reads `operator` from `chalette-dev/config/operator.json`, with a git
 
 1. Clone: `git clone https://github.com/ChaletteHQ/chalette-dev ~/repos/chalette-dev`
 2. Install the plugin in the Claude app from this repo.
-3. Matthew only: add `chalette-dev/config/operator.local.json` with `{"operator": "m", "operator_name": "Matthew"}`.
+3. Matthew only, optional: add `chalette-dev/config/operator.local.json` with `{"operator": "m", "operator_name": "Matthew"}`. Not needed when your GitHub account is signed in; it only matters on a computer where it isn't.
 4. Optional, each person: `chalette-dev/config/scrub.local.json` with private lists for the scrub (format at the top of `skills/cr2-scrub/scripts/scrub_scan.py`). Never commit it.
 5. In your cr2 clone, the scrub guard runs before every commit: see `04_tools/hooks/README.md` there.
 

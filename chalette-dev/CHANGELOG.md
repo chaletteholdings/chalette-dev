@@ -3,6 +3,15 @@
 (Release history before v0.3.0 lives in `.claude-plugin/plugin.json`'s `description` field.
 This file starts at the CONSOL1 release.)
 
+## v0.7.1 (2026-10-10): the skills know Matthew in web and phone chats
+
+Web and phone chats load a fresh copy of the plugin, which never holds Matthew's local profile, so cr2-test took him for Erick and turned his closes into proposals.
+
+- **All four skills:** "Who is running this" now checks, in order, the local profile, then the GitHub account the session posts as (`chaletteholdings` is Matthew, `erick559` is Erick, anyone else is treated as Erick), then the shared default. The first reply says who it took the person for, and the person's correction stands for the chat. The unreadable-profile rule is unchanged.
+- **README:** the order above; the local profile is now optional for Matthew.
+- **Test:** `test_who_is_running_is_identical_across_skills` keeps the section word for word the same in all four skills.
+- **Committed `operator.json` unchanged**, so every operator fence still holds.
+
 ## v0.7.0 (2026-10-04): Command Room 2 only
 
 Matthew's ruling: chalette-dev keeps only the Command Room 2 dev skills; everything else moves to his private `chalette` plugin (its v0.12.0).
