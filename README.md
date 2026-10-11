@@ -19,7 +19,7 @@ Building from an issue is `cr2-build`, a project skill inside the cr2 repo itsel
 
 Each skill works out who is running it in this order: a gitignored `config/operator.local.json` when present (Matthew's says `"operator": "m"`), then the GitHub account the session posts as (`chaletteholdings` is Matthew, `erick559` is Erick, anyone else is treated as Erick), then the committed `chalette-dev/config/operator.json` (Erick's profile). The GitHub check is what lets web and phone chats, which never have the local file, know Matthew. The skill says who it took you for in its first reply.
 
-- **Matthew** decides the route (`core` or `labs`) and closes an issue on a passing test.
+- **Matthew** confirms what gets filed and closes an issue on a passing test.
 - **Erick** gets the same steps, with those decisions turned into proposals tagged for Matthew.
 
 ## Setup

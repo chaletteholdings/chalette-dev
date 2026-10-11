@@ -22,8 +22,8 @@ These skills are shared by Matthew and Erick (the chalette-dev plugin). Work out
 
 Say who in one line in the first reply ("Running as Matthew, from the GitHub account."), so a wrong guess shows at once. If the person says otherwise, their word stands for the rest of the chat. If none of the three can be read, never assume: say `FATAL: operator profile unreadable` in one line, then ask once, "Matthew or Erick?", and go on with the answer.
 
-- **Matthew (`m`):** everything below as written. He decides the route (`core` or `labs`), confirms what gets filed, and closes an issue on a passing test.
-- **Erick (anyone else):** the same steps, with Matthew's decisions turned into proposals. Suggest a route but file it with the label `question` and the line "Route proposed by Erick, Matthew to confirm." Never close an issue: post the test result and tag Matthew. Never post a build brief as decided; post it as "Proposed by Erick, Matthew to confirm."
+- **Matthew (`m`):** everything below as written. He confirms what gets filed and closes an issue on a passing test.
+- **Erick (anyone else):** the same steps, with Matthew's decisions turned into proposals. File anything that needs Matthew's call with the label `question` and the line "Proposed by Erick, Matthew to confirm." Never close an issue: post the test result and tag Matthew. Never post a build brief as decided; post it as "Proposed by Erick, Matthew to confirm."
 - Where the text says "Matthew" as the person you are talking to, talk to whoever is running it. Where it cites a ruling ("Matthew, 2026-10-04"), the ruling stands for both.
 
 ## How to talk to Matthew
@@ -50,10 +50,10 @@ Each issue goes in exactly one pile, first match wins:
 
 1. **Waiting on your test.** Label `needs UAT`, or Louis's last comment says "Please verify the fix". Do not explain these here; say "say *what needs me* to test them" (cr2-test owns this pile).
 2. **Waiting on Louis.** An open pull request linked to it is waiting for his review, or Louis was asked something and has not answered.
-3. **Needs your decision.** Any of: no `labs` or `core` route label on a feature; no acceptance check (what "done" looks like); the label `question`; the body or a recent comment asks Matthew to choose ("Matthew's call", "decision", "options"); or the issue has no labels at all (not sorted yet).
-4. **Ready to build.** Has a route label, a build brief and an acceptance check, and no open pull request.
+3. **Needs your decision.** Any of: no acceptance check (what "done" looks like); the label `question`; the body or a recent comment asks Matthew to choose ("Matthew's call", "decision", "options"); or the issue has no labels at all (not sorted yet).
+4. **Ready to build.** Has a build brief and an acceptance check, and no open pull request.
 
-Rulings that shape the piles (from the 2026-10-04 meeting with Louis): Matthew decides what is `core` and what is `labs`. cr2-build can build either route. Louis reviews and merges every pull request. Matthew closes an issue only after his test passes.
+Rulings that shape the piles (from the 2026-10-04 meeting with Louis): Matthew may build any issue with cr2-build. Louis reviews and merges every pull request. Matthew closes an issue only after his test passes.
 
 ### Explain each item
 
@@ -81,7 +81,7 @@ Read the issue in full, every comment, every linked issue and pull request. Then
 - **What's going on:** two or three sentences, client side first.
 - **Why it matters now:** who is affected and how often. Mark guesses.
 - **The options**, if there is a real choice: each option on one line with one pro and one con. Then your recommendation, marked as a recommendation.
-- **What it touches:** the core product (Louis watches it closely) or an add-on (safer, Matthew can build it). One line.
+- **What it touches:** which part of Command Room it changes, and whether clients will notice. One line.
 
 If Matthew only said "explain #N", stop here.
 
@@ -90,7 +90,7 @@ If Matthew only said "explain #N", stop here.
 One question at a time, always multiple choice, so he never has to write an answer from scratch:
 
 ```
-Q2 of 6. What does done look like, from the client's side?
+Q2 of 5. What does done look like, from the client's side?
 Why it matters: this becomes the test he runs at the end.
   A (recommended): <option>, because <one line>
   B: <option>
@@ -98,14 +98,13 @@ Why it matters: this becomes the test he runs at the end.
   Or say it in your own words.
 ```
 
-He can answer "yes" (takes the recommendation), a letter, or his own words. Skip any question the issue already answers clearly, and say you skipped it. Stop early when he says "done" or nothing important is unclear. At most six:
+He can answer "yes" (takes the recommendation), a letter, or his own words. Skip any question the issue already answers clearly, and say you skipped it. Stop early when he says "done" or nothing important is unclear. At most five:
 
 1. **Who is this for?** Every client, clients on a certain setup, or only Matthew's own folder.
 2. **What does done look like, from the client's side?** One or two sentences a client would recognise. This becomes the acceptance check. It must be something Matthew can see and test, not something only a developer can see.
 3. **What must not change?** Anything clients rely on that this must leave alone.
 4. **How will you test it?** A test folder or the real folder, and the first thing he will try. A test folder whenever it converts, moves, deletes or runs Maintenance.
-5. **Core or labs?** Recommend one, with one line on why. Core: changes how Command Room itself behaves. Labs: a new add-on beside it that only reads and files proposals.
-6. **How much is this worth to you?** An afternoon, a few days, or two weeks. This is his appetite: a business call he can make, unlike an estimate, which is Louis's. If the work will not fit the appetite, or does two things, propose splitting it into separate issues and name them.
+5. **How much is this worth to you?** An afternoon, a few days, or two weeks. This is his appetite: a business call he can make, unlike an estimate, which is Louis's. If the work will not fit the appetite, or does two things, propose splitting it into separate issues and name them.
 
 If an answer creates a new choice, ask it as one extra question. Never more than eight in total.
 
@@ -126,7 +125,6 @@ Out of scope: what this is deliberately not doing
 Appetite: an afternoon / a few days / two weeks
 Door: two-way (easy to undo) / one-way (hard to undo, because ...)
 Test: ... (test folder / real folder), first step: ...
-Route: core / labs
 Scope: one thing / split into #.. and #..
 Decided: (any option he chose, with the one-line reason)
 ```
@@ -135,14 +133,14 @@ On his yes:
 
 - Scrub it (no client names, people, companies, amounts, emails). If something was replaced, say so.
 - Post it as a comment on the issue.
-- Set the route label (`core` or `labs`) and remove `question` if it was there. Read the labels back to confirm they saved.
+- Remove the label `question` if it was there. Read the labels back to confirm they saved.
 - If he chose a split, file the new issues through cr2-report's shape and link them.
 
 ### Step 4: hand off
 
-One line, depending on the route:
+One line, depending on who builds it:
 
-- **labs or core, Matthew building:** "In Claude Code, open the cr2 repo and say *build #N*."
+- **Matthew building:** "In Claude Code, open the cr2 repo and say *build #N*."
 - **Louis building:** "Louis has it. I'll show it under *Waiting on Louis* until his pull request is up."
 
 ## The checklist behind every brief
@@ -170,8 +168,6 @@ These are standard practices for a non-technical owner working with one develope
 - **Issue:** one item on the to-do list in GitHub. A bug or a feature.
 - **Pull request:** a proposed change, waiting for Louis to review before it goes live.
 - **Merge:** Louis accepting the change into the product.
-- **Core:** Command Room itself. Changes here reach every client.
-- **Labs:** add-ons beside Command Room. They can read and propose, never change the book directly.
 - **Acceptance check:** the test that proves it is done, written from the client's side.
 - **UAT:** Matthew's own test after the change is merged.
 - **Version:** the release number clients have installed. Louis sets it.

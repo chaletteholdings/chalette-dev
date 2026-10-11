@@ -3,6 +3,15 @@
 (Release history before v0.3.0 lives in `.claude-plugin/plugin.json`'s `description` field.
 This file starts at the CONSOL1 release.)
 
+## v0.8.0 (2026-10-11): no more core/labs routes
+
+Matthew's ruling: Command Room 2 work is no longer split into a `core` route and a `labs` route. Every issue is just a bug or a feature.
+
+- **cr2-report:** files `bug` or `enhancement` only; the route step (4b), the route line in the build brief, the `cr2-labs` version lookup and the `[Labs]` area are gone.
+- **cr2-desk:** a feature no longer needs a route to be ready; the "Core or labs?" question is gone (five questions at most), as are the route line in the brief, the route label step and the glossary entries.
+- **All four skills:** "Who is running this" no longer says Matthew decides the route; Erick still files proposals with the label `question`.
+- **README:** same change. The `core` label already on existing cr2 issues is left as it is.
+
 ## v0.7.1 (2026-10-10): the skills know Matthew in web and phone chats
 
 Web and phone chats load a fresh copy of the plugin, which never holds Matthew's local profile, so cr2-test took him for Erick and turned his closes into proposals.
