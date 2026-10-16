@@ -3,6 +3,15 @@
 (Release history before v0.3.0 lives in `.claude-plugin/plugin.json`'s `description` field.
 This file starts at the CONSOL1 release.)
 
+## v0.7.3 (2026-10-16): one route, no core/labs
+
+Matthew's ruling (2026-10-16): eliminate the split between labs and core. cr2 already retired it (cr2 #224, merged 2026-10-15); these skills still asked for a route. Tracked in #14.
+
+- **cr2-desk:** a feature is no longer "needs your decision" for lacking a `core` or `labs` label; "ready to build" needs a build brief and an acceptance check only. The "Core or labs?" question is gone (five questions at most), as are the brief's `Route:` line, the route-label step and the Core/Labs glossary entries.
+- **cr2-report:** no route suggestion, no route in the build brief, no `core` label on create, no `[Labs]` area, no `cr2-labs` version lookup; the rules pointer moves from the archived `06_labs/README.md` to `00_docs/dev-process.md`.
+- **All four skills and the README:** Matthew no longer "decides the route"; Erick no longer proposes one.
+- Descriptions and triggers unchanged.
+
 ## v0.7.2 (2026-10-15): every test ends with a test log
 
 Matthew's ruling (2026-10-15): a test script always gives the prompt that makes the test chat list what it did, without being asked. In the 0.8.109 test of cr2 #169 the answer was right in 3 of 3 runs while the fix's own path never ran; only the book's run log showed it.
