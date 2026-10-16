@@ -3,6 +3,16 @@
 (Release history before v0.3.0 lives in `.claude-plugin/plugin.json`'s `description` field.
 This file starts at the CONSOL1 release.)
 
+## v0.7.2 (2026-10-15): every test ends with a test log
+
+Matthew's ruling (2026-10-15): a test script always gives the prompt that makes the test chat list what it did, without being asked. In the 0.8.109 test of cr2 #169 the answer was right in 3 of 3 runs while the fix's own path never ran; only the book's run log showed it.
+
+- **cr2-test, the script:** every script ends with "After every run: the test log" and the test-log prompt in its own code block. Matthew pastes it into the same test chat after the answer and brings both replies back. Test chats get only the test prompts and the log prompt.
+- **cr2-test, the verdict:** judge the path, not only the answer. A right answer reached by a workaround is partial, never a pass. The log's claims are checked against the book's run log where the folder is reachable. A run with no log is posted as "no test log".
+- **cr2-test, fail reports:** the chat log is built from the test log.
+- **Test:** `tests/test_test_log.py` pins the prompt verbatim, its place in the script template, and the partial-not-pass rule.
+- Description and triggers unchanged.
+
 ## v0.7.1 (2026-10-10): the skills know Matthew in web and phone chats
 
 Web and phone chats load a fresh copy of the plugin, which never holds Matthew's local profile, so cr2-test took him for Erick and turned his closes into proposals.
