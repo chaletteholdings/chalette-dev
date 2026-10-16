@@ -67,8 +67,22 @@ Step 4. The wrong skill does not answer
 When you type: <a near-miss phrase that belongs to a different skill>
 Pass if: <that other skill answers, not this one>
 
-When done, tell me: "pass", or "fail" and paste the reply you got (or say "report this" in that test chat).
+After every run: the test log
+Right after the test prompt's reply, paste this into the SAME test chat as its next message:
+    <the test-log prompt below, verbatim>
+Then copy both replies (the answer and the log) back into this chat.
+
+When done, paste the answers and the logs here, and say "pass" or "fail" if you already know.
+Only type the test prompts and the log prompt in a test chat: never "post it", "run maintenance" or "report this" unless a step says so.
 ```
+
+**The test-log prompt.** Every script ends with it, in its own code block so it copies cleanly, every time, without being asked (Matthew, 2026-10-15). It is the only way to see what a test chat did behind its answer: which script ran, where, and what failed quietly. The 0.8.109 test of #169 showed why: the answer was right in 3 of 3 runs while the fix's own path never ran, and only the run log gave it away.
+
+```
+For a test log, list exactly what you just did, in order: each skill you loaded, each script or command you ran (name and whether it ran in this chat or on my computer), each connector you called, every file you read or wrote or filed as a proposal (path only), any error or warning word for word, and whether anything was saved, queued for Maintenance, or not saved. Facts only, no summary of the findings, no client names.
+```
+
+If an earlier test chat is still open and its log was never taken, ask for it there before posting.
 
 Rules for a good script:
 - Every step has an exact thing to type or click and an observable result. Never "check that it works".
@@ -77,6 +91,7 @@ Rules for a good script:
 - Every check is a yes/no about the answer ("the brief names three meetings and no client names"), never a score. Name the evidence for each.
 - Add one **regression** step (a related closed issue still works) and one **near-miss** step (a phrase that must go to a different skill). Fixes often break a neighbour.
 - For a risky fix (conversion, Maintenance, anything that moves or deletes files), you may add one optional 5-minute look-around: "Explore <surface> with the test folder to find anything wrong or missing." Anything found becomes a new issue through cr2-report, not part of this verdict.
+- Every script ends with the test-log prompt, verbatim, for every run. It is never optional and never left for Matthew to ask for.
 - Three to six steps. Over ten minutes, split it into two tests.
 - If a step needs proof, name it ("paste the line that starts `Saved.`", or "screenshot the widget" for anything visual).
 - Say what not to do when a wrong move would spoil the test ("don't say 'run maintenance' yet").
@@ -84,6 +99,8 @@ Rules for a good script:
 ## 4. Record the result
 
 **Evidence before verdict.** Before posting a pass, quote what was seen (the pasted line, or the screenshot's name) against each pass criterion. No evidence for a criterion means that criterion is not passed.
+
+**Judge the path, not only the answer.** Read each run's test log against Louis's fix comment: did the script or route he changed actually run? A right answer reached by a workaround (the model reading files by hand because the fix's own path failed) is **partial**, never a pass. Where the folder is reachable, check the log's claims against the book's run log (`_hq/_system/runs/`). A run with no test log is posted as "no test log" in its row, never silently counted as a pass.
 
 Scrub every result before posting with the **cr2-scrub** skill. Post with `gh api repos/ChaletteHQ/cr2/issues/N/comments -F body=@<scratch>/uat.md`.
 
@@ -112,7 +129,7 @@ Matthew closes on a pass (his ruling, 2026-10-04). Close it: `gh api -X PATCH re
 A failed or partial test is a bug report on the fix, so it carries everything cr2-report puts in a bug. Nothing is left for Louis to ask.
 
 **Get the evidence first.** The failure usually happened in the separate test chat, so ask Matthew for one of these:
-- paste the reply he got (and any error) here;
+- paste the reply he got (and any error) and that chat's test log here; build the chat log below from the test log;
 - or say "report this" in the test chat. cr2-report finds this open issue and comments there with that chat's log. Then post only the UAT header and step results below, and link that comment.
 
 For anything visual, ask for a full-window screenshot (Windows: Win+Shift+S, window mode, names covered), and add `needs evidence` until he says it's attached.
