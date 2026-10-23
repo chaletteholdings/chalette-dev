@@ -137,7 +137,7 @@ Before the scrub, read the draft line by line. Every step, error string, number 
 
 ## 5. Scrub (always, before anything is posted)
 
-Run the scrub (cr1-scrub, section S below) on the title, body and chat log. Replace every client name, real person, family member, real email, phone, money figure and client folder name with a placeholder (`Contact A`, `<client folder>`, `an amount`), and add one line saying so. A screenshot gets the same treatment: it is attached only after the visible names are covered.
+Run the scrub (cr1-scrub, section S below) on the title, body and chat log. Replace every client name, real person, family member, real email, phone, money figure and client folder name with a placeholder (`Contact A`, `<client folder>`, `an amount`), and add one line saying so. Screenshots from a real folder are never attached (the owner's rule): use a screenshot taken on a test folder, or give the exact error text instead.
 
 ## 6. Confirm, then file
 
@@ -153,7 +153,7 @@ Labels: `bug` or `enhancement`, plus `question` when Erick files it.
 - If `gh` can't reach the repo in a cloud session, attach it with the add_repo tool (`ChaletteHQ`, `cr1`) and retry once.
 - If there is no GitHub access at all, save the issue to scratch and give Matthew a prefilled link: `https://github.com/ChaletteHQ/cr1/issues/new?title=<urlencoded>&labels=enhancement&body=<urlencoded>`. If the body is over about 6,000 characters, give the link with the title only and the body to paste.
 
-**Visual bugs** (a widget, page, artifact, layout, anything you judge by looking): also add the `needs evidence` label. Tell Matthew in one line to take a full-window screenshot (Windows: Win+Shift+S, window mode), cover any names, and drag it into the issue. When he says it's attached, remove `needs evidence`.
+**Visual bugs** (a widget, page, artifact, layout, anything you judge by looking): also add the `needs evidence` label. Tell Matthew in one line to reproduce it on a test folder, take a full-window screenshot there (Windows: Win+Shift+S, window mode) and drag it into the issue; if it only shows on the real folder, paste the exact error text instead. When he says it's attached, remove `needs evidence`.
 
 ## 7. Reply
 

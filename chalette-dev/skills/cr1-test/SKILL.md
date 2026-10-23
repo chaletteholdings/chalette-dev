@@ -137,7 +137,7 @@ A failed or partial test is a bug report on the fix, so it carries everything cr
 - paste the reply he got (and any error) and that chat's test log here; build the chat log below from the test log;
 - or say "report this" in the test chat. cr1-report finds this open issue and comments there with that chat's log. Then post only the UAT header and step results below, and link that comment.
 
-For anything visual, ask for a full-window screenshot (Windows: Win+Shift+S, window mode, names covered), and add `needs evidence` until he says it's attached.
+For anything visual, ask for a full-window screenshot taken on a test folder (Windows: Win+Shift+S, window mode; never from a real folder, where the exact error text stands in), and add `needs evidence` until he says it's attached.
 
 **Post this shape:**
 
