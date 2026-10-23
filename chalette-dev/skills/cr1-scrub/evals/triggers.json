@@ -1,6 +1,6 @@
 {
  "_comment": "Trigger checks in the skill-creator shape: should_trigger phrases must start this skill; should_not_trigger near misses must go elsewhere. Not yet run.",
- "skill": "cr2-scrub",
+ "skill": "cr1-scrub",
  "should_trigger": [
   "scrub this",
   "scrub the repo",

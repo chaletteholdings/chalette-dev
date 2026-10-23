@@ -1,5 +1,5 @@
 """Scrub scan. Usage:
-  python scrub_scan.py terms --book <folder with _hq/data/entities> > terms.txt
+  python scrub_scan.py terms --book <book folder: _hq/data/entities.json, or the older _hq/data/entities/ parts> > terms.txt
   python scrub_scan.py scan --terms terms.txt <file or - for stdin> [...]
 Prints one finding per line: KIND<TAB>match<TAB>where. Exit 1 if anything found.
 
@@ -24,7 +24,7 @@ INTERNAL = ("command room", "chalette", "penelope", "new bot build", "cr56 testb
 def _local():
     here = os.path.dirname(os.path.abspath(__file__))
     for p in (os.path.join(here, "..", "..", "..", "config", "scrub.local.json"),
-              os.environ.get("CR2_SCRUB_LOCAL", "")):
+              os.environ.get("CR1_SCRUB_LOCAL", ""), os.environ.get("CR2_SCRUB_LOCAL", "")):  # CR2_ kept for old setups
         if p and os.path.isfile(p):
             with open(p, encoding="utf-8") as f:
                 return json.load(f)
@@ -44,33 +44,50 @@ def _pieces(name):
             yield p
 
 
-def terms(book):
-    out = set(FAMILY)
+def _records(book):
+    """Every entity record in the book: the split parts (_hq/data/entities/*.jsonl.txt), then the
+    single Command Room 1 file (_hq/data/entities.json: its people, orgs and threads lists)."""
     for f in glob.glob(os.path.join(book, "_hq", "data", "entities", "*.jsonl.txt")):
         for line in open(f, encoding="utf-8"):
             try:
-                r = json.loads(line)
+                yield json.loads(line)
             except ValueError:
                 continue
-            name = r.get("canonical_name") or ""
-            if name.lower().startswith(INTERNAL) or name in TEAM_FULL:
+    one = os.path.join(book, "_hq", "data", "entities.json")
+    if os.path.isfile(one):
+        try:
+            with open(one, encoding="utf-8") as f:
+                data = json.load(f)
+        except ValueError:
+            data = {}
+        for kind in ("people", "orgs", "threads"):
+            for r in (data.get(kind) or []) if isinstance(data, dict) else []:
+                if isinstance(r, dict):
+                    yield r
+
+
+def terms(book):
+    out = set(FAMILY)
+    for r in _records(book):
+        name = r.get("canonical_name") or ""
+        if name.lower().startswith(INTERNAL) or name in TEAM_FULL:
+            continue
+        is_org = bool(r.get("domains") or r.get("folder_name") or r.get("scope") or r.get("kind"))
+        for p in list(_pieces(name)) + [r.get("folder_name") or ""]:
+            if len(p) < 4 or p.lower().startswith(INTERNAL) or p.startswith("_"):
                 continue
-            is_org = bool(r.get("domains") or r.get("folder_name") or r.get("scope") or r.get("kind"))
-            for p in list(_pieces(name)) + [r.get("folder_name") or ""]:
-                if len(p) < 4 or p.lower().startswith(INTERNAL) or p.startswith("_"):
-                    continue
-                if " " in p or is_org:
-                    out.add(p.split("/")[-1])
-                    if " " in p and not is_org and p.split()[-1].isalpha() and len(p.split()[-1]) >= 5:
-                        out.add(p.split()[-1])  # a surname on its own
-            for e in r.get("emails") or []:
-                out.add(e)
-                d = e.split("@")[-1].lower()
-                if d not in GENERIC_DOMAINS:
-                    out.add(d)
-            for d in r.get("domains") or []:
-                if d.lower() not in GENERIC_DOMAINS:
-                    out.add(d)
+            if " " in p or is_org:
+                out.add(p.split("/")[-1])
+                if " " in p and not is_org and p.split()[-1].isalpha() and len(p.split()[-1]) >= 5:
+                    out.add(p.split()[-1])  # a surname on its own
+        for e in r.get("emails") or []:
+            out.add(e)
+            d = e.split("@")[-1].lower()
+            if d not in GENERIC_DOMAINS:
+                out.add(d)
+        for d in r.get("domains") or []:
+            if d.lower() not in GENERIC_DOMAINS:
+                out.add(d)
     team = {w.lower() for n in TEAM_FULL for w in n.split()} | TEAM
     return sorted({t for t in out if t.lower() not in team and t.lower() not in COMMON and t.lower() not in WORDS}, key=str.lower)
 

@@ -1,6 +1,6 @@
 name: toolkit-guard
 
-# Guards for the Command Room 2 dev skills: operator fences, quick_validate and the
+# Guards for the Command Room 1 dev skills (cr1-report, cr1-scrub, cr1-test, cr1-desk): operator fences, quick_validate and the
 # description budget, on every push and pull request. (The cross-repo overlap guard was
 # retired on 2026-10-04 when the Command Room 1 toolkit moved to the chalette plugin.)
 

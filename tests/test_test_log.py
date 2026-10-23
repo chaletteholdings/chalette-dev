@@ -1,7 +1,7 @@
-"""Every cr2-test script ends with the test-log prompt, and a right answer by a workaround is never a pass (v0.7.2)."""
+"""Every cr1-test script ends with the test-log prompt, and a right answer by a workaround is never a pass (v0.7.2)."""
 import pathlib
 
-SKILL = pathlib.Path(__file__).resolve().parent.parent / "chalette-dev" / "skills" / "cr2-test" / "SKILL.md"
+SKILL = pathlib.Path(__file__).resolve().parent.parent / "chalette-dev" / "skills" / "cr1-test" / "SKILL.md"
 PROMPT = ("For a test log, list exactly what you just did, in order: each skill you loaded, each script or command you ran "
           "(name and whether it ran in this chat or on my computer), each connector you called, every file you read or "
           "wrote or filed as a proposal (path only), any error or warning word for word, and whether anything was saved, "
