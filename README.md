@@ -28,7 +28,7 @@ Each skill works out who is running it in this order: a gitignored `config/opera
 2. Install the plugin in the Claude app from this repo.
 3. Matthew only, optional: add `chalette-dev/config/operator.local.json` with `{"operator": "m", "operator_name": "Matthew"}`. Not needed when your GitHub account is signed in; it only matters on a computer where it isn't.
 4. Optional, each person: `chalette-dev/config/scrub.local.json` with private lists for the scrub (format at the top of `skills/cr1-scrub/scripts/scrub_scan.py`). Never commit it.
-5. In your cr1 clone, switch on the scrub guard that runs before every commit: `git config core.hooksPath scripts/hooks` and `git config scrub.book "<book folder>"`.
+5. In your cr1 clone, switch on the scrub guard that runs before every commit: `git config core.hooksPath command-room/.githooks` and `git config scrub.book "<book folder>"`.
 
 ## Checks
 

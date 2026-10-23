@@ -78,8 +78,8 @@ Before fixing, show Matthew the findings in one table (kind, where, what replace
 In a cr1 clone, the scrub also runs before every commit once the guard is switched on. From the clone, run once:
 
 ```
-git config core.hooksPath scripts/hooks
+git config core.hooksPath command-room/.githooks
 git config scrub.book "<book folder>"
 ```
 
-The guard finds this skill's script at `~/repos/chalette-dev/chalette-dev/skills/cr1-scrub/scripts/scrub_scan.py`, so keep this repo cloned there.
+The hook (`command-room/.githooks/pre-commit`, which runs `scripts/scrub/scan.py` after cr1's own privacy guards) finds this skill's script at `~/repos/chalette-dev/chalette-dev/skills/cr1-scrub/scripts/scrub_scan.py`, so keep this repo cloned there.
