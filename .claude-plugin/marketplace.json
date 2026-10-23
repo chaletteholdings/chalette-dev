@@ -7,7 +7,7 @@
     {
       "name": "chalette-dev",
       "source": "./chalette-dev",
-      "description": "Chalette Command Room 2 dev skills shared by Matthew and Erick: report a bug or idea to the cr2 repo, scrub client data, run acceptance tests, and see what is pending to build. No client data."
+      "description": "Chalette Command Room 1 dev skills shared by Matthew and Erick: report a bug or idea to the cr1 repo, scrub client data, run acceptance tests, and see what is pending to build. No client data."
     }
   ]
 }

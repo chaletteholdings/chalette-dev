@@ -1,6 +1,6 @@
 {
  "_comment": "Trigger checks in the skill-creator shape: should_trigger phrases must start this skill; should_not_trigger near misses must go elsewhere. Not yet run.",
- "skill": "cr2-desk",
+ "skill": "cr1-desk",
  "should_trigger": [
   "what's pending to build",
   "build desk",

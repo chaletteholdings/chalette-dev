@@ -1,13 +1,13 @@
 {
  "_comment": "Trigger checks in the skill-creator shape: should_trigger phrases must start this skill; should_not_trigger near misses must go elsewhere. Not yet run.",
- "skill": "cr2-test",
+ "skill": "cr1-test",
  "should_trigger": [
   "what needs me",
   "what do I need to test",
   "test #57",
   "verify the fix",
   "UAT",
-  "Louis says #57 is fixed, let's check it",
+  "#57 is merged, let's check it",
   "run the acceptance test on #57",
   "is anything waiting for my test",
   "the fix for #57 shipped, walk me through testing it",

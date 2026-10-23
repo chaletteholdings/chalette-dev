@@ -1,11 +1,11 @@
 {
  "_comment": "Trigger checks in the skill-creator shape: should_trigger phrases must start this skill; should_not_trigger near misses must go elsewhere. Not yet run.",
- "skill": "cr2-report",
+ "skill": "cr1-report",
  "should_trigger": [
   "report this",
   "file a bug",
-  "log this for Louis",
-  "this is broken, send it to Louis",
+  "log this as a bug",
+  "this is broken, file it on cr1",
   "feature request: let me snooze a commitment",
   "spec it",
   "send it to build",
@@ -21,7 +21,7 @@
   "what's pending to build",
   "get #42 ready",
   "build #42",
-  "draft an email to Louis",
+  "draft an email to Erick",
   "what's going on",
   "weekly recap"
  ]
