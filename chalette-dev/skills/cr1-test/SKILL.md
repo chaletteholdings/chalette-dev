@@ -1,11 +1,11 @@
 ---
 name: "cr1-test"
-description: "Use when Matthew or Erick wants to test a Command Room 1 fix that is waiting on them: 'what needs me', 'what do I need to test', 'test #N', 'verify the fix', 'UAT'. Gives a short script of what to type and what to look for, then records pass, flaky or fail on the GitHub issue in ChaletteHQ/cr1. Does NOT fire on 'report this' (cr1-report) or 'what's pending to build' (cr1-desk)."
+description: "Use when Matthew or Erick wants to test a Command Room 1 fix that is waiting on them: 'what needs me', 'what do I need to test', 'test #N', 'verify the fix', 'UAT'. Gives a short script of what to type and what to look for, then records pass, flaky or fail on the GitHub issue in chaletteholdings/cr1. Does NOT fire on 'report this' (cr1-report) or 'what's pending to build' (cr1-desk)."
 ---
 
 # cr1 test
 
-A fix is built with cr1-build, checked by a fresh reviewer, and merged by Matthew. Then Matthew confirms it in the real product. This skill makes the confirming fast: it tells Matthew where to go, what to type and what a pass looks like, then writes the result back in the repo's fixed shape. A failed test gets the same complete write-up as a bug filed with cr1-report, so whoever builds the next attempt never has to ask what happened. Rules: sections 7 and 12 of `ISSUES.md` at the root of `ChaletteHQ/cr1`.
+A fix is built with cr1-build, checked by a fresh reviewer, and merged by Matthew. Then Matthew confirms it in the real product. This skill makes the confirming fast: it tells Matthew where to go, what to type and what a pass looks like, then writes the result back in the repo's fixed shape. A failed test gets the same complete write-up as a bug filed with cr1-report, so whoever builds the next attempt never has to ask what happened. Rules: sections 7 and 12 of `ISSUES.md` at the root of `chaletteholdings/cr1`.
 
 If the owner explicitly says the fix is on Command Room 2, read and post on `ChaletteHQ/cr2` instead, with the same steps.
 
@@ -26,8 +26,8 @@ Say who in one line in the first reply ("Running as Matthew, from the GitHub acc
 ## 1. "What needs me" (the queue)
 
 List open issues waiting on Matthew:
-- label `needs UAT`: `gh api "repos/ChaletteHQ/cr1/issues?state=open&labels=needs%20UAT&per_page=100"`
-- plus any open issue whose latest fix comment starts **Please verify the fix** and has no later UAT result. Read comments with `gh api repos/ChaletteHQ/cr1/issues/N/comments`.
+- label `needs UAT`: `gh api "repos/chaletteholdings/cr1/issues?state=open&labels=needs%20UAT&per_page=100"`
+- plus any open issue whose latest fix comment starts **Please verify the fix** and has no later UAT result. Read comments with `gh api repos/chaletteholdings/cr1/issues/N/comments`.
 
 Before listing an issue, read its later comments. If an automated validation (Erick's sessions post "Confirmed on <version>" comments) already shows the fix **failing** on that version or a later one, don't spend Matthew's time on it. Mark it "already failing per #N comment, back to build", and offer to remove `needs UAT` with a one-line comment pointing at that evidence.
 
@@ -36,9 +36,9 @@ Show the queue oldest first, one line each: `#N title · fixed in <version or co
 ## 2. Prepare one test
 
 1. Read the issue body, its acceptance check, and the fix comment (version or commit, what changed, what it asks to check).
-2. **Version gate: the fix must be in what is installed.** First find the fix's merge: the pull request that references the issue, and its merge commit (`gh api repos/ChaletteHQ/cr1/pulls/<PR> -q .merge_commit_sha`). Then find the installed plugin: the `plugin.json` whose `"name"` is `command-room` under `~/.claude/plugins`, `/root/.claude/plugins` or `/mnt/skills/plugins`. There are two kinds:
-   - **Matthew's staging plugin `cr`** (from the `commandroom1` marketplace; it sits under a `commandroom1` folder). It follows `main` by commit, so its installed commit must be at or after the fix's merge. Read the commit from the `cr@commandroom1` entry (`gitCommitSha`) in `installed_plugins.json` beside the plugins folder, then run `gh api repos/ChaletteHQ/cr1/compare/<merge commit>...<installed commit> -q .status`. `ahead` or `identical` means the fix is in; `behind` or `diverged` means it is not.
-   - **The `command-room` plugin clients and Matthew run.** It gets changes only when Matthew promotes a release, so the fix is in only if a released version at or below the installed one contains it. Search the CHANGELOG on `main` for the issue number: `gh api repos/ChaletteHQ/cr1/contents/command-room/CHANGELOG.md -H "Accept: application/vnd.github.raw" | grep -n "cr1/issues/N)"` (each entry links its issue that way) and read which version's section it sits under. If no release lists it, it cannot be tested on `command-room` yet: test on `cr`, or wait for the release.
+2. **Version gate: the fix must be in what is installed.** First find the fix's merge: the pull request that references the issue, and its merge commit (`gh api repos/chaletteholdings/cr1/pulls/<PR> -q .merge_commit_sha`). Then find the installed plugin: the `plugin.json` whose `"name"` is `command-room` under `~/.claude/plugins`, `/root/.claude/plugins` or `/mnt/skills/plugins`. There are two kinds:
+   - **Matthew's staging plugin `cr`** (from the `commandroom1` marketplace; it sits under a `commandroom1` folder). It follows `main` by commit, so its installed commit must be at or after the fix's merge. Read the commit from the `cr@commandroom1` entry (`gitCommitSha`) in `installed_plugins.json` beside the plugins folder, then run `gh api repos/chaletteholdings/cr1/compare/<merge commit>...<installed commit> -q .status`. `ahead` or `identical` means the fix is in; `behind` or `diverged` means it is not.
+   - **The `command-room` plugin clients and Matthew run.** It gets changes only when Matthew promotes a release, so the fix is in only if a released version at or below the installed one contains it. Search the CHANGELOG on `main` for the issue number: `gh api repos/chaletteholdings/cr1/contents/command-room/CHANGELOG.md -H "Accept: application/vnd.github.raw" | grep -n "cr1/issues/N)"` (each entry links its issue that way) and read which version's section it sits under. If no release lists it, it cannot be tested on `command-room` yet: test on `cr`, or wait for the release.
    If the fix is not in, stop. Tell Matthew to update the plugin in the Claude app and start a fresh chat, then check again. Note the version (or the `cr` commit) and the `main` commit; a fail report needs both.
 3. **Pick the folder.** Use a test folder (a synthetic or copied test brain) for anything that converts, moves, deletes or rewrites files, or that runs Maintenance against a book. Use the real folder only when the bug can only show there, and say so up front. Never run a destructive step on the real folder without Matthew's explicit yes in this chat.
 4. **Decide where it runs.** Most tests run in a **new chat** (the product's real path), not in this one, because this chat now carries extra skills and context. Script-level checks (a command, a file's contents) can run here; say which.
@@ -107,7 +107,7 @@ Rules for a good script:
 
 **Judge the path, not only the answer.** Read each run's test log against the fix comment: did the script or route it changed actually run? A right answer reached by a workaround (the model reading files by hand because the fix's own path failed) is **partial**, never a pass. Check the log's claims against the book's own records, where reachable. A run with no test log is posted as "no test log" in its row, never silently counted as a pass.
 
-Scrub every result before posting with the **cr1-scrub** skill. Post with `gh api repos/ChaletteHQ/cr1/issues/N/comments -F body=@<scratch>/uat.md`.
+Scrub every result before posting with the **cr1-scrub** skill. Post with `gh api repos/chaletteholdings/cr1/issues/N/comments -F body=@<scratch>/uat.md`.
 
 ### Pass
 
@@ -127,7 +127,7 @@ Evidence:
 </details>
 ```
 
-Matthew closes on a pass (his ruling, 2026-10-04). Close it: `gh api -X PATCH repos/ChaletteHQ/cr1/issues/N -f state=closed -f state_reason=completed`. Remove the label: `gh api -X DELETE "repos/ChaletteHQ/cr1/issues/N/labels/needs%20UAT"`.
+Matthew closes on a pass (his ruling, 2026-10-04). Close it: `gh api -X PATCH repos/chaletteholdings/cr1/issues/N -f state=closed -f state_reason=completed`. Remove the label: `gh api -X DELETE "repos/chaletteholdings/cr1/issues/N/labels/needs%20UAT"`.
 
 ### Fail or partial: a full report, every time
 
@@ -174,7 +174,7 @@ For anything visual, ask for a full-window screenshot taken on a test folder (Wi
 
 Chat log rules (the same as cr1-report): one line per turn, high level, what was typed verbatim, what Claude did, what it answered, errors verbatim. No internal reasoning, no long tool output, no file contents. About 5 to 20 lines.
 
-Then leave the issue open and remove `needs UAT`: `gh api -X DELETE "repos/ChaletteHQ/cr1/issues/N/labels/needs%20UAT"`.
+Then leave the issue open and remove `needs UAT`: `gh api -X DELETE "repos/chaletteholdings/cr1/issues/N/labels/needs%20UAT"`.
 
 ### Other outcomes
 
@@ -182,7 +182,7 @@ Then leave the issue open and remove `needs UAT`: `gh api -X DELETE "repos/Chale
 - **Not tested, no time:** say so in one line and post nothing. Silence never counts as a pass.
 - **A new, different problem** found while testing gets its own issue through **cr1-report**, linked here, not a paragraph in this comment.
 
-REST only (GraphQL is blocked). If `gh` can't reach the repo in a cloud session, attach it with the add_repo tool (`ChaletteHQ`, `cr1`) and retry once.
+REST only (GraphQL is blocked). If `gh` can't reach the repo in a cloud session, attach it with the add_repo tool (`chaletteholdings`, `cr1`) and retry once.
 
 ## 5. Reply
 

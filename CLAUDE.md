@@ -1,6 +1,6 @@
 # chalette-dev: working on the Command Room 1 dev skills
 
-This repo holds the four skills Matthew and Erick share for Command Room 1 work (`ChaletteHQ/cr1`): cr1-report, cr1-scrub, cr1-test and cr1-desk. Read `README.md` first.
+This repo holds the four skills Matthew and Erick share for Command Room 1 work (`chaletteholdings/cr1`): cr1-report, cr1-scrub, cr1-test and cr1-desk. Read `README.md` first.
 
 ## Rules
 
