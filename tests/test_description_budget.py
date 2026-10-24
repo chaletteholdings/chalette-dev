@@ -1,31 +1,18 @@
 #!/usr/bin/env python3
-"""Description-budget guard for chalette-dev — the sibling of cr1's G11.
+"""Description-budget guard for chalette-dev, the sibling of cr1's G11.
 
-Why this exists (2026-08-16): cr1 has G11, which caps every skill description
-and the whole-catalog total. chalette-dev had no equivalent, so nothing was
-watching this repo's descriptions at all. They drifted: `triage-intake` reached
-1,019 characters — FIVE below the 1,024 hard cap at which the Agent Skills spec
-fails a skill at frontmatter parse. A skill over that cap does not warn; it
-stops loading. `triage-intake` is the skill that works the intake queue, so the
-failure mode was "the tool you use to find problems silently stops existing".
-`capture-for-code` (1,009) and `cr-test` (1,007) were in the same band.
+Why this exists (2026-08-16): a skill description over 1,024 characters does not warn; the
+skill stops loading at frontmatter parse. Nothing was watching this repo's descriptions and
+three of them had drifted to within 20 characters of the cap. Since 2026-10-24 (v0.8.1) the
+same budget covers the two manifests: plugin.json's description had grown into a
+22,892-character changelog.
 
-The gap was structural, not careless: cr1's guard reads cr1's `skills/` folder.
-It cannot see this repo, and no one had noticed that meant this repo was
-unguarded.
+The whole-catalog total is deliberately NOT asserted: whether the runtime's listing budget
+is per plugin or per install is not established, and the four cr1 skills are far under any
+plausible total.
 
-WHY THE CATALOG TOTAL IS NOT CHECKED HERE. M and Eric run cr1 AND chalette-dev
-at the same time, so what their runtime actually loads is the SUM of the two
-catalogs (~63.8k at the time of writing, against cr1's 53,000 budget). Whether
-that budget is enforced per-plugin or per-install is NOT established — it was
-raised, not answered, and guessing either way would be worse than the honest
-gap. So this guard enforces only what IS established: the per-skill cap, which
-comes from the spec and is not ambiguous. A combined-catalog check belongs here
-the moment someone confirms the runtime's actual scope; the constant below is
-recorded so that work starts from a measurement rather than a memory.
-
-  BUDGET (980)   — same headroom cr1 keeps under the hard cap.
-  HARD_CAP (1024) — the spec's parse limit. Never raise this; it is not ours.
+  BUDGET (980)    same headroom cr1 keeps under the hard cap.
+  HARD_CAP (1024) the spec's parse limit. Never raise this; it is not ours.
 """
 from __future__ import annotations
 
@@ -40,10 +27,10 @@ SKILLS = ROOT / "chalette-dev" / "skills"
 
 BUDGET = 980
 HARD_CAP = 1024
-# Measured 2026-08-16 after the trim pass (was 10,814 before it). Recorded for
-# whoever establishes the runtime's real scope; deliberately NOT asserted —
-# see the module docstring.
-CATALOG_AT_LAST_MEASURE = 10583
+MANIFESTS = [
+    ROOT / "chalette-dev" / ".claude-plugin" / "plugin.json",
+    ROOT / ".claude-plugin" / "marketplace.json",
+]
 
 
 def _description(skill_md: Path) -> str:
@@ -94,6 +81,36 @@ def test_description_is_present(skill_md: Path) -> None:
     assert _description(skill_md).strip(), (
         f"{skill_md.parent.name}: no description in frontmatter. Cowork routes on "
         f"the description ONLY, so this skill can never be reached."
+    )
+
+
+def _manifest_descriptions() -> list[tuple[str, str]]:
+    import json
+    out = []
+    for p in MANIFESTS:
+        data = json.loads(p.read_text(encoding="utf-8"))
+        if "description" in data:
+            out.append((p.name, data["description"]))
+        for entry in data.get("plugins", []):
+            out.append((f"{p.name}:{entry.get('name')}", entry.get("description", "")))
+    return out
+
+
+def test_manifests_are_discoverable() -> None:
+    assert len(_manifest_descriptions()) >= 2, _manifest_descriptions()
+
+
+@pytest.mark.parametrize("item", _manifest_descriptions(), ids=lambda x: x[0])
+def test_manifest_description_within_budget(item: tuple[str, str]) -> None:
+    """A manifest description is read wherever the plugin is listed; it is a label, not a changelog.
+
+    Release history belongs in CHANGELOG.md.
+    """
+    name, desc = item
+    assert desc.strip(), f"{name}: empty description"
+    assert len(desc) <= BUDGET, (
+        f"{name}: description is {len(desc)} chars, over the {BUDGET} budget. "
+        f"Move history to CHANGELOG.md; keep two sentences here."
     )
 
 

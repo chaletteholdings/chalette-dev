@@ -1,6 +1,6 @@
-# Operator overlay — per-machine, gitignored. Only M keeps one; it carries his real
-# paths and the "real" allowed_targets. The committed config/operator.json stays the
-# contractor-safe default. Guard 2 (tests/test_operator_fences.py) asserts this stays untracked.
+# Operator overlay, per machine, gitignored. The owner's copy sets operator to m.
+# The committed config/operator.json stays the contractor default.
+# tests/test_operator_fences.py asserts the overlay is never tracked.
 operator.local.json
 chalette-dev/config/operator.local.json
 
