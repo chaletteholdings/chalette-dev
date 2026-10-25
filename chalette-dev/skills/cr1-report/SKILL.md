@@ -1,13 +1,13 @@
 ---
 name: "cr1-report"
-description: "Use when Matthew or Erick wants something that broke, or an idea, turned into a GitHub issue on ChaletteHQ/cr1 (Command Room 1) from the chat where it came up: 'report this', 'file a bug', 'feature request', 'spec it', 'send it to build'. Does NOT fire on 'scrub this' or 'scrub the repo' (cr1-scrub), 'what needs me' or 'test #N' (cr1-test), or 'what's pending to build' (cr1-desk)."
+description: "Use when Matthew or Erick wants something that broke, or an idea, turned into a GitHub issue on chaletteholdings/cr1 (Command Room 1) from the chat where it came up: 'report this', 'file a bug', 'feature request', 'spec it', 'send it to build'. Does NOT fire on 'scrub this' or 'scrub the repo' (cr1-scrub), 'what needs me' or 'test #N' (cr1-test), or 'what's pending to build' (cr1-desk)."
 ---
 
 # cr1 report
 
 Turns what just happened in this chat into one clean GitHub issue, so Matthew spends a minute on it and whoever builds the fix gets everything they need. **A report is an issue, never a branch or a pull request.** The issue is also the handoff to Claude Code: cr1-build, a project skill inside the cr1 repo, builds from the issue.
 
-The repo is `ChaletteHQ/cr1`, branch `main`. Its own rules are `ISSUES.md`, `CONTRIBUTING.md` and `DEVELOPMENT.md` at the repo root. This skill follows them.
+The repo is `chaletteholdings/cr1`, branch `main`. Its own rules are `ISSUES.md`, `CONTRIBUTING.md` and `DEVELOPMENT.md` at the repo root. This skill follows them.
 
 If the owner explicitly says the problem is on Command Room 2, file it on `ChaletteHQ/cr2` instead, with the same steps.
 
@@ -38,7 +38,7 @@ Say who in one line in the first reply ("Running as Matthew, from the GitHub acc
 ## 2. Gather (without asking Matthew for what you can see)
 
 - **The chat log:** this conversation is the evidence, so run the skill in the chat where the problem happened. If it happened in another chat, ask Matthew to say "report this" there, or to paste that chat's key turns here.
-- **Version:** read `version` from the installed plugin's `.claude-plugin/plugin.json`. Search for a `plugin.json` whose `"name"` is `command-room` under `~/.claude/plugins`, `/root/.claude/plugins` or `/mnt/skills/plugins`. If it sits under a `commandroom1` folder, it is Matthew's staging plugin `cr`, which follows `main` by commit: note its commit too (the `gitCommitSha` of `cr@commandroom1` in `installed_plugins.json` beside the plugins folder). Note the current `main` version too: `gh api repos/ChaletteHQ/cr1/contents/command-room/.claude-plugin/plugin.json -q .content | base64 -d`. If you can't find it, write "unknown".
+- **Version:** read `version` from the installed plugin's `.claude-plugin/plugin.json`. Search for a `plugin.json` whose `"name"` is `command-room` under `~/.claude/plugins`, `/root/.claude/plugins` or `/mnt/skills/plugins`. If it sits under a `commandroom1` folder, it is Matthew's staging plugin `cr`, which follows `main` by commit: note its commit too (the `gitCommitSha` of `cr@commandroom1` in `installed_plugins.json` beside the plugins folder). Note the current `main` version too: `gh api repos/chaletteholdings/cr1/contents/command-room/.claude-plugin/plugin.json -q .content | base64 -d`. If you can't find it, write "unknown".
 - **Where:** chat or scheduled task; desktop, web or phone; folder attached directly or through the connector; test folder or real folder (never its contents).
 - **Error text,** verbatim, plus the failing tool output if there was one (trimmed to the lines that matter).
 - **Last version that worked / first version that broke,** if the chat or the owner knows. Otherwise "unknown". This narrows the search to one release.
@@ -52,7 +52,7 @@ Say who in one line in the first reply ("Running as Matthew, from the GitHub acc
 
 ## 3. Check for an existing issue
 
-List open and recent issues and match by title and area: `gh api "repos/ChaletteHQ/cr1/issues?state=all&per_page=100&page=1" -q '.[]|select(.pull_request|not)|"\(.number) [\(.state)] \(.title)"'` (page 2 if needed). Read the body of any close match. The search endpoint is blocked in cloud sessions, so use this list.
+List open and recent issues and match by title and area: `gh api "repos/chaletteholdings/cr1/issues?state=all&per_page=100&page=1" -q '.[]|select(.pull_request|not)|"\(.number) [\(.state)] \(.title)"'` (page 2 if needed). Read the body of any close match. The search endpoint is blocked in cloud sessions, so use this list.
 - If the same problem or feature is already open, **comment there** with the new evidence (same chat log format) instead of opening a twin. Similar symptoms do not prove the same cause; if unsure, open a new issue and link the old one.
 - If it was closed and is back, comment on it and say it came back on version X. Matthew reopens it; Erick asks him to in the comment.
 
@@ -144,14 +144,14 @@ Run the scrub (cr1-scrub, section S below) on the title, body and chat log. Repl
 Show Matthew the title plus three lines (what it is, impact or outcome, labels) and ask "File it?". On yes:
 
 ```
-gh api repos/ChaletteHQ/cr1/issues -f title="<title>" -F body=@<scratch>/issue.md -f "labels[]=enhancement" -q .html_url
+gh api repos/chaletteholdings/cr1/issues -f title="<title>" -F body=@<scratch>/issue.md -f "labels[]=enhancement" -q .html_url
 ```
 
 Labels: `bug` or `enhancement`, plus `question` when Erick files it.
 
 - Use REST only. GraphQL (`gh issue create`, `gh pr list`) is blocked in these sessions.
-- If `gh` can't reach the repo in a cloud session, attach it with the add_repo tool (`ChaletteHQ`, `cr1`) and retry once.
-- If there is no GitHub access at all, save the issue to scratch and give Matthew a prefilled link: `https://github.com/ChaletteHQ/cr1/issues/new?title=<urlencoded>&labels=enhancement&body=<urlencoded>`. If the body is over about 6,000 characters, give the link with the title only and the body to paste.
+- If `gh` can't reach the repo in a cloud session, attach it with the add_repo tool (`chaletteholdings`, `cr1`) and retry once.
+- If there is no GitHub access at all, save the issue to scratch and give Matthew a prefilled link: `https://github.com/chaletteholdings/cr1/issues/new?title=<urlencoded>&labels=enhancement&body=<urlencoded>`. If the body is over about 6,000 characters, give the link with the title only and the body to paste.
 
 **Visual bugs** (a widget, page, artifact, layout, anything you judge by looking): also add the `needs evidence` label. Tell Matthew in one line to reproduce it on a test folder, take a full-window screenshot there (Windows: Win+Shift+S, window mode) and drag it into the issue; if it only shows on the real folder, paste the exact error text instead. When he says it's attached, remove `needs evidence`.
 

@@ -1,6 +1,6 @@
 # chalette-dev: Command Room 1 dev skills
 
-The skills Matthew and Erick share to report, scrub, test and plan work on Command Room 1 (`ChaletteHQ/cr1`, branch `main`). Install this plugin and both of you work the same way.
+The skills Matthew and Erick share to report, scrub, test and plan work on Command Room 1 (`chaletteholdings/cr1`, branch `main`). Install this plugin and both of you work the same way.
 
 As of v0.8.0 (2026-10-22) the skills target cr1. Command Room 2 was retired that day; these were its cr2-report, cr2-scrub, cr2-test and cr2-desk. Each skill still files on Command Room 2 when the owner explicitly says the problem is there.
 
@@ -24,7 +24,7 @@ Each skill works out who is running it in this order: a gitignored `config/opera
 
 ## Setup
 
-1. Clone: `git clone https://github.com/ChaletteHQ/chalette-dev ~/repos/chalette-dev` (cr1's commit guard looks for the scrub script there).
+1. Clone: `git clone https://github.com/chaletteholdings/chalette-dev ~/repos/chalette-dev` (cr1's commit guard looks for the scrub script there).
 2. Install the plugin in the Claude app from this repo.
 3. Matthew only, optional: add `chalette-dev/config/operator.local.json` with `{"operator": "m", "operator_name": "Matthew"}`. Not needed when your GitHub account is signed in; it only matters on a computer where it isn't.
 4. Optional, each person: `chalette-dev/config/scrub.local.json` with private lists for the scrub (format at the top of `skills/cr1-scrub/scripts/scrub_scan.py`). Never commit it.
