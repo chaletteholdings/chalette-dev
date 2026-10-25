@@ -2,7 +2,7 @@
 
 The skills Matthew and Erick share to report, scrub, test and plan work on Command Room 1 (`chaletteholdings/cr1`, branch `main`). Install this plugin and both of you work the same way.
 
-As of v0.8.0 (2026-10-22) the skills target cr1. Command Room 2 was retired that day; these were its cr2-report, cr2-scrub, cr2-test and cr2-desk. Each skill still files on Command Room 2 when the owner explicitly says the problem is there.
+As of v0.8.0 (2026-10-22) the skills target cr1. Command Room 2 was retired that day, and as of v0.8.2 nothing in this plugin files on it or names its repository.
 
 ## The four skills
 

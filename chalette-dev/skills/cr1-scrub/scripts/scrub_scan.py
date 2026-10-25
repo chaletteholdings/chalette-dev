@@ -17,14 +17,14 @@ WORDS = {"company", "builders", "contact", "complete", "beach", "power", "group"
          "capital", "advisors", "leaders", "school", "life", "word", "franchise", "partnership", "consulting",
          "venture", "trading", "system", "global", "brands", "clean", "labs", "solutions", "investors", "logistics",
          "speakers", "talent", "forum", "fund", "deal", "construction", "living", "green", "place"}
-TEAM_FULL = ["Matthew Davidov", "Louis Wong", "Erick Burg"]  # the team may be named; removed before scanning
+TEAM_FULL = ["Matthew Davidov", "Erick Burg"]  # the team may be named; removed before scanning
 INTERNAL = ("command room", "chalette", "penelope", "new bot build", "cr56 testbot")
 
 
 def _local():
     here = os.path.dirname(os.path.abspath(__file__))
     for p in (os.path.join(here, "..", "..", "..", "config", "scrub.local.json"),
-              os.environ.get("CR1_SCRUB_LOCAL", ""), os.environ.get("CR2_SCRUB_LOCAL", "")):  # CR2_ kept for old setups
+              os.environ.get("CR1_SCRUB_LOCAL", "")):
         if p and os.path.isfile(p):
             with open(p, encoding="utf-8") as f:
                 return json.load(f)

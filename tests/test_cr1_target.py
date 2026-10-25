@@ -1,8 +1,8 @@
-"""The four skills target Command Room 1 (chaletteholdings/cr1) and carry nothing CR2-only (v0.8.0).
+"""The four skills target Command Room 1 (chaletteholdings/cr1) and carry nothing CR2-only.
 
-CR2 was retired on 2026-10-22. Each skill may name ChaletteHQ/cr2 in exactly one line: the
-fallback for when the owner explicitly says a problem is on CR2. Nothing else from CR2 survives:
-no CR2 developer, no core/labs routes, no CR2 folders or tools."""
+CR2 was retired on 2026-10-22. As of v0.8.2 no skill names the CR2 repository at all (the
+explicit-fallback line of v0.8.0 is gone). Nothing else from CR2 survives: no CR2 developer,
+no core/labs routes, no CR2 folders or tools."""
 import pathlib
 import re
 
@@ -28,10 +28,9 @@ def test_frontmatter_name_matches_folder(name):
 
 
 @pytest.mark.parametrize("name", NAMES)
-def test_cr2_appears_only_in_the_one_fallback_line(name):
-    lines = [ln for ln in _text(name).splitlines() if "ChaletteHQ/cr2" in ln or "repos/ChaletteHQ/cr2" in ln]
-    assert len(lines) == 1, f"{name}: ChaletteHQ/cr2 on {len(lines)} lines, expected only the fallback line"
-    assert "explicitly says" in lines[0]
+def test_no_cr2_repository_reference_remains(name):
+    hits = [ln for ln in _text(name).splitlines() if re.search(r"ChaletteHQ/cr2|cr2", ln, re.I)]
+    assert not hits, f"{name}: CR2 still named: {hits}"
 
 
 @pytest.mark.parametrize("name", NAMES)
