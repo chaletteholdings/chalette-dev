@@ -1,4 +1,4 @@
-"""The four skills target Command Room 1 (ChaletteHQ/cr1) and carry nothing CR2-only (v0.8.0).
+"""The four skills target Command Room 1 (chaletteholdings/cr1) and carry nothing CR2-only (v0.8.0).
 
 CR2 was retired on 2026-10-22. Each skill may name ChaletteHQ/cr2 in exactly one line: the
 fallback for when the owner explicitly says a problem is on CR2. Nothing else from CR2 survives:

@@ -1,6 +1,6 @@
 ---
 name: cr1-desk
-description: "Use when Matthew or Erick wants to see what is pending to build on Command Room 1 (ChaletteHQ/cr1), explained from the client's side, or to get one item ready to build with a short guided set of questions. Use on 'what's pending to build', 'build desk', 'what's waiting to build', 'what should we build next', 'explain #N', 'get #N ready', 'let's build #N', 'decide #N'. Does NOT fire on 'what needs me' or 'test #N' (cr1-test), 'report this', 'file a bug' or 'spec it' (cr1-report), 'scrub this' (cr1-scrub), or 'build #N' in Claude Code (cr1-build)."
+description: "Use when Matthew or Erick wants to see what is pending to build on Command Room 1 (chaletteholdings/cr1), explained from the client's side, or to get one item ready to build with a short guided set of questions. Use on 'what's pending to build', 'build desk', 'what's waiting to build', 'what should we build next', 'explain #N', 'get #N ready', 'let's build #N', 'decide #N'. Does NOT fire on 'what needs me' or 'test #N' (cr1-test), 'report this', 'file a bug' or 'spec it' (cr1-report), 'scrub this' (cr1-scrub), or 'build #N' in Claude Code (cr1-build)."
 ---
 
 # cr1-desk: the build desk
@@ -10,7 +10,7 @@ Matthew is not technical. He builds Command Room 1 with Claude Code and merges h
 1. **The desk:** shows everything pending, sorted by what it is waiting on, each item explained from the client's side.
 2. **Get one ready:** when Matthew picks one, briefs him, asks him the few questions only he can answer, and writes his answers into the issue as the build brief, so the decision lives where the work happens and not in a chat.
 
-Repository: `ChaletteHQ/cr1`, branch `main`. Read it with whatever GitHub access this session has (the `gh` command in Claude Code, or a GitHub connector in chat). If there is none, say so in one line and stop. If the owner explicitly says the item is on Command Room 2, read and post on `ChaletteHQ/cr2` instead, with the same steps.
+Repository: `chaletteholdings/cr1`, branch `main`. Read it with whatever GitHub access this session has (the `gh` command in Claude Code, or a GitHub connector in chat). If there is none, say so in one line and stop. If the owner explicitly says the item is on Command Room 2, read and post on `ChaletteHQ/cr2` instead, with the same steps.
 
 ## Who is running this
 
@@ -170,4 +170,4 @@ These are standard practices for a non-technical owner building with an AI devel
 - **UAT:** Matthew's own test after the change is merged.
 - **Version:** the release number clients have installed. It is set only at release, by Matthew's ship-cr-plugin flow; a pull request never changes it.
 
-Uses: GitHub issues, pull requests, labels and comments in ChaletteHQ/cr1; cr1-scrub rules; cr1-report issue shape; hands off to cr1-build and cr1-test.
+Uses: GitHub issues, pull requests, labels and comments in chaletteholdings/cr1; cr1-scrub rules; cr1-report issue shape; hands off to cr1-build and cr1-test.

@@ -1,11 +1,11 @@
 ---
 name: "cr1-scrub"
-description: "Use before anything goes to the ChaletteHQ/cr1 (Command Room 1) GitHub repo, to check text, files or the whole repo for client names, personal information and money figures. Use on 'scrub this', 'scrub the repo', 'privacy check', and before any cr1 issue, comment, PR or commit."
+description: "Use before anything goes to the chaletteholdings/cr1 (Command Room 1) GitHub repo, to check text, files or the whole repo for client names, personal information and money figures. Use on 'scrub this', 'scrub the repo', 'privacy check', and before any cr1 issue, comment, PR or commit."
 ---
 
 # cr1 scrub
 
-The rule (Matthew, 2026-09-29, extended 2026-10-04): **nothing about a client, prospect, partner, family member or any real person, and no money figure, goes into the `ChaletteHQ/cr1` repo.** Not in files, tests, issues, comments, pull requests, commit messages, branch names, chat logs or screenshots. The full text is section 0 of `ISSUES.md` at the repo root; the Privacy section of `CONTRIBUTING.md` says the same.
+The rule (Matthew, 2026-09-29, extended 2026-10-04): **nothing about a client, prospect, partner, family member or any real person, and no money figure, goes into the `chaletteholdings/cr1` repo.** Not in files, tests, issues, comments, pull requests, commit messages, branch names, chat logs or screenshots. The full text is section 0 of `ISSUES.md` at the repo root; the Privacy section of `CONTRIBUTING.md` says the same.
 
 If the owner explicitly says the text is going to Command Room 2, check and sweep `ChaletteHQ/cr2` instead, with the same steps.
 
@@ -46,7 +46,7 @@ Client names come from Matthew's own book, so the list is always current and nev
 ## Step 2. Scan
 
 - Check mode: write the text to `<scratch>/post.md` and run `python3 scrub_scan.py scan --terms <scratch>/terms.txt <scratch>/post.md`. Exit 0 means clean.
-- Sweep mode: clone or fetch `ChaletteHQ/cr1` with all branches. Dump each live branch's current files (open text for `.docx`/`.xlsx`/`.pptx` from their XML), and all issues, PRs, issue comments and review comments through the REST API (`gh api repos/ChaletteHQ/cr1/issues?state=all&per_page=100&page=N`, `.../issues/comments`, `.../pulls/comments`). Paginate by hand: `--paginate` and GraphQL fail through the session proxy. Scan the lot in one call so the pattern compiles once.
+- Sweep mode: clone or fetch `chaletteholdings/cr1` with all branches. Dump each live branch's current files (open text for `.docx`/`.xlsx`/`.pptx` from their XML), and all issues, PRs, issue comments and review comments through the REST API (`gh api repos/chaletteholdings/cr1/issues?state=all&per_page=100&page=N`, `.../issues/comments`, `.../pulls/comments`). Paginate by hand: `--paginate` and GraphQL fail through the session proxy. Scan the lot in one call so the pattern compiles once.
 
 ## Step 3. Judge each hit (the script is a net, not a verdict)
 
@@ -62,7 +62,7 @@ Replace with neutral placeholders: `Contact A`, `Client B`, `<client folder>`, `
 Matthew's ruling (2026-10-04): **current files only. Git history is not rewritten.**
 - Files on `main`: one small branch and one PR per item (`fix/scrub-<few-words>`). The PR never touches the version or the CHANGELOG; those are set only at release, by Matthew's ship-cr-plugin flow. Run the quick check from `command-room/`: `PYTHONUTF8=1 python tests/run_all.py --quick` (the full battery is the same command without `--quick`).
 - Files on an open PR's branch: push one scrub commit to that branch and comment asking for a squash-merge, so the old commits never reach `main`.
-- Issue bodies and comments: edit in place (`gh api -X PATCH repos/ChaletteHQ/cr1/issues/N -F body=@file`, or `.../issues/comments/ID`) and add `_Redacted <date>: names replaced with placeholders._`. Never delete an issue.
+- Issue bodies and comments: edit in place (`gh api -X PATCH repos/chaletteholdings/cr1/issues/N -F body=@file`, or `.../issues/comments/ID`) and add `_Redacted <date>: names replaced with placeholders._`. Never delete an issue.
   - **An edit does not erase the old text.** GitHub keeps every earlier version of an issue body or comment under its "edited" marker, readable by anyone who can see the repo. There is no API or `gh` command to remove it. So after editing, list each redacted item with its link and tell the operator to remove the old version by hand: click **edited** on the comment, open the earlier version, then **Options → Delete revision from history**. Only the comment's author or someone with write access can do this; who edited it and when stays visible. Until that is done, the redaction is not finished.
 - Commit messages and old commits: report them, do not touch them.
 - A credential or token found anywhere: tell Matthew at once so he can rotate it. Fixing the text does not make the secret safe.
