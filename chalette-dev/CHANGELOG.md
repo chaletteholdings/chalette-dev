@@ -2,6 +2,16 @@
 
 (Release history before v0.3.0 is at the bottom of this file, moved out of `plugin.json` on 2026-10-24.)
 
+## v0.9.0 (2026-10-25): the dev toolkit moves in from the owner's plugin
+
+Owner ruling 2026-10-25: `chalette` is the owner's personal plugin; `chalette-dev` is the development toolkit for the owner and the team. Eleven skills moved here from `chalette` and leave it in its v0.13.0.
+
+- **Moved in:** `battery` (was `cr-test`), `bug-regression-suite`, `synthetic-workspace-runtime-test`, `cross-skill-interaction-test`, `scale-stress-test`, `ship-readiness-gate`, `cr-skill-builder`, `skill-creator`, `skill-generator`, `regenerate-skill`, `preview-command-room-widget`.
+- **Renamed `cr-test` to `battery`** so it cannot collide with `cr1-test`. Say "run the battery", "battery --quick", "battery --ship" or "battery --attended"; the old "cr test" phrases are gone, and a test fails if they come back.
+- **Scrubbed on the way in:** the old `ChaletteHQ/cr1` address now reads `chaletteholdings/cr1`; a real company name used as a fixture placeholder in `synthetic-workspace-runtime-test` and `cr-skill-builder` is now `Acme Bakery`; the owner and the implementer are named by role; plugin prefixes on moved skills now read `chalette-dev:`; three packaged `.skill` archives nothing referenced were dropped from `skill-creator`. The private name scan is clean over the branch.
+- **Team fence:** every moved skill opens with the same note: a contractor runs it on the synthetic fixtures or a copied test brain only, never a real client folder, and never ships or promotes.
+- **Tests:** the skill set is pinned at the four `cr1-*` skills plus the eleven; new fences for the old `cr-test` name, the old repo address and the team note, each seen to fail when its rule is broken. A pre-existing defect in `test_no_cr2_repository_reference_remains` is fixed in passing: its pattern held two literal backspace characters, so the bare `cr2` check never matched; it now reads `cr2` and the four skills still pass.
+
 ## v0.8.2 (2026-10-24): nothing here files on Command Room 2 any more
 
 Command Room 2 is retired (owner ruling 2026-10-22) and its three stale pull requests and the core/labs issue were closed on 2026-10-24. This release removes the last of it from the four skills.

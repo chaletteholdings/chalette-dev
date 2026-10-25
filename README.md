@@ -1,10 +1,10 @@
-# chalette-dev: Command Room 1 dev skills
+# chalette-dev: the Command Room dev toolkit
 
-The skills Matthew and Erick share to report, scrub, test and plan work on Command Room 1 (`chaletteholdings/cr1`, branch `main`). Install this plugin and both of you work the same way.
+The skills the owner and the team share to report, scrub, test and plan work on Command Room 1 (`chaletteholdings/cr1`, branch `main`). Install this plugin and both of you work the same way.
 
 As of v0.8.0 (2026-10-22) the skills target cr1. Command Room 2 was retired that day, and as of v0.8.2 nothing in this plugin files on it or names its repository.
 
-## The four skills
+## The four cr1 skills
 
 | Skill | Say | What it does |
 |---|---|---|
@@ -12,6 +12,24 @@ As of v0.8.0 (2026-10-22) the skills target cr1. Command Room 2 was retired that
 | `cr1-scrub` | "scrub this", "scrub the repo" | Keeps client names, personal information and money figures out of the repo. Builds the name list fresh from your own book. |
 | `cr1-test` | "what needs me", "test #N" | Your acceptance test on a fix: a short script, the original failure run 3 times, the result posted to the issue. |
 | `cr1-desk` | "what's pending to build", "get #N ready" | Everything pending in plain language from the client's side, and a short multiple-choice briefing that becomes the build brief. |
+
+## The toolkit (moved in from the owner's plugin, v0.9.0)
+
+Every skill below opens with the team fence: a contractor runs it on the synthetic fixtures or a copied test brain only, never a real client folder, and never ships or promotes. Release and promote stay in the owner's private plugin.
+
+| Skill | Say | What it does |
+|---|---|---|
+| `battery` | "run the battery", "battery --quick", "battery --ship" | The whole Command Room test battery in tiers, one GREEN, HOLD or RED verdict. Was `cr-test`; renamed so it never collides with `cr1-test`. |
+| `bug-regression-suite` | "run the regression suite" | Replays every bug ever found to prove none came back; an adversarial mode on top. |
+| `synthetic-workspace-runtime-test` | "run the synthetic workspace test" | Builds a fake executive's workspace from fixtures and runs the product against it. |
+| `cross-skill-interaction-test` | "run the cross-skill test" | Checks skills do not break each other across time. |
+| `scale-stress-test` | "run the scale test" | Checks the helpers degrade gracefully on a very large workspace. |
+| `ship-readiness-gate` | "ship readiness", "post-push verify" | The unattended is-this-safe-to-promote verdict after a push. Verifies only; it never ships. |
+| `cr-skill-builder` | "new CR skill", "audit this skill" | Builds or audits a Command Room skill with the house contract enforced. |
+| `skill-creator` | "create a skill", "improve this skill" | General skill writing, evals and description tuning. |
+| `skill-generator` | "generate a skill for [project]" | A project-scoped skill for one client or workstream. |
+| `regenerate-skill` | "regenerate [skill]" | Rebuilds a generated skill when its template changes, keeping the customizations. |
+| `preview-command-room-widget` | "internal: preview widget [name]" | Renders a widget before it ships. |
 
 Building from an issue is `cr1-build`, a project skill inside the cr1 repo itself. It runs a fresh-context reviewer before it opens a pull request, and Matthew merges. Versions and the CHANGELOG in cr1 are set only at release, by Matthew's ship-cr-plugin flow; clients get a change when he promotes that release.
 
