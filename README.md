@@ -32,4 +32,4 @@ Each skill works out who is running it in this order: a gitignored `config/opera
 
 ## Checks
 
-`pytest tests/` (also on every push): operator fences, `quick_validate` on every skill (`scripts/quick_validate.py`, vendored from Anthropic's skill-creator, Apache 2.0), the description budget, the cr1 target guard (no CR2-only text left in the skills) and the scrub script on sample books. Each skill has `evals/triggers.json`: phrases that should start it and near misses that should not.
+`pytest tests/` (also on every push): the committed operator profile stays the contractor default with exactly the two keys the skills read and the local overlay is never tracked; `quick_validate` on every skill (`scripts/quick_validate.py`, vendored from Anthropic's skill-creator, Apache 2.0); the description budget on every skill and on both manifests; the cr1 target guard (no CR2-only text left in the skills); the scrub script on sample books; the test-log prompt. Each skill has `evals/triggers.json`: phrases that should start it and near misses that should not. The evals are not run by the tests yet.

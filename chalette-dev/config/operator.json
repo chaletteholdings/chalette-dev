@@ -1,25 +1,5 @@
 {
-  "_comment": "Per-machine operator identity for chalette-dev skills. Lives INSIDE the plugin dir (chalette-dev/config/) so it actually ships with the skills that read it — at the repo root it was outside the plugin payload and never loaded, which meant the synthetic-only rule was prose with nothing behind it. THIS committed file is the contractor-safe default and must stay so (Guard 2 enforces it). 'Contractor-safe' means ZERO ship authority and synthetic targets only — as of GATE1 it does NOT mean zero authority: may_build_own_spec ships true on purpose, see its comment below. Do NOT edit it locally to become M's profile — instead drop a gitignored config/operator.local.json next to it; every reading skill loads operator.json then overlays operator.local.json per-key. Only M keeps an overlay.",
+  "_comment": "Shared default identity for the chalette-dev skills. The skills read one key, operator, and say who they took you for. The owner's machine keeps a gitignored config/operator.local.json beside this file with operator set to m; signed-in GitHub accounts are checked first in web and phone chats, so the overlay is optional. Authority (who merges, who ships, who promotes) is not a field here: it is the GitHub role on the repo. This committed file must stay the contractor default (tests/test_operator_fences.py).",
   "operator": "eric",
-  "operator_name": "Eric",
-  "role": "engineer",
-  "cr1_clone": "~/repos/cr1",
-  "_comment_workspace_root": "null = use the default synthetic fixture (skills/synthetic-workspace-runtime-test/fixtures/clean_workspace). Set a path ONLY if allowed_targets includes 'real'. Previously '~/cr-test-workspace', a directory that never existed on any machine.",
-  "workspace_root": null,
-  "_comment_intake_root": "Queue root for capture-for-code / triage-intake (bug+idea intake pair). Folders new/ needs-input/ speced/ done/ killed/ + specs/ are created under it on first capture. Local to each operator's machine.",
-  "intake_root": "~/cr-intake",
-  "_comment_chalette_clone": "Path to a chalette030 clone; only M has one. triage-intake pulls it when set AND the item targets the chalette plugin (INTAKE1 F4, operator-aware). null for contractors.",
-  "chalette_clone": null,
-  "_comment_specs_dir": "Where triage-intake writes specs. null = <intake_root>/specs/ (Eric default). M's overlay points it at his build-specs folder.",
-  "specs_dir": null,
-  "_comment_parking_doc": "PARK-verdict target for triage-intake. null = <intake_root>/PARKING.md. M's overlay points it at his FUTURE_WORK.md.",
-  "parking_doc": null,
-  "_comment_scrub_roster": "Path to the operator's real client/org/person roster, used ONLY as the grep source for triage-intake's outbound scrub gate (contributor packets + the cr1 BACKLOG.md row). FAIL-CLOSED: null or unreadable disables both outbound surfaces entirely — a contractor profile has no roster and never needs the feature. Real value lives ONLY in the gitignored overlay; the committed default stays null (Guard 2 enforces it).",
-  "scrub_roster": null,
-  "_comment_allowed_targets": "'synthetic' = fixtures only. Adding 'real' lets the skills target a live workspace; that is M's profile, not a contractor's.",
-  "allowed_targets": ["synthetic"],
-  "may_ship": false,
-  "may_promote": false,
-  "_comment_may_build_own_spec": "Whether this operator may build directly from a spec their own triage session wrote. Independent of may_ship: this operator carries spec->build in one pass while still holding ZERO ship authority (no version bump, no CHANGELOG, no promote, no self-merge) — review happens at the pull request. This is the ONE authority key that ships TRUE (M's ruling, 2026-07-27): it grants nothing a PR review doesn't already catch, and shipping it on means a contractor gets it by pulling the repo instead of hand-creating an overlay that a re-clone silently loses. Guard 2 pins it TRUE — a silent revert would send contractors back to the pre-build handoff with no error. may_ship / may_promote / allowed_targets are unaffected and still ship locked.",
-  "may_build_own_spec": true
+  "operator_name": "Eric"
 }

@@ -1,8 +1,10 @@
 name: toolkit-guard
 
-# Guards for the Command Room 1 dev skills (cr1-report, cr1-scrub, cr1-test, cr1-desk): operator fences, quick_validate and the
-# description budget, on every push and pull request. (The cross-repo overlap guard was
-# retired on 2026-10-04 when the Command Room 1 toolkit moved to the chalette plugin.)
+# Checks for the Command Room 1 dev skills (cr1-report, cr1-scrub, cr1-test, cr1-desk) on
+# every push and pull request: the committed operator profile stays the contractor default
+# with exactly the keys the skills read, the overlay is never tracked, every skill passes
+# quick_validate, descriptions (skills and manifests) stay under budget, the skills target
+# cr1, the scrub script works on sample books, and the test-log prompt is present.
 
 on:
   push:
@@ -18,6 +20,6 @@ jobs:
           python-version: "3.12"
       - name: Install test deps
         run: pip install pytest pyyaml
-      - name: Guard 2 — operator fences + quick_validate (all skills)
+      - name: Operator fences, quick_validate, description budget, cr1 target, scrub
         run: pytest tests/ -v
 
