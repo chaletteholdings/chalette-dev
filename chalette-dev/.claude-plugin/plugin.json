@@ -1,6 +1,6 @@
 {
   "name": "chalette-dev",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Chalette Command Room 1 dev skills shared by the owner and the contractor: report a bug or idea to the cr1 repo, scrub client data, run acceptance tests, and see what is pending to build. No client data. Release history is in CHANGELOG.md.",
   "author": {
     "name": "Chalette Holdings"

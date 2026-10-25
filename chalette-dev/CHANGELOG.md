@@ -2,6 +2,17 @@
 
 (Release history before v0.3.0 is at the bottom of this file, moved out of `plugin.json` on 2026-10-24.)
 
+## v0.8.2 (2026-10-24): nothing here files on Command Room 2 any more
+
+Command Room 2 is retired (owner ruling 2026-10-22) and its three stale pull requests and the core/labs issue were closed on 2026-10-24. This release removes the last of it from the four skills.
+
+- **cr1-desk, cr1-report, cr1-scrub, cr1-test** lose the one-line fallback that let the owner route an item to the CR2 repository. The skills name one repository, `chaletteholdings/cr1`.
+- **cr1-scrub `scrub_scan.py`** drops the `CR2_SCRUB_LOCAL` environment fallback, and the former CR2 developer is no longer on the allowed team list, so the name is flagged like any other.
+- **tests/test_cr1_target.py** now asserts that no skill names CR2 at all, instead of allowing exactly one fallback line.
+- **README** says so.
+
+Verified: `pytest tests/` green; `quick_validate` passes on all four skills.
+
 ## v0.8.1 (2026-10-24): the manifest says what the plugin is, the config holds what the skills read
 
 Cleanup from the 2026-10-23 dev-system audit. No skill text changed; triggers unchanged.

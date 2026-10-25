@@ -10,7 +10,7 @@ Matthew is not technical. He builds Command Room 1 with Claude Code and merges h
 1. **The desk:** shows everything pending, sorted by what it is waiting on, each item explained from the client's side.
 2. **Get one ready:** when Matthew picks one, briefs him, asks him the few questions only he can answer, and writes his answers into the issue as the build brief, so the decision lives where the work happens and not in a chat.
 
-Repository: `chaletteholdings/cr1`, branch `main`. Read it with whatever GitHub access this session has (the `gh` command in Claude Code, or a GitHub connector in chat). If there is none, say so in one line and stop. If the owner explicitly says the item is on Command Room 2, read and post on `ChaletteHQ/cr2` instead, with the same steps.
+Repository: `chaletteholdings/cr1`, branch `main`. Read it with whatever GitHub access this session has (the `gh` command in Claude Code, or a GitHub connector in chat). If there is none, say so in one line and stop.
 
 ## Who is running this
 

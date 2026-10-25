@@ -7,8 +7,6 @@ description: "Use when Matthew or Erick wants to test a Command Room 1 fix that 
 
 A fix is built with cr1-build, checked by a fresh reviewer, and merged by Matthew. Then Matthew confirms it in the real product. This skill makes the confirming fast: it tells Matthew where to go, what to type and what a pass looks like, then writes the result back in the repo's fixed shape. A failed test gets the same complete write-up as a bug filed with cr1-report, so whoever builds the next attempt never has to ask what happened. Rules: sections 7 and 12 of `ISSUES.md` at the root of `chaletteholdings/cr1`.
 
-If the owner explicitly says the fix is on Command Room 2, read and post on `ChaletteHQ/cr2` instead, with the same steps.
-
 ## Who is running this
 
 These skills are shared by Matthew and Erick (the chalette-dev plugin). Work out who is running them in this order and stop at the first answer:
@@ -81,7 +79,7 @@ When done, paste the answers and the logs here, and say "pass" or "fail" if you 
 Only type the test prompts and the log prompt in a test chat: never "post it", "run maintenance" or "report this" unless a step says so.
 ```
 
-**The test-log prompt.** Every script ends with it, in its own code block so it copies cleanly, every time, without being asked (Matthew, 2026-10-15). It is the only way to see what a test chat did behind its answer: which script ran, where, and what failed quietly. The 0.8.109 test of cr2 #169 showed why: the answer was right in 3 of 3 runs while the fix's own path never ran, and only the run log gave it away.
+**The test-log prompt.** Every script ends with it, in its own code block so it copies cleanly, every time, without being asked (Matthew, 2026-10-15). It is the only way to see what a test chat did behind its answer: which script ran, where, and what failed quietly. An earlier test on the retired product showed why: the answer was right in 3 of 3 runs while the fix's own path never ran, and only the run log gave it away.
 
 ```
 For a test log, list exactly what you just did, in order: each skill you loaded, each script or command you ran (name and whether it ran in this chat or on my computer), each connector you called, every file you read or wrote or filed as a proposal (path only), any error or warning word for word, and whether anything was saved, queued for Maintenance, or not saved. Facts only, no summary of the findings, no client names.

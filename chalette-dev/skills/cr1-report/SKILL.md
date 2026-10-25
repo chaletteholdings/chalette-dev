@@ -9,8 +9,6 @@ Turns what just happened in this chat into one clean GitHub issue, so Matthew sp
 
 The repo is `chaletteholdings/cr1`, branch `main`. Its own rules are `ISSUES.md`, `CONTRIBUTING.md` and `DEVELOPMENT.md` at the repo root. This skill follows them.
 
-If the owner explicitly says the problem is on Command Room 2, file it on `ChaletteHQ/cr2` instead, with the same steps.
-
 It also owns **the scrub**: the check that keeps client names, personal details and money figures out of the repo. It uses the cr1-scrub skill for that; "scrub this" or "scrub the repo" goes straight to cr1-scrub.
 
 ## Who is running this
