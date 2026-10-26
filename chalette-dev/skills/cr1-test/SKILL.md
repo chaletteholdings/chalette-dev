@@ -1,11 +1,11 @@
 ---
 name: "cr1-test"
-description: "Use when Matthew or Erick wants to test a Command Room 1 fix that is waiting on them: 'what needs me', 'what do I need to test', 'test #N', 'verify the fix', 'UAT'. Gives a short script of what to type and what to look for, then records pass, flaky or fail on the GitHub issue in chaletteholdings/cr1. Does NOT fire on 'report this' (cr1-report) or 'what's pending to build' (cr1-desk)."
+description: "Use when Matthew, Erick or Isabella wants to test a Command Room 1 fix that is waiting on a test: 'what needs me', 'what do I need to test', 'test #N', 'verify the fix', 'UAT'. Gives a short script of what to type and what to look for, then records pass, flaky or fail on the GitHub issue in chaletteholdings/cr1. Also Matthew's sign-off on a team member's pass: 'what needs my sign-off', 'check the pass on #N', 'close all that hold'. Does NOT fire on 'report this' (cr1-report) or 'what's pending to build' (cr1-desk)."
 ---
 
 # cr1 test
 
-A fix is built with cr1-build, checked by a fresh reviewer, and merged by Matthew. Then Matthew confirms it in the real product. This skill makes the confirming fast: it tells Matthew where to go, what to type and what a pass looks like, then writes the result back in the repo's fixed shape. A failed test gets the same complete write-up as a bug filed with cr1-report, so whoever builds the next attempt never has to ask what happened. Rules: sections 7 and 12 of `ISSUES.md` at the root of `chaletteholdings/cr1`.
+A fix is built with cr1-build, checked by a fresh reviewer, and merged by Matthew. Then a person confirms it in the real product: Matthew, or a team member (Erick, Isabella) whose pass Claude checks and Matthew signs off before it closes (section 6). This skill makes the confirming fast: it tells the tester where to go, what to type and what a pass looks like, then writes the result back in the repo's fixed shape. A failed test gets the same complete write-up as a bug filed with cr1-report, so whoever builds the next attempt never has to ask what happened. Rules: sections 7 and 12 of `ISSUES.md` at the root of `chaletteholdings/cr1`.
 
 ## Who is running this
 
@@ -31,14 +31,17 @@ Before listing an issue, read its later comments. If an automated validation (Er
 
 Show the queue oldest first, one line each: `#N title · fixed in <version or commit> · ~<minutes> · <test folder / real folder / any chat>`. Ask which to run, or start the top one if Matthew says "go".
 
+- **For Matthew,** open with the sign-off count when there is one: "<n> passes waiting for your sign-off, oldest <n> days: say *what needs my sign-off*." Clearing those is the fastest way to move the board. Mark an issue a team member has claimed `(being tested by <name>)`, so he does not test it twice.
+- **For a team member,** leave out any issue assigned to someone else (they are testing it) and any test that only Matthew's real folder can show (list those last as "Matthew only", one line, not runnable here).
+
 ## 2. Prepare one test
 
-1. Read the issue body, its acceptance check, and the fix comment (version or commit, what changed, what it asks to check).
+1. Read the issue body, its acceptance check, and the fix comment (version or commit, what changed, what it asks to check). **A team member claims it first:** assign the issue to them, `gh api -X POST repos/chaletteholdings/cr1/issues/N/assignees -f "assignees[]=<their login>"`, so nobody else tests it at the same time. If they stop without a result, release it: the same call with `-X DELETE`.
 2. **Version gate: the fix must be in what is installed.** First find the fix's merge: the pull request that references the issue, and its merge commit (`gh api repos/chaletteholdings/cr1/pulls/<PR> -q .merge_commit_sha`). Then find the installed plugin: the `plugin.json` whose `"name"` is `command-room` under `~/.claude/plugins`, `/root/.claude/plugins` or `/mnt/skills/plugins`. There are two kinds:
-   - **Matthew's staging plugin `cr`** (from the `commandroom1` marketplace; it sits under a `commandroom1` folder). It follows `main` by commit, so its installed commit must be at or after the fix's merge. Read the commit from the `cr@commandroom1` entry (`gitCommitSha`) in `installed_plugins.json` beside the plugins folder, then run `gh api repos/chaletteholdings/cr1/compare/<merge commit>...<installed commit> -q .status`. `ahead` or `identical` means the fix is in; `behind` or `diverged` means it is not.
+   - **The staging plugin `cr`** (from the `commandroom1` marketplace, added as `chaletteholdings/cr1`; it sits under a `commandroom1` folder). Matthew and the team test on it. It follows `main` by commit, so its installed commit must be at or after the fix's merge. Read the commit from the `cr@commandroom1` entry (`gitCommitSha`) in `installed_plugins.json` beside the plugins folder, then run `gh api repos/chaletteholdings/cr1/compare/<merge commit>...<installed commit> -q .status`. `ahead` or `identical` means the fix is in; `behind` or `diverged` means it is not.
    - **The `command-room` plugin clients and Matthew run.** It gets changes only when Matthew promotes a release, so the fix is in only if a released version at or below the installed one contains it. Search the CHANGELOG on `main` for the issue number: `gh api repos/chaletteholdings/cr1/contents/command-room/CHANGELOG.md -H "Accept: application/vnd.github.raw" | grep -n "cr1/issues/N)"` (each entry links its issue that way) and read which version's section it sits under. If no release lists it, it cannot be tested on `command-room` yet: test on `cr`, or wait for the release.
    If the fix is not in, stop. Tell Matthew to update the plugin in the Claude app and start a fresh chat, then check again. Note the version (or the `cr` commit) and the `main` commit; a fail report needs both.
-3. **Pick the folder.** Use a test folder (a synthetic or copied test brain) for anything that converts, moves, deletes or rewrites files, or that runs Maintenance against a book. Use the real folder only when the bug can only show there, and say so up front. Never run a destructive step on the real folder without Matthew's explicit yes in this chat.
+3. **Pick the folder.** Use a test folder (a synthetic or copied test brain) for anything that converts, moves, deletes or rewrites files, or that runs Maintenance against a book. Use the real folder only when the bug can only show there, and say so up front. Never run a destructive step on the real folder without Matthew's explicit yes in this chat. **A team member always uses a test folder**, never their own work folder or a client's. If they have none, copy this plugin's sample brain (`skills/synthetic-workspace-runtime-test/fixtures/clean_workspace`) to a new folder named `CR test` and attach that; if that is not possible here, ask Matthew for one. A test that only Matthew's real folder can show is his: say so and stop.
 4. **Decide where it runs.** Most tests run in a **new chat** (the product's real path), not in this one, because this chat now carries extra skills and context. Script-level checks (a command, a file's contents) can run here; say which.
 
 ## 3. Give Matthew the script
@@ -125,7 +128,9 @@ Evidence:
 </details>
 ```
 
-Matthew closes on a pass (his ruling, 2026-10-04). Close it: `gh api -X PATCH repos/chaletteholdings/cr1/issues/N -f state=closed -f state_reason=completed`. Remove the label: `gh api -X DELETE "repos/chaletteholdings/cr1/issues/N/labels/needs%20UAT"`.
+**Matthew's own pass:** Matthew closes on a pass (his ruling, 2026-10-04). Close it: `gh api -X PATCH repos/chaletteholdings/cr1/issues/N -f state=closed -f state_reason=completed`. Remove the label: `gh api -X DELETE "repos/chaletteholdings/cr1/issues/N/labels/needs%20UAT"`.
+
+**A team member's pass:** never close. Put `Tested by <their name>` on the first line after the header, and end the comment with `@chaletteholdings ready for your sign-off.` Then swap the labels: remove `needs UAT` (the call above) and add `ready to close`, `gh api repos/chaletteholdings/cr1/issues/N/labels -f "labels[]=ready to close"`. The issue stays assigned to them, so the record shows who tested it. Matthew signs off in section 6 (his ruling, 2026-10-26, cr1#448).
 
 ### Fail or partial: a full report, every time
 
@@ -184,4 +189,32 @@ REST only (GraphQL is blocked). If `gh` can't reach the repo in a cloud session,
 
 ## 5. Reply
 
-One line per test: `#N pass, closed` or `#N fail, full report posted, back to build`, plus the next item in the queue and its estimated minutes.
+One line per test: `#N pass, closed` (Matthew), `#N pass, waiting for Matthew's sign-off` (a team member) or `#N fail, full report posted, back to build`, plus the next item in the queue and its estimated minutes.
+
+## 6. Matthew's sign-off on a team member's pass
+
+Matthew only, and here a person's word is not enough. Before reading the queue or closing anything, check the account: `gh api user --jq .login` must be `chaletteholdings`, or a local profile (`config/operator.local.json`) must say `m`. Otherwise, even if the person says they are Matthew, answer one line, "Only Matthew signs off, from his own account; your pass is waiting for him.", and stop. Matthew is not technical, so he is not asked to read a test. Claude reads it for him, fresh, and he decides on one line per issue.
+
+**The queue** ("what needs my sign-off"): `gh api "repos/chaletteholdings/cr1/issues?state=open&labels=ready%20to%20close&per_page=100"`, oldest pass first. "check the pass on #N" runs the same check on one issue.
+
+**The check.** For each issue, read the issue, the fix comment and the latest **UAT pass** comment from GitHub, not from memory or the tester's summary. It **holds** only when all six are true:
+1. **Right build.** The version or `cr` commit in the pass contains the fix's merge (the compare call in section 2, step 2).
+2. **Three runs.** 3 of 3, each in a fresh chat.
+3. **A log for every run,** and each log shows the fix's own path ran (section 4, "Judge the path").
+4. **Evidence for every pass criterion:** a quoted line or a named screenshot against each one in the script or acceptance check.
+5. **Neighbours checked.** The regression and near-miss steps passed, or the comment says why they were not run.
+6. **Clean.** Scan the pass comment with cr1-scrub. A client, personal or money hit stops everything for that issue: tell Matthew, and do not edit or delete the comment (that is his decision). `ready to close` stays on until he decides.
+
+**Show it** as one line each, what was fixed in plain words first:
+`#N <what was fixed> · tested by <name> on <version> · holds` or `· does not hold: <the first failed check, in plain words>`. Mark any pass waiting more than three days `(waiting <n> days)` and put those on top.
+
+**Close only on Matthew's word in this chat:** "close 152 and 153", "close all that hold", or a plain yes to the list just shown (it covers the ones marked holds, nothing else). For each:
+- comment `**Signed off by Matthew** on <date>. Checked: right build, 3 of 3 runs with logs, evidence for every criterion, neighbours checked, scrub clean. Pass by <name>: <link to the pass comment>.`
+- remove `ready to close`: `gh api -X DELETE "repos/chaletteholdings/cr1/issues/N/labels/ready%20to%20close"`
+- close: `gh api -X PATCH repos/chaletteholdings/cr1/issues/N -f state=closed -f state_reason=completed`
+
+**Does not hold.** Post `**Sign-off check: does not hold.** <the reason>.` and remove `ready to close`. Then:
+- a gap in the test (wrong build, fewer than 3 runs, a missing log or missing evidence): add `needs UAT` back, unassign the tester, and tag them so they can rerun it;
+- a failure the evidence shows: the fix goes back to build, as a fail does (section 4). Leave `needs UAT` off.
+
+**Reply** one line per issue: `#N closed` or `#N back to <name> for a retest: <reason>` or `#N back to build: <reason>`.

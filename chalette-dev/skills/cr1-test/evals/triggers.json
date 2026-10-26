@@ -11,7 +11,10 @@
   "run the acceptance test on #57",
   "is anything waiting for my test",
   "the fix for #57 shipped, walk me through testing it",
-  "go"
+  "go",
+  "what needs my sign-off",
+  "check the pass on #57",
+  "close all that hold"
  ],
  "should_not_trigger": [
   "report this",

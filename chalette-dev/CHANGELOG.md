@@ -2,6 +2,18 @@
 
 (Release history before v0.3.0 is at the bottom of this file, moved out of `plugin.json` on 2026-10-24.)
 
+## v0.9.3 (2026-10-26): the team tests, Claude checks, Matthew signs off
+
+Owner ruling 2026-10-26, cr1#448. The rules side is ISSUES.md section 12 in cr1.
+
+- **cr1-test:** Erick and Isabella test on the staging plugin `cr`, in a test folder only. Starting a test assigns the issue to the tester, so two people never test the same fix; stopping without a result releases it. A team member's pass never closes: it swaps `needs UAT` for the new label `ready to close` and tags Matthew.
+- **cr1-test section 6, Matthew's sign-off:** "what needs my sign-off" lists every `ready to close` issue, and Claude checks each pass fresh against six conditions (right build, 3 of 3 runs, a log per run showing the fix's own path ran, evidence per criterion, neighbours checked, scrub clean). One line each, holds or does not hold. Only Matthew's word in that chat closes. A pass that does not hold goes back to the tester (a gap in the test) or to build (a real failure).
+- **cr1-test queue:** Matthew's "what needs me" opens with the sign-off count; a team member's leaves out issues someone else is testing and lists real-folder tests as Matthew only.
+- **cr1-desk:** a new first pile, waiting on Matthew's sign-off; the closing line names the sign-off path.
+- **docs/TEAM_GUIDE.md:** install `cr` from `chaletteholdings/cr1`, a test folder, and what happens after a test.
+- **tests/test_signoff.py:** pins that a team member never closes, the label swap, and that only Matthew's word closes. The sign-off checks the GitHub account first; a person saying they are Matthew is not enough there.
+- **tests/test_who_is_running.py:** compares the whole "Who is running this" section, bullets included, across the four cr1 skills; it used to stop before the bullets. Seen to fail on a changed bullet.
+
 ## v0.9.2 (2026-10-26): a guide for the team, and a sheet for the rebrand
 
 - **docs/TEAM_GUIDE.md:** what this repo is, setup, the four things to say, what a team member decides and what goes to the owner, the no-client-data rule, what a good report and a good test look like, where things live. Written for Isabella and Erick.
