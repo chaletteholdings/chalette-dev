@@ -2,6 +2,12 @@
 
 (Release history before v0.3.0 is at the bottom of this file, moved out of `plugin.json` on 2026-10-24.)
 
+## v0.9.4 (2026-10-26): a guide to every repo the team can open
+
+- **docs/REPO_GUIDE.md:** what each repository Isabella and Erick can open holds (cr1, this toolkit, the CRM pilot, the brand tools, the website, and the read-only and retired ones), how it works, how to use it, where their time helps most, and what stays with Matthew. Links to TEAM_GUIDE for setup and the after-test sequence rather than restating them; counts are dated.
+- **docs/TEAM_GUIDE.md and README:** one line each pointing at the new guide.
+- **Verified:** `pytest tests/` passes; the new and changed files scan clean against the full name list; no em dashes or exclamation marks added. Rebased onto v0.9.3 (#28).
+
 ## v0.9.3 (2026-10-26): the team tests, Claude checks, Matthew signs off
 
 Owner ruling 2026-10-26, cr1#448. The rules side is ISSUES.md section 12 in cr1.
