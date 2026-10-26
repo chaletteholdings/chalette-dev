@@ -10,14 +10,14 @@ operator's own computer only:
 Nothing real is written in this file."""
 import json, re, sys, glob, os
 
-TEAM = {"matthew", "erick", "eric", "claude", "chalette", "command room", "penelope"}
+TEAM = {"matthew", "erick", "eric", "isabella", "claude", "chalette", "command room", "penelope"}
 GENERIC_DOMAINS = {"gmail.com", "yahoo.com", "icloud.com", "me.com", "outlook.com", "hotmail.com", "aol.com",
                    "wework.com", "superhuman.com", "chaletteholdings.com"}
 WORDS = {"company", "builders", "contact", "complete", "beach", "power", "group", "partners", "systems", "holdings",
          "capital", "advisors", "leaders", "school", "life", "word", "franchise", "partnership", "consulting",
          "venture", "trading", "system", "global", "brands", "clean", "labs", "solutions", "investors", "logistics",
          "speakers", "talent", "forum", "fund", "deal", "construction", "living", "green", "place"}
-TEAM_FULL = ["Matthew Davidov", "Erick Burg"]  # the team may be named; removed before scanning
+TEAM_FULL = ["Matthew Davidov", "Erick Burg", "Isabella Cardenas"]  # the team may be named; removed before scanning
 INTERNAL = ("command room", "chalette", "penelope", "new bot build", "cr56 testbot")
 
 

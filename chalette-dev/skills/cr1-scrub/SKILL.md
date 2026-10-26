@@ -7,7 +7,7 @@ description: "Use before anything goes to the chaletteholdings/cr1 (Command Room
 
 The rule (Matthew, 2026-09-29, extended 2026-10-04): **nothing about a client, prospect, partner, family member or any real person, and no money figure, goes into the `chaletteholdings/cr1` repo.** Not in files, tests, issues, comments, pull requests, commit messages, branch names, chat logs or screenshots. The full text is section 0 of `ISSUES.md` at the repo root; the Privacy section of `CONTRIBUTING.md` says the same.
 
-Allowed: the team by name (Matthew, Erick, Claude), `dev@chaletteholdings.com`, sample names and `*.example` addresses, version numbers, commit SHAs, issue numbers, sizes and counts that are not money.
+Allowed: the team by name (Matthew, Erick, Isabella, Claude), `dev@chaletteholdings.com`, sample names and `*.example` addresses, version numbers, commit SHAs, issue numbers, sizes and counts that are not money.
 
 Two modes:
 - **Check** (default, and what cr1-report and cr1-test call): scan one piece of text before it is posted.

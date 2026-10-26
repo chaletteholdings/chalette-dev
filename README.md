@@ -1,5 +1,7 @@
 # chalette-dev: the Command Room dev toolkit
 
+New to the team? Start with [docs/TEAM_GUIDE.md](docs/TEAM_GUIDE.md). Brand and positioning during the rebrand: [docs/POSITIONING_AND_BRAND_SHEET.md](docs/POSITIONING_AND_BRAND_SHEET.md).
+
 The skills the owner and the team share to report, scrub, test and plan work on Command Room 1 (`chaletteholdings/cr1`, branch `main`). Install this plugin and both of you work the same way.
 
 As of v0.8.0 (2026-10-22) the skills target cr1. Command Room 2 was retired that day, and as of v0.8.2 nothing in this plugin files on it or names its repository.
