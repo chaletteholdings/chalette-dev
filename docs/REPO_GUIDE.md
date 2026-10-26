@@ -4,6 +4,8 @@ What each repository you can open holds, how it works, how to get the most from 
 
 Setting up (GitHub sign-in, the toolkit plugin, the staging plugin `cr`, a test folder, the four phrases) is already covered in [TEAM_GUIDE.md](TEAM_GUIDE.md). This guide does not repeat it. Do that setup first.
 
+**Your jobs, as Matthew set them on 2026-10-26:** test fixes (both of you), keep the Chalette Design System current as the source of truth (both of you), and test the CRM (Isabella). You are not asked to build. Each of you has a step-by-step guide for those jobs, kept in your own Command Room; this page is the map behind it.
+
 The counts below (open issues, tests waiting) are as of 2026-10-26. For today's numbers, say "what's pending to build".
 
 ## The map
@@ -81,7 +83,7 @@ The website is plain web pages. Anything that lands on its `main` branch is live
 
 **How to use it best.** The README in the repo is the install guide, with a checklist for the second person. You need Python 3.11 or newer on your machine, available as `python`. The **Feedback** button on the page is the quickest way to say what works and what does not.
 
-**Where you help.** Use it on real work and keep the feedback coming. You have already filed five of its six open issues, which is exactly the job. A bug in the pilot goes on ChaletteCRM; anything the finished product should do goes to cr1 with "report this".
+**Where you help.** Isabella tests it, on her own real work; Erick does not need to. Run the checklist in your step-by-step guide, retest each fix when its issue says it landed, and keep the Feedback button busy. A bug in the pilot goes on ChaletteCRM; anything the finished product should do goes to cr1 with "report this".
 
 **Never:** test it against a client's folder, or paste a real name, address or email into an issue or a commit.
 
@@ -93,7 +95,9 @@ The website is plain web pages. Anything that lands on its `main` branch is live
 
 **How to use it best.** Install the plugin (Plugins → add marketplace `ChaletteHQ/chalette-brand` → turn on `chalette-brand`). From then on, any Claude session that touches Chalette or Command Room loads it and makes things on brand without you asking. In claude.ai chat without plugins, upload the skill folder in Settings instead.
 
-**Where you help.** Brand and positioning are mid-rebrand. Before you draft anything public, check its row in [POSITIONING_AND_BRAND_SHEET.md](POSITIONING_AND_BRAND_SHEET.md): each row is Ruled, Working, Open or Retired. Nothing goes public on an Open row. Propose changes there, Matthew rules.
+**Where you help.** Brand and positioning are mid-rebrand. Before you draft anything public, check its row in [POSITIONING_AND_BRAND_SHEET.md](POSITIONING_AND_BRAND_SHEET.md): each row is Ruled, Working, Open or Retired. Nothing goes public on an Open row.
+
+**Keeping the design system current is your job.** When Matthew rules something the design system does not say yet, you put it in: the `chalette-brand` skill shows you the exact before and after, you say yes, and it stamps your name. Then send Matthew the summary so his machine carries it into the product. Anything he has not ruled goes to him as a proposal first. The steps are in your step-by-step guide.
 
 **Never:** change the brand in this repo (a change here changes tooling, not the brand), or run `sync_brand.py`. It runs once per change on Matthew's machine and OneDrive spreads the result.
 
@@ -121,11 +125,11 @@ The website is plain web pages. Anything that lands on its `main` branch is live
 
 ## Where your time helps most, in order
 
-1. **Clear the test queue.** "what needs me" in a fresh chat with `cr` in a test folder. 32 fixes were waiting on 2026-10-26, and until now Matthew has been the only tester.
-2. **Reproduce the `needs evidence` issues.** 25 on 2026-10-26. A reproduction with the exact error text often turns a stalled issue into a buildable one.
-3. **Report what you hit in real use,** from the chat where it happened, the same day.
-4. **Run the CRM pilot on real work** and use the Feedback button.
-5. **Move the rebrand forward** through the brand sheet, and for Isabella, website pull requests on Ruled or Working rows.
+1. **Clear the test queue.** "what needs me" with `cr` in a test folder. 32 fixes were waiting on 2026-10-26, and until now Matthew has been the only tester. When there is time left, reproduce the `needs evidence` issues (25 on 2026-10-26) with the exact error text.
+2. **Keep the design system current.** Every ruling Matthew makes about the brand, positioning or copy goes into the design system the same day.
+3. **Test the CRM (Isabella).** The checklist, then each fix as it lands.
+
+Along the way, report what you hit in real use from the chat where it happened. Website pull requests (Isabella) come after these three.
 
 ## What stays with Matthew
 
