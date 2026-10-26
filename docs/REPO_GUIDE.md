@@ -101,7 +101,7 @@ The website is plain web pages. Anything that lands on its `main` branch is live
 
 **What is inside.** Eight plain web pages (Home, The Product, The Service, Results, About, Security, Partners, Book), the link-preview image, and older sample PDFs kept so old links still work.
 
-**How it works.** A push to `main` is live on chaletteholdings.com in about thirty seconds. Nothing stops a push to `main` today, so the rule below is the only guard.
+**How it works.** Anything merged into `main` is live on chaletteholdings.com in about thirty seconds. `main` is protected (since 2026-10-26): GitHub refuses a direct push from anyone, so every change goes through a pull request and Matthew merges.
 
 **How to use it best.**
 
@@ -111,7 +111,7 @@ The website is plain web pages. Anything that lands on its `main` branch is live
 
 **Where you help.** Turn brand-sheet rows that are Ruled or Working into page changes, one change per pull request, with a screenshot of the preview. Matthew merges, which is the moment it goes live.
 
-**Never:** push to `main` directly, or add a client name, a quote or a figure without Matthew's written yes.
+**Never:** add a client name, a quote or a figure without Matthew's written yes.
 
 ### Erick only: the client repos, cr2 and Backstage
 
