@@ -1,0 +1,436 @@
+{
+  "version": 1,
+  "last_updated": "2026-05-01T09:00:00",
+  "last_writer": "workspace-manager",
+  "entities": {
+    "people": [
+      {
+        "id": "person_001",
+        "canonical_name": "Sam Sample",
+        "first_seen": "2026-05-02T09:00:00",
+        "status": "active",
+        "aliases": [],
+        "nicknames": [],
+        "project_ids": [],
+        "emails": [
+          "sam.sample1@example.com"
+        ],
+        "phones": [],
+        "affiliation_ids": [],
+        "connections": [],
+        "email": "sam.sample1@example.com",
+        "primary_org_id": "org_001",
+        "org_id": "org_001"
+      },
+      {
+        "id": "person_002",
+        "canonical_name": "Sam Stone",
+        "first_seen": "2026-05-03T09:00:00",
+        "status": "active",
+        "aliases": [],
+        "nicknames": [],
+        "project_ids": [],
+        "emails": [
+          "sam.stone2@example.com"
+        ],
+        "phones": [],
+        "affiliation_ids": [],
+        "connections": [],
+        "email": "sam.stone2@example.com",
+        "primary_org_id": "org_002",
+        "org_id": "org_002"
+      },
+      {
+        "id": "person_003",
+        "canonical_name": "Bo Sample",
+        "first_seen": "2026-05-04T09:00:00",
+        "status": "active",
+        "aliases": [],
+        "nicknames": [],
+        "project_ids": [],
+        "emails": [],
+        "phones": [],
+        "affiliation_ids": [],
+        "connections": [],
+        "email": null,
+        "primary_org_id": "org_001",
+        "org_id": "org_001"
+      },
+      {
+        "id": "person_004",
+        "canonical_name": "Rio Stone",
+        "first_seen": "2026-05-05T09:00:00",
+        "status": "active",
+        "aliases": [],
+        "nicknames": [],
+        "project_ids": [],
+        "emails": [],
+        "phones": [],
+        "affiliation_ids": [],
+        "connections": [],
+        "email": null,
+        "primary_org_id": "org_003",
+        "org_id": "org_003"
+      },
+      {
+        "id": "person_005",
+        "canonical_name": "Dustin Sample",
+        "first_seen": "2026-05-06T09:00:00",
+        "status": "active",
+        "aliases": [],
+        "nicknames": [],
+        "project_ids": [],
+        "emails": [
+          "dustin.sample5@example.com"
+        ],
+        "phones": [],
+        "affiliation_ids": [],
+        "connections": [],
+        "email": "dustin.sample5@example.com",
+        "primary_org_id": "org_005",
+        "org_id": "org_005"
+      },
+      {
+        "id": "person_006",
+        "canonical_name": "Lyra Stone",
+        "first_seen": "2026-05-07T09:00:00",
+        "status": "active",
+        "aliases": [],
+        "nicknames": [],
+        "project_ids": [],
+        "emails": [
+          "lyra.stone6@example.com"
+        ],
+        "phones": [],
+        "affiliation_ids": [],
+        "connections": [],
+        "email": "lyra.stone6@example.com",
+        "primary_org_id": "org_006",
+        "org_id": "org_006"
+      },
+      {
+        "id": "person_007",
+        "canonical_name": "Mira Sample",
+        "first_seen": "2026-05-08T09:00:00",
+        "status": "active",
+        "aliases": [],
+        "nicknames": [],
+        "project_ids": [],
+        "emails": [
+          "mira.sample7@example.com"
+        ],
+        "phones": [],
+        "affiliation_ids": [],
+        "connections": [],
+        "email": "mira.sample7@example.com",
+        "primary_org_id": "org_007",
+        "org_id": "org_007"
+      },
+      {
+        "id": "person_008",
+        "canonical_name": "Quinn Stone",
+        "first_seen": "2026-05-09T09:00:00",
+        "status": "active",
+        "aliases": [],
+        "nicknames": [],
+        "project_ids": [],
+        "emails": [
+          "quinn.stone8@example.com"
+        ],
+        "phones": [],
+        "affiliation_ids": [],
+        "connections": [],
+        "email": "quinn.stone8@example.com",
+        "primary_org_id": "org_008",
+        "org_id": "org_008"
+      },
+      {
+        "id": "person_009",
+        "canonical_name": "Rio Sample",
+        "first_seen": "2026-05-10T09:00:00",
+        "status": "active",
+        "aliases": [],
+        "nicknames": [],
+        "project_ids": [],
+        "emails": [
+          "rio.sample9@example.com"
+        ],
+        "phones": [],
+        "affiliation_ids": [],
+        "connections": [],
+        "email": "rio.sample9@example.com",
+        "primary_org_id": "org_001",
+        "org_id": "org_001"
+      },
+      {
+        "id": "person_010",
+        "canonical_name": "Sam Stone",
+        "first_seen": "2026-05-11T09:00:00",
+        "status": "active",
+        "aliases": [],
+        "nicknames": [],
+        "project_ids": [],
+        "emails": [
+          "sam.stone10@example.com"
+        ],
+        "phones": [],
+        "affiliation_ids": [],
+        "connections": [],
+        "email": "sam.stone10@example.com",
+        "primary_org_id": "org_002",
+        "org_id": "org_002"
+      },
+      {
+        "id": "person_011",
+        "canonical_name": "Skyler Sample",
+        "first_seen": "2026-05-12T09:00:00",
+        "status": "active",
+        "aliases": [],
+        "nicknames": [],
+        "project_ids": [],
+        "emails": [
+          "skyler.sample11@example.com"
+        ],
+        "phones": [],
+        "affiliation_ids": [],
+        "connections": [],
+        "email": "skyler.sample11@example.com",
+        "primary_org_id": "org_003",
+        "org_id": "org_003"
+      },
+      {
+        "id": "person_012",
+        "canonical_name": "Adan Stone",
+        "first_seen": "2026-05-13T09:00:00",
+        "status": "active",
+        "aliases": [],
+        "nicknames": [],
+        "project_ids": [],
+        "emails": [
+          "adan.stone12@example.com"
+        ],
+        "phones": [],
+        "affiliation_ids": [],
+        "connections": [],
+        "email": "adan.stone12@example.com",
+        "primary_org_id": "org_004",
+        "org_id": "org_004"
+      },
+      {
+        "id": "person_013",
+        "canonical_name": "Aria Sample",
+        "first_seen": "2026-05-14T09:00:00",
+        "status": "active",
+        "aliases": [],
+        "nicknames": [],
+        "project_ids": [],
+        "emails": [
+          "aria.sample13@example.com"
+        ],
+        "phones": [],
+        "affiliation_ids": [],
+        "connections": [],
+        "email": "aria.sample13@example.com",
+        "primary_org_id": "org_005",
+        "org_id": "org_005"
+      },
+      {
+        "id": "person_014",
+        "canonical_name": "Bo Stone",
+        "first_seen": "2026-05-15T09:00:00",
+        "status": "active",
+        "aliases": [],
+        "nicknames": [],
+        "project_ids": [],
+        "emails": [
+          "bo.stone14@example.com"
+        ],
+        "phones": [],
+        "affiliation_ids": [],
+        "connections": [],
+        "email": "bo.stone14@example.com",
+        "primary_org_id": "org_006",
+        "org_id": "org_006"
+      },
+      {
+        "id": "person_015",
+        "canonical_name": "Bowie Sample",
+        "first_seen": "2026-05-16T09:00:00",
+        "status": "active",
+        "aliases": [],
+        "nicknames": [],
+        "project_ids": [],
+        "emails": [
+          "bowie.sample15@example.com"
+        ],
+        "phones": [],
+        "affiliation_ids": [],
+        "connections": [],
+        "email": "bowie.sample15@example.com",
+        "primary_org_id": "org_007",
+        "org_id": "org_007"
+      }
+    ],
+    "projects": [
+      {
+        "id": "project_001",
+        "folder_name": "Series A Raise",
+        "display_name": "Series A Raise",
+        "status": "active",
+        "kind": "initiative",
+        "first_seen": "2026-05-02T09:00:00",
+        "org_id": "org_001",
+        "owner_person_id": "person_001",
+        "stakeholder_person_ids": [],
+        "cross_refs": [],
+        "success_criteria": []
+      },
+      {
+        "id": "project_002",
+        "folder_name": "Board Cadence",
+        "display_name": "Board Cadence",
+        "status": "active",
+        "kind": "initiative",
+        "first_seen": "2026-05-03T09:00:00",
+        "org_id": "org_002",
+        "owner_person_id": "person_002",
+        "stakeholder_person_ids": [],
+        "cross_refs": [],
+        "success_criteria": []
+      },
+      {
+        "id": "project_003",
+        "folder_name": "Hiring Slate",
+        "display_name": "Hiring Slate",
+        "status": "active",
+        "kind": "initiative",
+        "first_seen": "2026-05-04T09:00:00",
+        "org_id": "org_003",
+        "owner_person_id": "person_003",
+        "stakeholder_person_ids": [],
+        "cross_refs": [],
+        "success_criteria": []
+      },
+      {
+        "id": "project_004",
+        "folder_name": "Pricing Review",
+        "display_name": "Pricing Review",
+        "status": "active",
+        "kind": "initiative",
+        "first_seen": "2026-05-05T09:00:00",
+        "org_id": "org_004",
+        "owner_person_id": "person_004",
+        "stakeholder_person_ids": [],
+        "cross_refs": [],
+        "success_criteria": []
+      },
+      {
+        "id": "project_005",
+        "folder_name": "Platform Migration",
+        "display_name": "Platform Migration",
+        "status": "active",
+        "kind": "initiative",
+        "first_seen": "2026-05-06T09:00:00",
+        "org_id": "org_005",
+        "owner_person_id": "person_005",
+        "stakeholder_person_ids": [],
+        "cross_refs": [],
+        "success_criteria": []
+      }
+    ],
+    "orgs": [
+      {
+        "id": "org_001",
+        "canonical_name": "Acme Co",
+        "status": "active",
+        "aliases": [],
+        "domains": [
+          "acmeco.example.com"
+        ],
+        "inferred_from": [],
+        "first_seen": "2026-05-02T09:00:00"
+      },
+      {
+        "id": "org_002",
+        "canonical_name": "Northstar Partners",
+        "status": "active",
+        "aliases": [],
+        "domains": [
+          "northstarpartners.example.com"
+        ],
+        "inferred_from": [],
+        "first_seen": "2026-05-03T09:00:00"
+      },
+      {
+        "id": "org_003",
+        "canonical_name": "Acme Bakery",
+        "status": "active",
+        "aliases": [],
+        "domains": [
+          "categorycompany.example.com"
+        ],
+        "inferred_from": [],
+        "first_seen": "2026-05-04T09:00:00"
+      },
+      {
+        "id": "org_004",
+        "canonical_name": "Bluebird Group",
+        "status": "active",
+        "aliases": [],
+        "domains": [
+          "bluebirdgroup.example.com"
+        ],
+        "inferred_from": [],
+        "first_seen": "2026-05-05T09:00:00"
+      },
+      {
+        "id": "org_005",
+        "canonical_name": "Cedar Works",
+        "status": "active",
+        "aliases": [],
+        "domains": [
+          "cedarworks.example.com"
+        ],
+        "inferred_from": [],
+        "first_seen": "2026-05-06T09:00:00"
+      },
+      {
+        "id": "org_006",
+        "canonical_name": "Harbor Labs",
+        "status": "active",
+        "aliases": [],
+        "domains": [
+          "harborlabs.example.com"
+        ],
+        "inferred_from": [],
+        "first_seen": "2026-05-07T09:00:00"
+      },
+      {
+        "id": "org_007",
+        "canonical_name": "Ivory Systems",
+        "status": "active",
+        "aliases": [],
+        "domains": [
+          "ivorysystems.example.com"
+        ],
+        "inferred_from": [],
+        "first_seen": "2026-05-08T09:00:00"
+      },
+      {
+        "id": "org_008",
+        "canonical_name": "Juniper Holdings",
+        "status": "active",
+        "aliases": [],
+        "domains": [
+          "juniperholdings.example.com"
+        ],
+        "inferred_from": [],
+        "first_seen": "2026-05-09T09:00:00"
+      }
+    ]
+  },
+  "workspace": {
+    "user_timezone": "America/Los_Angeles",
+    "brain_name": "Atlas"
+  }
+}

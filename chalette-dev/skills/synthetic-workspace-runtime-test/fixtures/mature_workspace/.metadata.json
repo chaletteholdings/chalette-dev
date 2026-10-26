@@ -1,0 +1,51 @@
+{
+  "name": "mature_workspace",
+  "description": "Realistic mature workspace -- 80 people, 20 orgs, 15 projects, 1500 events. 8 malformed events.jsonl lines at 100-107 (Sub-bug #14b shatter: 7 bare-key JSON strings + 1 truncated event). Mix of nano-epoch + human-counter seqs (Bug #41). Legacy person_added then canonical person_created (Bug #34). aliases.json carries BOTH nested and flat shapes. 4 orgs with no domains (Bug #1). For verifying substrate-hygiene migrations + defensive readers.",
+  "fixture_version": "1.0",
+  "compatible_plugin_versions": [
+    "4.8.0"
+  ],
+  "status": "POPULATED",
+  "characteristics": {
+    "people_count": 80,
+    "orgs_count": 20,
+    "projects_count": 15,
+    "events_count": 1500,
+    "aliases_count": 200,
+    "has_malformed_lines": true,
+    "malformed_line_pattern": "lines 100-107 shattered as 7 bare-key JSON strings + 1 truncated event raising JSONDecodeError",
+    "has_dual_shape_seqs": true,
+    "dual_shape_split": "1200 human-counter seqs (1..1200) + 300 nano-epoch artifacts (1.77e18+)",
+    "has_unsanctioned_events": false,
+    "has_first_name_collisions": true,
+    "first_name_collision_note": "CHANGED from false, 2026-07-15. The approved placeholder vocabulary is 11 first names x 2 surnames = 22 unique full names; 80 people cannot avoid collisions. It is also the realistic shape -- an 80-person org with zero repeated first names is the 'too clean fixture' failure mode. Collisions exercise entity_resolve, which invariants.md already expects here (I7, 'fixture has multi-Daniel collision').",
+    "has_unattributed_people": true,
+    "unattributed_count": 12,
+    "has_paused_projects": true,
+    "paused_project_count": 3,
+    "orgs_without_domains": 4
+  },
+  "expected_invariants_pass": [
+    "I1",
+    "I2",
+    "I3",
+    "I4",
+    "I5",
+    "I6",
+    "I7",
+    "I8",
+    "I9",
+    "I10",
+    "I11",
+    "I13",
+    "I14",
+    "I15",
+    "I16",
+    "I17"
+  ],
+  "expected_invariants_skip": [
+    "I12",
+    "I18"
+  ],
+  "_generated_by": "_generate_fixtures.py (deterministic; do not hand-edit)"
+}

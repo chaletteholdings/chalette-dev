@@ -1,0 +1,146 @@
+{
+  "granola_get_transcript": {
+    "doc_ids": {
+      "doc_001": {
+        "transcript": "Synthetic transcript 1. Placeholder content only.",
+        "attendees": [
+          "Adan Sample"
+        ],
+        "duration": "30m"
+      },
+      "doc_002": {
+        "transcript": "Synthetic transcript 2. Placeholder content only.",
+        "attendees": [
+          "Aria Stone"
+        ],
+        "duration": "30m"
+      },
+      "doc_003": {
+        "transcript": "Synthetic transcript 3. Placeholder content only.",
+        "attendees": [
+          "Bo Sample"
+        ],
+        "duration": "30m"
+      },
+      "doc_004": {
+        "transcript": "Synthetic transcript 4. Placeholder content only.",
+        "attendees": [
+          "Bowie Stone"
+        ],
+        "duration": "30m"
+      },
+      "doc_005": {
+        "transcript": "Synthetic transcript 5. Placeholder content only.",
+        "attendees": [
+          "Dustin Sample"
+        ],
+        "duration": "30m"
+      },
+      "doc_006": {
+        "transcript": "Synthetic transcript 6. Placeholder content only.",
+        "attendees": [
+          "Lyra Stone"
+        ],
+        "duration": "30m"
+      },
+      "doc_007": {
+        "transcript": "Synthetic transcript 7. Placeholder content only.",
+        "attendees": [
+          "Mira Sample"
+        ],
+        "duration": "30m"
+      },
+      "doc_008": {
+        "transcript": "Synthetic transcript 8. Placeholder content only.",
+        "attendees": [
+          "Quinn Stone"
+        ],
+        "duration": "30m"
+      },
+      "doc_009": {
+        "transcript": "Synthetic transcript 9. Placeholder content only.",
+        "attendees": [
+          "Rio Sample"
+        ],
+        "duration": "30m"
+      },
+      "doc_010": {
+        "transcript": "Synthetic transcript 10. Placeholder content only.",
+        "attendees": [
+          "Sam Stone"
+        ],
+        "duration": "30m"
+      },
+      "doc_011": {
+        "transcript": "Synthetic transcript 11. Placeholder content only.",
+        "attendees": [
+          "Skyler Sample"
+        ],
+        "duration": "30m"
+      },
+      "doc_012": {
+        "transcript": "Synthetic transcript 12. Placeholder content only.",
+        "attendees": [
+          "Adan Stone"
+        ],
+        "duration": "30m"
+      },
+      "doc_013": {
+        "transcript": "Synthetic transcript 13. Placeholder content only.",
+        "attendees": [
+          "Aria Sample"
+        ],
+        "duration": "30m"
+      },
+      "doc_014": {
+        "transcript": "Synthetic transcript 14. Placeholder content only.",
+        "attendees": [
+          "Bo Stone"
+        ],
+        "duration": "30m"
+      },
+      "doc_015": {
+        "transcript": "Synthetic transcript 15. Placeholder content only.",
+        "attendees": [
+          "Bowie Sample"
+        ],
+        "duration": "30m"
+      },
+      "doc_016": {
+        "transcript": "Synthetic transcript 16. Placeholder content only.",
+        "attendees": [
+          "Dustin Stone"
+        ],
+        "duration": "30m"
+      },
+      "doc_017": {
+        "transcript": "Synthetic transcript 17. Placeholder content only.",
+        "attendees": [
+          "Lyra Sample"
+        ],
+        "duration": "30m"
+      },
+      "doc_018": {
+        "transcript": "Synthetic transcript 18. Placeholder content only.",
+        "attendees": [
+          "Mira Stone"
+        ],
+        "duration": "30m"
+      },
+      "doc_019": {
+        "transcript": "Synthetic transcript 19. Placeholder content only.",
+        "attendees": [
+          "Quinn Sample"
+        ],
+        "duration": "30m"
+      },
+      "doc_020": {
+        "transcript": "Synthetic transcript 20. Placeholder content only.",
+        "attendees": [
+          "Rio Stone"
+        ],
+        "duration": "30m"
+      }
+    }
+  }
+}

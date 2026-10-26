@@ -18,8 +18,34 @@ def _text(name):
     return (SKILLS / name / "SKILL.md").read_text(encoding="utf-8")
 
 
+# The team toolkit that moved in from the owner's plugin on 2026-10-25 (v0.9.0).
+TOOLKIT = ["battery", "bug-regression-suite", "synthetic-workspace-runtime-test",
+           "cross-skill-interaction-test", "scale-stress-test", "ship-readiness-gate",
+           "cr-skill-builder", "skill-creator", "skill-generator", "regenerate-skill",
+           "preview-command-room-widget"]
+
+
 def test_the_four_skills_exist_under_cr1_names():
-    assert sorted(p.parent.name for p in SKILLS.glob("*/SKILL.md")) == sorted(NAMES)
+    assert sorted(p.parent.name for p in SKILLS.glob("*/SKILL.md")) == sorted(NAMES + TOOLKIT)
+
+
+def test_no_skill_answers_to_the_old_cr_test_name():
+    """`cr-test` became `battery` so it cannot collide with `cr1-test` (owner ruling 2026-10-25)."""
+    hits = [f"{p.parent.name}:{n}" for p in SKILLS.glob("*/SKILL.md")
+            for n, ln in enumerate(p.read_text(encoding="utf-8").splitlines(), 1)
+            if re.search(r"\bcr-test\b|\bcr test\b", ln)]
+    assert not hits, hits
+
+
+def test_toolkit_skills_name_the_moved_repo():
+    hits = [str(f) for s in TOOLKIT for f in (SKILLS / s).rglob("*")
+            if f.is_file() and f.suffix in {".md", ".py", ".json"} and "ChaletteHQ/cr1" in f.read_text(encoding="utf-8")]
+    assert not hits, hits
+
+
+def test_toolkit_skills_carry_the_team_fence():
+    missing = [s for s in TOOLKIT if "Team toolkit (chalette-dev)" not in (SKILLS / s / "SKILL.md").read_text(encoding="utf-8")]
+    assert not missing, missing
 
 
 @pytest.mark.parametrize("name", NAMES)
@@ -29,7 +55,7 @@ def test_frontmatter_name_matches_folder(name):
 
 @pytest.mark.parametrize("name", NAMES)
 def test_no_cr2_repository_reference_remains(name):
-    hits = [ln for ln in _text(name).splitlines() if re.search(r"ChaletteHQ/cr2|cr2", ln, re.I)]
+    hits = [ln for ln in _text(name).splitlines() if re.search(r"ChaletteHQ/cr2|\bcr2\b", ln, re.I)]
     assert not hits, f"{name}: CR2 still named: {hits}"
 
 

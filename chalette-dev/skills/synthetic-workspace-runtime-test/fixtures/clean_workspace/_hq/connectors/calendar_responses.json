@@ -1,0 +1,130 @@
+{
+  "calendar_list_events": {
+    "windows": {
+      "today": [
+        {
+          "event_id": "cal_001",
+          "title": "Sync 1",
+          "start": "2026-05-01T10:00:00",
+          "attendees": [
+            "adan.sample1@example.com"
+          ]
+        },
+        {
+          "event_id": "cal_002",
+          "title": "Sync 2",
+          "start": "2026-05-02T10:00:00",
+          "attendees": [
+            "aria.sample2@example.com"
+          ]
+        },
+        {
+          "event_id": "cal_003",
+          "title": "Sync 3",
+          "start": "2026-05-03T10:00:00",
+          "attendees": [
+            "bo.sample3@example.com"
+          ]
+        },
+        {
+          "event_id": "cal_004",
+          "title": "Sync 4",
+          "start": "2026-05-04T10:00:00",
+          "attendees": [
+            "bowie.sample4@example.com"
+          ]
+        },
+        {
+          "event_id": "cal_005",
+          "title": "Sync 5",
+          "start": "2026-05-05T10:00:00",
+          "attendees": [
+            "dustin.sample5@example.com"
+          ]
+        }
+      ],
+      "next_7_days": [
+        {
+          "event_id": "cal_001",
+          "title": "Sync 1",
+          "start": "2026-05-01T10:00:00",
+          "attendees": [
+            "adan.sample1@example.com"
+          ]
+        },
+        {
+          "event_id": "cal_002",
+          "title": "Sync 2",
+          "start": "2026-05-02T10:00:00",
+          "attendees": [
+            "aria.sample2@example.com"
+          ]
+        },
+        {
+          "event_id": "cal_003",
+          "title": "Sync 3",
+          "start": "2026-05-03T10:00:00",
+          "attendees": [
+            "bo.sample3@example.com"
+          ]
+        },
+        {
+          "event_id": "cal_004",
+          "title": "Sync 4",
+          "start": "2026-05-04T10:00:00",
+          "attendees": [
+            "bowie.sample4@example.com"
+          ]
+        },
+        {
+          "event_id": "cal_005",
+          "title": "Sync 5",
+          "start": "2026-05-05T10:00:00",
+          "attendees": [
+            "dustin.sample5@example.com"
+          ]
+        },
+        {
+          "event_id": "cal_006",
+          "title": "Sync 6",
+          "start": "2026-05-06T10:00:00",
+          "attendees": [
+            "lyra.sample6@example.com"
+          ]
+        },
+        {
+          "event_id": "cal_007",
+          "title": "Sync 7",
+          "start": "2026-05-07T10:00:00",
+          "attendees": [
+            "mira.sample7@example.com"
+          ]
+        },
+        {
+          "event_id": "cal_008",
+          "title": "Sync 8",
+          "start": "2026-05-01T10:00:00",
+          "attendees": [
+            "quinn.sample8@example.com"
+          ]
+        },
+        {
+          "event_id": "cal_009",
+          "title": "Sync 9",
+          "start": "2026-05-02T10:00:00",
+          "attendees": [
+            "rio.sample9@example.com"
+          ]
+        },
+        {
+          "event_id": "cal_010",
+          "title": "Sync 10",
+          "start": "2026-05-03T10:00:00",
+          "attendees": [
+            "sam.sample10@example.com"
+          ]
+        }
+      ]
+    }
+  }
+}
