@@ -21,7 +21,7 @@ metadata:
 - **Use `chalette-dev:skill-generator` for:** project-scoped client skills ("go [project]") that live in `_hq/skills/<project>/`, not in the Command Room plugin.
 - **Use `chalette-dev:regenerate-skill` for:** refreshing an existing project-scoped skill when its template or context changed.
 - **Use direct edit** for: trivial changes to an existing skill (typo, small text fix, single-line clarification). The contract gates don't help here and waste time.
-- **Use `chalette:voice-test` for:** standalone voice scoring outside a skill-build context.
+- **Use `chalette:voice-test` for:** standalone voice scoring outside a skill-build context. It lives in the owner's own plugin, so a team member without it hands Gate 14 to the owner.
 - **Use `chalette-dev:synthetic-workspace-runtime-test` for:** running runtime exercise against synthetic fixture once the SKILL.md is drafted (Gate 13 invocation).
 - **Use `chalette-dev:bug-regression-suite` for:** regression checks against the resolved workspace or synthetic fixture (Gate 18 invocation).
 - **Use `chalette:ship-cr-plugin` for:** the actual release flow once the ship-package is reviewed and ready.
@@ -82,7 +82,7 @@ This skill is a META-skill: it does NOT write to the CR substrate (`events.jsonl
 - Does NOT run regression itself. Defers to `chalette-dev:bug-regression-suite` for the no-regression check (Gate 18).
 - Does NOT run runtime exercise itself. Defers to `chalette-dev:synthetic-workspace-runtime-test` (Gate 13).
 - Does NOT generate fake names / synthetic data outside the canonical placeholder set (`Sam Sample`, `Bo Sample`, `Rio Sample`, `Acme Co`, `Northstar Partners`, `Acme Bakery`, `@example.com`). Privacy Gate 6 hard-gate.
-- Does NOT skip Voice Calibration for composer skills. Any skill detected as a composer (drafts emails / writes memos / composes replies) MUST score ≥85 on `chalette:voice-test`. No override below 70; 70-85 requires explicit M-acceptance with reason logged.
+- Does NOT skip Voice Calibration for composer skills. Any skill detected as a composer (drafts emails / writes memos / composes replies) MUST score ≥85 on `chalette:voice-test` (the owner runs it; a team member without the owner's plugin marks Gate 14 pending and hands the skill to the owner before it ships). No override below 70; 70-85 requires explicit M-acceptance with reason logged.
 - Does NOT mark a skill ship-ready until ALL Tier A static gates clear AND ALL Tier B runtime/eval gates clear. WARN-status surfaces for explicit accept; BLOCK-status halts.
 
 ## How to Use

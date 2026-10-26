@@ -197,7 +197,7 @@ Trigger phrases:
 
 - "Generate a skill for Acme Property"
 - "Make a skill for NorthStar"
-- "Scaffold a skill for the new Daniel project"
+- "Scaffold a skill for the new Acme Bakery project"
 - "Create the go-uplift skill"
 - "I need a skill for Command Room"
 
