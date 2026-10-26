@@ -10,7 +10,7 @@ operator's own computer only:
 Nothing real is written in this file."""
 import json, re, sys, glob, os
 
-TEAM = {"matthew", "louis", "lewis", "erick", "eric", "claude", "chalette", "command room", "penelope"}
+TEAM = {"matthew", "erick", "eric", "claude", "chalette", "command room", "penelope"}
 GENERIC_DOMAINS = {"gmail.com", "yahoo.com", "icloud.com", "me.com", "outlook.com", "hotmail.com", "aol.com",
                    "wework.com", "superhuman.com", "chaletteholdings.com"}
 WORDS = {"company", "builders", "contact", "complete", "beach", "power", "group", "partners", "systems", "holdings",

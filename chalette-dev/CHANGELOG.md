@@ -2,6 +2,14 @@
 
 (Release history before v0.3.0 is at the bottom of this file, moved out of `plugin.json` on 2026-10-24.)
 
+## v0.9.1 (2026-10-25): the team, the merge rule and the battery, as they are now
+
+- **Who is running this (cr1-report, cr1-desk, cr1-test, cr1-scrub):** a GitHub account other than the owner's or Erick's is another team member under their own name, not Erick. Proposals read "Proposed by <their name>, Matthew to confirm."
+- **cr1-desk:** who merges follows the owner ruling on cr1#289 of 2026-10-25 (three green quick-check shards plus the review; one full battery on main per batch; a red battery on main stops merges until fixed or reverted). The ISSUES.md update is tracked in cr1#420. The "no second developer" line is gone.
+- **battery:** `battery --quick` is cr1's quick check (`run_all.py --quick`, about 4 to 8 minutes), the same check CI runs before a merge. `run the battery` is the full battery (about 35 to 47 minutes), run once on main per batch and before a promote, not before every commit. The "~10s" claim is gone.
+- **cr1-scrub:** the departed developer's first name is no longer on the team allowlist, so the scan flags it.
+- **CI:** toolkit-guard runs on pull requests and on pushes to main only; every pull request used to run it twice.
+
 ## v0.9.0 (2026-10-25): the dev toolkit moves in from the owner's plugin
 
 Owner ruling 2026-10-25: `chalette` is the owner's personal plugin; `chalette-dev` is the development toolkit for the owner and the team. Eleven skills moved here from `chalette` and leave it in its v0.13.0.

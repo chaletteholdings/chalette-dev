@@ -1,6 +1,6 @@
 ---
 name: battery
-description: "INTERNAL — the single entry point for testing Command Room. Orchestrates the full battery in tiers, fail-fast, and emits ONE consolidated GREEN/HOLD/RED verdict. Replaces having to remember synthetic-workspace-runtime-test / bug-regression-suite / cross-skill-interaction-test / ship-readiness-gate individually — it sequences and delegates to them. Fires on 'run the battery', 'test command room', 'full test', 'badass test', 'battery --quick', 'battery --ship', 'battery --attended'. Absorbs two retired entry points. run-command-room-tests: 'internal: run plugin tests', 'run command room tests', 'command room health check', 'verify plugin code' alias 'battery --quick' — tiers 0-1, auto-discovered by tests/run_all.py. verify-cr-release: 'verify cr release', 'run verification suite' alias '--attended'; 'pre-ship check' aliases '--ship'. Tier 5 = the dogfood ritual, walked by hand. Plugin-developer use only; not customer chat. Not 'test #N' (cr1-test, a fixed issue)."
+description: "INTERNAL — the single entry point for testing Command Room. Orchestrates the full battery in tiers, fail-fast, and emits ONE consolidated GREEN/HOLD/RED verdict. Replaces having to remember synthetic-workspace-runtime-test / bug-regression-suite / cross-skill-interaction-test / ship-readiness-gate individually — it sequences and delegates to them. Fires on 'run the battery', 'test command room', 'full test', 'badass test', 'battery --quick', 'battery --ship', 'battery --attended'. Absorbs two retired entry points. run-command-room-tests: 'internal: run plugin tests', 'run command room tests', 'command room health check', 'verify plugin code' alias 'battery --quick' — the quick check, via tests/run_all.py. verify-cr-release: 'verify cr release', 'run verification suite' alias '--attended'; 'pre-ship check' aliases '--ship'. Tier 5 = the dogfood ritual, walked by hand. Plugin-developer use only; not customer chat. Not 'test #N' (cr1-test, a fixed issue)."
 ---
 
 # battery — the Command Room test battery
@@ -45,7 +45,7 @@ The deep-testing weeks surfaced a layered truth about what catches what:
 | 4 · ship verdict | unattended pre-promote battery + bug-catalog cross-ref | delegate → `ship-readiness-gate` | emits PROMOTE/HOLD/BLOCKED |
 | 5 · attended | the dogfood ritual: freeform real-workspace dogfood **+** walk `references/VERIFICATION_PLAN.md` against a fresh test workspace | hand off to the operator — **no skill; walked by hand** (NOT auto-run) | the ship operator's call (`may_ship`) |
 
-Tiers 0–2 are pure code and run in this skill directly (~10s). Tiers 3–5 are
+Tiers 0–2 are pure code and run in this skill directly: together they are cr1's full battery, about 35 to 47 minutes on the dev PC. Tiers 3–5 are
 heavier and delegate to the specialist skills, which keep their own logic — this
 flow just sequences them and rolls their verdicts into one.
 
@@ -53,9 +53,9 @@ flow just sequences them and rolls their verdicts into one.
 
 | Trigger | Runs | When |
 |---|---|---|
-| `battery --quick` | tiers 0–1 only | mid-edit sanity check, seconds |
-| `internal: run plugin tests` / `run command room tests` / `command room health check` / `verify plugin code` | tiers 0–1 (alias for `battery --quick`) | the retired run-command-room-tests entry point, folded in here (v0.3.1) |
-| `test command room` / `run the battery` | tiers 0–2 (full code battery) | default — before any commit |
+| `battery --quick` | cr1's quick check (`run_all.py --quick`: the guard tier plus every suite but the slow ones), about 4 to 8 minutes | before every pull request; the same check CI runs as the merge gate |
+| `internal: run plugin tests` / `run command room tests` / `command room health check` / `verify plugin code` | the quick check (alias for `battery --quick`) | the retired run-command-room-tests entry point, folded in here (v0.3.1) |
+| `test command room` / `run the battery` | tiers 0–2 (the full battery) | once on cr1's main per batch of merges, and before a promote (owner ruling 2026-10-25); not needed per pull request |
 | `battery --ship` / `badass test` | tiers 0–4 (adds integration + ship verdict) | before a production-promote decision |
 | `battery --attended` | tiers 0–5 (adds the Cowork loop) | full pre-release gate with the operator present |
 
@@ -122,8 +122,8 @@ the plugins directory can get picked up as a marketplace and shadow the real ins
 Then, from that directory:
 
 ```
-python tests/run_all.py                 # default — tiers 0-2
-python tests/run_all.py --tier guard    # --quick
+python tests/run_all.py           # run the battery: tiers 0-2, the full battery
+python tests/run_all.py --quick   # battery --quick: the quick check CI runs (not a battery)
 ```
 
 On Windows, a wall of `UnicodeEncodeError: charmap` across ~30 suites is **not** a
@@ -186,22 +186,25 @@ rather than calling the attended tier covered.
 ```
 Command Room test battery — v{version}  ({mode})
 
-Tier 0 · guard          11/11 ✓
-Tier 1 · unit           31/31 ✓
-Tier 2 · runtime         1/1  ✓
+Tier 0 · guard        108/108 ✓
+Tier 1 · unit          662/662 ✓
+Tier 2 · runtime        16/16  ✓
 Tier 3 · integration     —    (run with --ship)
 Tier 4 · ship verdict    —    (run with --ship)
 
-Code battery: GREEN (43/43, 9.6s)
+Code battery: GREEN (786/786, 2,799 s)
 
-VERDICT: GREEN — safe to commit.
+VERDICT: GREEN — the batch on main stands; merging may continue.
 ```
 
+For `battery --quick` the verdict is one line, and it is never called a battery:
+`Quick check: GREEN (693/693, 285 s). Not a battery; the full battery runs once on main per batch.`
+
 Verdict logic:
-- **RED** — any tier 0–2 suite failed. Not safe to commit. List failures + fixes.
+- **RED** — any tier 0–2 suite failed. On main, stop merging until the cause is fixed or reverted. List failures + fixes.
 - **HOLD** — code battery GREEN but a tier 3 integration gate failed OR
   ship-readiness-gate returned HOLD/BLOCKED. Safe to commit; NOT safe to promote.
-- **GREEN** — everything run was green. For `run the battery` (tiers 0–2): safe to commit.
+- **GREEN** — everything run was green. For `run the battery` (tiers 0–2) on main: the batch stands.
   For `battery --ship`: ship-readiness-gate said PROMOTE → safe to promote.
 
 Per CONTRACT Rule 4: this is internal dev output — test-suite names and tier

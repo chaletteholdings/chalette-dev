@@ -7,7 +7,7 @@ NAMES = ["cr1-test", "cr1-report", "cr1-scrub", "cr1-desk"]
 
 def _rule(name):
     text = (SKILLS / name / "SKILL.md").read_text(encoding="utf-8")
-    m = re.search(r"These skills are shared by Matthew and Erick.*?go on with the answer\.", text, re.S)
+    m = re.search(r"These skills are shared by the team.*?go on with the answer\.", text, re.S)
     assert m, f"{name}: 'Who is running this' rule not found"
     return m.group(0)
 

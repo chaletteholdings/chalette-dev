@@ -1,13 +1,14 @@
 name: toolkit-guard
 
 # Checks for the Command Room 1 dev skills (cr1-report, cr1-scrub, cr1-test, cr1-desk) on
-# every push and pull request: the committed operator profile stays the contractor default
+# every pull request and every push to main: the committed operator profile stays the contractor default
 # with exactly the keys the skills read, the overlay is never tracked, every skill passes
 # quick_validate, descriptions (skills and manifests) stay under budget, the skills target
 # cr1, the scrub script works on sample books, and the test-log prompt is present.
 
 on:
   push:
+    branches: [main]
   pull_request:
 
 jobs:
