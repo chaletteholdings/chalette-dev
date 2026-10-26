@@ -4,6 +4,8 @@ For Isabella and Erick. About ten minutes to read, fifteen to set up. Written 20
 
 Brand, positioning and copy are not in this guide. They are mid-rebrand and have their own sheet: [POSITIONING_AND_BRAND_SHEET.md](POSITIONING_AND_BRAND_SHEET.md).
 
+This guide covers this repo. For every repository you can open (cr1, this toolkit, the CRM pilot, the brand tools, the website), what each holds and where your time helps most, read [REPO_GUIDE.md](REPO_GUIDE.md).
+
 ## What this repo is
 
 Command Room 1 is built in one repository, `chaletteholdings/cr1`. Every bug and every idea for it lives there as a GitHub issue.
