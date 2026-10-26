@@ -2,6 +2,14 @@
 
 (Release history before v0.3.0 is at the bottom of this file, moved out of `plugin.json` on 2026-10-24.)
 
+## v0.9.5 (2026-10-26): the name check refuses when it has no names (cr1#455)
+
+- **cr1-scrub `terms`:** reads people, orgs and threads from a current Command Room 1 book, which keeps them under an "entities" block, as well as from the older flat layout and the split parts. Before this, a current book gave no names and every scan passed on the fixed checks alone while reporting clean.
+- **cr1-scrub `terms` refuses:** when no names come out of the book (a wrong folder, an unreadable or empty book, or the private family list alone), it prints nothing, says "The name check did not run: no names could be read from this workspace." and exits 2. cr1's pre-commit guard and cr1's promote step already stop on a failed terms step.
+- **cr1-scrub SKILL step 2:** says what to do on that refusal.
+- **tests/test_scrub_scan.py:** a nested book gives the same names as a flat one; a missing folder, an empty book and an empty book with a sample family list loaded each refuse. Each new test was seen to fail before the change.
+- **Verified:** `pytest tests/` passes. Checked by hand, not by a test: on the owner's own book the name list is identical before and after (same entries, same order).
+
 ## v0.9.4 (2026-10-26): a guide to every repo the team can open
 
 - **docs/REPO_GUIDE.md:** what each repository Isabella and Erick can open holds (cr1, this toolkit, the CRM pilot, the brand tools, the website, and the read-only and retired ones), how it works, how to use it, where their time helps most, and what stays with Matthew. Links to TEAM_GUIDE for setup and the after-test sequence rather than restating them; counts are dated. States the team's jobs as Matthew set them on 2026-10-26: test fixes, keep the Chalette Design System current as the source of truth, with Matthew approving every change before it is published, and (Isabella) test the CRM; nobody is asked to build.

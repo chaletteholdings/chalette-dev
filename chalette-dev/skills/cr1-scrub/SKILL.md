@@ -38,7 +38,7 @@ Client names come from Matthew's own book, so the list is always current and nev
 2. Run the script that ships with this skill, `scripts/scrub_scan.py` (copy it to this session's scratch folder first if the skill folder is read-only; never into the repo or the book folder):
    `python3 scrub_scan.py terms --book "<book root>" > <scratch>/terms.txt`
    It also reads the operator's private extra lists from this plugin's `config/scrub.local.json` when present (family surnames to always flag, first names and words to ignore). That file is gitignored and stays on the operator's own computer; never commit or post it.
-   Count the lines in the terms file (never print them). If it is empty, or holds only the private family list, the book was not read: say plainly that the name check did not run.
+   Count the lines in the terms file (never print them). If the script stops with "The name check did not run" (it does when no names come out of the book: a wrong folder, an unreadable or empty book, or the private family list alone), the book was not read: say plainly that the name check did not run, and never call the text clean on names.
 3. The terms file is scratch only. Never commit it, never paste it into GitHub, never print the whole list in chat.
 
 ## Step 2. Scan
