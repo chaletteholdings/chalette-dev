@@ -48,12 +48,13 @@ Fires on "what's pending to build", "build desk", "what's waiting to build", "wh
 
 Each issue goes in exactly one pile, first match wins:
 
+0. **Waiting on Matthew's sign-off.** Label `ready to close`: a team member's test passed. Do not explain these here; say "say *what needs my sign-off*" (cr1-test owns this pile).
 1. **Waiting on your test.** Label `needs UAT`, or the latest fix comment says "Please verify the fix". Do not explain these here; say "say *what needs me* to test them" (cr1-test owns this pile).
 2. **Waiting on Matthew's merge.** An open pull request linked to it is built and reviewed, and waits for Matthew to merge it.
 3. **Needs your decision.** Any of: no acceptance check (what "done" looks like); the label `question`; the body or a recent comment asks Matthew to choose ("Matthew's call", "decision", "options"); or the issue has no labels at all (not sorted yet).
 4. **Ready to build.** Has a build brief and an acceptance check, and no open pull request.
 
-Rulings that shape the piles (since the move back to cr1 on 2026-10-22): cr1-build builds an issue and runs a fresh-context reviewer before it opens the pull request. Matthew merges, or a train he has allowed for that run merges, under the owner ruling on cr1#289 of 2026-10-25 (the ISSUES.md update is tracked in cr1#420): three green quick-check shards plus the review, one full battery on main per batch, and a red battery on main stops further merges until the cause is fixed or reverted. Erick proposes; Matthew decides. Matthew closes an issue only after his test passes.
+Rulings that shape the piles (since the move back to cr1 on 2026-10-22): cr1-build builds an issue and runs a fresh-context reviewer before it opens the pull request. Matthew merges, or a train he has allowed for that run merges, under the owner ruling on cr1#289 of 2026-10-25 (the ISSUES.md update is tracked in cr1#420): three green quick-check shards plus the review, one full battery on main per batch, and a red battery on main stops further merges until the cause is fixed or reverted. Erick and Isabella propose and test; Matthew decides. Matthew closes an issue after his own test passes, or after he signs off on a team member's pass that Claude checked (ISSUES.md section 12, cr1#448).
 
 ### Explain each item
 

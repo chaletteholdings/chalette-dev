@@ -20,7 +20,9 @@ You do not write code here. You report what you see, test what was fixed, and se
    - Then `gh auth login` and follow the prompts.
    - Check: `gh api user --jq .login` prints your own account name.
 3. **The plugin.** In the Claude desktop app, open Plugins, add the marketplace `chaletteholdings/chalette-dev`, and turn on `chalette-dev`. In a Claude Code terminal the same thing is `/plugin marketplace add chaletteholdings/chalette-dev`, then `/plugin install chalette-dev@chalette-dev`.
-4. **Check it knows you.** Start a new chat and say "what's pending to build". The first line of the reply says who it took you for: "Running as Isabella" or "Running as Erick". If it names someone else, stop and tell it who you are. Your word stands for the rest of that chat.
+4. **The product you test: the staging plugin `cr`.** This is the newest Command Room, updated every time a fix is merged; it is the same one Matthew tests on. In Plugins, add the marketplace `chaletteholdings/cr1` (it shows up as `commandroom1`; the repo is private, so the app needs to be connected to your GitHub account) and turn on `cr`. If you also have the released plugin `command-room`, turn it off while you test, so you know which one answered. Before each test, press Update on `cr` and start a new chat.
+5. **A test folder.** Use `cr` only with a test folder, never your own work folder or a client's. If you have none, ask Matthew for the sample one (a business with made-up names), or ask the test skill to copy it for you; the copy step has not been tried on your computers yet, so tell Matthew if it fails.
+6. **Check it knows you.** Start a new chat and say "what's pending to build". The first line of the reply says who it took you for: "Running as Isabella" or "Running as Erick". If it names someone else, stop and tell it who you are. Your word stands for the rest of that chat.
 
 You do not need to clone this repo or cr1, and you should not create `config/operator.local.json`; that file is Matthew's alone.
 
@@ -29,7 +31,7 @@ You do not need to clone this repo or cr1, and you should not create `config/ope
 | Say | What happens |
 |---|---|
 | "report this", "file a bug", "feature request" | Turns the chat you are in into one issue on cr1: what happened, the exact error, the version, how bad it is. Run it in the chat where the problem happened, so the chat is the evidence. |
-| "what needs me", "test #N" | Lists fixes waiting for a test, then gives you a short script: what to type, what a pass looks like, three runs. Your result is posted on the issue. |
+| "what needs me", "test #N" | Lists fixes waiting for a test, then gives you a short script: what to type, what a pass looks like, three runs. Picking one puts your name on it, so nobody else tests it at the same time. Your result is posted on the issue. |
 | "what's pending to build", "explain #N" | Everything waiting on cr1, sorted by what it is waiting on, each item explained from the client's side. Read this before you describe the product to anyone, so you know what is true today and what is coming. |
 | "scrub this" | Checks a piece of text for client names, personal details and money figures before it goes to GitHub. The other three run it for you; run it yourself on anything you write by hand. |
 
@@ -40,6 +42,16 @@ The plugin carries eleven more skills (the battery, the test suites, the skill b
 - **You can:** file issues, add evidence to an existing issue, run a test and post the result, and propose how something should be built.
 - **Matthew decides:** what gets built, what merges, when an issue is closed, and when a release goes out to clients.
 - **So:** anything you file is labelled `question` and signed "Proposed by <your name>, Matthew to confirm." The skills do this for you. Never close an issue; post the result and tag Matthew.
+
+## What happens after your test
+
+1. **Pass:** the skill posts your result, labels the issue `ready to close`, and tags Matthew. You are done with it.
+2. **Claude checks your pass** in Matthew's chat: the right build, three runs, a test log for each run, proof for every check, no client data. A pass with all of those holds.
+3. **Matthew signs off** with one word and the issue closes. You do not need to do anything.
+4. **If it does not hold,** you get a comment saying why (usually a missing log or the wrong build) and the issue comes back to you as `needs UAT`. Run it again the same way.
+5. **Fail:** the skill posts a full report and the fix goes back to whoever builds it. A fail is useful; report exactly what you saw.
+
+Fixes reach `cr` the moment they merge, so testing them quickly is what keeps work moving. A pass with three logs is worth more than three passes without them.
 
 ## The rule that cannot slip: no client data in GitHub
 
