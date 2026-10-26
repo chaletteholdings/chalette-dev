@@ -4,7 +4,7 @@ What each repository you can open holds, how it works, how to get the most from 
 
 Setting up (GitHub sign-in, the toolkit plugin, the staging plugin `cr`, a test folder, the four phrases) is already covered in [TEAM_GUIDE.md](TEAM_GUIDE.md). This guide does not repeat it. Do that setup first.
 
-**Your jobs, as Matthew set them on 2026-10-26:** test fixes (both of you), keep the Chalette Design System current as the source of truth (both of you), and test the CRM (Isabella). You are not asked to build. Each of you has a step-by-step guide for those jobs, kept in your own Command Room; this page is the map behind it.
+**Your jobs, as Matthew set them on 2026-10-26:** test fixes (both of you), keep the Chalette Design System current as the source of truth, with Matthew approving every change (both of you), and test the CRM (Isabella). You are not asked to build. Each of you has a step-by-step guide for those jobs, kept in your own Command Room; this page is the map behind it.
 
 The counts below (open issues, tests waiting) are as of 2026-10-26. For today's numbers, say "what's pending to build".
 
@@ -97,7 +97,7 @@ The website is plain web pages. Anything that lands on its `main` branch is live
 
 **Where you help.** Brand and positioning are mid-rebrand. Before you draft anything public, check its row in [POSITIONING_AND_BRAND_SHEET.md](POSITIONING_AND_BRAND_SHEET.md): each row is Ruled, Working, Open or Retired. Nothing goes public on an Open row.
 
-**Keeping the design system current is your job.** When Matthew rules something the design system does not say yet, you put it in: the `chalette-brand` skill shows you the exact before and after, you say yes, and it stamps your name. Then send Matthew the summary so his machine carries it into the product. Anything he has not ruled goes to him as a proposal first. The steps are in your step-by-step guide.
+**Keeping the design system current is your job, and Matthew approves every change.** When he rules something the design system does not say yet, or you see something to fix or add, you prepare the change: the `chalette-brand` skill shows the exact before and after. You send that to Matthew, and only after his written approval do you publish it, with the approval in the stamp. Then send him the published summary so his machine carries it into the product. The steps are in your step-by-step guide.
 
 **Never:** change the brand in this repo (a change here changes tooling, not the brand), or run `sync_brand.py`. It runs once per change on Matthew's machine and OneDrive spreads the result.
 
@@ -126,14 +126,14 @@ The website is plain web pages. Anything that lands on its `main` branch is live
 ## Where your time helps most, in order
 
 1. **Clear the test queue.** "what needs me" with `cr` in a test folder. 32 fixes were waiting on 2026-10-26, and until now Matthew has been the only tester. When there is time left, reproduce the `needs evidence` issues (25 on 2026-10-26) with the exact error text.
-2. **Keep the design system current.** Every ruling Matthew makes about the brand, positioning or copy goes into the design system the same day.
+2. **Keep the design system current.** Prepare each brand, positioning or copy ruling as a change the same day it is made, and publish it once Matthew approves.
 3. **Test the CRM (Isabella).** The checklist, then each fix as it lands.
 
 Along the way, report what you hit in real use from the chat where it happened. Website pull requests (Isabella) come after these three.
 
 ## What stays with Matthew
 
-What gets built, what merges, when an issue closes, when a release goes to clients, and every brand or positioning ruling. You propose; he decides. When you are unsure which side of that line something sits on, ask him with the exact words on screen.
+What gets built, what merges, when an issue closes, when a release goes to clients, every brand or positioning ruling, and every change to the design system before it is published. You propose; he decides. When you are unsure which side of that line something sits on, ask him with the exact words on screen.
 
 ## The one rule that never bends
 

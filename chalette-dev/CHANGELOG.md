@@ -4,7 +4,7 @@
 
 ## v0.9.4 (2026-10-26): a guide to every repo the team can open
 
-- **docs/REPO_GUIDE.md:** what each repository Isabella and Erick can open holds (cr1, this toolkit, the CRM pilot, the brand tools, the website, and the read-only and retired ones), how it works, how to use it, where their time helps most, and what stays with Matthew. Links to TEAM_GUIDE for setup and the after-test sequence rather than restating them; counts are dated. States the team's jobs as Matthew set them on 2026-10-26: test fixes, keep the Chalette Design System current as the source of truth once he has ruled, and (Isabella) test the CRM; nobody is asked to build.
+- **docs/REPO_GUIDE.md:** what each repository Isabella and Erick can open holds (cr1, this toolkit, the CRM pilot, the brand tools, the website, and the read-only and retired ones), how it works, how to use it, where their time helps most, and what stays with Matthew. Links to TEAM_GUIDE for setup and the after-test sequence rather than restating them; counts are dated. States the team's jobs as Matthew set them on 2026-10-26: test fixes, keep the Chalette Design System current as the source of truth, with Matthew approving every change before it is published, and (Isabella) test the CRM; nobody is asked to build.
 - **docs/TEAM_GUIDE.md and README:** one line each pointing at the new guide.
 - **Verified:** `pytest tests/` passes; the new and changed files scan clean against the full name list; no em dashes or exclamation marks added. Rebased onto v0.9.3 (#28).
 
