@@ -2,6 +2,13 @@
 
 (Release history before v0.3.0 is at the bottom of this file, moved out of `plugin.json` on 2026-10-24.)
 
+## v0.9.2 (2026-10-26): a guide for the team, and a sheet for the rebrand
+
+- **docs/TEAM_GUIDE.md:** what this repo is, setup, the four things to say, what a team member decides and what goes to the owner, the no-client-data rule, what a good report and a good test look like, where things live. Written for Isabella and Erick.
+- **docs/POSITIONING_AND_BRAND_SHEET.md:** the source of truth while Chalette is rebranded and repositioned. Every brand and positioning item with a status (Ruled, Working, Open, Retired), which file wins, and how a row gets decided. No client names, prices or money figures.
+- **cr1-scrub:** Isabella joins the team list, so her own name in an issue she files is not flagged. `scrub_scan.py` TEAM and TEAM_FULL, and the SKILL's allowed list.
+- **README** points at both documents.
+
 ## v0.9.1 (2026-10-25): the team, the merge rule and the battery, as they are now
 
 - **Who is running this (cr1-report, cr1-desk, cr1-test, cr1-scrub):** a GitHub account other than the owner's or Erick's is another team member under their own name, not Erick. Proposals read "Proposed by <their name>, Matthew to confirm."
