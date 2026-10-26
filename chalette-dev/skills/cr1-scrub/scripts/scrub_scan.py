@@ -46,7 +46,8 @@ def _pieces(name):
 
 def _records(book):
     """Every entity record in the book: the split parts (_hq/data/entities/*.jsonl.txt), then the
-    single Command Room 1 file (_hq/data/entities.json: its people, orgs and threads lists)."""
+    single Command Room 1 file (_hq/data/entities.json: its people, orgs and threads lists, at the top
+    level or, in a current book, under its "entities" block, cr1#455)."""
     for f in glob.glob(os.path.join(book, "_hq", "data", "entities", "*.jsonl.txt")):
         for line in open(f, encoding="utf-8"):
             try:
@@ -60,10 +61,14 @@ def _records(book):
                 data = json.load(f)
         except ValueError:
             data = {}
-        for kind in ("people", "orgs", "threads"):
-            for r in (data.get(kind) or []) if isinstance(data, dict) else []:
-                if isinstance(r, dict):
-                    yield r
+        blocks = [data] if isinstance(data, dict) else []
+        if blocks and isinstance(data.get("entities"), dict):
+            blocks.append(data["entities"])
+        for block in blocks:
+            for kind in ("people", "orgs", "threads"):
+                for r in block.get(kind) or []:
+                    if isinstance(r, dict):
+                        yield r
 
 
 def terms(book):
@@ -123,7 +128,13 @@ def scan(term_list, label, text):
 if __name__ == "__main__":
     sys.stdout.reconfigure(encoding="utf-8")  # Windows defaults to cp1252, which the scan step cannot read back
     if sys.argv[1] == "terms":
-        print("\n".join(terms(sys.argv[sys.argv.index("--book") + 1])))
+        found = terms(sys.argv[sys.argv.index("--book") + 1])
+        # No names from the book (wrong folder, unreadable or empty book, family list only):
+        # refuse, never hand back a list a scan would pass as clean (cr1#455).
+        if not set(found) - set(FAMILY):
+            print("The name check did not run: no names could be read from this workspace.", file=sys.stderr)
+            sys.exit(2)
+        print("\n".join(found))
         sys.exit(0)
     tl = [t.strip() for t in open(sys.argv[sys.argv.index("--terms") + 1], encoding="utf-8") if t.strip()]
     targets = [a for a in sys.argv[2:] if a not in ("--terms",) and a != sys.argv[sys.argv.index("--terms") + 1]]
