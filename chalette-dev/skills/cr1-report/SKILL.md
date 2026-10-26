@@ -13,7 +13,7 @@ It also owns **the scrub**: the check that keeps client names, personal details 
 
 ## Who is running this
 
-These skills are shared by Matthew and Erick (the chalette-dev plugin). Work out who is running them in this order and stop at the first answer:
+These skills are shared by the team (the chalette-dev plugin). Work out who is running them in this order and stop at the first answer:
 
 1. **The local profile.** `config/operator.local.json` in this plugin, when present: its `operator` wins (`"m"` is Matthew). Only Matthew keeps one, on his own computer.
 2. **The GitHub account.** Run `gh api user --jq .login`. `chaletteholdings` is Matthew; `erick559` is Erick; any other account is another team member, who gets Erick's steps under their own name. Web and phone chats load a fresh copy of the plugin with no local profile, so this is how they know who is there.
@@ -22,8 +22,8 @@ These skills are shared by Matthew and Erick (the chalette-dev plugin). Work out
 Say who in one line in the first reply ("Running as Matthew, from the GitHub account."), so a wrong guess shows at once. If the person says otherwise, their word stands for the rest of the chat. If none of the three can be read, never assume: say `FATAL: operator profile unreadable` in one line, then ask once, "Matthew, Erick, or someone else on the team?", and go on with the answer.
 
 - **Matthew (`m`):** everything below as written. He confirms what gets filed, decides what is ready to build, merges, and closes an issue on a passing test.
-- **Erick, or any other team member:** the same steps, with Matthew's decisions turned into proposals. File it with the label `question` and the line "Proposed by <their name>, Matthew to confirm." Never close an issue: post the test result and tag Matthew. Never post a build brief as decided; post it as "Proposed by <their name>, Matthew to confirm."
-- Where the text says "Matthew" as the person you are talking to, talk to whoever is running it. Where it cites a ruling ("Matthew, 2026-10-04"), the ruling stands for both.
+- **Erick, or any other team member:** the same steps, with Matthew's decisions turned into proposals. File it with the label `question` and the line "Proposed by <their name>, Matthew to confirm." (<their name> comes from `gh api user --jq '.name // .login'`.) Never close an issue: post the test result and tag Matthew. Never post a build brief as decided; post it as "Proposed by <their name>, Matthew to confirm."
+- Where the text says "Matthew" as the person you are talking to, talk to whoever is running it. Where it cites a ruling ("Matthew, 2026-10-04"), the ruling stands for everyone.
 
 ## 1. Decide what it is
 
@@ -52,7 +52,7 @@ Say who in one line in the first reply ("Running as Matthew, from the GitHub acc
 
 List open and recent issues and match by title and area: `gh api "repos/chaletteholdings/cr1/issues?state=all&per_page=100&page=1" -q '.[]|select(.pull_request|not)|"\(.number) [\(.state)] \(.title)"'` (page 2 if needed). Read the body of any close match. The search endpoint is blocked in cloud sessions, so use this list.
 - If the same problem or feature is already open, **comment there** with the new evidence (same chat log format) instead of opening a twin. Similar symptoms do not prove the same cause; if unsure, open a new issue and link the old one.
-- If it was closed and is back, comment on it and say it came back on version X. Matthew reopens it; Erick asks him to in the comment.
+- If it was closed and is back, comment on it and say it came back on version X. Matthew reopens it; anyone else asks him to in the comment.
 
 ## 4. Write it
 
@@ -95,7 +95,7 @@ Title: `[Area] what fails, in plain words` for a bug, `[Area] what the owner can
 **Screenshot:** <attached / not needed (not visual) / needed: Matthew to add>
 **Suspected cause (not verified):** only if there is a real clue; keep it apart from the facts
 
-_Drafted by Claude from chat; confirmed by <Matthew or Erick> on <date>; reproduced: yes / no._
+_Drafted by Claude from chat; confirmed by <who confirmed it> on <date>; reproduced: yes / no._
 ```
 
 Keep the body short: about 40 lines outside the collapsed chat log. Studies of what helps fixers, human or AI, find that longer reports do worse; the trigger prompt and a suggested fix help most.
@@ -112,7 +112,7 @@ Chat log rules: one line per turn, high level. What was typed (verbatim), what C
 **Not asking for:** limits, so the scope stays small
 **Related:** #N
 
-_Drafted by Claude from chat; confirmed by <Matthew or Erick> on <date>._
+_Drafted by Claude from chat; confirmed by <who confirmed it> on <date>._
 
 ## Build brief
 - **Skill:** new skill <name> / change to skill <name>
@@ -145,7 +145,7 @@ Show Matthew the title plus three lines (what it is, impact or outcome, labels) 
 gh api repos/chaletteholdings/cr1/issues -f title="<title>" -F body=@<scratch>/issue.md -f "labels[]=enhancement" -q .html_url
 ```
 
-Labels: `bug` or `enhancement`, plus `question` when Erick files it.
+Labels: `bug` or `enhancement`, plus `question` when anyone but Matthew files it.
 
 - Use REST only. GraphQL (`gh issue create`, `gh pr list`) is blocked in these sessions.
 - If `gh` can't reach the repo in a cloud session, attach it with the add_repo tool (`chaletteholdings`, `cr1`) and retry once.

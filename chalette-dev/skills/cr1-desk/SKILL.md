@@ -5,7 +5,7 @@ description: "Use when Matthew or Erick wants to see what is pending to build on
 
 # cr1-desk: the build desk
 
-Matthew is not technical. He builds Command Room 1 with Claude Code and the team, and merges the pull requests (or lets a build train merge them under cr1's ISSUES.md section 10). This skill is the step between an idea or bug being filed (cr1-report) and it being built (cr1-build) and tested (cr1-test). It does two things:
+Matthew is not technical. He builds Command Room 1 with Claude Code and the team, and merges the pull requests (or lets a build train merge them, under the owner ruling on cr1#289 of 2026-10-25 (the ISSUES.md update is tracked in cr1#420)). This skill is the step between an idea or bug being filed (cr1-report) and it being built (cr1-build) and tested (cr1-test). It does two things:
 
 1. **The desk:** shows everything pending, sorted by what it is waiting on, each item explained from the client's side.
 2. **Get one ready:** when Matthew picks one, briefs him, asks him the few questions only he can answer, and writes his answers into the issue as the build brief, so the decision lives where the work happens and not in a chat.
@@ -14,7 +14,7 @@ Repository: `chaletteholdings/cr1`, branch `main`. Read it with whatever GitHub 
 
 ## Who is running this
 
-These skills are shared by Matthew and Erick (the chalette-dev plugin). Work out who is running them in this order and stop at the first answer:
+These skills are shared by the team (the chalette-dev plugin). Work out who is running them in this order and stop at the first answer:
 
 1. **The local profile.** `config/operator.local.json` in this plugin, when present: its `operator` wins (`"m"` is Matthew). Only Matthew keeps one, on his own computer.
 2. **The GitHub account.** Run `gh api user --jq .login`. `chaletteholdings` is Matthew; `erick559` is Erick; any other account is another team member, who gets Erick's steps under their own name. Web and phone chats load a fresh copy of the plugin with no local profile, so this is how they know who is there.
@@ -23,8 +23,8 @@ These skills are shared by Matthew and Erick (the chalette-dev plugin). Work out
 Say who in one line in the first reply ("Running as Matthew, from the GitHub account."), so a wrong guess shows at once. If the person says otherwise, their word stands for the rest of the chat. If none of the three can be read, never assume: say `FATAL: operator profile unreadable` in one line, then ask once, "Matthew, Erick, or someone else on the team?", and go on with the answer.
 
 - **Matthew (`m`):** everything below as written. He confirms what gets filed, decides what is ready to build, merges, and closes an issue on a passing test.
-- **Erick, or any other team member:** the same steps, with Matthew's decisions turned into proposals. File it with the label `question` and the line "Proposed by <their name>, Matthew to confirm." Never close an issue: post the test result and tag Matthew. Never post a build brief as decided; post it as "Proposed by <their name>, Matthew to confirm."
-- Where the text says "Matthew" as the person you are talking to, talk to whoever is running it. Where it cites a ruling ("Matthew, 2026-10-04"), the ruling stands for both.
+- **Erick, or any other team member:** the same steps, with Matthew's decisions turned into proposals. File it with the label `question` and the line "Proposed by <their name>, Matthew to confirm." (<their name> comes from `gh api user --jq '.name // .login'`.) Never close an issue: post the test result and tag Matthew. Never post a build brief as decided; post it as "Proposed by <their name>, Matthew to confirm."
+- Where the text says "Matthew" as the person you are talking to, talk to whoever is running it. Where it cites a ruling ("Matthew, 2026-10-04"), the ruling stands for everyone.
 
 ## How to talk to Matthew
 
@@ -53,7 +53,7 @@ Each issue goes in exactly one pile, first match wins:
 3. **Needs your decision.** Any of: no acceptance check (what "done" looks like); the label `question`; the body or a recent comment asks Matthew to choose ("Matthew's call", "decision", "options"); or the issue has no labels at all (not sorted yet).
 4. **Ready to build.** Has a build brief and an acceptance check, and no open pull request.
 
-Rulings that shape the piles (since the move back to cr1 on 2026-10-22): cr1-build builds an issue and runs a fresh-context reviewer before it opens the pull request. Matthew merges, or a train he has allowed for that run merges under cr1's ISSUES.md section 10 (since 2026-10-25: three green quick-check shards plus the review, and one full battery on main per batch). Erick proposes; Matthew decides. Matthew closes an issue only after his test passes.
+Rulings that shape the piles (since the move back to cr1 on 2026-10-22): cr1-build builds an issue and runs a fresh-context reviewer before it opens the pull request. Matthew merges, or a train he has allowed for that run merges, under the owner ruling on cr1#289 of 2026-10-25 (the ISSUES.md update is tracked in cr1#420): three green quick-check shards plus the review, one full battery on main per batch, and a red battery on main stops further merges until the cause is fixed or reverted. Erick proposes; Matthew decides. Matthew closes an issue only after his test passes.
 
 ### Explain each item
 
@@ -133,7 +133,7 @@ On his yes:
 
 - Scrub it (no client names, people, companies, amounts, emails). If something was replaced, say so.
 - Post it as a comment on the issue.
-- Remove `question` if it was there (Matthew only; a brief Erick posts keeps it). Read the labels back to confirm they saved.
+- Remove `question` if it was there (Matthew only; a brief anyone else posts keeps it). Read the labels back to confirm they saved.
 - If he chose a split, file the new issues through cr1-report's shape and link them.
 
 ### Step 4: hand off
