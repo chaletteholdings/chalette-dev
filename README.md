@@ -35,10 +35,10 @@ Building from an issue is `cr1-build`, a project skill inside the cr1 repo itsel
 
 ## Who decides
 
-Each skill works out who is running it in this order: a gitignored `config/operator.local.json` when present (Matthew's says `"operator": "m"`), then the GitHub account the session posts as (`chaletteholdings` is Matthew, `erick559` is Erick, anyone else is treated as Erick), then the committed `chalette-dev/config/operator.json` (Erick's profile). The GitHub check is what lets web and phone chats, which never have the local file, know Matthew. The skill says who it took you for in its first reply.
+Each skill works out who is running it in this order: a gitignored `config/operator.local.json` when present (Matthew's says `"operator": "m"`), then the GitHub account the session posts as (`chaletteholdings` is Matthew, `erick559` is Erick, any other account is another team member under their own name), then the committed `chalette-dev/config/operator.json` (Erick's profile). The GitHub check is what lets web and phone chats, which never have the local file, know Matthew. The skill says who it took you for in its first reply.
 
 - **Matthew** decides what is ready to build, merges, and closes an issue on a passing test.
-- **Erick** gets the same steps, with those decisions turned into proposals tagged for Matthew.
+- **Erick, and anyone else on the team,** gets the same steps, with those decisions turned into proposals tagged for Matthew, under their own name.
 
 ## Setup
 
