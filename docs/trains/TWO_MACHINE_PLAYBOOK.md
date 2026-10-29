@@ -25,7 +25,7 @@ On train 4 it ran the other way for half the night. PC builders waited on the PC
 
 ## Rules that held
 
-- **Update branches by merging main into them, not by rebasing.** Auto mode started refusing force-push partway through train 4, on both machines, after it had worked earlier. The Mac's branches were stuck for hours. What worked: merge `origin/main` into the branch, push normally, re-test, then squash-merge, so main still gets one commit per pull request. Whether this becomes the standard, or force-push is allowed for train branches, is Matthew's call. Until he rules, use the merge method so the night does not depend on a permission that can change.
+- **Update branches by merging main into them, not by rebasing.** Auto mode started refusing force-push partway through train 4, on both machines, after it had worked earlier. The Mac's branches were stuck for hours. What worked: merge `origin/main` into the branch, push normally, re-test, then squash-merge, so main still gets one commit per pull request. Ruled the standard by Matthew on 2026-10-28 (cr1#289), and written into `cr1-build` section 7 and `ISSUES.md` section 10 (cr1#551).
 - **One merge loop, on one machine.** Two merge loops ran at once once on train 4. That breaks the one-at-a-time rule.
 - **A failed check gets one automatic re-run before merging stops.** Flaky checks (cr1#542, cr1#548) stopped merging for four hours overnight because nobody was awake to press re-run. *Not yet in the scripts; add it before the next train.*
 - **A cancelled main run is not a red one.** It was replaced by a newer push. The merge script skips cancelled runs.
@@ -47,6 +47,5 @@ Both need `TRAIN_DIR` set to the train's scratch folder. That folder holds `term
 
 ## Still open from train 4
 
-- Matthew's ruling on merge-update against force-push for train branches.
 - cr1#524 (the Mac privacy check) and the Mac-only failing suites.
 - The automatic re-run and the stall check above.
