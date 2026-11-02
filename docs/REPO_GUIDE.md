@@ -2,7 +2,7 @@
 
 What each repository you can open holds, how it works, how to get the most from it, and where your time helps Matthew most. Written 2026-10-26 against the live repositories. About fifteen minutes to read.
 
-Setting up (GitHub sign-in, the toolkit plugin, the staging plugin `cr`, a test folder, the four phrases) is already covered in [TEAM_GUIDE.md](TEAM_GUIDE.md). This guide does not repeat it. Do that setup first.
+Setting up (GitHub sign-in, the toolkit plugin, the staging plugin `cr`, your own folder, the four phrases) is already covered in [TEAM_GUIDE.md](TEAM_GUIDE.md). This guide does not repeat it. Do that setup first.
 
 **Your jobs, as Matthew set them on 2026-10-26:** test fixes (both of you), keep the Chalette Design System current as the source of truth, with Matthew approving every change (both of you), and test the CRM (Isabella). You are not asked to build. Each of you has a step-by-step guide for those jobs, kept in your own Command Room; this page is the map behind it.
 
@@ -45,14 +45,14 @@ The website is plain web pages. Anything that lands on its `main` branch is live
 
 **How to use it best.**
 
-- **Use the staging plugin `cr`, in a test folder only.** The steps are in [TEAM_GUIDE.md](TEAM_GUIDE.md). Never use it in your own work folder or a client's. If you also have the released `command-room` plugin, turn it off while you test, so you know which one answered. Press Update on `cr` and start a new chat before each test.
+- **Use the staging plugin `cr`, in your own real folder** (Matthew, 2026-11-01). The steps are in [TEAM_GUIDE.md](TEAM_GUIDE.md). Never a client's folder. Back up before any step that changes or deletes files; the test skill tells you when. If you also have the released `command-room` plugin, turn it off while you test, so you know which one answered. Press Update on `cr` and start a new chat before each test.
 - **Read `SKILLS.md` once.** It is the fastest way to know what the product does and the exact phrases that start each part.
 - **Before you describe the product to anyone,** say "what's pending to build" so you know what is true today and what is still coming.
 
 **Where you help.** Today cr1 has 213 open issues. Two piles are yours to shrink:
 
 - **32 issues labelled `needs UAT`**: fixed and merged, waiting for someone to try them. Say "what needs me".
-- **25 issues labelled `needs evidence`**: someone saw a problem but nobody has reproduced it. Try it in a test folder and add what you see, with the exact error text.
+- **25 issues labelled `needs evidence`**: someone saw a problem but nobody has reproduced it. Try it in your own folder and add what you see, with the exact error text.
 
 **Never:** push to `main`, merge a pull request, close an issue, or put a client name, a real person or a money figure anywhere in the repo. GitHub will show you a Merge button on a green pull request. Do not press it; merging is Matthew's.
 
@@ -125,7 +125,7 @@ The website is plain web pages. Anything that lands on its `main` branch is live
 
 ## Where your time helps most, in order
 
-1. **Clear the test queue.** "what needs me" with `cr` in a test folder. 32 fixes were waiting on 2026-10-26, and until now Matthew has been the only tester. When there is time left, reproduce the `needs evidence` issues (25 on 2026-10-26) with the exact error text.
+1. **Clear the test queue.** "what needs me" with `cr` in your own folder. 32 fixes were waiting on 2026-10-26, and until now Matthew has been the only tester. When there is time left, reproduce the `needs evidence` issues (25 on 2026-10-26) with the exact error text.
 2. **Keep the design system current.** Prepare each brand, positioning or copy ruling as a change the same day it is made, and publish it once Matthew approves.
 3. **Test the CRM (Isabella).** The checklist, then each fix as it lands.
 

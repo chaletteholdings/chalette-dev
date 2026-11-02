@@ -41,7 +41,8 @@ Show the queue oldest first, one line each: `#N title · fixed in <version or co
    - **The staging plugin `cr`** (from the `commandroom1` marketplace, added as `chaletteholdings/cr1`; it sits under a `commandroom1` folder). Matthew and the team test on it. It follows `main` by commit, so its installed commit must be at or after the fix's merge. Read the commit from the `cr@commandroom1` entry (`gitCommitSha`) in `installed_plugins.json` beside the plugins folder, then run `gh api repos/chaletteholdings/cr1/compare/<merge commit>...<installed commit> -q .status`. `ahead` or `identical` means the fix is in; `behind` or `diverged` means it is not.
    - **The `command-room` plugin clients and Matthew run.** It gets changes only when Matthew promotes a release, so the fix is in only if a released version at or below the installed one contains it. Search the CHANGELOG on `main` for the issue number: `gh api repos/chaletteholdings/cr1/contents/command-room/CHANGELOG.md -H "Accept: application/vnd.github.raw" | grep -n "cr1/issues/N)"` (each entry links its issue that way) and read which version's section it sits under. If no release lists it, it cannot be tested on `command-room` yet: test on `cr`, or wait for the release.
    If the fix is not in, stop. Tell Matthew to update the plugin in the Claude app and start a fresh chat, then check again. Note the version (or the `cr` commit) and the `main` commit; a fail report needs both.
-3. **Pick the folder.** Use a test folder (a synthetic or copied test brain) for anything that converts, moves, deletes or rewrites files, or that runs Maintenance against a book. Use the real folder only when the bug can only show there, and say so up front. Never run a destructive step on the real folder without Matthew's explicit yes in this chat. **A team member always uses a test folder**, never their own work folder or a client's. If they have none, copy this plugin's sample brain (`skills/synthetic-workspace-runtime-test/fixtures/clean_workspace`) to a new folder named `CR test` and attach that; if that is not possible here, ask Matthew for one. A test that only Matthew's real folder can show is his: say so and stop.
+3. **Pick the folder.** **A team member always tests in their own real folder** (owner ruling, 2026-11-01, extending cr1#448): real meetings, mail and records are what the fix has to work on, and a test copy hides the bugs that only real data shows. Never a client's folder, never a sample brain. Before any step that converts, moves, deletes or rewrites files, resets settings, or runs Maintenance, have them back up what that step touches (copy the files or the folder aside) and say how to put it back; test entries a step adds (a sample decision, objective or note) are named as samples and removed after the run. A test that only Matthew's real folder can show is his: say so and stop.
+   **For Matthew,** use a test folder (a synthetic or copied test brain) for anything that converts, moves, deletes or rewrites files, or that runs Maintenance against a book, and the real folder when the bug can only show there; never run a destructive step on his real folder without his explicit yes in this chat.
 4. **Decide where it runs.** Most tests run in a **new chat** (the product's real path), not in this one, because this chat now carries extra skills and context. Script-level checks (a command, a file's contents) can run here; say which.
 
 ## 3. Give Matthew the script
@@ -51,10 +52,10 @@ Keep it to what he does and what he looks at. Shape:
 ```
 Test #N on <version> · about <n> minutes
 What was fixed: <one plain line>
-Setup: <new chat / attach TEST folder / nothing>
+Setup: <new chat / your own folder attached / nothing> · Back up first: <what, or none>
 
 Step 1. The original failure, 3 runs
-Given: <setup in plain words: a fresh chat, the test folder attached>
+Given: <setup in plain words: a fresh chat, your own folder attached>
 When you type:
     <exact text, in a code block so it copies cleanly>
 Then: <what the answer should do, in business words>
@@ -93,10 +94,10 @@ If an earlier test chat is still open and its log was never taken, ask for it th
 Rules for a good script:
 - Every step has an exact thing to type or click and an observable result. Never "check that it works".
 - Test the original failure first: the exact action from the issue's steps. Then one nearby case the fix comment named.
-- **Run the original failure 3 times, each in a fresh chat.** Command Room is an AI product, so one good run proves little. 3 of 3 is a pass, 1 or 2 of 3 is **partial (flaky)**, 0 of 3 is a fail. For a step that changes files, reset the test folder between runs, or run it once and say so in the result.
+- **Run the original failure 3 times, each in a fresh chat.** Command Room is an AI product, so one good run proves little. 3 of 3 is a pass, 1 or 2 of 3 is **partial (flaky)**, 0 of 3 is a fail. For a step that changes files, put the backup back between runs, or run it once and say so in the result.
 - Every check is a yes/no about the answer ("the brief names three meetings and no client names"), never a score. Name the evidence for each.
 - Add one **regression** step (a related closed issue still works) and one **near-miss** step (a phrase that must go to a different skill). Fixes often break a neighbour.
-- For a risky fix (conversion, Maintenance, anything that moves or deletes files), you may add one optional 5-minute look-around: "Explore <surface> with the test folder to find anything wrong or missing." Anything found becomes a new issue through cr1-report, not part of this verdict.
+- For a risky fix (conversion, Maintenance, anything that moves or deletes files), you may add one optional 5-minute look-around: "Explore <surface> in your folder to find anything wrong or missing." Anything found becomes a new issue through cr1-report, not part of this verdict.
 - Every script ends with the test-log prompt, verbatim, for every run. It is never optional and never left for Matthew to ask for.
 - Three to six steps. Over ten minutes, split it into two tests.
 - If a step needs proof, name it ("paste the line that starts `Saved.`", or "screenshot the widget" for anything visual).
@@ -140,7 +141,7 @@ A failed or partial test is a bug report on the fix, so it carries everything cr
 - paste the reply he got (and any error) and that chat's test log here; build the chat log below from the test log;
 - or say "report this" in the test chat. cr1-report finds this open issue and comments there with that chat's log. Then post only the UAT header and step results below, and link that comment.
 
-For anything visual, ask for a full-window screenshot taken on a test folder (Windows: Win+Shift+S, window mode; never from a real folder, where the exact error text stands in), and add `needs evidence` until he says it's attached.
+For anything visual, give the exact error text and describe what the screen shows by its shape. A screenshot from a real folder is never attached (ISSUES.md section 0); only Matthew may add one taken on a test folder. Add `needs evidence` until the text or his screenshot is on the issue.
 
 **Post this shape:**
 
@@ -181,7 +182,7 @@ Then leave the issue open and remove `needs UAT`: `gh api -X DELETE "repos/chale
 
 ### Other outcomes
 
-- **Not tested, blocked by something specific** (wrong version, a broken prerequisite, no test folder): post one line, "Not tested: <reason>", and add the `blocked` label, so the issue shows why it is stuck.
+- **Not tested, blocked by something specific** (wrong version, a broken prerequisite, no folder attached): post one line, "Not tested: <reason>", and add the `blocked` label, so the issue shows why it is stuck.
 - **Not tested, no time:** say so in one line and post nothing. Silence never counts as a pass.
 - **A new, different problem** found while testing gets its own issue through **cr1-report**, linked here, not a paragraph in this comment.
 
