@@ -2,6 +2,14 @@
 
 (Release history before v0.3.0 is at the bottom of this file, moved out of `plugin.json` on 2026-10-24.)
 
+## v0.9.6 (2026-11-01): testers use their own folder
+
+Owner ruling 2026-11-01, extending cr1#448 (which allowed it on 2026-10-26; the skill never picked it up).
+
+- **cr1-test step 2.3:** a team member always tests in their own real folder, never a client's and never a sample brain. Back up before any step that converts, moves, deletes or rewrites files, resets settings or runs Maintenance; sample entries a test adds are removed after. Matthew's own tests keep the test-folder rule for destructive steps.
+- **cr1-test script and evidence:** the setup line names the backup; files are reset from the backup between runs; visual evidence is the exact error text, since a real-folder screenshot is never attached.
+- **docs/TEAM_GUIDE.md and docs/REPO_GUIDE.md:** the same rule in the setup and the test-queue lines.
+
 ## v0.9.5 (2026-10-26): the name check refuses when it has no names (cr1#455)
 
 - **cr1-scrub `terms`:** reads people, orgs and threads from a current Command Room 1 book, which keeps them under an "entities" block, as well as from the older flat layout and the split parts. Before this, a current book gave no names and every scan passed on the fixed checks alone while reporting clean.
