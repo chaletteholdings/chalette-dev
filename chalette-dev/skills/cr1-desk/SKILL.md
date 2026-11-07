@@ -52,7 +52,8 @@ Each issue goes in exactly one pile, first match wins:
 1. **Waiting on your test.** Label `needs UAT`, or the latest fix comment says "Please verify the fix". Do not explain these here; say "say *what needs me* to test them" (cr1-test owns this pile).
 2. **Waiting on Matthew's merge.** An open pull request linked to it is built and reviewed, and waits for Matthew to merge it.
 3. **Needs your decision.** Any of: no acceptance check (what "done" looks like); the label `question`; the body or a recent comment asks Matthew to choose ("Matthew's call", "decision", "options"); or the issue has no labels at all (not sorted yet).
-4. **Ready to build.** Has a build brief and an acceptance check, and no open pull request.
+4. **Backlog.** Label `backlog`: filed on Matthew's word although it met none of the four tests in cr1-report section 1a (owner ruling, 2026-11-06), so nothing is scheduled for it. Count these in one line, "and <n> in backlog; say *backlog review* to clear the old ones" (cr1-test owns that), and do not explain them here.
+5. **Ready to build.** Has a build brief and an acceptance check, and no open pull request.
 
 Rulings that shape the piles (since the move back to cr1 on 2026-10-22): cr1-build builds an issue and runs a fresh-context reviewer before it opens the pull request. Matthew merges, or a train he has allowed for that run merges, under the owner ruling on cr1#289 of 2026-10-25 (the ISSUES.md update is tracked in cr1#420): three green quick-check shards plus the review, one full battery on main per batch, and a red battery on main stops further merges until the cause is fixed or reverted. Erick and Isabella propose and test; Matthew decides. Matthew closes an issue after his own test passes, or after he signs off on a team member's pass that Claude checked (ISSUES.md section 12, cr1#448).
 
@@ -168,7 +169,7 @@ These are standard practices for a non-technical owner building with an AI devel
 - **Merge:** Matthew accepting the change into main; clients get it at the next promote.
 - **Promote:** Matthew sending a release out to every client.
 - **Acceptance check:** the test that proves it is done, written from the client's side.
-- **UAT:** Matthew's own test after the change is merged.
+- **UAT:** a person's test after the change is merged. Owed only on a `critical` fix (one that can write the wrong thing, send without the owner's word, expose information, or stop the Hub or Maintenance); every other fix is tested by use.
 - **Version:** the release number clients have installed. It is set only at release, by Matthew's ship-cr-plugin flow; a pull request never changes it.
 
 Uses: GitHub issues, pull requests, labels and comments in chaletteholdings/cr1; cr1-scrub rules; cr1-report issue shape; hands off to cr1-build and cr1-test.

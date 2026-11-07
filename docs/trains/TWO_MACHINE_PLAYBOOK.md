@@ -40,7 +40,7 @@ The session restarted around 07:05 and nothing noticed until 09:25. The running 
 
 Saved beside this file in `docs/trains/`:
 
-- `merge_pr.sh <PR> <issue> [squash]` checks five things in order: three green quick-check shards on the pull request; the newest finished main run is green (cancelled runs skipped); the branch is on the tip of main or has no overlap; the scrub is clean on added lines and commit messages. If all pass, it squash-merges. It then posts the Please verify comment from `v/<issue>.md`, adds `needs UAT`, and writes a line to the log.
+- `merge_pr.sh <PR> <issue> [squash]` checks five things in order: three green quick-check shards on the pull request; the newest finished main run is green (cancelled runs skipped); the branch is on the tip of main or has no overlap; the scrub is clean on added lines and commit messages. If all pass, it squash-merges. It then reads the issue's labels: a `critical` issue gets the Please verify comment from `v/<issue>.md` and `needs UAT`; any other issue is closed on the build's verification with a one-line comment (owner ruling 2026-11-06). Then it writes a line to the log.
 - `wait_merge.sh <PR> <issue>` waits for the shards, then calls `merge_pr.sh`.
 
 Both need `TRAIN_DIR` set to the train's scratch folder. That folder holds `terms.txt`, the `v/` comment texts and `ledger.txt`. They expect the cr1 clone at `~/repos/cr1-canonical` and the scrub tool in the chalette-dev clone. They are Git Bash scripts written on the PC and have not been run from this copy yet.

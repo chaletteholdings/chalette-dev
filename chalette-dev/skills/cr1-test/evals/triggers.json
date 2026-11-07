@@ -14,7 +14,10 @@
   "go",
   "what needs my sign-off",
   "check the pass on #57",
-  "close all that hold"
+  "close all that hold",
+  "backlog review",
+  "review the backlog",
+  "what's in the backlog"
  ],
  "should_not_trigger": [
   "report this",

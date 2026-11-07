@@ -2,6 +2,19 @@
 
 (Release history before v0.3.0 is at the bottom of this file, moved out of `plugin.json` on 2026-10-24.)
 
+## v0.9.7 (2026-11-06): critical or backlog, decided at filing
+
+Owner ruling 2026-11-06 (cr1 ISSUES.md sections 7 and 12, cr1 PR #855): the tracker keeps only critical tickets, and a merged fix is tested by use. A ticket is critical only if it can write the wrong thing to a book or lose data, send or draft without the owner's word or to the wrong person, expose client or personal information, or stop the Hub or Maintenance. This release is the mechanism, so the ruling binds at report time without anyone remembering it.
+
+- **cr1-report section 1a:** every report is judged against the four tests from the chat. One met: label `critical`, one line at the top of the body naming the test (`**Critical:** can close the wrong commitment`), nothing asked. None met: one question, "This does not meet the four tests. File it anyway, or drop it?", and a filed-anyway ticket gets `backlog`, no milestone. Unsure is treated as critical with the evidence named. Severity and the four tests are kept apart. Section 6 files the decided label and reads it back; section 7's reply says which, and that a backlog ticket is owed no test.
+- **cr1-test section 1:** "what needs me" lists only issues carrying both `critical` and `needs UAT`. A `needs UAT` without `critical` is not owed a test; "sort them" judges those against the four tests, labels the critical ones and closes the rest on the builder's verification (Matthew closes, a team member proposes).
+- **cr1-test section 7, backlog review:** "backlog review" lists `backlog` tickets over 30 days old, oldest first, and "close them" closes each as not planned with a one-line comment. A team member lists and tags Matthew, never closes. Three trigger phrases added.
+- **cr1-desk:** a Backlog pile, counted only, between the test pile and Ready to build; the glossary says when UAT is owed.
+- **docs/trains/merge_pr.sh:** after the merge, reads the issue's labels: `critical` gets the verify comment and `needs UAT` as before; anything else is closed with the one-line close comment. The playbook line says so.
+- **tests/test_critical_only.py:** pins the four tests and the question in cr1-report, the decided labels in its filing step, the `critical,needs UAT` queue and the backlog review in cr1-test, the trigger phrase, and the label gate in the merge script. Seven of eight were seen to fail before the change.
+- The build side (cr1-build reads the label, never guesses; `needs UAT` and Please verify only on `critical`; other fixes close on merge) and the ISSUES.md section 2 paragraph pointing at this mechanism are a separate pull request on cr1, `Refs #846`. The labels `critical` and `backlog` were created on chaletteholdings/cr1 the same day.
+- **Verified:** `pytest tests/` passes; the diff scans clean with cr1-scrub against the owner's book; no em dashes or exclamation marks added. Not verified by a run: the three skill flows in a fresh chat (done looks like in the pull request).
+
 ## v0.9.6 (2026-11-01): testers use their own folder
 
 Owner ruling 2026-11-01, extending cr1#448 (which allowed it on 2026-10-26; the skill never picked it up).

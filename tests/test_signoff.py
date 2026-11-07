@@ -20,7 +20,7 @@ def test_a_team_members_pass_ends_at_ready_to_close():
 
 def test_only_matthews_word_closes_in_the_sign_off():
     text = _test_skill()
-    sign_off = text[text.index("## 6. Matthew's sign-off"):]
+    sign_off = text[text.index("## 6. Matthew's sign-off"):text.index("## 7. Backlog review")]  # v0.9.7: section 7 has its own close
     assert "Matthew only, and here a person's word is not enough." in sign_off
     gate, rest = sign_off.split("**The queue**", 1)
     assert "gh api user --jq .login" in gate and "`chaletteholdings`" in gate

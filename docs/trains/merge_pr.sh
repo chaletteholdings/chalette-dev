@@ -23,8 +23,16 @@ fi
 git diff $B..$H | grep -E '^\+' | grep -v '^+++' > "$S/a.txt"; git log --format=%B $B..$H >> "$S/a.txt"
 PYTHONUTF8=1 python $SCR scan --terms "$S/terms.txt" "$S/a.txt" || { echo "#$P scrub hit"; exit 4; }
 OUT=$(gh api -X PUT repos/$R/pulls/$P/merge -f merge_method=$M -f sha=$H -q .sha) || { echo "#$P merge refused"; exit 5; }
-sed "s/@MERGE@/${OUT:0:8}/g; s/@PR@/$P/g" "$S/v/$I.md" > "$S/vv.md"
-PYTHONUTF8=1 python $SCR scan --terms "$S/terms.txt" "$S/vv.md" >/dev/null || { echo "verify text scrub hit, not posted"; exit 6; }
-gh api repos/$R/issues/$I/comments -F body=@"$S/vv.md" -q .html_url
-gh api repos/$R/issues/$I/labels -f 'labels[]=needs UAT' -q '[.[].name]|join(",")'
+# A person's test is owed only on a critical fix (owner ruling 2026-11-06, ISSUES.md section 7).
+# Read the label from the issue, never guess: critical gets the verify text and needs UAT; anything
+# else closes on the builder's verification with a one-line comment.
+if gh api repos/$R/issues/$I/labels -q '.[].name' | grep -qx critical; then
+  sed "s/@MERGE@/${OUT:0:8}/g; s/@PR@/$P/g" "$S/v/$I.md" > "$S/vv.md"
+  PYTHONUTF8=1 python $SCR scan --terms "$S/terms.txt" "$S/vv.md" >/dev/null || { echo "verify text scrub hit, not posted"; exit 6; }
+  gh api repos/$R/issues/$I/comments -F body=@"$S/vv.md" -q .html_url
+  gh api repos/$R/issues/$I/labels -f 'labels[]=needs UAT' -q '[.[].name]|join(",")'
+else
+  gh api repos/$R/issues/$I/comments -f body="Closed on merge: not critical (ISSUES.md section 7, owner ruling 2026-11-06). Merged in #$P as ${OUT:0:8} on the builder's verification. Refile from use with *report this* if it comes back." -q .html_url
+  gh api -X PATCH repos/$R/issues/$I -f state=closed -f state_reason=completed -q .state
+fi
 echo "$(date +%H:%M) MERGED #$P (#$I) -> ${OUT:0:8} ($M)" >> "$S/ledger.txt"; echo "MERGED #$P -> $OUT"

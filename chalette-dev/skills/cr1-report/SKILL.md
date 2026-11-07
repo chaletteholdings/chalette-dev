@@ -33,6 +33,22 @@ Say who in one line in the first reply ("Running as Matthew, from the GitHub acc
 - One problem or one feature per issue. If the chat shows two, file two issues and link them.
 - Ask only if it truly could be either. Otherwise decide and say which in the confirmation line.
 
+## 1a. Critical or backlog (owner ruling, 2026-11-06)
+
+The tracker keeps only critical tickets, and a merged fix is tested by use (`ISSUES.md` section 7). So every report is judged at filing, from the chat, against the four tests. Decide it yourself from what the chat shows; ask about it only in the one case below.
+
+1. **Wrong write or data loss:** it can write the wrong thing to a book or lose data (a commitment closed that was not done, a record overwritten, an event dropped, a file moved or rewritten wrongly).
+2. **Send without the owner's word, or to the wrong person:** it can send or draft mail, a message or a calendar item nobody asked for, or to the wrong recipient.
+3. **Client or personal information exposed:** it can put a client's or a person's information where it does not belong (another folder, a repo, a log, a widget, a reply to the wrong person).
+4. **Hub or Maintenance stops:** it can stop the Hub or Maintenance from running (an error that ends the run, a scheduled task that never fires, a lock that never clears).
+
+A feature request meets a test only when what it asks for is one of the four (a guard against a wrong write, a confirmation before a send). Wanting something is not critical by itself.
+
+- **Meets one or more: critical.** Add the label `critical` and put one line at the top of the body naming the test, in the form `**Critical:** can close the wrong commitment` (test 1), `**Critical:** can draft to the wrong person` (test 2), `**Critical:** can put a client name in a log` (test 3), `**Critical:** can stop Maintenance` (test 4). Ask nothing about it. Name the test in the confirmation line in section 6, and go on.
+- **Meets none: backlog, on the owner's word only.** Ask one question before anything is filed, in these words: "This does not meet the four tests. File it anyway, or drop it?" That question replaces "File it?" in section 6. On "file it", add the label `backlog`, give it no milestone, and put the line `**Backlog:** meets none of the four tests; filed on <who>'s word.` at the top of the body. On "drop it", post nothing and say in one line what was dropped, so it can be refiled from use with "report this" if it comes back.
+- **Unsure** (the chat shows the symptom but not whether it writes, sends or exposes): treat it as critical, name the test it would meet, and add "judged on <the evidence>" to the Critical line. A wrong `backlog` hides a real risk; a wrong `critical` costs one test. Matthew moves it with one word if he disagrees.
+- Never both labels, and never `critical` without the line that names the test. A comment on an existing issue (section 3) judges the same way: if the issue has neither label, add the one that fits, with its line, in the comment.
+
 ## 2. Gather (without asking Matthew for what you can see)
 
 - **The chat log:** this conversation is the evidence, so run the skill in the chat where the problem happened. If it happened in another chat, ask Matthew to say "report this" there, or to paste that chat's key turns here.
@@ -46,7 +62,7 @@ Say who in one line in the first reply ("Running as Matthew, from the GitHub acc
   - **S1:** blocked or silently wrong, and no workaround. Data lost or misfiled is always S1.
   - **S2:** broken, but there is a workaround.
   - **S3:** annoying, slow or cosmetic.
-  Severity goes in the body. Priority is Matthew's call.
+  Severity goes in the body. Priority is Matthew's call. Severity and the four tests are different questions: an S1 that blocks work is still `backlog` when it writes, sends and exposes nothing, and an S3 that quietly closes the wrong commitment is `critical`.
 
 ## 3. Check for an existing issue
 
@@ -139,13 +155,13 @@ Run the scrub (cr1-scrub, section S below) on the title, body and chat log. Repl
 
 ## 6. Confirm, then file
 
-Show Matthew the title plus three lines (what it is, impact or outcome, labels) and ask "File it?". On yes:
+Show Matthew the title plus three lines (what it is, impact or outcome, labels with the test it met or "backlog") and ask "File it?". For a report that met none of the four tests, section 1a's question ("This does not meet the four tests. File it anyway, or drop it?") is that confirmation; do not ask twice. On yes:
 
 ```
-gh api repos/chaletteholdings/cr1/issues -f title="<title>" -F body=@<scratch>/issue.md -f "labels[]=enhancement" -q .html_url
+gh api repos/chaletteholdings/cr1/issues -f title="<title>" -F body=@<scratch>/issue.md -f "labels[]=bug" -f "labels[]=critical" -q .html_url
 ```
 
-Labels: `bug` or `enhancement`, plus `question` when anyone but Matthew files it.
+Labels: `bug` or `enhancement`; `critical` (met a test) or `backlog` (filed anyway), never both and never neither; plus `question` when anyone but Matthew files it. Read the labels back (`gh api repos/chaletteholdings/cr1/issues/N/labels -q '.[].name'`) and confirm they saved. A `backlog` issue gets no milestone; a `critical` one gets a milestone only if Matthew names it.
 
 - Use REST only. GraphQL (`gh issue create`, `gh pr list`) is blocked in these sessions.
 - If `gh` can't reach the repo in a cloud session, attach it with the add_repo tool (`chaletteholdings`, `cr1`) and retry once.
@@ -155,7 +171,7 @@ Labels: `bug` or `enhancement`, plus `question` when anyone but Matthew files it
 
 ## 7. Reply
 
-One line: `Filed #N: <title>` with the link, then: "To build it, open the cr1 repo in Claude Code and say: build #N." Add the screenshot line if one is needed. No recap.
+One line: `Filed #N: <title>` with the link and `critical (<the test>)` or `backlog`, then, for a critical issue: "To build it, open the cr1 repo in Claude Code and say: build #N. After the merge it needs a person's test." For a backlog issue: "No test is owed on it; it waits for *backlog review*." Add the screenshot line if one is needed. No recap.
 
 ## Never
 
@@ -163,6 +179,7 @@ One line: `Filed #N: <title>` with the link, then: "To build it, open the cr1 re
 - Never post before the scrub passes.
 - Never claim something was reproduced or tested when it was only reported.
 - Never set a version or write the CHANGELOG. Those are set only at release, by Matthew's ship-cr-plugin flow.
+- Never file without `critical` or `backlog`, and never ask about a report that met a test. The only question the rule allows is the one in section 1a, for a report that met none.
 
 ## S. The scrub
 
