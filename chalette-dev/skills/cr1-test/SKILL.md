@@ -1,11 +1,11 @@
 ---
 name: "cr1-test"
-description: "Use when Matthew, Erick or Isabella wants to test a Command Room 1 fix that is waiting on a test: 'what needs me', 'what do I need to test', 'test #N', 'verify the fix', 'UAT'. Gives a short script of what to type and what to look for, then records pass, flaky or fail on the GitHub issue in chaletteholdings/cr1. Also Matthew's sign-off on a team member's pass: 'what needs my sign-off', 'check the pass on #N', 'close all that hold'. Does NOT fire on 'report this' (cr1-report) or 'what's pending to build' (cr1-desk)."
+description: "Use when Matthew, Erick or Isabella wants to test a Command Room 1 fix that is waiting on a test: 'what needs me', 'what do I need to test', 'test #N', 'verify the fix', 'UAT'. Gives a short script of what to type and what to look for, then records pass, flaky or fail on the GitHub issue in chaletteholdings/cr1. Also Matthew's sign-off on a team member's pass: 'what needs my sign-off', 'check the pass on #N', 'close all that hold'. Also 'backlog review': lists backlog tickets over 30 days old to close in one word. Does NOT fire on 'report this' (cr1-report) or 'what's pending to build' (cr1-desk)."
 ---
 
 # cr1 test
 
-A fix is built with cr1-build, checked by a fresh reviewer, and merged by Matthew. Then a person confirms it in the real product: Matthew, or a team member (Erick, Isabella) whose pass Claude checks and Matthew signs off before it closes (section 6). This skill makes the confirming fast: it tells the tester where to go, what to type and what a pass looks like, then writes the result back in the repo's fixed shape. A failed test gets the same complete write-up as a bug filed with cr1-report, so whoever builds the next attempt never has to ask what happened. Rules: sections 7 and 12 of `ISSUES.md` at the root of `chaletteholdings/cr1`.
+A fix is built with cr1-build, checked by a fresh reviewer, and merged by Matthew. Then, for a `critical` fix only, a person confirms it in the real product: Matthew, or a team member (Erick, Isabella) whose pass Claude checks and Matthew signs off before it closes (section 6). Every other merged fix is tested by use and closed by its builder on merge (owner ruling, 2026-11-06); a problem found in use is filed with "report this". This skill makes the confirming fast: it tells the tester where to go, what to type and what a pass looks like, then writes the result back in the repo's fixed shape. A failed test gets the same complete write-up as a bug filed with cr1-report, so whoever builds the next attempt never has to ask what happened. Rules: sections 7 and 12 of `ISSUES.md` at the root of `chaletteholdings/cr1`.
 
 ## Who is running this
 
@@ -23,9 +23,11 @@ Say who in one line in the first reply ("Running as Matthew, from the GitHub acc
 
 ## 1. "What needs me" (the queue)
 
-List open issues waiting on Matthew:
-- label `needs UAT`: `gh api "repos/chaletteholdings/cr1/issues?state=open&labels=needs%20UAT&per_page=100"`
-- plus any open issue whose latest fix comment starts **Please verify the fix** and has no later UAT result. Read comments with `gh api repos/chaletteholdings/cr1/issues/N/comments`.
+List open issues waiting on a person's test. A test is owed only on a `critical` fix (owner ruling, 2026-11-06; the label is set by cr1-report at filing, and the issue's first line names the test it met):
+- labels `critical` and `needs UAT` together: `gh api "repos/chaletteholdings/cr1/issues?state=open&labels=critical,needs%20UAT&per_page=100"`
+- plus any open `critical` issue whose latest fix comment starts **Please verify the fix** and has no later UAT result. Read comments with `gh api repos/chaletteholdings/cr1/issues/N/comments`.
+
+An open issue that carries `needs UAT` without `critical` is not in the queue and is not owed a test. Do not list it as work. Count those in one closing line, "<n> merged fixes carry needs UAT without critical; say *sort them*", and on "sort them" read each against the four tests in cr1-report section 1a: one that meets a test gets `critical` and its Critical line in a comment and joins the queue; the rest close on the builder's verification with the comment "Closed on merge: not critical (ISSUES.md section 7, owner ruling 2026-11-06). Refile from use with *report this* if it comes back." and `needs UAT` removed. Matthew closes; a team member proposes the sort in a comment and tags him.
 
 Before listing an issue, read its later comments. If an automated validation (Erick's sessions post "Confirmed on <version>" comments) already shows the fix **failing** on that version or a later one, don't spend Matthew's time on it. Mark it "already failing per #N comment, back to build", and offer to remove `needs UAT` with a one-line comment pointing at that evidence.
 
@@ -219,3 +221,13 @@ Matthew only, and here a person's word is not enough. Before reading the queue o
 - a failure the evidence shows: the fix goes back to build, as a fail does (section 4). Leave `needs UAT` off.
 
 **Reply** one line per issue: `#N closed` or `#N back to <name> for a retest: <reason>` or `#N back to build: <reason>`.
+
+## 7. Backlog review
+
+Fires on "backlog review", "review the backlog", "what's in the backlog". A `backlog` ticket was filed on the owner's word although it met none of the four tests (cr1-report section 1a), so nobody tests it and nothing is scheduled for it. After 30 days without being refiled from use, it goes.
+
+1. List them: `gh api "repos/chaletteholdings/cr1/issues?state=open&labels=backlog&per_page=100"`, keep those whose `created_at` is more than 30 days before today, oldest first. One line each: `#N <title> · filed <n> days ago · by <login>`. Count the younger ones in one line ("and <n> more under 30 days, not due"). An issue with both `backlog` and `critical` is a filing error: say so, and sort it with cr1-report section 1a before anything else.
+2. Then one line: "Say *close them* to close all <n>, or *close N and M*." No explanations unless asked; "explain #N" gives the four lines from cr1-desk.
+3. **Matthew's word closes.** On "close them" or a list of numbers, for each: comment `Closed at backlog review on <date>: over 30 days in backlog, not refiled from use. Say *report this* if it comes back.`, then `gh api -X PATCH repos/chaletteholdings/cr1/issues/N -f state=closed -f state_reason=not_planned`. Reply one line per issue, `#N closed`, and the count left in backlog.
+4. **A team member** runs the same review but can never close: post the list as one comment on the oldest ticket, "Backlog review by <their name>: these are over 30 days. @chaletteholdings close or keep.", and reply with the count. Matthew closes from his own chat.
+5. "Keep #N" leaves it open and adds nothing; the next review shows it again. A ticket Matthew wants built instead is re-judged with cr1-report section 1a and gets `critical` with its line, or stays `backlog` and is built on his word alone.
