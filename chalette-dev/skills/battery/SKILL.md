@@ -55,7 +55,8 @@ flow just sequences them and rolls their verdicts into one.
 |---|---|---|
 | `battery --quick` | cr1's quick check (`run_all.py --quick`: the guard tier plus every suite but the slow ones), about 4 to 8 minutes | before every pull request, on the builder's PC (the only Windows check); the Mac runs the same check as the merge gate |
 | `internal: run plugin tests` / `run command room tests` / `command room health check` / `verify plugin code` | the quick check (alias for `battery --quick`) | the retired run-command-room-tests entry point, folded in here (v0.3.1) |
-| `test command room` / `run the battery` | tiers 0–2 (the full battery) | on cr1's main once every 5 merges, and before a promote (owner ruling 2026-11-11, cr1#1041); never per pull request |
+| `test command room` / `run the battery` | tiers 0–2 (the full battery) | on cr1's main once every 5 merges, on the Mac (dispatch `battery.yml` on `main`), and before a promote, on the office PC as the Windows check (owner rulings 2026-11-11 and 2026-11-12, cr1#1041); never per pull request |
+| ORCH1 and ACCESS1 (`tests/run_orch1_test.py`, `tests/run_access1_test.py`) | the two access-layer suites, about 20 and 15 minutes | before a pull request that touches the access layer, on the builder's own Windows PC: `workspace_access.py`, `WORKSPACE_ACCESS.md`, the Access preamble or its copies, a `SKILL.md` line that calls `plan run_helper` or `plan run_writer`, or a module holding a function on either allow-list (owner ruling 2026-11-12, cr1 train gate 9); every other pull request skips them |
 | `battery --ship` / `badass test` | tiers 0–4 (adds integration + ship verdict) | before a production-promote decision |
 | `battery --attended` | tiers 0–5 (adds the Cowork loop) | full pre-release gate with the operator present |
 
