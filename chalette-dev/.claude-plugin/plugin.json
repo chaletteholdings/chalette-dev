@@ -1,6 +1,6 @@
 {
   "name": "chalette-dev",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "description": "Chalette Command Room dev toolkit for the owner and the team: report a bug or idea to the cr1 repo, scrub client data, run acceptance tests, see what is pending to build, run the battery and its suites, build and audit skills. Contractors run on synthetic fixtures only. No client data. Release history is in CHANGELOG.md.",
   "author": {
     "name": "Chalette Holdings"

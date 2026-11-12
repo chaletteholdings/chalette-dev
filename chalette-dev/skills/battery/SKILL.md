@@ -53,9 +53,9 @@ flow just sequences them and rolls their verdicts into one.
 
 | Trigger | Runs | When |
 |---|---|---|
-| `battery --quick` | cr1's quick check (`run_all.py --quick`: the guard tier plus every suite but the slow ones), about 4 to 8 minutes | before every pull request; the same check CI runs as the merge gate |
+| `battery --quick` | cr1's quick check (`run_all.py --quick`: the guard tier plus every suite but the slow ones), about 4 to 8 minutes | before every pull request, on the builder's PC (the only Windows check); the Mac runs the same check as the merge gate |
 | `internal: run plugin tests` / `run command room tests` / `command room health check` / `verify plugin code` | the quick check (alias for `battery --quick`) | the retired run-command-room-tests entry point, folded in here (v0.3.1) |
-| `test command room` / `run the battery` | tiers 0–2 (the full battery) | once on cr1's main per batch of merges, and before a promote (owner ruling 2026-10-25); not needed per pull request |
+| `test command room` / `run the battery` | tiers 0–2 (the full battery) | on cr1's main once every 5 merges, and before a promote (owner ruling 2026-11-11, cr1#1041); never per pull request |
 | `battery --ship` / `badass test` | tiers 0–4 (adds integration + ship verdict) | before a production-promote decision |
 | `battery --attended` | tiers 0–5 (adds the Cowork loop) | full pre-release gate with the operator present |
 
@@ -198,10 +198,10 @@ VERDICT: GREEN — the batch on main stands; merging may continue.
 ```
 
 For `battery --quick` the verdict is one line, and it is never called a battery:
-`Quick check: GREEN (693/693, 285 s). Not a battery; the full battery runs once on main per batch.`
+`Quick check: GREEN (693/693, 285 s). Not a battery; the full battery runs on main every 5 merges.`
 
 Verdict logic:
-- **RED** — any tier 0–2 suite failed. On main, stop merging until the cause is fixed or reverted. List failures + fixes.
+- **RED** — any tier 0–2 suite failed (a suite that timed out is re-run once first). On main, a failure that was not already red at the previous every-5 run stops merging, and a fix build starts at once; a known red does not. Log every failure on cr1#1041 (date, range, suite, culprit pull request, files, area, kind). Revert-first is retired. List failures + fixes.
 - **HOLD** — code battery GREEN but a tier 3 integration gate failed OR
   ship-readiness-gate returned HOLD/BLOCKED. Safe to commit; NOT safe to promote.
 - **GREEN** — everything run was green. For `run the battery` (tiers 0–2) on main: the batch stands.

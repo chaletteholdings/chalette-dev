@@ -1,5 +1,7 @@
 # CR1 trains on two computers: playbook
 
+> **Superseded 2026-11-11.** Trains now run on three computers under [THREE_COMPUTER_PLAYBOOK.md](THREE_COMPUTER_PLAYBOOK.md): the Mac only checks and never builds, the PCs build, one coordinator merges, and the merge gates are cr1#1041. Kept for history and for the lessons below; do not run a train from this file.
+
 Written 2026-10-28, from train 4 (the first train run on the PC and the Mac together). Read this before any train that uses both machines, and point the train brief at it.
 
 ## What train 4 showed
