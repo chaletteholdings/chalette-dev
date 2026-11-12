@@ -9,7 +9,9 @@ H=$(gh api repos/$R/pulls/$P -q .head.sha); MAIN=$(git rev-parse origin/main)
 C=$(gh api repos/$R/commits/$H/check-runs -q '[.check_runs[]|select(.name|startswith("quick check"))|select(.conclusion=="success")]|length')
 [ "$C" = 3 ] || { echo "#$P shards not 3 green ($C)"; exit 1; }
 MC=$(gh api "repos/$R/actions/runs?branch=main&status=completed&per_page=10" -q '[.workflow_runs[]|select(.conclusion!="cancelled")][0]|"\(.head_sha) \(.conclusion)"')
-[ "${MC#* }" = success ] || { echo "newest finished main run not green: $MC"; exit 2; }
+# Red main between every-5 runs does not stop everything (cr1#1041 ruling 5): the coordinator files an
+# issue, checks this PR does not touch the broken area, and re-runs with MAIN_RED_OK=1.
+[ "${MC#* }" = success ] || [ "${MAIN_RED_OK:-}" = 1 ] || { echo "newest finished main run not green: $MC (file an issue; if this PR is outside the broken area, re-run with MAIN_RED_OK=1)"; exit 2; }
 B=$(git merge-base $H origin/main)
 if [ "$B" != "$MAIN" ]; then
   G='instruction_layer_names.py|ORCH_MIGRATION_CENSUS|MODULE_INDEX|SKILLS_INDEX|specs/INDEX|handoffs/INDEX|WORKSPACE_ACCESS.md|SCHEDULER_DISCOVERY.md|propagate_rule22'

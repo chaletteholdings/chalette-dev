@@ -1,6 +1,6 @@
 # chalette-dev: the Command Room dev toolkit
 
-New to the team? Start with [docs/TEAM_GUIDE.md](docs/TEAM_GUIDE.md). What is in every repo you can open: [docs/REPO_GUIDE.md](docs/REPO_GUIDE.md). Brand and positioning during the rebrand: [docs/POSITIONING_AND_BRAND_SHEET.md](docs/POSITIONING_AND_BRAND_SHEET.md).
+New to the team? Start with [docs/TEAM_GUIDE.md](docs/TEAM_GUIDE.md). What is in every repo you can open: [docs/REPO_GUIDE.md](docs/REPO_GUIDE.md). Brand and positioning during the rebrand: [docs/POSITIONING_AND_BRAND_SHEET.md](docs/POSITIONING_AND_BRAND_SHEET.md). How cr1 gets built (three computers, one coordinator, the merge gates): [docs/trains/THREE_COMPUTER_PLAYBOOK.md](docs/trains/THREE_COMPUTER_PLAYBOOK.md).
 
 The skills the owner and the team share to report, scrub, test and plan work on Command Room 1 (`chaletteholdings/cr1`, branch `main`). Install this plugin and both of you work the same way.
 

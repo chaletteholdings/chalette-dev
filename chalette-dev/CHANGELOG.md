@@ -2,6 +2,20 @@
 
 (Release history before v0.3.0 is at the bottom of this file, moved out of `plugin.json` on 2026-10-24.)
 
+## v0.9.8 (2026-11-12): the three-computer build rules and the Nov 11 merge gates
+
+Owner rulings 2026-11-11: the three-computer rules (cr1#1051) and the merge gates (cr1#1041). Until now they lived only in the owner's workspace and in cr1 issue text, so builder chats on the other computers had no copy in git.
+
+- **docs/trains/THREE_COMPUTER_PLAYBOOK.md (new):** the Mac checks and never builds, two builders on each PC, one coordinator on either PC that merges without asking, the control issue, the ten rules, what happens when a computer goes quiet, and who decides what. Adds the eight merge gates from cr1#1041 (Mac CI, full battery every 5 merges, no path list, promote overrides, red main keeps merging outside the broken area, stacked lanes, one review round, one timeout re-run), what is not built yet, and the check-name rename in flight (cr1#1114).
+- **docs/trains/CHAT_PROMPTS.md (new):** the coordinator and builder prompts, now pointing at the repo copy of the playbook instead of a workspace file.
+- **docs/trains/TWO_MACHINE_PLAYBOOK.md:** bannered as superseded, kept for history.
+- **docs/trains/merge_pr.sh:** a red main no longer blocks every merge; the coordinator re-runs with `MAIN_RED_OK=1` for a pull request outside the broken area (gate 5).
+- **battery skill:** the full battery runs every 5 merges, not per batch; a known red does not stop merging, a new one does and starts a fix; failures are logged on cr1#1041; revert-first is gone.
+- **cr1-desk skill:** the rulings paragraph names the coordinator and the Nov 11 gates in place of the Oct 25 ones.
+- **README:** one line pointing at the playbook.
+- **tests/test_train_rules.py:** pins the gates in the playbook, the prompts' pointer, the banner, the skills' wording and the script switch.
+- **Verified:** `pytest tests/` passes; the diff scans clean with cr1-scrub; no em dashes or exclamation marks added. Not verified by a run: `merge_pr.sh` with `MAIN_RED_OK=1` against a real red main. cr1's own `cr1-build`, `ISSUES.md` and `DEVELOPMENT.md` still carry the old gates; that is cr1#1041's acceptance check, not this release.
+
 ## v0.9.7 (2026-11-06): critical or backlog, decided at filing
 
 Owner ruling 2026-11-06 (cr1 ISSUES.md sections 7 and 12, cr1 PR #855): the tracker keeps only critical tickets, and a merged fix is tested by use. A ticket is critical only if it can write the wrong thing to a book or lose data, send or draft without the owner's word or to the wrong person, expose client or personal information, or stop the Hub or Maintenance. This release is the mechanism, so the ruling binds at report time without anyone remembering it.
