@@ -1,9 +1,10 @@
 """The 2026-11-11 build rules live in docs/trains and the skills follow them (v0.9.8).
 
 Owner ruling 2026-11-11 (cr1#1041 merge gates, cr1#1051 three-computer rules): the Mac checks,
-the PCs build, one coordinator merges, the full battery runs every 5 merges, and a red main
-between those runs no longer stops everything (revert-first retired). This file pins that the
-playbook carries the gates and that no skill still states the retired per-batch / revert rule.
+the PCs build, one coordinator merges, the full battery runs every 5 merges (every 10 since
+2026-11-12), and a red main between those runs no longer stops everything. Since cr1#1258 the
+gates live once, in cr1 ISSUES.md section 10: this file pins that the playbook and the battery
+skill point there, and that no skill still states the retired per-batch / revert rule.
 """
 import pathlib
 
@@ -16,11 +17,15 @@ def _read(path):
     return path.read_text(encoding="utf-8")
 
 
-def test_playbook_carries_the_gates():
+def test_playbook_points_at_the_one_home():
+    # cr1#1258 (owner ruling 2026-11-14): the gates live once, in cr1 ISSUES.md section 10;
+    # the playbook points there instead of restating them, and states the current cadence.
     text = _read(TRAINS / "THREE_COMPUTER_PLAYBOOK.md")
-    for needle in ("cr1#1041", "cr1#1051", "every 5 merges", "Revert-first is retired",
-                   "One review round", "--force", "re-run once"):
+    for needle in ("cr1#1041", "cr1#1051", "cr1#1258", "ISSUES.md` section 10", "every 10 merges"):
         assert needle in text, needle
+    gates = text[text.index("## The merge gates"):text.index("## Who does what")]
+    assert "1. **CI runs on the Mac.**" not in gates, "the gates are restated again"
+    assert "every-5" not in text
 
 
 def test_prompts_point_at_the_repo_copy():

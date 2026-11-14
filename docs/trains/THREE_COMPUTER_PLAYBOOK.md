@@ -16,11 +16,11 @@ These are decided. The rules below follow them.
 - **The PCs keep running their own tests before every pull request.** Ana's reasons: it is faster, and it doesn't overload the Mac. The Mac then checks on top of that, the way GitHub did.
 - **When the tests run:**
   - The quick check runs on every pull request and blocks the merge.
-  - The full battery runs once every 5 merges. A red result stops merging, and a fix starts automatically.
+  - The full battery runs once every 5 merges (every 10 since the 2026-11-12 ruling; the current rule is cr1 `ISSUES.md` section 10). A red result stops merging, and a fix starts automatically.
   - The full battery runs before every promote to Command Room Internal, with a quick or force override for Matthew.
   - Promotes from Internal to clients go out with no further battery.
-- **Retired:** the nightly battery, the sandbox VM check, and the list of risky files. In place of the list, failures from the every-5 battery are logged by area, so a targeted check can be rebuilt later.
-- **When main goes red between the every-5 runs:** file an issue and a fix, and keep merging work that doesn't touch the broken area. This was Ana's pick (option 4).
+- **Retired:** the nightly battery, the sandbox VM check, and the list of risky files. In place of the list, failures from the periodic battery are logged by area, so a targeted check can be rebuilt later.
+- **When main goes red between the periodic battery runs:** file an issue and a fix, and keep merging work that doesn't touch the broken area. This was Ana's pick (option 4).
 - **Reruns and reviews:** a red result is re-run once before it counts. Stacked lanes are kept for dependent work. A fresh reviewer looks at every pull request, once.
 - **Ana owns the battery, the quick check and the dev skills.** She can change them without waiting for approval, and she checks with Matthew only where his call is needed.
 - **Still open with Ana:**
@@ -28,22 +28,11 @@ These are decided. The rules below follow them.
   - Moving every machine to one Python version.
   - Whether cr1 goes back under the ChaletteHQ organisation, so access to it can be controlled. Ana: sensible, not urgent.
 
-## The merge gates (cr1#1041, ruled 2026-11-11)
+## The merge gates
 
-These replace train gates 1, 2, 3 and 5 of the 2026-11-09 ruling and the 2026-11-03 "merge on CI, the nightly is the battery" ruling. Where `cr1-build`, `ISSUES.md` or `DEVELOPMENT.md` in cr1 still says otherwise, this list wins until cr1#1041 lands there.
+The merge, train and release rules have one home: **cr1 `ISSUES.md` section 10** (owner ruling 2026-11-14, cr1#1258). This playbook does not restate them; read them there. In short: CI runs on the two Mac runners, the full battery runs on `main` once every 10 merges, a red `main` between those runs holds back only work that touches the broken area, a fresh reviewer reads every pull request once, a suite that times out is re-run once, and a release and a promote happen on Matthew's word, Command Room Internal first. The gates were first ruled on cr1#1041 (2026-11-11).
 
-1. **CI runs on the Mac.** The two Mac runners (`cr1-mac` for tests, `cr1-mac-light` for the small API-only workflows) run the quick check, the full battery and the small workflows. No job is left on GitHub's hosted runners. Builders still run their own tests on the PCs.
-2. **Full battery once every 5 merges to main,** not per pull request. A new red, after one re-run of the failing suite, stops merging, an issue is filed and a fix build starts at once, ahead of everything else. A red already known at the previous run does not stop merging.
-3. **No path list.** `needs_full_battery.py` retires. Every failure in an every-5 run is logged as a comment on cr1#1041: date, commit range, suite, culprit pull request, files touched, area, kind (time limit, pin or golden, real bug). The list or a per-area check gets rebuilt from that log later.
-4. **Promote:** a full battery by default. Two overrides, each with a reason that goes in the changelog: `--quick "<reason>"` and `--force "<reason>"` (no battery). The office PC's full battery is the Windows check before each release to Command Room Internal.
-5. **Red main between every-5 runs does not stop everything.** It files an issue, and pull requests that do not touch the broken area keep merging. Revert-first is retired.
-6. **Stacked lanes** stay allowed for dependent work.
-7. **One review round.** A fresh reviewer on every pull request, once. Second-round findings go to a follow-up issue and do not hold the merge.
-8. **A suite that times out is re-run once** before it counts as red. This one stays from the 2026-11-09 ruling.
-
-Also retired on 2026-11-11 (cr1#433): the nightly battery and the sandbox-VM job.
-
-**Not built yet** (open on cr1#1041, Ana's to design): the automatic every-5 trigger, the automatic fix start, the log format, and what counts as "the broken area". Until then the coordinator does all four by hand: it counts merges, starts the battery on the Mac (`gh workflow run battery.yml --ref main`) when no pull request is waiting for its quick check, and judges the area from the failing suite and the culprit's files.
+**Not built yet** (open on cr1#1041, Ana's to design): the automatic every-10 trigger, the automatic fix start, the log format, and what counts as "the broken area". Until then the coordinator does all four by hand: it counts merges, starts the battery on the Mac (`gh workflow run battery.yml --ref main`) when no pull request is waiting for its quick check, and judges the area from the failing suite and the culprit's files.
 
 **Check names.** The required checks are renamed from `windows` to `mac` by cr1#1114. Until main's branch protection lists the `mac` names and that pull request merges, the old names are the ones that gate.
 
@@ -51,7 +40,7 @@ Also retired on 2026-11-11 (cr1#433): the nightly battery and the sandbox-VM job
 
 | Computer | Its job | Chats open on it |
 |---|---|---|
-| **Mac mini** (office) | The checker. Tests every pull request, runs the full battery on main after every 5 merges, and runs the battery before each promote. Never builds, never merges. Looked after by Ana. | None day to day. The test runners work in the background. |
+| **Mac mini** (office) | The checker. Tests every pull request, runs the full battery on main after every 10 merges, and runs the battery before each promote. Never builds, never merges. Looked after by Ana. | None day to day. The test runners work in the background. |
 | **Office PC** (32 GB Dell) | Builds. Can also host the coordinator. | **office-1** and **office-2**, plus the **Coordinator** if you open it here |
 | **Home PC** (gaming PC) | Builds. Can also host the coordinator. | **home-1** and **home-2**, plus the **Coordinator** if you open it here |
 
@@ -72,7 +61,7 @@ If the coordinator's PC goes quiet for 2 hours, the -1 builder on the other PC c
 2. **Claim before building.** A builder posts a claim on the control issue before it starts. Two builders never work on the same job, or on jobs that change the same files. The coordinator keeps dependent jobs in order.
 3. **Builders test, then hand off.** A builder runs the quick tests on its own PC, which is now the only Windows check, and gets one review from a fresh reviewer. Then it opens the pull request, posts it on the control issue and messages the coordinator. Builders never merge.
 4. **Only the coordinator merges,** one pull request at a time, once the Mac's quick check is green and the review is done. A second round of review findings becomes a new issue and does not hold the merge.
-5. **The Mac checks main every 5 merges.** If that run is red, merging stops, and the coordinator starts the fix itself. If main goes red between runs, the coordinator files an issue and keeps merging work outside the broken area. **Until Ana can run several tests on the Mac at once**, the every-5 run makes pull request checks wait behind it for about an hour. The coordinator starts it when no pull request is waiting.
+5. **The Mac checks main every 10 merges.** If that run is red, merging stops, and the coordinator starts the fix itself. If main goes red between runs, the coordinator files an issue and keeps merging work outside the broken area. **Until Ana can run several tests on the Mac at once**, the every-10 run makes pull request checks wait behind it for about an hour. The coordinator starts it when no pull request is waiting.
 6. **Rulings are yours and are never guessed.** When a job needs your decision, the question goes on that job's issue, and the builder moves to the next job. The coordinator lists every waiting question in your daily status.
 7. **One daily status for you.** Each morning, the coordinator posts on the control issue: what merged, what is open, what is stuck, and what needs you. It is written to be read on a phone.
 8. **When a computer goes quiet:**
