@@ -38,7 +38,11 @@ def test_skills_drop_the_retired_rule():
         text = _read(SKILLS / name / "SKILL.md")
         assert "fixed or reverted" not in text, name
         assert "per batch" not in text, name
-    assert "every 5 merges" in _read(SKILLS / "battery" / "SKILL.md")
+    # cr1#1258 (owner ruling 2026-11-14): the battery skill states the current cadence
+    # (every 10 merges since the 2026-11-12 ruling) and points at the rules' one home.
+    battery = _read(SKILLS / "battery" / "SKILL.md")
+    assert "every 10 merges" in battery and "every 5 merges" not in battery
+    assert "ISSUES.md` section 10" in battery
     assert "cr1#1041" in _read(SKILLS / "cr1-desk" / "SKILL.md")
 
 
