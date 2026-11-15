@@ -55,8 +55,8 @@ flow just sequences them and rolls their verdicts into one.
 |---|---|---|
 | `battery --quick` | cr1's quick check (`run_all.py --quick`: the guard tier plus every suite but the slow ones), about 4 to 8 minutes | before every pull request, on the builder's PC (the only Windows check); the Mac runs the same check as the merge gate |
 | `internal: run plugin tests` / `run command room tests` / `command room health check` / `verify plugin code` | the quick check (alias for `battery --quick`) | the retired run-command-room-tests entry point, folded in here (v0.3.1) |
-| `test command room` / `run the battery` | tiers 0–2 (the full battery) | on cr1's main once every 5 merges, on the Mac (dispatch `battery.yml` on `main`), and before a promote, on the office PC as the Windows check (owner rulings 2026-11-11 and 2026-11-12, cr1#1041); never per pull request |
-| ORCH1 and ACCESS1 (`tests/run_orch1_test.py`, `tests/run_access1_test.py`) | the two access-layer suites, about 20 and 15 minutes | before a pull request that touches the access layer, on the builder's own Windows PC: `workspace_access.py`, `WORKSPACE_ACCESS.md`, the Access preamble or its copies, a `SKILL.md` line that calls `plan run_helper` or `plan run_writer`, or a module holding a function on either allow-list (owner ruling 2026-11-12, cr1 train gate 9); every other pull request skips them |
+| `test command room` / `run the battery` | tiers 0–2 (the full battery) | on cr1's main once every 10 merges, on the Mac (dispatch `battery.yml` on `main`), and before a release and the promotes, on the office PC as the Windows check; never per pull request. The rule's one home is cr1 `ISSUES.md` section 10, train gates 2 and 4 (cr1#1258) |
+| ORCH1 and ACCESS1 (`tests/run_orch1_test.py`, `tests/run_access1_test.py`) | the two access-layer suites, about 20 and 15 minutes | before a pull request that touches the access layer, on the builder's own Windows PC: `workspace_access.py`, `WORKSPACE_ACCESS.md`, the Access preamble or its copies, a `SKILL.md` line that calls `plan run_helper` or `plan run_writer`, or a module holding a function on either allow-list (cr1 `ISSUES.md` section 10, train gate 9); every other pull request skips them |
 | `battery --ship` / `badass test` | tiers 0–4 (adds integration + ship verdict) | before a production-promote decision |
 | `battery --attended` | tiers 0–5 (adds the Cowork loop) | full pre-release gate with the operator present |
 
@@ -199,7 +199,7 @@ VERDICT: GREEN — the batch on main stands; merging may continue.
 ```
 
 For `battery --quick` the verdict is one line, and it is never called a battery:
-`Quick check: GREEN (693/693, 285 s). Not a battery; the full battery runs on main every 5 merges.`
+`Quick check: GREEN (693/693, 285 s). Not a battery; the full battery runs on main every 10 merges.`
 
 Verdict logic:
 - **RED** — any tier 0–2 suite failed (a suite that timed out is re-run once first). On main, a failure that was not already red at the previous every-5 run stops merging, and a fix build starts at once; a known red does not. Log every failure on cr1#1041 (date, range, suite, culprit pull request, files, area, kind). Revert-first is retired. List failures + fixes.
