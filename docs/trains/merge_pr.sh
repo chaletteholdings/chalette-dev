@@ -8,8 +8,8 @@ git fetch -q origin && git fetch -q origin pull/$P/head
 H=$(gh api repos/$R/pulls/$P -q .head.sha); MAIN=$(git rev-parse origin/main)
 # Since cr1#1238 the quick check is one Mac job ("quick check (mac, py3.12, shard 1/1)"), not three shards.
 # Read the newest run of each quick-check name on the head: at least one Mac job, and every newest run green.
-read NM NR <<< "$(gh api repos/$R/commits/$H/check-runs -q '[.check_runs[]|select(.name|startswith("quick check"))]|group_by(.name)|map(sort_by(.started_at)|last)|"\([.[]|select(.name|startswith("quick check (mac"))]|length) \([.[]|select(.conclusion!="success")]|length)"')"
-[ "$NM" -ge 1 ] && [ "$NR" = 0 ] || { echo "#$P quick check not green (mac jobs=$NM, not green=$NR)"; exit 1; }
+read NM NR <<< "$(gh api "repos/$R/commits/$H/check-runs?per_page=100" -q '[.check_runs[]|select(.name|startswith("quick check"))]|group_by(.name)|map(sort_by(.id)|last)|"\([.[]|select(.name|startswith("quick check (mac"))]|length) \([.[]|select(.conclusion!="success")]|length)"')"
+[ "$NM" -ge 1 ] && [ "$NR" = 0 ] || { echo "QUICK_NOT_GREEN #$P (mac jobs=$NM, not green=$NR)"; exit 1; }
 MC=$(gh api "repos/$R/actions/runs?branch=main&status=completed&per_page=10" -q '[.workflow_runs[]|select(.conclusion!="cancelled")][0]|"\(.head_sha) \(.conclusion)"')
 # Red main between every-5 runs does not stop everything (cr1#1041 ruling 5): the coordinator files an
 # issue, checks this PR does not touch the broken area, and re-runs with MAIN_RED_OK=1.
